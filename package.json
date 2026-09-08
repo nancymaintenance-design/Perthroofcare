@@ -1,0 +1,1 @@
+{"name":"ellis-roofing-website","private":true,"type":"module","scripts":{"dev":"node tools/local-server.mjs","test":"node --test tests/static-smoke.test.mjs","build":"node build.mjs","vercel-build":"node vercel-build.mjs"}}

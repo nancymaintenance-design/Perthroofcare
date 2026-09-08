@@ -1,0 +1,12 @@
+# Secrets and host-specific state — never commit these.
+.env
+.env.*
+!.env.example
+.vercel/
+
+# Local dependencies and logs.
+node_modules/
+npm-debug.log*
+
+# Local delivery history is retained in the Obsidian workspace, not the public repository.
+WEB-*-receipt.md
