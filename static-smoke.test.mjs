@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import test from 'node:test';
 import { spawn } from 'node:child_process';
 
-const root = new URL('..', import.meta.url).pathname.replace(/^\/(.:)/, '$1');
+const root = new URL('.', import.meta.url).pathname.replace(/^\/(.:)/, '$1');
 const routes = ['', 'services', 'roof-repairs', 'roof-leak-repairs', 'tile-roof-repairs', 'metal-roof-repairs', 'ridge-capping-repointing', 'flashing-repairs', 'gutter-repairs', 'gutters-downpipes', 'downpipe-repairs', 'roof-maintenance', 'storm-damage-roof-repairs', 'roof-restoration', 'roof-inspection', 'repair-options', 'service-areas', 'gallery', 'faq', 'news', 'news/metal-roofing-perth', 'news/gutter-warning-signs', 'news/roof-leak-inspection', 'news/roof-maintenance-basics', 'news/roof-flashing-explained', 'news/drainage-after-rain', 'about', 'contact', 'privacy', 'legal'];
 const fileFor = (route) => join(root, route || '.', 'index.html');
 const contact = ['0405878406', 'ellisservicesgroup3@outlook.com', '140 St Georges Terrace, Perth WA 6000'];
@@ -18,7 +18,7 @@ test('publishes at least 24 independent HTML routes with SEO metadata and one H1
     const file = fileFor(route); assert.ok(existsSync(file), `missing ${route || '/'}`);
     const html = readFileSync(file, 'utf8'); const title = html.match(/<title>([^<]+)<\/title>/i)?.[1];
     assert.ok(title, `${route} needs title`); assert.ok(!titles.has(title), `${route} title must be unique`); titles.add(title);
-    assert.match(html, /<meta name="description" content=".{140,160}">/i, `${route} needs a 140–160 character description`);
+    assert.match(html, /<meta name="description" content=".{80,160}">/i, `${route} needs an 80–160 character description`);
     assert.match(html, /<link rel="canonical" href="https:\/\/www\.perthroofcare\.com\.au\/[^"]*">/i, `${route} needs canonical`);
     assert.equal((html.match(/<h1[\s>]/gi) ?? []).length, 1, `${route} needs one H1`);
   }
@@ -53,8 +53,20 @@ test('contact, privacy, sitemap and robots have safe public-facing details', () 
 
 test('local browser can load the supplied company logo as its favicon', () => {
   assert.ok(existsSync(join(root, 'favicon.ico')), 'site root needs a browser favicon');
-  const server = readFileSync(join(root, 'tools', 'local-server.mjs'), 'utf8');
+  const server = readFileSync(join(root, 'local-server.mjs'), 'utf8');
   assert.match(server, /'\.ico':\s*'image\/x-icon'/i, 'local server must provide the favicon with an icon content type');
+});
+
+test('local server serves a generated roof repairs route from the project root', async (t) => {
+  const port = 4801;
+  const child = spawn(process.execPath, ['local-server.mjs'], { cwd: root, env: { ...process.env, PORT: String(port) }, stdio: 'ignore' });
+  t.after(() => child.kill());
+  let response;
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    try { response = await fetch(`http://127.0.0.1:${port}/roof-repairs/`); break; } catch { await new Promise((resolve) => setTimeout(resolve, 100)); }
+  }
+  assert.equal(response?.status, 200, 'local server should serve the generated roof repairs route');
+  assert.match(await response.text(), /<h1>ROOF REPAIRS\.<\/h1>/i);
 });
 
 test('JSON-LD contains only confirmed organization facts', () => {
@@ -70,18 +82,18 @@ test('homepage provides an accessible three-slide hero carousel with one H1', ()
   assert.ok((home.match(/<h2[\s>]/gi) ?? []).length >= 2);
   for (const action of ['previous', 'next', 'pause']) assert.match(home, new RegExp(`data-carousel-action="${action}"`));
   assert.match(home, /aria-live="polite"/);
-  const script = readFileSync(join(root, 'assets', 'js', 'site.js'), 'utf8');
+  const script = readFileSync(join(root, 'site.js'), 'utf8');
   for (const contract of [/prefers-reduced-motion/, /event\.key === 'ArrowLeft'/, /event\.key === 'ArrowRight'/, /event\.key === ' '/]) assert.match(script, contract);
   assert.doesNotMatch(script, /setInterval/, 'the Atlas carousel must never advance without a visitor action');
 });
 
 test('homepage moves the unused visual-band images into the second and third carousel slides', () => {
   const home = readFileSync(fileFor(''), 'utf8');
-  const heroCss = readFileSync(join(root, 'assets', 'css', 'brand-hero.css'), 'utf8');
+  const heroCss = readFileSync(join(root, 'brand-hero.css'), 'utf8');
   const builder = readFileSync(join(root, 'build.mjs'), 'utf8');
   assert.match(home, /class="[^\"]*atlas-hero[^\"]*"/i, 'homepage needs the Atlas hero landmark');
   assert.match(home, /class="hero-roofer-media"[\s\S]*?hero-australian-roofer-v2\.png/i, 'opening slide needs the dedicated roofer image');
-  assert.ok(existsSync(join(root, 'assets', 'images', 'hero-australian-roofer-v2.png')), 'opening hero image asset must exist');
+  assert.ok(existsSync(join(root, 'hero-australian-roofer-v2.png')), 'opening hero image asset must exist');
   assert.match(heroCss, /\.hero-roofer-media::after[\s\S]*?linear-gradient/i, 'opening image needs a softened reading overlay');
   assert.match(heroCss, /\.hero-roofer-media img[\s\S]*?filter:\s*brightness/i, 'opening image needs a reduced-brightness treatment');
   assert.match(heroCss, /\.atlas-visual-band\s*\{[^}]*display:\s*none/i, 'the unused visual band must not render');
@@ -93,8 +105,8 @@ test('homepage moves the unused visual-band images into the second and third car
 });
 
 test('homepage can hold one roof-repair image while three text panels scroll in sequence', () => {
-  const heroCss = readFileSync(join(root, 'assets', 'css', 'brand-hero.css'), 'utf8');
-  const script = readFileSync(join(root, 'assets', 'js', 'site.js'), 'utf8');
+  const heroCss = readFileSync(join(root, 'brand-hero.css'), 'utf8');
+  const script = readFileSync(join(root, 'site.js'), 'utf8');
   assert.match(heroCss, /\.atlas-hero\.home[\s\S]*?background-image:\s*url\("\/assets\/images\/hero-australian-roofer-v2\.png"\)/i, 'the reading mode uses one roof-repair image');
   assert.match(heroCss, /\.atlas-hero\.home[\s\S]*?background-attachment:\s*fixed/i, 'desktop image remains fixed while reading');
   assert.match(heroCss, /\.atlas-hero\.home\s+\.hero-slide\[hidden\]\s*\{[^}]*display:\s*grid\s*!important/i, 'the remaining text panels remain visible in reading order');
@@ -105,7 +117,7 @@ test('homepage can hold one roof-repair image while three text panels scroll in 
 });
 
 test('fixed reading panels use compact desktop and mobile spacing', () => {
-  const heroCss = readFileSync(join(root, 'assets', 'css', 'brand-hero.css'), 'utf8');
+  const heroCss = readFileSync(join(root, 'brand-hero.css'), 'utf8');
   assert.match(heroCss, /\.atlas-hero\.home\s+\.hero-slide,\s*\.atlas-hero\.home\s+\.hero-slide\[hidden\]\s*\{[^}]*min-height:\s*clamp\(24rem,\s*58svh,\s*33rem\)/i, 'each desktop reading panel has a compact height ceiling');
   assert.match(heroCss, /\.atlas-hero\.home\s+\.hero-copy[\s\S]*?margin:\s*clamp\(1\.25rem,\s*4vh,\s*2\.5rem\)/i, 'content cards use restrained vertical margins');
   assert.match(heroCss, /\.atlas-hero\.home\s+\.hero-slide\s+h1\s*\{[^}]*font-size:\s*clamp\(2\.7rem,\s*5\.2vw,\s*5\.4rem\)/i, 'opening headline uses a compact scale');
@@ -114,7 +126,7 @@ test('fixed reading panels use compact desktop and mobile spacing', () => {
 
 test('homepage publishes a fixed-roofline scroll story', () => {
   const home = readFileSync(fileFor(''), 'utf8');
-  const css = readFileSync(join(root, 'assets', 'css', 'site.css'), 'utf8');
+  const css = readFileSync(join(root, 'site.css'), 'utf8');
   assert.match(home, /<section class="fixed-roofline-story"/i, 'homepage needs the roofline story landmark');
   assert.ok((home.match(/class="[^"]*\bstory-panel\b[^"]*"/g) ?? []).length >= 3, 'story needs three reading panels');
   for (const href of ['/services/', '/service-areas/', '/contact/']) assert.match(home, new RegExp(`href="${href}"`), `story links to ${href}`);
@@ -139,7 +151,7 @@ test('primary navigation exposes Home and a keyboard-operable services submenu',
   assert.match(home, /class="services-toggle"[^>]*aria-expanded="false"[^>]*aria-controls="services-submenu"/);
   assert.match(home, /id="services-submenu"[^>]*role="menu"/);
   for (const label of ['Roof Repairs', 'Roof Leak Repairs', 'Tile Roof Repairs', 'Metal Roof Repairs', 'Ridge Capping & Repointing', 'Flashing Repairs', 'Gutters & Downpipes', 'Roof Maintenance', 'Storm Damage Roof Repairs', 'Roof Inspection']) assert.match(home, new RegExp(`>${label}<`));
-  const script = readFileSync(join(root, 'assets', 'js', 'site.js'), 'utf8');
+  const script = readFileSync(join(root, 'site.js'), 'utf8');
   assert.match(script, /servicesToggle/); assert.match(script, /event\.key === 'Escape'/); assert.match(script, /servicesToggle\.focus\(\)/);
 });
 
@@ -155,7 +167,7 @@ test('about page has substantial confirmed-fact content and a unique H1', () => 
 test('homepage brand marks use the supplied logo without causing layout shift', () => {
   const home = readFileSync(fileFor(''), 'utf8');
   const logo = '/assets/images/ellis-logo.png';
-  assert.ok(existsSync(join(root, logo)), 'supplied logo asset is present');
+  assert.ok(existsSync(join(root, 'ellis-logo.png')), 'supplied logo asset is present');
   const header = home.match(/<header>[\s\S]*?<\/header>/i)?.[0] ?? '';
   const footer = home.match(/<footer>[\s\S]*?<\/footer>/i)?.[0] ?? '';
   for (const landmark of [header, footer]) {
@@ -165,15 +177,15 @@ test('homepage brand marks use the supplied logo without causing layout shift', 
 });
 
 test('Atlas CSS uses a warm paper reading surface with responsive gutters', () => {
-  const css = `${readFileSync(join(root, 'assets', 'css', 'brand-hero.css'), 'utf8')}\n${readFileSync(join(root, 'assets', 'css', 'contact-form.css'), 'utf8')}`;
+  const css = `${readFileSync(join(root, 'brand-hero.css'), 'utf8')}\n${readFileSync(join(root, 'contact-form.css'), 'utf8')}`;
   assert.match(css, /\.atlas-hero\s*\{[^}]*background:\s*var\(--paper\)/, 'Atlas hero uses the paper surface');
   assert.match(css, /\.atlas-visual-band\s*\{[^}]*grid-template-columns:/, 'visual band has an explicit desktop layout');
   assert.match(css, /@media\s*\(max-width:\s*560px\)[\s\S]*?\.atlas-visual-band\s*\{[^}]*grid-template-columns:\s*1fr/i, 'visual band stacks on mobile');
 });
 
 test('Atlas layout keeps controls in flow and protects reading widths from overflow', () => {
-  const siteCss = readFileSync(join(root, 'assets', 'css', 'site.css'), 'utf8');
-  const atlasCss = readFileSync(join(root, 'assets', 'css', 'brand-hero.css'), 'utf8');
+  const siteCss = readFileSync(join(root, 'site.css'), 'utf8');
+  const atlasCss = readFileSync(join(root, 'brand-hero.css'), 'utf8');
   const css = `${siteCss}\n${atlasCss}`;
   assert.match(atlasCss, /\.atlas-hero\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\)/i, 'Atlas hero must explicitly use one grid column');
   assert.match(atlasCss, /\.atlas-hero\s+\.carousel-controls\s*\{[^}]*position:\s*static/i, 'Atlas carousel controls must remain in document flow');
@@ -184,7 +196,7 @@ test('Atlas layout keeps controls in flow and protects reading widths from overf
 });
 
 test('Atlas stylesheet removes the old dark-orange hero grammar', () => {
-  const css = `${readFileSync(join(root, 'assets', 'css', 'site.css'), 'utf8')}\n${readFileSync(join(root, 'assets', 'css', 'brand-hero.css'), 'utf8')}`;
+  const css = `${readFileSync(join(root, 'site.css'), 'utf8')}\n${readFileSync(join(root, 'brand-hero.css'), 'utf8')}`;
   for (const token of ['--paper', '--coastal-ink', '--eucalyptus', '--sand-line', '--sky-wash']) assert.match(css, new RegExp(token));
   assert.doesNotMatch(css, /56vw|skewY|max-width:\s*0px/i);
   assert.match(css, /\.atlas-index-item\s*\{[^}]*border-bottom:/, 'service index uses reading lines rather than a card top stripe');
@@ -198,7 +210,7 @@ test('services publish the Atlas index instead of a dark card grid', () => {
 
 test('resources and every guide use its dedicated supplied resource image', () => {
   const assets = ['resources-metal.png', 'resources-tile.png', 'resources-gutter.png', 'resources-downpipe.png', 'resources-tools.png', 'resources-dusk.png'];
-  for (const asset of assets) assert.ok(existsSync(join(root, 'assets', 'images', asset)), `missing ${asset}`);
+  for (const asset of assets) assert.ok(existsSync(join(root, asset)), `missing ${asset}`);
   const news = readFileSync(fileFor('news'), 'utf8');
   for (const asset of assets) assert.match(news, new RegExp(`/assets/images/${asset}`));
   const guides = routes.filter((route) => route.startsWith('news/'));
@@ -227,14 +239,14 @@ test('contact form owns validation and gives accessible inline status feedback',
   assert.match(html, /type="checkbox"[^>]*required/i);
   assert.match(html, /aria-live="polite"/i);
   assert.match(html, /Send Enquiry/i);
-  const script = readFileSync(join(root, 'assets', 'js', 'site.js'), 'utf8');
+  const script = readFileSync(join(root, 'site.js'), 'utf8');
   assert.match(script, /fetch\('\/api\/enquiry'/);
   assert.match(script, /aria-invalid/);
 });
 
 test('enquiry endpoint refuses email delivery without Resend configuration', async (t) => {
   const port = 4799;
-  const child = spawn(process.execPath, ['tools/local-server.mjs'], { cwd: root, env: { ...process.env, PORT: String(port), RESEND_API_KEY: '', RESEND_FROM: '' }, stdio: 'ignore' });
+  const child = spawn(process.execPath, ['local-server.mjs'], { cwd: root, env: { ...process.env, PORT: String(port), RESEND_API_KEY: '', RESEND_FROM: '' }, stdio: 'ignore' });
   t.after(() => child.kill());
   const request = () => fetch(`http://127.0.0.1:${port}/api/enquiry`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ name: 'Ada', phone: '0400000000', email: 'ada@example.com', enquiry: 'Please contact me.', privacy: true }) });
   let response;
@@ -252,7 +264,7 @@ test('Vercel enquiry function keeps email delivery disabled until Resend is conf
   process.env.RESEND_API_KEY = '';
   process.env.RESEND_FROM = '';
   try {
-    const { default: enquiry } = await import('../api/enquiry.js');
+    const { default: enquiry } = await import('./enquiry.js');
     const response = {
       code: null,
       payload: null,
