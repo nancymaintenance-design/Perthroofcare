@@ -1,10 +1,11 @@
-import { cpSync, existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
 const publicDirectory = join(root, 'public');
+const outputDirectory = join(root, '.vercel', 'output');
 const build = spawnSync(process.execPath, ['build.mjs'], { cwd: root, stdio: 'inherit' });
 if (build.status !== 0) process.exit(build.status ?? 1);
 
@@ -48,3 +49,22 @@ for (const [source, destination] of stagedFiles) {
   mkdirSync(dirname(destinationPath), { recursive: true });
   cpSync(sourcePath, destinationPath);
 }
+
+rmSync(outputDirectory, { recursive: true, force: true });
+const staticDirectory = join(outputDirectory, 'static');
+mkdirSync(staticDirectory, { recursive: true });
+cpSync(publicDirectory, staticDirectory, { recursive: true });
+
+const enquirySource = join(root, 'enquiry.js');
+if (!existsSync(enquirySource)) throw new Error('Missing enquiry handler.');
+const functionDirectory = join(outputDirectory, 'functions', 'api', 'enquiry.func');
+mkdirSync(functionDirectory, { recursive: true });
+cpSync(enquirySource, join(functionDirectory, 'index.js'));
+writeFileSync(join(functionDirectory, 'package.json'), JSON.stringify({ type: 'module' }));
+writeFileSync(join(functionDirectory, '.vc-config.json'), JSON.stringify({
+  runtime: 'nodejs20.x',
+  handler: 'index.js',
+  launcherType: 'Nodejs',
+  shouldAddHelpers: true
+}));
+writeFileSync(join(outputDirectory, 'config.json'), JSON.stringify({ version: 3 }));
