@@ -12,7 +12,7 @@ if (build.status !== 0) process.exit(build.status ?? 1);
 rmSync(publicDirectory, { recursive: true, force: true });
 mkdirSync(publicDirectory, { recursive: true });
 
-const excludedDirectories = new Set(['api', 'node_modules', 'public', 'tests', 'tools', '.vercel']);
+const excludedDirectories = new Set(['api', 'node_modules', 'public', 'tests', 'tools', '.vercel', '.git']);
 for (const entry of readdirSync(root, { withFileTypes: true })) {
   if (entry.isDirectory() && !excludedDirectories.has(entry.name)) {
     cpSync(join(root, entry.name), join(publicDirectory, entry.name), { recursive: true });
