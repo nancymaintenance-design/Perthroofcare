@@ -1,5 +1,5 @@
 import { cpSync, existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
@@ -17,7 +17,34 @@ for (const entry of readdirSync(root, { withFileTypes: true })) {
     cpSync(join(root, entry.name), join(publicDirectory, entry.name), { recursive: true });
   }
 }
-for (const file of ['favicon.ico', 'index.html', 'robots.txt', 'sitemap.xml']) {
-  if (!existsSync(join(root, file))) throw new Error(`Missing static file: ${file}`);
-  cpSync(join(root, file), join(publicDirectory, file));
+
+const stagedFiles = [
+  ['favicon.ico', 'favicon.ico'],
+  ['index.html', 'index.html'],
+  ['robots.txt', 'robots.txt'],
+  ['sitemap.xml', 'sitemap.xml'],
+  ['site.css', 'assets/css/site.css'],
+  ['brand-hero.css', 'assets/css/brand-hero.css'],
+  ['contact-form.css', 'assets/css/contact-form.css'],
+  ['site.js', 'assets/js/site.js'],
+  ['ellis-logo.png', 'assets/images/ellis-logo.png'],
+  ['gutter.png', 'assets/images/gutter.png'],
+  ['hero-australian-roofer-v2.png', 'assets/images/hero-australian-roofer-v2.png'],
+  ['hero-roof.png', 'assets/images/hero-roof.png'],
+  ['inspection.png', 'assets/images/inspection.png'],
+  ['metal-roof.png', 'assets/images/metal-roof.png'],
+  ['resources-downpipe.png', 'assets/images/resources-downpipe.png'],
+  ['resources-dusk.png', 'assets/images/resources-dusk.png'],
+  ['resources-gutter.png', 'assets/images/resources-gutter.png'],
+  ['resources-metal.png', 'assets/images/resources-metal.png'],
+  ['resources-tile.png', 'assets/images/resources-tile.png'],
+  ['resources-tools.png', 'assets/images/resources-tools.png']
+];
+
+for (const [source, destination] of stagedFiles) {
+  const sourcePath = join(root, source);
+  if (!existsSync(sourcePath)) throw new Error(`Missing static file: ${source}`);
+  const destinationPath = join(publicDirectory, destination);
+  mkdirSync(dirname(destinationPath), { recursive: true });
+  cpSync(sourcePath, destinationPath);
 }
