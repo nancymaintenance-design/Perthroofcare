@@ -63,3 +63,15 @@ if (enquiryForm) {
     finally { submit.disabled = false; submit.removeAttribute('aria-busy'); submit.textContent = original; }
   });
 }
+
+(() => {
+  const measurementId = 'G-35M6VYNBDV';
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+  document.head.append(script);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function gtag() { window.dataLayer.push(arguments); };
+  window.gtag('js', new Date());
+  window.gtag('config', measurementId);
+})();
