@@ -1,0 +1,86 @@
+:root { --page-gutter: max(24px, calc((100vw - 1280px) / 2)); }
+.brand { display: inline-flex; align-items: center; gap: .7rem; }
+.brand-logo { width: 48px; height: 48px; aspect-ratio: 1237 / 1272; flex: none; object-fit: contain; }
+.atlas-hero { --paper: #F5F0E6; background: var(--paper); display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto; isolation: isolate; }
+.hero-copy { width: min(100%, 70rem); margin-inline: auto; padding: clamp(3rem, 6vw, 6rem) 24px; }
+.atlas-hero .hero-copy { max-width: 68rem; padding-bottom: clamp(2rem, 4vw, 4rem); position: static; z-index: auto; }
+.atlas-hero h1 { font-size: clamp(3.25rem, 5vw, 4.5rem); }
+.atlas-hero .carousel-controls { position: static; transform: none; width: min(100%, 70rem); margin: 0 auto; padding: 0 24px clamp(2rem, 4vw, 4rem); justify-content: flex-start; flex-wrap: wrap; }
+.atlas-hero, .atlas-hero :is(h1, h2, h3, p, a, li, summary), nav { overflow-wrap: anywhere; }
+nav { white-space: normal; }
+.section.texture, main > .section:nth-of-type(even), main > article > .section:nth-of-type(even) { background: var(--sky-wash); border-block: 1px solid var(--sand-line); }
+.atlas-visual-band { width: min(100% - 48px, 1280px); margin: 0 auto; display: grid; grid-template-columns: minmax(0, 3fr) minmax(18rem, 1fr); border: 1px solid var(--sand-line); background: var(--sky-wash); }
+.atlas-visual-band .media-frame, .atlas-visual-band .media-frame img { min-height: 19rem; margin: 0; box-shadow: none; }
+.atlas-notes { margin: 0; padding: clamp(1.5rem, 3vw, 3rem); align-self: center; list-style: none; counter-reset: atlas-note; }
+.atlas-notes li { counter-increment: atlas-note; padding-block: 1rem; border-top: 1px solid var(--sand-line); }
+.atlas-notes li::before { content: "0" counter(atlas-note) "  "; color: var(--eucalyptus); font: 700 .75rem/1 ui-monospace, monospace; letter-spacing: .12em; }
+@media (max-width: 560px) { .brand-logo { width: 40px; height: 40px; } .hero-copy { width: min(100%, 70rem); padding-inline: 16px; } .atlas-hero .carousel-controls { padding-inline: 16px; } .atlas-visual-band { width: min(100% - 40px, 1280px); grid-template-columns: 1fr; } }
+
+/* WEB-015 opening carousel slide: full-bleed Perth roof repair image with a deliberately softened reading field. */
+.atlas-hero .hero-slide:first-child { position: relative; isolation: isolate; min-height: clamp(39rem, 76svh, 52rem); overflow: hidden; background: var(--coastal-ink); }
+.atlas-hero .hero-slide:first-child .hero-roofer-media { position: absolute; z-index: 0; inset: 0; }
+.atlas-hero .hero-slide:first-child .hero-roofer-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(13 37 38 / .88) 0%, rgb(18 47 46 / .72) 38%, rgb(18 47 46 / .18) 74%, rgb(18 47 46 / .12) 100%); }
+.atlas-hero .hero-slide:first-child .hero-roofer-media img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 69% center; filter: brightness(.62) saturate(.72) contrast(1.02); }
+.atlas-hero .hero-slide:first-child .hero-copy { position: relative; z-index: 2; width: min(100%, 78rem); max-width: none; margin: 0 auto; padding: clamp(6.5rem, 11vw, 10rem) 24px clamp(7.5rem, 12vw, 10rem); color: var(--paper); }
+.atlas-hero .hero-slide:first-child .eyebrow { color: #d9e8dc; }
+.atlas-hero .hero-slide:first-child h1 { max-width: 12ch; margin-bottom: 1.35rem; font-size: clamp(3.55rem, 7.2vw, 7.6rem); text-wrap: balance; }
+.atlas-hero .hero-slide:first-child .hero-copy p:not(.eyebrow) { max-width: 43rem; margin-bottom: 2rem; color: rgb(247 244 236 / .94); }
+.atlas-hero .hero-slide:first-child .button { background: var(--paper); border-color: var(--paper); color: var(--coastal-ink); }
+.atlas-hero .hero-slide:first-child .text-link { color: var(--paper); }
+.atlas-hero .carousel-controls { position: absolute; z-index: 4; bottom: clamp(1.25rem, 3vw, 2.25rem); left: max(24px, calc((100vw - 1280px) / 2)); width: auto; margin: 0; padding: 0; }
+.atlas-hero .carousel-controls button { border-color: rgb(247 244 236 / .45); background: rgb(24 51 51 / .72); color: var(--paper); backdrop-filter: blur(7px); }
+@media (max-width: 560px) {
+  .atlas-hero .hero-slide:first-child { min-height: 42rem; }
+  .atlas-hero .hero-slide:first-child .hero-roofer-media::after { background: linear-gradient(180deg, rgb(13 37 38 / .55), rgb(13 37 38 / .9) 70%, rgb(13 37 38 / .96)); }
+  .atlas-hero .hero-slide:first-child .hero-roofer-media img { object-position: 68% center; }
+  .atlas-hero .hero-slide:first-child .hero-copy { padding: 5.5rem 16px 7.5rem; }
+  .atlas-hero .hero-slide:first-child h1 { font-size: clamp(3.1rem, 15vw, 4.45rem); max-width: 10ch; }
+  .atlas-hero .carousel-controls { position: absolute; left: 16px; bottom: 1.25rem; padding: 0; }
+}
+
+/* WEB-016: the second and third carousel panels inherit the retired visual-band images. */
+.atlas-visual-band { display: none; }
+.atlas-hero .hero-slide:nth-child(n + 2) { position: relative; isolation: isolate; min-height: clamp(39rem, 76svh, 52rem); overflow: hidden; background: var(--coastal-ink); }
+.atlas-hero .hero-slide:nth-child(2)::before, .atlas-hero .hero-slide:nth-child(3)::before { content: ""; position: absolute; z-index: 0; inset: 0; background-position: center; background-size: cover; filter: brightness(.6) saturate(.7) contrast(1.04); }
+.atlas-hero .hero-slide:nth-child(2)::before { background-image: url("/assets/images/hero-roof.png"); }
+.atlas-hero .hero-slide:nth-child(3)::before { background-image: url("/assets/images/metal-roof.png"); }
+.atlas-hero .hero-slide:nth-child(2)::after, .atlas-hero .hero-slide:nth-child(3)::after { content: ""; position: absolute; z-index: 1; inset: 0; background: linear-gradient(90deg, rgb(13 37 38 / .86) 0%, rgb(18 47 46 / .68) 42%, rgb(18 47 46 / .22) 75%, rgb(18 47 46 / .14) 100%); }
+.atlas-hero .hero-slide:nth-child(n + 2) .hero-carousel-media { position: absolute; z-index: 0; inset: 0; }
+.atlas-hero .hero-slide:nth-child(n + 2) .hero-carousel-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(13 37 38 / .86) 0%, rgb(18 47 46 / .68) 42%, rgb(18 47 46 / .22) 75%, rgb(18 47 46 / .14) 100%); }
+.atlas-hero .hero-slide:nth-child(n + 2) .hero-carousel-media img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; filter: brightness(.6) saturate(.7) contrast(1.04); }
+.atlas-hero .hero-slide:nth-child(n + 2) .hero-copy { position: relative; z-index: 2; width: min(100%, 78rem); max-width: none; margin: 0 auto; padding: clamp(6.5rem, 11vw, 10rem) 24px clamp(7.5rem, 12vw, 10rem); color: var(--paper); }
+.atlas-hero .hero-slide:nth-child(n + 2) .eyebrow { color: #d9e8dc; }
+.atlas-hero .hero-slide:nth-child(n + 2) h2 { max-width: 13ch; margin-bottom: 1.35rem; font-size: clamp(3.15rem, 6.5vw, 6.8rem); text-wrap: balance; }
+.atlas-hero .hero-slide:nth-child(n + 2) .hero-copy p:not(.eyebrow) { max-width: 43rem; margin-bottom: 2rem; color: rgb(247 244 236 / .94); }
+.atlas-hero .hero-slide:nth-child(n + 2) .button { background: var(--paper); border-color: var(--paper); color: var(--coastal-ink); }
+.atlas-hero .hero-slide:nth-child(n + 2) .text-link { color: var(--paper); }
+@media (max-width: 560px) {
+  .atlas-hero .hero-slide:nth-child(n + 2) { min-height: 42rem; }
+  .atlas-hero .hero-slide:nth-child(n + 2) .hero-carousel-media::after { background: linear-gradient(180deg, rgb(13 37 38 / .54), rgb(13 37 38 / .9) 70%, rgb(13 37 38 / .96)); }
+  .atlas-hero .hero-slide:nth-child(n + 2) .hero-copy { padding: 5.5rem 16px 7.5rem; }
+  .atlas-hero .hero-slide:nth-child(n + 2) h2 { font-size: clamp(2.8rem, 13vw, 4.25rem); max-width: 11ch; }
+}
+
+/* WEB-017: one fixed Perth roofline image; the visitor scrolls through the reading panels. */
+.atlas-hero.home { display: block; background-color: var(--coastal-ink); background-image: url("/assets/images/hero-australian-roofer-v2.png"); background-position: 69% center; background-size: cover; background-attachment: fixed; }
+.atlas-hero.home .hero-roofer-media, .atlas-hero.home .hero-carousel-media { display: none; }
+.atlas-hero.home .hero-slide, .atlas-hero.home .hero-slide[hidden] { display: grid !important; position: relative; isolation: isolate; min-height: clamp(24rem, 58svh, 33rem); overflow: hidden; background: transparent; }
+.atlas-hero.home .hero-slide::before, .atlas-hero.home .hero-slide::after { display: none; }
+.atlas-hero.home .hero-copy, .atlas-hero.home .hero-slide:first-child .hero-copy, .atlas-hero.home .hero-slide:nth-child(n + 2) .hero-copy { position: relative; z-index: 2; width: min(100% - 48px, 45rem); margin: clamp(1.25rem, 4vh, 2.5rem) max(24px, calc((100vw - 1280px) / 2)); padding: clamp(1.5rem, 2.5vw, 2.25rem); color: var(--paper); background: rgb(13 37 38 / .88); border: 1px solid rgb(217 232 220 / .38); box-shadow: 0 18px 44px rgb(7 23 24 / .22); backdrop-filter: blur(8px); }
+.atlas-hero.home .hero-slide:nth-child(even) .hero-copy { margin-left: auto; margin-right: max(24px, calc((100vw - 1280px) / 2)); background: rgb(20 58 54 / .88); }
+.atlas-hero.home .hero-slide :is(h1, h2) { max-width: 12ch; margin-bottom: 1.35rem; color: var(--paper); text-wrap: balance; }
+.atlas-hero.home .hero-slide h1 { font-size: clamp(2.7rem, 5.2vw, 5.4rem); }
+.atlas-hero.home .hero-slide h2 { font-size: clamp(2.35rem, 4.6vw, 4.5rem); }
+.atlas-hero.home .hero-copy .eyebrow { color: #d9e8dc; }
+.atlas-hero.home .hero-copy p:not(.eyebrow) { max-width: 39rem; color: rgb(247 244 236 / .94); }
+.atlas-hero.home .hero-copy .button { background: var(--paper); border-color: var(--paper); color: var(--coastal-ink); }
+.atlas-hero.home .hero-copy .text-link { color: var(--paper); }
+.atlas-hero.home .carousel-controls { display: none; }
+@media (prefers-reduced-motion: reduce) { .atlas-hero.home { background-attachment: scroll; } }
+@media (max-width: 560px) {
+  .atlas-hero.home { background-attachment: scroll; background-position: 65% center; }
+  .atlas-hero.home .hero-slide, .atlas-hero.home .hero-slide[hidden] { min-height: 0; padding: 1.5rem 0; }
+  .atlas-hero.home .hero-copy, .atlas-hero.home .hero-slide:first-child .hero-copy, .atlas-hero.home .hero-slide:nth-child(n + 2) .hero-copy, .atlas-hero.home .hero-slide:nth-child(even) .hero-copy { width: calc(100% - 32px); margin: 0 16px; padding: 2rem 1.25rem; }
+  .atlas-hero.home .hero-slide h1 { font-size: clamp(3rem, 14vw, 4.35rem); }
+  .atlas-hero.home .hero-slide h2 { font-size: clamp(2.75rem, 12vw, 4rem); }
+}
