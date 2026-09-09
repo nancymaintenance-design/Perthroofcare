@@ -71,7 +71,7 @@ test('local server serves a generated roof repairs route from the project root',
 
 test('JSON-LD contains only confirmed organization facts', () => {
   const json = readFileSync(fileFor(''), 'utf8').match(/<script type="application\/ld\+json">(.*?)<\/script>/i)?.[1]; assert.ok(json); const data = JSON.parse(json);
-  assert.equal(data.name, 'Ellis Services Group'); assert.equal(data.telephone, '0405878406'); assert.equal(data.email, 'ellisservicesgroup3@outlook.com'); assert.equal(data.foundingDate, '2011'); assert.doesNotMatch(json, /"(?:aggregateRating|review|ABN|openingHours|geo)"/i);
+  assert.equal(data.name, 'Ellis Services Group'); assert.equal(data.telephone, '0405878406'); assert.equal(data.email, 'ellisservicesgroup3@outlook.com'); assert.equal(data.foundingDate, '2020-11-11'); assert.doesNotMatch(json, /"(?:aggregateRating|review|ABN|openingHours|geo)"/i);
 });
 
 test('homepage provides an accessible three-slide hero carousel with one H1', () => {
@@ -155,12 +155,13 @@ test('primary navigation exposes Home and a keyboard-operable services submenu',
   assert.match(script, /servicesToggle/); assert.match(script, /event\.key === 'Escape'/); assert.match(script, /servicesToggle\.focus\(\)/);
 });
 
-test('about page has substantial confirmed-fact content and a unique H1', () => {
+test('about page uses the confirmed entity date and does not invent company history', () => {
   const about = readFileSync(fileFor('about'), 'utf8');
   const text = about.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-  assert.ok(text.split(' ').length >= 800, 'about page needs at least 800 words');
+  assert.ok(text.split(' ').length >= 250, 'about page needs enough public entity and contact context');
   assert.equal((about.match(/<h1[\s>]/gi) ?? []).length, 1);
-  for (const fact of ['established in 2011', 'integrity', 'fair pricing', 'real estate agencies', 'experienced tradespeople', 'advanced equipment', 'Australian housing and maintenance standards', 'after-sales care']) assert.match(about, new RegExp(fact, 'i'));
+  assert.match(about, /registered on 11 November 2020/i);
+  assert.doesNotMatch(about, /\b(?:2011|long-term cooperation|experienced tradespeople|advanced equipment|familiar with Australian housing and maintenance standards)\b/i);
   assert.doesNotMatch(about, /\b(?:ABN|licen[cs]e|insured|insurance|warranty|within \d+|#1|best in Perth)\b/i);
 });
 
