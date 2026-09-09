@@ -57,6 +57,28 @@ test('local browser can load the supplied company logo as its favicon', () => {
   assert.match(server, /'\.ico':\s*'image\/x-icon'/i, 'local server must provide the favicon with an icon content type');
 });
 
+test('homepage publishes a standard PNG favicon from the root', async (t) => {
+  const home = readFileSync(fileFor(''), 'utf8');
+  assert.match(home, /<link(?=[^>]*\brel="icon")(?=[^>]*\bhref="\/favicon\.png")(?=[^>]*\btype="image\/png")[^>]*>/i, 'homepage needs a stable PNG favicon declaration');
+  assert.match(home, /<link(?=[^>]*\brel="apple-touch-icon")(?=[^>]*\bhref="\/favicon\.png")[^>]*>/i, 'homepage needs an Apple touch icon declaration');
+  const favicon = join(root, 'favicon.png');
+  const png = readFileSync(favicon);
+  assert.deepEqual(png.subarray(0, 8), Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), 'favicon must be a PNG');
+  assert.equal(png.readUInt32BE(16), 512, 'favicon must use the standard 512px height');
+  assert.equal(png.readUInt32BE(20), 512, 'favicon must use the standard 512px width');
+  assert.ok(existsSync(join(root, 'public', 'favicon.png')), 'Vercel build must package the PNG favicon');
+
+  const port = 4802;
+  const child = spawn(process.execPath, ['local-server.mjs'], { cwd: root, env: { ...process.env, PORT: String(port) }, stdio: 'ignore' });
+  t.after(() => child.kill());
+  let response;
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    try { response = await fetch(`http://127.0.0.1:${port}/favicon.png`); break; } catch { await new Promise((resolve) => setTimeout(resolve, 100)); }
+  }
+  assert.equal(response?.status, 200, 'local server should serve /favicon.png');
+  assert.match(response?.headers.get('content-type') ?? '', /^image\/png\b/i, 'favicon response must be PNG');
+});
+
 test('local server serves a generated roof repairs route from the project root', async (t) => {
   const port = 4801;
   const child = spawn(process.execPath, ['local-server.mjs'], { cwd: root, env: { ...process.env, PORT: String(port) }, stdio: 'ignore' });
