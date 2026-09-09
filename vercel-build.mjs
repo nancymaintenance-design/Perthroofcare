@@ -21,6 +21,7 @@ for (const entry of readdirSync(root, { withFileTypes: true })) {
 
 const stagedFiles = [
   ['favicon.ico', 'favicon.ico'],
+  ['favicon.png', 'favicon.png'],
   ['index.html', 'index.html'],
   ['robots.txt', 'robots.txt'],
   ['sitemap.xml', 'sitemap.xml'],
