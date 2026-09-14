@@ -88,7 +88,7 @@ test('local server serves a generated roof repairs route from the project root',
     try { response = await fetch(`http://127.0.0.1:${port}/roof-repairs/`); break; } catch { await new Promise((resolve) => setTimeout(resolve, 100)); }
   }
   assert.equal(response?.status, 200, 'local server should serve the generated roof repairs route');
-  assert.match(await response.text(), /<h1>ROOF REPAIRS\.<\/h1>/i);
+  assert.match(await response.text(), /<h1>ROOF REPAIRS(?: IN PERTH)?\.<\/h1>/i);
 });
 
 test('JSON-LD contains only confirmed organization facts', () => {
@@ -114,7 +114,8 @@ test('homepage moves the unused visual-band images into the second and third car
   const heroCss = readFileSync(join(root, 'brand-hero.css'), 'utf8');
   const builder = readFileSync(join(root, 'build.mjs'), 'utf8');
   assert.match(home, /class="[^\"]*atlas-hero[^\"]*"/i, 'homepage needs the Atlas hero landmark');
-  assert.match(home, /class="hero-roofer-media"[\s\S]*?hero-australian-roofer-v2\.png/i, 'opening slide needs the dedicated roofer image');
+  assert.match(home, /rel="preload" as="image" href="\/assets\/images\/hero-australian-roofer-v2\.png" fetchpriority="high"/i, 'opening slide needs a high-priority visual preload');
+  assert.doesNotMatch(home, /class="hero-roofer-media"/i, 'the CSS hero must not also create a hidden duplicate image request');
   assert.ok(existsSync(join(root, 'hero-australian-roofer-v2.png')), 'opening hero image asset must exist');
   assert.match(heroCss, /\.hero-roofer-media::after[\s\S]*?linear-gradient/i, 'opening image needs a softened reading overlay');
   assert.match(heroCss, /\.hero-roofer-media img[\s\S]*?filter:\s*brightness/i, 'opening image needs a reduced-brightness treatment');

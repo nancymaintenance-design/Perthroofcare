@@ -159,14 +159,34 @@ amendRoute('', (html) => html.replace('</main>', `<section class="section homepa
 
 amendRoute('', (html) => html.replace('</main>', `<section class="fixed-roofline-story" aria-label="Roofline, drainage and Perth next steps"><article class="story-panel story-panel--roofline"><div class="story-media"><img src="/assets/images/hero-roof.png" alt="" role="presentation"></div><div class="story-copy"><p class="eyebrow">01 / ROOFLINE</p><h2>START WITH WHAT IS VISIBLE.</h2><p>A roofline question is easier to describe when it begins with a visible edge, ridge, junction or material change. Use the service pages to place that detail in context before an enquiry.</p><p><a class="button" href="/services/">Browse roof repair services</a></p></div></article><article class="story-panel story-panel--drainage"><div class="story-media"><img src="/assets/images/gutter.png" alt="" role="presentation"></div><div class="story-copy"><p class="eyebrow">02 / DRAINAGE</p><h2>FOLLOW THE WATER PATH.</h2><p>Gutter edges, outlets and downpipes are part of one visible route. Notice where water appears to collect or travel, then use the Perth areas page to orient the next conversation.</p><p><a class="button" href="/service-areas/">Explore Perth service areas</a></p></div></article><article class="story-panel story-panel--next-steps"><div class="story-media"><img src="/assets/images/resources-downpipe.png" alt="" role="presentation"></div><div class="story-copy"><p class="eyebrow">03 / PERTH NEXT STEPS</p><h2>BRING THE DETAILS TOGETHER.</h2><p>When you are ready, a short note about the visible roof or drainage detail, its location and any recent weather context can help begin a clear enquiry.</p><p><a class="button dark" href="/contact/">Make an enquiry</a></p></div></article></section></main>`));
 
-// WEB-015: keep the three-slide carousel, but give its opening slide a dedicated, readable full-bleed visual.
+// WEB-015: keep the three-slide carousel while the opening visual remains a CSS background.
 amendRoute('', (html) => html
-  .replace('<article class="hero-slide" data-carousel-slide aria-hidden="false"><div class="container hero-copy">', '<article class="hero-slide" data-carousel-slide aria-hidden="false"><div class="hero-roofer-media"><img src="/assets/images/hero-australian-roofer-v2.png" alt="Professional roofer working on a tiled Perth suburban roof"></div><div class="container hero-copy">')
   .replace('ROOF REPAIR INFORMATION, BUILT FOR CLEARER NEXT STEPS.', 'PERTH ROOF REPAIRS, CLEARLY EXPLAINED.')
   .replace('Read the roofline, drainage and material details before an enquiry begins.', 'Roof repair, leak, tile, metal and drainage information to help you prepare a clearer enquiry.'));
 
 // WEB-016: retire the standalone two-image strip and use those images as the second and third carousel backgrounds.
 amendRoute('', (html) => html
   .replace(/<section class="atlas-visual-band">[\s\S]*?<\/section>/, '')
-  .replace('aria-hidden="true" hidden><div class="container hero-copy"><p class="eyebrow">MATERIAL / ROOFLINE', 'aria-hidden="true" hidden><div class="hero-carousel-media"><img src="/assets/images/hero-roof.png" alt="Roof edge and gutter in rainfall"></div><div class="container hero-copy"><p class="eyebrow">MATERIAL / ROOFLINE')
-  .replace('aria-hidden="true" hidden><div class="container hero-copy"><p class="eyebrow">DRAINAGE / MAINTENANCE', 'aria-hidden="true" hidden><div class="hero-carousel-media"><img src="/assets/images/metal-roof.png" alt="Tiled roof and Perth suburban roofline"></div><div class="container hero-copy"><p class="eyebrow">DRAINAGE / MAINTENANCE'));
+  .replace('aria-hidden="true" hidden><div class="container hero-copy"><p class="eyebrow">MATERIAL / ROOFLINE', 'aria-hidden="true" hidden><div class="hero-carousel-media"><img src="/assets/images/hero-roof.png" alt="Roof edge and gutter in rainfall" loading="lazy" decoding="async"></div><div class="container hero-copy"><p class="eyebrow">MATERIAL / ROOFLINE')
+  .replace('aria-hidden="true" hidden><div class="container hero-copy"><p class="eyebrow">DRAINAGE / MAINTENANCE', 'aria-hidden="true" hidden><div class="hero-carousel-media"><img src="/assets/images/metal-roof.png" alt="Tiled roof and Perth suburban roofline" loading="lazy" decoding="async"></div><div class="container hero-copy"><p class="eyebrow">DRAINAGE / MAINTENANCE'));
+
+// T0: keep the first visual discoverable without downloading a hidden duplicate,
+// and defer noninitial images on the homepage.
+const homePath = join(root, 'index.html');
+let home = readFileSync(homePath, 'utf8')
+  .replace('<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/assets/images/ellis-logo.png"><link rel="apple-touch-icon" href="/assets/images/ellis-logo.png">', '<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/favicon.png"><link rel="preload" as="image" href="/assets/images/hero-australian-roofer-v2.png" fetchpriority="high">')
+  .replace('"foundingDate":"2011"', '"foundingDate":"2020-11-11"')
+  .replaceAll('<img src="/assets/images/inspection.png" alt="Roofing material and drainage detail">', '<img src="/assets/images/inspection.png" alt="Roofing material and drainage detail" loading="lazy" decoding="async">')
+  .replaceAll('<img src="/assets/images/hero-roof.png" alt="" role="presentation">', '<img src="/assets/images/hero-roof.png" alt="" role="presentation" loading="lazy" decoding="async">')
+  .replaceAll('<img src="/assets/images/gutter.png" alt="" role="presentation">', '<img src="/assets/images/gutter.png" alt="" role="presentation" loading="lazy" decoding="async">')
+  .replaceAll('<img src="/assets/images/resources-downpipe.png" alt="" role="presentation">', '<img src="/assets/images/resources-downpipe.png" alt="" role="presentation" loading="lazy" decoding="async">');
+writeFileSync(homePath, home);
+
+const aboutPath = join(root, 'about', 'index.html');
+writeFileSync(aboutPath, layout('About Ellis Services Group', 'about/', `<section class="hero inner">${image(0)}<div class="container hero-copy"><p class="eyebrow">ABOUT / PERTH, WESTERN AUSTRALIA</p><h1>ELLIS SERVICES GROUP.</h1><p>Company and contact information for Perth roof repair enquiries.</p></div></section><article class="section"><div class="narrow"><h2>Registered company information</h2><p>Ellis Services Group Pty Ltd is an Australian company registered on 11 November 2020. This website provides general information for Perth roof repair enquiries and direct contact details for Ellis Services Group.</p><h2>Clear information before an enquiry</h2><p>Roof questions can begin with a visible water mark, a ridge-line change, a tile concern, a flashing junction or a drainage detail. The service pages are organised around those visible starting points so visitors can describe what they have noticed without assuming a cause or repair scope.</p><h2>Perth contact details</h2><p>Use the listed telephone number, email address or contact page to share the property location and the visible detail you would like to discuss. Website information is general and does not replace advice for a specific property.</p><p><a class="button" href="/contact/">Contact Ellis Services Group</a></p></div></article>`));
+
+const areasPath = join(root, 'service-areas', 'index.html');
+let areas = readFileSync(areasPath, 'utf8')
+  .replaceAll('Roof Repairs Across Perth Metropolitan Areas', 'Perth Metropolitan Service Areas')
+  .replace('ROOF REPAIRS ACROSS PERTH METROPOLITAN AREAS.', 'PERTH METROPOLITAN SERVICE AREAS.');
+writeFileSync(areasPath, areas);
