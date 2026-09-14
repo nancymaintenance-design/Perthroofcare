@@ -1,0 +1,10 @@
+.price-table-wrap{overflow-x:auto;border:1px solid var(--sand-line);background:white}
+.price-guide-table{width:100%;min-width:560px;border-collapse:collapse;text-align:left}
+.price-guide-table caption{padding:1rem 1.25rem;text-align:left;background:var(--coastal-ink);color:var(--paper);font:700 .78rem/1.25 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase}
+.price-guide-table th,.price-guide-table td{padding:1rem 1.25rem;vertical-align:top;border-bottom:1px solid var(--sand-line)}
+.price-guide-table thead th{background:var(--sky-wash);font:700 .78rem/1.25 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase}
+.price-guide-table tbody th{width:58%;font-family:'Arial Narrow',Arial,sans-serif;font-size:1.05rem;line-height:1.05;text-transform:uppercase}
+.price-guide-table td{color:var(--eucalyptus);font-weight:800;white-space:nowrap}
+.price-guide-panel{padding:clamp(1.5rem,3vw,2.5rem);border:1px solid var(--sand-line);background:linear-gradient(145deg,var(--sky-wash),var(--paper))}
+.price-guide-panel h2{font-size:clamp(1.8rem,3.5vw,3.4rem)}
+@media(max-width:560px){.price-table-wrap{margin-inline:-16px;border-inline:0}.price-guide-table th,.price-guide-table td{padding:.85rem 1rem}}

@@ -14,7 +14,7 @@ mkdirSync(publicDirectory, { recursive: true });
 
 const excludedDirectories = new Set(['api', 'node_modules', 'public', 'tests', 'tools', '.vercel', '.git']);
 for (const entry of readdirSync(root, { withFileTypes: true })) {
-  if (entry.isDirectory() && !excludedDirectories.has(entry.name)) {
+  if (entry.isDirectory() && !entry.name.startsWith('.') && !excludedDirectories.has(entry.name)) {
     cpSync(join(root, entry.name), join(publicDirectory, entry.name), { recursive: true });
   }
 }
@@ -28,6 +28,7 @@ const stagedFiles = [
   ['site.css', 'assets/css/site.css'],
   ['brand-hero.css', 'assets/css/brand-hero.css'],
   ['contact-form.css', 'assets/css/contact-form.css'],
+  ['price-guide.css', 'assets/css/price-guide.css'],
   ['site.js', 'assets/js/site.js'],
   ['ellis-logo.png', 'assets/images/ellis-logo.png'],
   ['gutter.png', 'assets/images/gutter.png'],
