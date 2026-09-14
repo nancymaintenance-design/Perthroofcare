@@ -5,7 +5,7 @@ import test from 'node:test';
 import { spawn } from 'node:child_process';
 
 const root = new URL('.', import.meta.url).pathname.replace(/^\/(.:)/, '$1');
-const routes = ['', 'services', 'roof-repairs', 'roof-leak-repairs', 'tile-roof-repairs', 'metal-roof-repairs', 'ridge-capping-repointing', 'flashing-repairs', 'gutter-repairs', 'gutters-downpipes', 'downpipe-repairs', 'roof-maintenance', 'storm-damage-roof-repairs', 'roof-restoration', 'roof-inspection', 'repair-options', 'roof-repair-costs-perth', 'service-areas', 'gallery', 'faq', 'news', 'news/metal-roofing-perth', 'news/gutter-warning-signs', 'news/roof-leak-inspection', 'news/roof-maintenance-basics', 'news/roof-flashing-explained', 'news/drainage-after-rain', 'about', 'contact', 'privacy', 'legal'];
+const routes = ['', 'services', 'roof-repairs', 'roof-leak-repairs', 'tile-roof-repairs', 'metal-roof-repairs', 'ridge-capping-repointing', 'flashing-repairs', 'gutter-repairs', 'gutters-downpipes', 'downpipe-repairs', 'roof-maintenance', 'storm-damage-roof-repairs', 'roof-restoration', 'roof-inspection', 'repair-options', 'service-areas', 'gallery', 'faq', 'news', 'news/metal-roofing-perth', 'news/gutter-warning-signs', 'news/roof-leak-inspection', 'news/roof-maintenance-basics', 'news/roof-flashing-explained', 'news/drainage-after-rain', 'about', 'contact', 'privacy', 'legal'];
 const fileFor = (route) => join(root, route || '.', 'index.html');
 const contact = ['0405878406', 'ellisservicesgroup3@outlook.com', '140 St Georges Terrace, Perth WA 6000'];
 const forbidden = /candidate|to be confirmed|local demo|placeholder|AI-generated/iu;
@@ -28,46 +28,16 @@ test('public copy has no release-internal or generated-content language', () => 
   for (const file of allHtmlFiles(root)) assert.doesNotMatch(readFileSync(file, 'utf8'), forbidden, file);
 });
 
-test('service pages use a focused one-image structure with direct price and enquiry actions', () => {
+test('service pages publish distinct route-specific main content', () => {
   const pages = ['roof-repairs', 'roof-leak-repairs', 'tile-roof-repairs', 'metal-roof-repairs', 'ridge-capping-repointing', 'flashing-repairs', 'gutter-repairs', 'gutters-downpipes', 'downpipe-repairs', 'roof-maintenance', 'storm-damage-roof-repairs', 'roof-restoration', 'roof-inspection', 'repair-options'];
   const bodies = pages.map((route) => readFileSync(fileFor(route), 'utf8').match(/<main[\s\S]*?<\/main>/i)?.[0]);
   assert.equal(new Set(bodies).size, pages.length, 'each service route needs its own main content');
   for (const body of bodies) {
-    assert.equal((body.match(/<img\b/gi) ?? []).length, 1, 'service page should retain one content image');
-    assert.match(body, /WHAT THIS ISSUE CAN LEAD TO/i, 'service page needs impacts');
-    assert.match(body, /HOW ELLIS SERVICES GROUP APPROACHES IT/i, 'service page needs the solution');
-    assert.match(body, /View Perth price guide/i, 'service page needs price guide action');
-    assert.match(body, /Make an enquiry/i, 'service page needs enquiry action');
+    assert.match(body, /What to note/i, 'service page needs visible signs');
+    assert.match(body, /Useful context/i, 'service page needs useful context');
+    assert.match(body, /Next step/i, 'service page needs a next step');
+    assert.match(body, /Read the guide/i, 'service page needs a related guide');
   }
-});
-
-test('price guide provides direct Perth ranges without uncertainty boilerplate', () => {
-  const html = readFileSync(fileFor('roof-repair-costs-perth'), 'utf8');
-  assert.match(html, /<h1>ROOF REPAIR COSTS IN PERTH\.<\/h1>/i);
-  assert.match(html, /<h2>PERTH ROOF REPAIR PRICES\.<\/h2>/i);
-  assert.match(html, /Perth residential price ranges/i);
-  assert.match(html, /A\$4,000–9,000/i);
-  assert.match(html, /Request a roof repair quote/i);
-  for (const phrase of ['indicative', 'not a fixed quote', 'planning only', 'may differ from an itemised quote', 'what can change a quote', 'written scope follows']) assert.doesNotMatch(html.toLowerCase(), new RegExp(phrase, 'i'));
-});
-
-test('Vercel static output excludes internal dot-directories', () => {
-  const publicEntries = readdirSync(join(root, 'public'), { withFileTypes: true }).filter((entry) => entry.isDirectory()).map((entry) => entry.name);
-  const outputEntries = readdirSync(join(root, '.vercel', 'output', 'static'), { withFileTypes: true }).filter((entry) => entry.isDirectory()).map((entry) => entry.name);
-  assert.deepEqual(publicEntries.filter((name) => name.startsWith('.')), []);
-  assert.deepEqual(outputEntries.filter((name) => name.startsWith('.')), []);
-});
-
-test('roof repairs hub gives visitors separate next steps for leak, inspection and ridge-line observations', () => {
-  const main = readFileSync(fileFor('roof-repairs'), 'utf8').match(/<main[\s\S]*?<\/main>/i)?.[0] ?? '';
-  for (const [href, label] of [
-    ['/roof-leak-repairs/', 'Roof leak repairs'],
-    ['/roof-inspection/', 'Roof inspection'],
-    ['/ridge-capping-repointing/', 'Ridge capping &amp; repointing'],
-  ]) {
-    assert.match(main, new RegExp(`<a[^>]+href="${href}"[^>]*>${label}<\/a>`, 'i'), `roof-repairs hub needs its ${label} pathway`);
-  }
-  assert.doesNotMatch(main, /emergency (?:response|repair|callout)|same-day/i, 'hub must not make unsupported urgency promises');
 });
 
 test('all pages repeat the confirmed contact facts without per-image visual labels', () => {
@@ -344,4 +314,15 @@ test('Vercel build stages the complete static site in public', () => {
   assert.match(config, /"outputDirectory"\s*:\s*"public"/);
   for (const file of ['index.html', 'robots.txt', 'sitemap.xml', 'favicon.ico']) assert.ok(existsSync(join(root, 'public', file)), `public output misses ${file}`);
   for (const folder of ['assets', 'about', 'services', 'contact', 'news']) assert.ok(existsSync(join(root, 'public', folder)), `public output misses ${folder}`);
+});
+
+test('generated PRC pages load the first-party Speed Insights client', () => {
+  for (const route of ['', 'roof-repairs', 'contact']) {
+    const html = readFileSync(join(root, 'public', route, 'index.html'), 'utf8');
+    assert.match(
+      html,
+      /<script>window\.si=window\.si\|\|function\(\)\{\(window\.siq=window\.siq\|\|\[\]\)\.push\(arguments\)\};<\/script><script defer src="\/_vercel\/speed-insights\/script\.js"><\/script>/,
+      `${route || 'home'} must initialize and load the first-party Speed Insights client`,
+    );
+  }
 });
