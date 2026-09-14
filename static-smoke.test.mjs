@@ -40,6 +40,18 @@ test('service pages publish distinct route-specific main content', () => {
   }
 });
 
+test('roof repairs hub gives visitors separate next steps for leak, inspection and ridge-line observations', () => {
+  const main = readFileSync(fileFor('roof-repairs'), 'utf8').match(/<main[\s\S]*?<\/main>/i)?.[0] ?? '';
+  for (const [href, label] of [
+    ['/roof-leak-repairs/', 'Roof leak repairs'],
+    ['/roof-inspection/', 'Roof inspection'],
+    ['/ridge-capping-repointing/', 'Ridge capping &amp; repointing'],
+  ]) {
+    assert.match(main, new RegExp(`<a[^>]+href="${href}"[^>]*>${label}<\/a>`, 'i'), `roof-repairs hub needs its ${label} pathway`);
+  }
+  assert.doesNotMatch(main, /emergency (?:response|repair|callout)|same-day/i, 'hub must not make unsupported urgency promises');
+});
+
 test('all pages repeat the confirmed contact facts without per-image visual labels', () => {
   for (const route of routes) { const html = readFileSync(fileFor(route), 'utf8'); for (const fact of contact) assert.match(html, new RegExp(fact), `${route} missing ${fact}`); }
   for (const file of allHtmlFiles(root)) assert.doesNotMatch(readFileSync(file, 'utf8'), /Illustrative visual/, file);
