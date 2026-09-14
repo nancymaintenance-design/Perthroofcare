@@ -1,4 +1,4 @@
-import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -8,6 +8,20 @@ const publicDirectory = join(root, 'public');
 const outputDirectory = join(root, '.vercel', 'output');
 const build = spawnSync(process.execPath, ['build.mjs'], { cwd: root, stdio: 'inherit' });
 if (build.status !== 0) process.exit(build.status ?? 1);
+
+// Publish one brand-owned PNG icon path for browsers and search crawlers.
+const faviconMarkup = '<link rel="icon" type="image/png" sizes="512x512" href="/favicon.png"><link rel="apple-touch-icon" sizes="512x512" href="/favicon.png"><link rel="manifest" href="/site.webmanifest">';
+const stampFavicon = (directory) => {
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    const target = join(directory, entry.name);
+    if (entry.isDirectory() && !entry.name.startsWith('.') && !['node_modules', 'public'].includes(entry.name)) stampFavicon(target);
+    if (entry.isFile() && entry.name === 'index.html') {
+      const html = readFileSync(target, 'utf8').replace(/<link rel="icon" href="\/favicon\.ico" sizes="any"><link rel="icon" type="image\/png" href="\/(?:assets\/images\/ellis-logo|favicon)\.png"><link rel="apple-touch-icon" href="\/(?:assets\/images\/ellis-logo|favicon)\.png">/, faviconMarkup);
+      writeFileSync(target, html);
+    }
+  }
+};
+stampFavicon(root);
 
 rmSync(publicDirectory, { recursive: true, force: true });
 mkdirSync(publicDirectory, { recursive: true });
@@ -22,6 +36,7 @@ for (const entry of readdirSync(root, { withFileTypes: true })) {
 const stagedFiles = [
   ['favicon.ico', 'favicon.ico'],
   ['favicon.png', 'favicon.png'],
+  ['site.webmanifest', 'site.webmanifest'],
   ['index.html', 'index.html'],
   ['robots.txt', 'robots.txt'],
   ['sitemap.xml', 'sitemap.xml'],
