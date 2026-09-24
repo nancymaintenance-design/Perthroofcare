@@ -108,6 +108,24 @@ test('JSON-LD contains only confirmed organization facts', () => {
   assert.equal(data.name, 'Ellis Services Group'); assert.equal(data.telephone, '0405878406'); assert.equal(data.email, 'ellisservicesgroup3@outlook.com'); assert.equal(data.foundingDate, '2020-11-11'); assert.doesNotMatch(json, /"(?:aggregateRating|review|ABN|openingHours|geo)"/i);
 });
 
+test('Roleystone project schema uses confirmed local facts without commercial claims', () => {
+  const html = readFileSync(fileFor('projects/roleystone-metal-roof-fastener-leak-repair'), 'utf8');
+  const entries = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].flatMap(([, value]) => JSON.parse(value));
+  assert.deepEqual(entries.map((entry) => entry['@type']).sort(), ['BreadcrumbList', 'LocalBusiness', 'Service']);
+  const localBusiness = entries.find((entry) => entry['@type'] === 'LocalBusiness');
+  const service = entries.find((entry) => entry['@type'] === 'Service');
+  const breadcrumbs = entries.find((entry) => entry['@type'] === 'BreadcrumbList');
+  assert.equal(localBusiness.address.streetAddress, '140 St Georges Terrace');
+  assert.equal(service.areaServed[1].name, 'Roleystone, WA');
+  assert.equal(breadcrumbs.itemListElement.at(-1).name, 'Roleystone metal roof fastener leak repair');
+  assert.doesNotMatch(JSON.stringify(entries), /Heath Road|160-154|AggregateRating|Review|price|license|insurance|warranty/i);
+});
+
+test('Roleystone project is discoverable from the homepage and Resources', () => {
+  const href = '/projects/roleystone-metal-roof-fastener-leak-repair/';
+  for (const route of ['', 'news']) assert.match(readFileSync(fileFor(route), 'utf8'), new RegExp(`href="${href}"`));
+});
+
 test('homepage provides an accessible three-slide hero carousel with one H1', () => {
   const home = readFileSync(fileFor(''), 'utf8');
   assert.match(home, /class="[^"]*hero-carousel[^"]*"[^>]*aria-roledescription="carousel"/i);
