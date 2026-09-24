@@ -387,6 +387,21 @@ test('Vercel build stages the complete static site in public', () => {
   assert.ok(existsSync(join(root, 'public', 'assets', 'css', 'office-location.css')), 'public output misses the homepage office map stylesheet');
 });
 
+test('resource guides provide substantial safety-bounded Perth reading with internal and primary-source references', () => {
+  const guides = ['metal-roofing-perth', 'gutter-warning-signs', 'roof-leak-inspection', 'roof-maintenance-basics', 'roof-flashing-explained', 'drainage-after-rain'];
+  for (const guide of guides) {
+    const html = readFileSync(fileFor(`news/${guide}`), 'utf8');
+    const text = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    assert.ok(text.split(' ').length >= 700, `${guide} needs substantial, topic-specific guidance`);
+    assert.match(html, /What you can safely observe/i, `${guide} includes a safe observation section`);
+    assert.match(html, /When to stop and seek help/i, `${guide} gives a safety boundary`);
+    assert.match(html, /Sources and further reading/i, `${guide} includes a source section`);
+    assert.match(html, /safeworkaustralia\.gov\.au|bom\.gov\.au/i, `${guide} links to a primary safety or weather source`);
+    assert.match(html, /href="\/(?:services|roof-repairs|roof-leak-repairs|gutters-downpipes|roof-maintenance|flashing-repairs|contact)\//i, `${guide} links to a related internal page`);
+    assert.doesNotMatch(html, /guarantee|always fixes|definitely means|DIY repair instructions/i, `${guide} avoids unverified repair claims and DIY instructions`);
+  }
+});
+
 test('generated PRC pages load the first-party Speed Insights client', () => {
   for (const route of ['', 'roof-repairs', 'contact']) {
     const html = readFileSync(join(root, 'public', route, 'index.html'), 'utf8');
