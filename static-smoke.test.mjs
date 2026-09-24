@@ -394,6 +394,7 @@ test('resources list uses one fixed landscape image frame for every guide card',
   const news = readFileSync(fileFor('news'), 'utf8');
   const css = readFileSync(join(root, 'site.css'), 'utf8');
   assert.match(news, /class="container cards news-guide-grid"/i);
+  assert.match(news, /<link rel="stylesheet" href="\/assets\/css\/site\.css\?v=[^"]+">/i, 'published pages version the stylesheet so layout fixes bypass stale CSS caches');
   assert.match(css, /\.news-guide-grid\s+\.card\s+\.media-frame\s*\{[^}]*aspect-ratio:\s*16\s*\/\s*9/i);
   assert.match(css, /\.news-guide-grid\s+\.card\s+\.media-frame\s+img\s*\{[^}]*height:\s*100%[^}]*min-height:\s*0[^}]*object-fit:\s*cover/i);
 });
