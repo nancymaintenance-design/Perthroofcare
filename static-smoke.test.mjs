@@ -215,15 +215,19 @@ test('FAQ gives every published question a specific, non-empty answer', () => {
   assert.equal(new Set(entries.map(({ answer }) => answer)).size, entries.length, 'each FAQ answer must be specific to its question');
 });
 
-test('primary navigation exposes Home and a keyboard-operable services submenu', () => {
+test('primary navigation provides a grouped, keyboard-operable services panel', () => {
   const home = readFileSync(fileFor(''), 'utf8');
   assert.match(home, /<a href="\/">Home<\/a>/);
-  assert.match(home, /<a href="\/services\/">Services<\/a>/);
-  assert.match(home, /class="services-toggle"[^>]*aria-expanded="false"[^>]*aria-controls="services-submenu"/);
-  assert.match(home, /id="services-submenu"[^>]*role="menu"/);
-  for (const label of ['Roof Repairs', 'Roof Leak Repairs', 'Tile Roof Repairs', 'Metal Roof Repairs', 'Ridge Capping & Repointing', 'Flashing Repairs', 'Gutters & Downpipes', 'Roof Maintenance', 'Storm Damage Roof Repairs', 'Roof Inspection']) assert.match(home, new RegExp(`>${label}<`));
+  assert.match(home, /class="services-toggle services-trigger"[^>]*aria-expanded="false"[^>]*aria-controls="services-submenu"/);
+  assert.match(home, /id="services-submenu"[^>]*role="region"[^>]*aria-label="Services"/);
+  assert.match(home, /Start with the roof or drainage detail you can see./i);
+  assert.match(home, /href="\/services\/"[^>]*>View all services/i);
+  for (const heading of ['Roof repairs &amp; leaks', 'Roofline details', 'Gutters, maintenance &amp; inspection']) assert.match(home, new RegExp(`<h2>${heading}<\\/h2>`));
+  for (const label of ['Roof Repairs', 'Roof Leak Repairs', 'Tile Roof Repairs', 'Metal Roof Repairs', 'Ridge Capping &amp; Repointing', 'Flashing Repairs', 'Gutters &amp; Downpipes', 'Roof Maintenance', 'Storm Damage Roof Repairs', 'Roof Inspection']) assert.match(home, new RegExp(`>${label}<`));
   const script = readFileSync(join(root, 'site.js'), 'utf8');
+  const css = readFileSync(join(root, 'site.css'), 'utf8');
   assert.match(script, /servicesToggle/); assert.match(script, /event\.key === 'Escape'/); assert.match(script, /servicesToggle\.focus\(\)/);
+  assert.match(css, /\.services-menu-groups\s*\{[^}]*grid-template-columns:\s*repeat\(3/i);
 });
 
 test('about page presents confirmed company information and a detailed Perth enquiry path', () => {
