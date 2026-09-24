@@ -185,6 +185,19 @@ test('homepage provides a confirmed Perth office map before the footer', () => {
   }
 });
 
+test('homepage service overview and Perth area groups complete their desktop grids with useful existing links', () => {
+  const home = readFileSync(fileFor(''), 'utf8');
+  const areas = readFileSync(fileFor('service-areas'), 'utf8');
+  const serviceGrid = home.match(/<div class="homepage-service-links">([\s\S]*?)<\/div>/i)?.[1] ?? '';
+  const areaGrid = areas.match(/<div class="cards area-groups">([\s\S]*?)<\/div>/i)?.[1] ?? '';
+  assert.equal((serviceGrid.match(/<a\s/gi) ?? []).length, 16, 'service overview fills all sixteen desktop grid positions');
+  assert.match(serviceGrid, /href="\/news\/roof-leak-inspection\/"[^>]*>ROOF LEAK GUIDE<\/a>/i);
+  assert.match(serviceGrid, /href="\/news\/drainage-after-rain\/"[^>]*>DRAINAGE GUIDE<\/a>/i);
+  assert.equal((areaGrid.match(/<article\s/gi) ?? []).length, 6, 'area overview fills both desktop rows');
+  assert.match(areaGrid, /<h2>Enquiry &amp; Coverage<\/h2>/i);
+  assert.match(areaGrid, /href="\/contact\/"/i);
+});
+
 test('office map frame has responsive dimensions', () => {
   const home = readFileSync(fileFor(''), 'utf8');
   const css = readFileSync(join(root, 'office-location.css'), 'utf8');
