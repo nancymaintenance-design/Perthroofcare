@@ -126,7 +126,7 @@ amendRoute('services', (html) => html.replaceAll('class="cards"', 'class="atlas-
 
 const replaceImageSources = (html, sources) => {
   let index = 0;
-  const updated = html.replace(/\/assets\/images\/(?:hero-roof|metal-roof|inspection|gutter)\.png/g, () => `/assets/images/${sources[Math.min(index++, sources.length - 1)]}`);
+  const updated = html.replace(/(<img src=")\/assets\/images\/(?:hero-roof|metal-roof|inspection|gutter)\.png/g, (match, prefix) => `${prefix}/assets/images/${sources[Math.min(index++, sources.length - 1)]}`);
   return updated.replace(/(<img src="\/assets\/images\/([^\"]+)" alt=")Roofing material and drainage detail"/g, (match, prefix, asset) => `${prefix}${resourceImageAlt[asset] ?? 'Roofing material and drainage detail'}"`);
 };
 amendRoute('news', (html) => replaceImageSources(html, ['resources-dusk.png', ...resourceImages]));

@@ -307,14 +307,14 @@ test('resources and every guide use its dedicated supplied resource image', () =
   for (const asset of assets) assert.ok(existsSync(join(root, asset)), `missing ${asset}`);
   const news = readFileSync(fileFor('news'), 'utf8');
   for (const asset of assets) assert.match(news, new RegExp(`/assets/images/${asset}`));
-  assert.match(news, /resources-metal-project\.jpg[\s\S]*?<h2>Metal Roofing in Perth<\/h2>/i);
-  assert.match(news, /resources-gutter-project\.jpg[\s\S]*?<h2>Gutter Warning Signs<\/h2>/i);
-  assert.match(news, /resources-tile-project\.jpg[\s\S]*?<h2>Roof Leak Inspection Guide<\/h2>/i);
+  assert.match(news, /<img[^>]+src="\/assets\/images\/resources-metal-project\.jpg"[^>]+alt="Grey metal roof sheets viewed across a Perth roofline"[^>]*>[\s\S]*?<h2>Metal Roofing in Perth<\/h2>/i);
+  assert.match(news, /<img[^>]+src="\/assets\/images\/resources-gutter-project\.jpg"[^>]+alt="Covered patio roof edge and gutter line"[^>]*>[\s\S]*?<h2>Gutter Warning Signs<\/h2>/i);
+  assert.match(news, /<img[^>]+src="\/assets\/images\/resources-tile-project\.jpg"[^>]+alt="Red tiled roof with visible weathering and ridge detail"[^>]*>[\s\S]*?<h2>Roof Leak Inspection Guide<\/h2>/i);
   const guides = routes.filter((route) => route.startsWith('news/'));
   for (let index = 0; index < guides.length; index += 1) {
     const html = readFileSync(fileFor(guides[index]), 'utf8');
     assert.match(html, new RegExp(`/assets/images/${assets[index]}`));
-    assert.doesNotMatch(html, /\/assets\/images\/(?:hero-roof|metal-roof|inspection|gutter)\.png/);
+    assert.doesNotMatch(html, /<img[^>]+src="\/assets\/images\/(?:hero-roof|metal-roof|inspection|gutter)\.png"/i);
   }
 });
 
