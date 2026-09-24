@@ -242,8 +242,8 @@ test('homepage footer provides an accessible Instagram link to Ellis Services Gr
   assert.match(footer, /<a[^>]+class="instagram-link"[^>]+href="https:\/\/www\.instagram\.com\/elliservices_group\/"/i);
   assert.match(footer, /target="_blank"[^>]+rel="noopener noreferrer"/i);
   assert.match(footer, /aria-label="Visit Ellis Services Group on Instagram"/i);
-  assert.match(footer, /<svg[^>]+class="instagram-icon"[^>]+aria-hidden="true"[\s\S]*?<linearGradient[^>]+id="instagram-gradient"/i, 'Instagram link uses a compact coloured camera icon');
-  assert.match(footer, /fill="url\(#instagram-gradient\)"/i, 'Instagram icon uses the gradient camera mark');
+  assert.match(footer, /<img[^>]+class="instagram-icon"[^>]+src="\/assets\/images\/instagram-icon\.png"[^>]+width="16"[^>]+height="16"[^>]+alt=""/i, 'Instagram link uses the supplied icon at a text-sized intrinsic dimension');
+  assert.ok(existsSync(join(root, 'instagram-icon.png')), 'supplied Instagram icon must remain a source asset');
   assert.match(css, /footer\s+\.instagram-link\s+\.instagram-icon\s*\{[^}]*width:\s*1em[^}]*height:\s*1em/i, 'Instagram icon remains the same size as its text');
 });
 
