@@ -61,11 +61,11 @@ const stagedFiles = [
   ['resources-metal-project.jpg', 'assets/images/resources-metal-project.jpg'],
   ['resources-tile.png', 'assets/images/resources-tile.png'],
   ['resources-tile-project.jpg', 'assets/images/resources-tile-project.jpg'],
-  ['resources-tools.png', 'assets/images/resources-tools.png']
-  ,['roleystone-metal-fastener-rust-01.jpg', 'assets/images/roleystone-metal-fastener-rust-01.jpg']
-  ,['roleystone-metal-fastener-rust-02.jpg', 'assets/images/roleystone-metal-fastener-rust-02.jpg']
-  ,['roleystone-metal-fastener-detail-03.jpg', 'assets/images/roleystone-metal-fastener-detail-03.jpg']
-  ,['roleystone-metal-fastener-detail-04.jpg', 'assets/images/roleystone-metal-fastener-detail-04.jpg']
+  ['resources-tools.png', 'assets/images/resources-tools.png'],
+  ['roleystone-metal-fastener-rust-01.jpg', 'assets/images/roleystone-metal-fastener-rust-01.jpg'],
+  ['roleystone-metal-fastener-rust-02.jpg', 'assets/images/roleystone-metal-fastener-rust-02.jpg'],
+  ['roleystone-metal-fastener-detail-03.jpg', 'assets/images/roleystone-metal-fastener-detail-03.jpg'],
+  ['roleystone-metal-fastener-detail-04.jpg', 'assets/images/roleystone-metal-fastener-detail-04.jpg']
 ];
 
 for (const [source, destination] of stagedFiles) {

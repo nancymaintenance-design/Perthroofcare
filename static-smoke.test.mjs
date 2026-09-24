@@ -442,3 +442,17 @@ test('Roleystone project protects property privacy and documents the confirmed r
   assert.equal(new Set(images).size, 4);
   for (const image of images) assert.ok(existsSync(join(root, image)));
 });
+
+test('roof leak and metal roof services form a focused cluster around the documented Roleystone project', () => {
+  const project = '/projects/roleystone-metal-roof-fastener-leak-repair/';
+  const leak = readFileSync(fileFor('roof-leak-repairs'), 'utf8');
+  const metal = readFileSync(fileFor('metal-roof-repairs'), 'utf8');
+  assert.match(leak, /<h1>ROOF LEAK REPAIRS IN PERTH\.<\/h1>/);
+  assert.match(leak, /ceiling mark.*away from the point/i);
+  assert.match(leak, /fastener|fixing/i);
+  assert.match(leak, new RegExp(`href="${project}"`));
+  assert.match(metal, /aged fixing|fastener|corrosion/i);
+  assert.match(metal, new RegExp(`href="${project}"`));
+  assert.match(metal, /href="\/roof-leak-repairs\/"/);
+  assert.doesNotMatch(leak + metal, /lowest price|guaranteed|fully insured|licensed/i);
+});
