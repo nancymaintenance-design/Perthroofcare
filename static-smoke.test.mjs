@@ -213,14 +213,24 @@ test('primary navigation exposes Home and a keyboard-operable services submenu',
   assert.match(script, /servicesToggle/); assert.match(script, /event\.key === 'Escape'/); assert.match(script, /servicesToggle\.focus\(\)/);
 });
 
-test('about page uses the confirmed entity date and does not invent company history', () => {
+test('about page presents confirmed company information and a detailed Perth enquiry path', () => {
   const about = readFileSync(fileFor('about'), 'utf8');
   const text = about.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-  assert.ok(text.split(' ').length >= 250, 'about page needs enough public entity and contact context');
+  assert.ok(text.split(' ').length >= 700, 'about page needs a substantial company, service and enquiry guide');
   assert.equal((about.match(/<h1[\s>]/gi) ?? []).length, 1);
-  assert.match(about, /registered on 11 November 2020/i);
+  assert.match(about, /ELLIS SERVICES GROUP PTY LTD/i);
+  assert.match(about, /ABN 96 645 821 745/i);
+  assert.match(about, /ACN 645 821 745/i);
+  assert.match(about, /Active from 11 November 2020/i);
+  assert.match(about, /GST registered from 11 November 2020/i);
+  assert.match(about, /https:\/\/abr\.business\.gov\.au\/ABN\/View\?id=645821745/i);
+  assert.match(about, /How an enquiry is arranged/i);
+  assert.match(about, /Questions people often ask/i);
+  assert.match(about, /140 St Georges Terrace, Perth WA 6000/i);
+  assert.match(about, /0405878406/i);
+  assert.match(about, /ellisservicesgroup3@outlook\.com/i);
   assert.doesNotMatch(about, /\b(?:2011|long-term cooperation|experienced tradespeople|advanced equipment|familiar with Australian housing and maintenance standards)\b/i);
-  assert.doesNotMatch(about, /\b(?:ABN|licen[cs]e|insured|insurance|warranty|within \d+|#1|best in Perth)\b/i);
+  assert.doesNotMatch(about, /\b(?:fully insured|public liability|licen[cs]ed contractor|insurance policy number|warranty terms|within \d+|#1|best in Perth)\b/i);
 });
 
 test('homepage brand marks use the supplied logo without causing layout shift', () => {
