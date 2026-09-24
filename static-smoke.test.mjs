@@ -461,6 +461,25 @@ test('Roleystone project protects property privacy and documents the confirmed r
   for (const image of images) assert.ok(existsSync(join(root, image)));
 });
 
+test('WA 6121 tile roof project documents only the confirmed cleaning and repair scope', () => {
+  const html = readFileSync(fileFor('projects/wa-6121-tile-roof-valley-gutter-cleaning'), 'utf8');
+  assert.match(html, /<title>Tile Roof and Valley Gutter Cleaning WA 6121 \| Ellis Services Group<\/title>/);
+  assert.match(html, /Western Australia 6121, Australia/);
+  assert.match(html, /valley gutter cleaning/i);
+  assert.match(html, /tile repairs/i);
+  assert.doesNotMatch(html, /before and after|guarantee|lowest price|fully insured|licensed/i);
+  for (const href of ['/tile-roof-repairs/', '/gutter-repairs/', '/roof-leak-repairs/', '/roof-inspection/', '/contact/']) assert.match(html, new RegExp(`href="${href}"`));
+  assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
+  const images = [...html.matchAll(/\/assets\/images\/(wa6121-tile-valley-[^"]+\.jpg)/g)].map(([, value]) => value);
+  assert.equal(new Set(images).size, 4);
+  for (const image of images) assert.ok(existsSync(join(root, image)));
+});
+
+test('WA 6121 project is discoverable from the homepage and Resources', () => {
+  const href = '/projects/wa-6121-tile-roof-valley-gutter-cleaning/';
+  for (const route of ['', 'news']) assert.match(readFileSync(fileFor(route), 'utf8'), new RegExp(`href="${href}"`));
+});
+
 test('roof leak and metal roof services form a focused cluster around the documented Roleystone project', () => {
   const project = '/projects/roleystone-metal-roof-fastener-leak-repair/';
   const leak = readFileSync(fileFor('roof-leak-repairs'), 'utf8');

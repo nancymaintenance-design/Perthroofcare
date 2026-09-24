@@ -65,7 +65,11 @@ const stagedFiles = [
   ['roleystone-metal-fastener-rust-01.jpg', 'assets/images/roleystone-metal-fastener-rust-01.jpg'],
   ['roleystone-metal-fastener-rust-02.jpg', 'assets/images/roleystone-metal-fastener-rust-02.jpg'],
   ['roleystone-metal-fastener-detail-03.jpg', 'assets/images/roleystone-metal-fastener-detail-03.jpg'],
-  ['roleystone-metal-fastener-detail-04.jpg', 'assets/images/roleystone-metal-fastener-detail-04.jpg']
+  ['roleystone-metal-fastener-detail-04.jpg', 'assets/images/roleystone-metal-fastener-detail-04.jpg'],
+  ['wa6121-tile-valley-gutter-01.jpg', 'assets/images/wa6121-tile-valley-gutter-01.jpg'],
+  ['wa6121-tile-valley-gutter-02.jpg', 'assets/images/wa6121-tile-valley-gutter-02.jpg'],
+  ['wa6121-tile-valley-gutter-03.jpg', 'assets/images/wa6121-tile-valley-gutter-03.jpg'],
+  ['wa6121-tile-valley-gutter-04.jpg', 'assets/images/wa6121-tile-valley-gutter-04.jpg']
 ];
 
 for (const [source, destination] of stagedFiles) {
