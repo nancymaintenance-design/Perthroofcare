@@ -303,10 +303,13 @@ test('services publish the Atlas index instead of a dark card grid', () => {
 });
 
 test('resources and every guide use its dedicated supplied resource image', () => {
-  const assets = ['resources-metal.png', 'resources-tile.png', 'resources-gutter.png', 'resources-downpipe.png', 'resources-tools.png', 'resources-dusk.png'];
+  const assets = ['resources-metal-project.jpg', 'resources-gutter-project.jpg', 'resources-tile-project.jpg', 'resources-downpipe.png', 'resources-tools.png', 'resources-dusk.png'];
   for (const asset of assets) assert.ok(existsSync(join(root, asset)), `missing ${asset}`);
   const news = readFileSync(fileFor('news'), 'utf8');
   for (const asset of assets) assert.match(news, new RegExp(`/assets/images/${asset}`));
+  assert.match(news, /resources-metal-project\.jpg[\s\S]*?<h2>Metal Roofing in Perth<\/h2>/i);
+  assert.match(news, /resources-gutter-project\.jpg[\s\S]*?<h2>Gutter Warning Signs<\/h2>/i);
+  assert.match(news, /resources-tile-project\.jpg[\s\S]*?<h2>Roof Leak Inspection Guide<\/h2>/i);
   const guides = routes.filter((route) => route.startsWith('news/'));
   for (let index = 0; index < guides.length; index += 1) {
     const html = readFileSync(fileFor(guides[index]), 'utf8');

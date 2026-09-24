@@ -111,7 +111,12 @@ const writeRoute = (route, html) => {
   writeFileSync(routeFile(route), withFormStyles);
 };
 const amendRoute = (route, amend) => writeRoute(route, amend(readFileSync(routeFile(route), 'utf8')));
-const resourceImages = ['resources-metal.png', 'resources-tile.png', 'resources-gutter.png', 'resources-downpipe.png', 'resources-tools.png', 'resources-dusk.png'];
+const resourceImages = ['resources-metal-project.jpg', 'resources-gutter-project.jpg', 'resources-tile-project.jpg', 'resources-downpipe.png', 'resources-tools.png', 'resources-dusk.png'];
+const resourceImageAlt = {
+  'resources-metal-project.jpg': 'Grey metal roof sheets viewed across a Perth roofline',
+  'resources-gutter-project.jpg': 'Covered patio roof edge and gutter line',
+  'resources-tile-project.jpg': 'Red tiled roof with visible weathering and ridge detail'
+};
 const resourceMarkup = (asset) => `<div class="media-frame"><img src="/assets/images/${asset}" alt="Roof material, drainage or inspection detail"></div>`;
 
 for (const route of ['', ...routes.map(([path]) => path)]) amendRoute(route, (html) => html);
@@ -121,7 +126,8 @@ amendRoute('services', (html) => html.replaceAll('class="cards"', 'class="atlas-
 
 const replaceImageSources = (html, sources) => {
   let index = 0;
-  return html.replace(/\/assets\/images\/(?:hero-roof|metal-roof|inspection|gutter)\.png/g, () => `/assets/images/${sources[Math.min(index++, sources.length - 1)]}`);
+  const updated = html.replace(/\/assets\/images\/(?:hero-roof|metal-roof|inspection|gutter)\.png/g, () => `/assets/images/${sources[Math.min(index++, sources.length - 1)]}`);
+  return updated.replace(/(<img src="\/assets\/images\/([^\"]+)" alt=")Roofing material and drainage detail"/g, (match, prefix, asset) => `${prefix}${resourceImageAlt[asset] ?? 'Roofing material and drainage detail'}"`);
 };
 amendRoute('news', (html) => replaceImageSources(html, ['resources-dusk.png', ...resourceImages]));
 for (const [index, route] of routes.filter(([path]) => path.startsWith('news/')).entries()) {

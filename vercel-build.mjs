@@ -56,8 +56,11 @@ const stagedFiles = [
   ['resources-downpipe.png', 'assets/images/resources-downpipe.png'],
   ['resources-dusk.png', 'assets/images/resources-dusk.png'],
   ['resources-gutter.png', 'assets/images/resources-gutter.png'],
+  ['resources-gutter-project.jpg', 'assets/images/resources-gutter-project.jpg'],
   ['resources-metal.png', 'assets/images/resources-metal.png'],
+  ['resources-metal-project.jpg', 'assets/images/resources-metal-project.jpg'],
   ['resources-tile.png', 'assets/images/resources-tile.png'],
+  ['resources-tile-project.jpg', 'assets/images/resources-tile-project.jpg'],
   ['resources-tools.png', 'assets/images/resources-tools.png']
 ];
 
