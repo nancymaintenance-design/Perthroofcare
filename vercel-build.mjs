@@ -41,6 +41,7 @@ const stagedFiles = [
   ['robots.txt', 'robots.txt'],
   ['sitemap.xml', 'sitemap.xml'],
   ['site.css', 'assets/css/site.css'],
+  ['office-location.css', 'assets/css/office-location.css'],
   ['brand-hero.css', 'assets/css/brand-hero.css'],
   ['contact-form.css', 'assets/css/contact-form.css'],
   ['price-guide.css', 'assets/css/price-guide.css'],

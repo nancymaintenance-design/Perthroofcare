@@ -55,7 +55,8 @@ createServer(async (req, res) => {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     if (pathname === '/api/enquiry') return handleEnquiry(req, res);
     if (pathname.includes('..')) throw new Error('invalid-path');
-    let file = join(root, normalize(pathname).replace(/^[/\\]+/, ''));
+    const asset = pathname.match(/^\/assets\/(?:css|images|js)\/([^/]+)$/);
+    let file = asset ? join(root, asset[1]) : join(root, normalize(pathname).replace(/^[/\\]+/, ''));
     if (pathname.endsWith('/')) file = join(file, 'index.html');
     try { if ((await stat(file)).isDirectory()) file = join(file, 'index.html'); } catch {}
     const data = await readFile(file); res.writeHead(200, { 'content-type': types[extname(file)] || 'application/octet-stream' }); res.end(data);

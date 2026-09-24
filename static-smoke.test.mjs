@@ -91,6 +91,18 @@ test('local server serves a generated roof repairs route from the project root',
   assert.match(await response.text(), /<h1>ROOF REPAIRS(?: IN PERTH)?\.<\/h1>/i);
 });
 
+test('local server maps published office map styles to their source file', async (t) => {
+  const port = 4803;
+  const child = spawn(process.execPath, ['local-server.mjs'], { cwd: root, env: { ...process.env, PORT: String(port) }, stdio: 'ignore' });
+  t.after(() => child.kill());
+  let response;
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    try { response = await fetch(`http://127.0.0.1:${port}/assets/css/office-location.css`); break; } catch { await new Promise((resolve) => setTimeout(resolve, 100)); }
+  }
+  assert.equal(response?.status, 200, 'local server should serve the published office map stylesheet');
+  assert.match(await response.text(), /\.office-map-frame/);
+});
+
 test('JSON-LD contains only confirmed organization facts', () => {
   const json = readFileSync(fileFor(''), 'utf8').match(/<script type="application\/ld\+json">(.*?)<\/script>/i)?.[1]; assert.ok(json); const data = JSON.parse(json);
   assert.equal(data.name, 'Ellis Services Group'); assert.equal(data.telephone, '0405878406'); assert.equal(data.email, 'ellisservicesgroup3@outlook.com'); assert.equal(data.foundingDate, '2020-11-11'); assert.doesNotMatch(json, /"(?:aggregateRating|review|ABN|openingHours|geo)"/i);
@@ -156,6 +168,29 @@ test('homepage publishes a fixed-roofline scroll story', () => {
   assert.match(css, /position:\s*sticky/i, 'desktop story media stays sticky');
   assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/i, 'story respects reduced motion');
   assert.match(css, /@media\s*\(max-width:\s*560px\)[\s\S]*?\.story-media\s*\{[^}]*position:\s*relative/i, 'mobile story returns media to normal flow');
+});
+
+test('homepage provides a confirmed Perth office map before the footer', () => {
+  const home = readFileSync(fileFor(''), 'utf8');
+  const section = home.match(/<section[^>]+class="[^"]*\boffice-location\b[^"]*"[\s\S]*?<\/section>/i)?.[0] ?? '';
+  assert.match(section, /data-office-location/i);
+  assert.match(section, /<h2>VISIT OUR PERTH OFFICE\.<\/h2>/i);
+  assert.match(section, /140 St Georges Terrace, Perth WA 6000, Australia/i);
+  assert.match(section, /<iframe[^>]+title="Map showing 140 St Georges Terrace, Perth"/i);
+  assert.match(section, /google\.com\/maps\?q=140%20St%20Georges%20Terrace%2C%20Perth%20WA%206000%2C%20Australia&amp;output=embed/i);
+  assert.match(section, /<a[^>]+href="https:\/\/www\.google\.com\/maps\/place\/140\+St\+Georges\+Terrace/i);
+  assert.ok(home.indexOf(section) < home.indexOf('<footer>'));
+  for (const route of routes) {
+    if (route) assert.doesNotMatch(readFileSync(fileFor(route), 'utf8'), /data-office-location/i);
+  }
+});
+
+test('office map frame has responsive dimensions', () => {
+  const home = readFileSync(fileFor(''), 'utf8');
+  const css = readFileSync(join(root, 'office-location.css'), 'utf8');
+  assert.match(home, /<link rel="stylesheet" href="\/assets\/css\/office-location\.css">/i);
+  assert.match(css, /\.office-map-frame\s*\{[^}]*aspect-ratio:\s*16\s*\/\s*9/i);
+  assert.match(css, /\.office-map-frame iframe\s*\{[^}]*width:\s*100%/i);
 });
 
 test('FAQ gives every published question a specific, non-empty answer', () => {
@@ -314,6 +349,7 @@ test('Vercel build stages the complete static site in public', () => {
   assert.match(config, /"outputDirectory"\s*:\s*"public"/);
   for (const file of ['index.html', 'robots.txt', 'sitemap.xml', 'favicon.ico']) assert.ok(existsSync(join(root, 'public', file)), `public output misses ${file}`);
   for (const folder of ['assets', 'about', 'services', 'contact', 'news']) assert.ok(existsSync(join(root, 'public', folder)), `public output misses ${folder}`);
+  assert.ok(existsSync(join(root, 'public', 'assets', 'css', 'office-location.css')), 'public output misses the homepage office map stylesheet');
 });
 
 test('generated PRC pages load the first-party Speed Insights client', () => {
