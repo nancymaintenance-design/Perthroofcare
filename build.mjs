@@ -71,7 +71,7 @@ const roleystoneProjectImages = [
 const roleystoneProjectSchema = [
   { '@context': 'https://schema.org', '@type': 'LocalBusiness', name: 'Ellis Services Group', url: site, telephone: '0405878406', email: 'ellisservicesgroup3@outlook.com', address: { '@type': 'PostalAddress', streetAddress: '140 St Georges Terrace', addressLocality: 'Perth', addressRegion: 'WA', postalCode: '6000', addressCountry: 'AU' } },
   { '@context': 'https://schema.org', '@type': 'Service', name: 'Metal roof fastener leak repair', provider: { '@type': 'LocalBusiness', name: 'Ellis Services Group' }, areaServed: [{ '@type': 'City', name: 'Perth' }, { '@type': 'Place', name: 'Roleystone, WA' }], url: `${site}/projects/roleystone-metal-roof-fastener-leak-repair/` },
-  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: site }, { '@type': 'ListItem', position: 2, name: 'Projects', item: `${site}/projects/` }, { '@type': 'ListItem', position: 3, name: 'Roleystone metal roof fastener leak repair', item: `${site}/projects/roleystone-metal-roof-fastener-leak-repair/` }] }
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: site }, { '@type': 'ListItem', position: 2, name: 'Roleystone metal roof fastener leak repair', item: `${site}/projects/roleystone-metal-roof-fastener-leak-repair/` }] }
 ].map((entry) => `<script type="application/ld+json">${JSON.stringify(entry)}</script>`).join('');
 for (const [path,title] of routes) {
   let html;
