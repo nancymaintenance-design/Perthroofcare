@@ -51,6 +51,7 @@ const stagedFiles = [
   ['hero-australian-roofer-v2.png', 'assets/images/hero-australian-roofer-v2.png'],
   ['hero-roof.png', 'assets/images/hero-roof.png'],
   ['inspection.png', 'assets/images/inspection.png'],
+  ['instagram-icon.png', 'assets/images/instagram-icon.png'],
   ['metal-roof.png', 'assets/images/metal-roof.png'],
   ['resources-downpipe.png', 'assets/images/resources-downpipe.png'],
   ['resources-dusk.png', 'assets/images/resources-dusk.png'],

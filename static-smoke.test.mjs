@@ -235,6 +235,18 @@ test('homepage brand marks use the supplied logo without causing layout shift', 
   }
 });
 
+test('homepage footer provides an accessible Instagram link to Ellis Services Group', () => {
+  const home = readFileSync(fileFor(''), 'utf8');
+  const css = readFileSync(join(root, 'site.css'), 'utf8');
+  const footer = home.match(/<footer>[\s\S]*?<\/footer>/i)?.[0] ?? '';
+  assert.match(footer, /<a[^>]+class="instagram-link"[^>]+href="https:\/\/www\.instagram\.com\/elliservices_group\/"/i);
+  assert.match(footer, /target="_blank"[^>]+rel="noopener noreferrer"/i);
+  assert.match(footer, /aria-label="Visit Ellis Services Group on Instagram"/i);
+  assert.match(footer, /<img[^>]+class="instagram-icon"[^>]+src="\/assets\/images\/instagram-icon\.png"[^>]+alt=""/i, 'Instagram link uses the supplied standard icon image');
+  assert.ok(existsSync(join(root, 'instagram-icon.png')), 'supplied Instagram icon must remain a source asset');
+  assert.match(css, /footer\s+\.instagram-link\s+\.instagram-icon\s*\{[^}]*width:\s*2rem/i, 'Instagram icon is a visible footer control');
+});
+
 test('Atlas CSS uses a warm paper reading surface with responsive gutters', () => {
   const css = `${readFileSync(join(root, 'brand-hero.css'), 'utf8')}\n${readFileSync(join(root, 'contact-form.css'), 'utf8')}`;
   assert.match(css, /\.atlas-hero\s*\{[^}]*background:\s*var\(--paper\)/, 'Atlas hero uses the paper surface');
