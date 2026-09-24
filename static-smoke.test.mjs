@@ -428,3 +428,17 @@ test('generated PRC pages load the first-party Speed Insights client', () => {
     );
   }
 });
+
+test('Roleystone project protects property privacy and documents the confirmed repair approach', () => {
+  const html = readFileSync(fileFor('projects/roleystone-metal-roof-fastener-leak-repair'), 'utf8');
+  assert.match(html, /<title>Metal Roof Leak Repair Roleystone WA \| Ellis Services Group<\/title>/);
+  assert.match(html, /Roleystone, WA/);
+  assert.doesNotMatch(html, /Heath Road|160-154/i);
+  assert.match(html, /structural adhesive/i);
+  assert.match(html, /renewed coating|recoating|spraying/i);
+  for (const href of ['/roof-leak-repairs/', '/metal-roof-repairs/', '/flashing-repairs/', '/roof-inspection/', '/contact/']) assert.match(html, new RegExp(`href="${href}"`));
+  assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
+  const images = [...html.matchAll(/\/assets\/images\/(roleystone-metal-fastener-[^"]+\.jpg)/g)].map(([, value]) => value);
+  assert.equal(new Set(images).size, 4);
+  for (const image of images) assert.ok(existsSync(join(root, image)));
+});
