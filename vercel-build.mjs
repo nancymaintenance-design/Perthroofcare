@@ -74,7 +74,13 @@ const stagedFiles = [
   ['wa6121-tile-valley-gutter-01.jpg', 'assets/images/wa6121-tile-valley-gutter-01.jpg'],
   ['wa6121-tile-valley-gutter-02.jpg', 'assets/images/wa6121-tile-valley-gutter-02.jpg'],
   ['wa6121-tile-valley-gutter-03.jpg', 'assets/images/wa6121-tile-valley-gutter-03.jpg'],
-  ['wa6121-tile-valley-gutter-04.jpg', 'assets/images/wa6121-tile-valley-gutter-04.jpg']
+  ['wa6121-tile-valley-gutter-04.jpg', 'assets/images/wa6121-tile-valley-gutter-04.jpg'],
+  ['roof-leak-case-01-overall.png', 'assets/images/roof-leak-case-01-overall.png'],
+  ['roof-leak-case-02-roof-context.png', 'assets/images/roof-leak-case-02-roof-context.png'],
+  ['roof-leak-case-03-junction-detail.png', 'assets/images/roof-leak-case-03-junction-detail.png'],
+  ['roof-leak-case-04-interior-mark.png', 'assets/images/roof-leak-case-04-interior-mark.png'],
+  ['roof-leak-case-05-work-in-progress.png', 'assets/images/roof-leak-case-05-work-in-progress.png'],
+  ['roof-leak-case-06-completed.png', 'assets/images/roof-leak-case-06-completed.png']
 ];
 
 for (const [source, destination] of stagedFiles) {

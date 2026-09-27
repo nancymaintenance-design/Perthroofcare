@@ -66,3 +66,14 @@ html{scroll-padding-top:6rem;scrollbar-color:var(--eucalyptus) var(--paper);scro
 .information-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin:1.25rem 0 2rem;background:var(--sand-line);white-space:normal}.information-links a{display:flex;justify-content:space-between;gap:.75rem;padding:1rem 1.1rem;background:var(--paper);font-weight:800;text-decoration:none}.information-links a:hover,.information-links a:focus-visible{background:var(--sky-wash)}
 @media(max-width:900px){.home-topic-rail.home-hero-backdrop{min-height:34rem;background-attachment:scroll;background-position:center}.home-topic-rail.home-hero-backdrop .home-hero-copy{padding-inline:clamp(1.5rem,6vw,3rem)}}
 @media(max-width:560px){.home-topic-rail.home-hero-backdrop{min-height:31rem}.home-topic-rail.home-hero-backdrop::before{background:linear-gradient(90deg,rgb(12 34 34/.88),rgb(15 43 41/.63))}.home-topic-rail.home-hero-backdrop .home-hero-copy{padding-block:4rem}.information-links{grid-template-columns:1fr}}
+
+/* Supplied roof-leak evidence: intentionally complete at every breakpoint. */
+.roof-leak-case-evidence{border-top:1px solid var(--sand-line);background:var(--paper)}
+.roof-leak-case-evidence h2{max-width:22ch;font-size:clamp(2rem,4vw,3.7rem);line-height:.94}
+.roof-leak-case-intro{max-width:62rem}
+.roof-leak-evidence-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin-top:1.5rem;background:var(--sand-line)}
+.roof-leak-evidence-item{display:grid;grid-template-rows:minmax(0,1fr) auto;margin:0;overflow:hidden;background:var(--paper)}
+.roof-leak-evidence-item img{display:block;width:100%;height:100%;min-height:0;aspect-ratio:4/3;object-fit:cover}
+.roof-leak-evidence-item figcaption{padding:.8rem 1rem;font-size:.86rem;font-weight:700}
+@media(max-width:900px){.roof-leak-evidence-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.roof-leak-evidence-grid{grid-template-columns:1fr}.roof-leak-evidence-item img{aspect-ratio:16/11}}

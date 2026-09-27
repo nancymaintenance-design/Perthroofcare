@@ -72,6 +72,15 @@ test('documented projects appear in their relevant services rather than a discon
   assert.ok(!existsSync(join(root, 'projects', 'index.html')), 'there must be no published projects index');
 });
 
+test('roof leak repairs presents the supplied six-image case record in a complete grid', () => {
+  const html = readFileSync(fileFor('roof-leak-repairs'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
+  const images = ['roof-leak-case-01-overall.png', 'roof-leak-case-02-roof-context.png', 'roof-leak-case-03-junction-detail.png', 'roof-leak-case-04-interior-mark.png', 'roof-leak-case-05-work-in-progress.png', 'roof-leak-case-06-completed.png'];
+  assert.match(html, new RegExp('REAL CASE RECORD / LOCATION NOT PUBLISHED', 'i'));
+  assert.equal((html.match(/class="roof-leak-evidence-item"/g) ?? []).length, 6, 'six supplied photos must form one complete gallery');
+  for (const image of images) assert.match(html, new RegExp(`/assets/images/${image}`));
+  assert.match(css, /\.roof-leak-evidence-grid\{[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/i);
+});
+
 test('privacy is compact, useful and directly contactable', () => {
   const html = readFileSync(fileFor('privacy'), 'utf8');
   assert.match(html, /<h1>PRIVACY FOR ROOF REPAIR ENQUIRIES\.<\/h1>/); assert.match(html, /Information you choose to send/i); assert.match(html, /How enquiry information is used/i); assert.match(html, /Questions about privacy/i); assert.match(html, /href="\/legal\/"/); assert.doesNotMatch(html, /class="hero inner"/i);
