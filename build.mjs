@@ -147,6 +147,7 @@ const routeFile = (route) => join(root, route || '.', 'index.html');
 const writeRoute = (route, html) => {
   const withAreas = html.includes('href="/service-areas/"') ? html : html.replace('<a href="/news/">Resources</a>', '<a href="/news/">Resources</a><a href="/service-areas/">Areas</a>');
   const withFormStyles = withAreas.includes('/assets/css/contact-form.css') ? withAreas : withAreas.replace('</head>', '<link rel="stylesheet" href="/assets/css/contact-form.css"></head>');
+  mkdirSync(dirname(routeFile(route)), { recursive: true });
   writeFileSync(routeFile(route), withFormStyles);
 };
 const amendRoute = (route, amend) => writeRoute(route, amend(readFileSync(routeFile(route), 'utf8')));
@@ -498,3 +499,135 @@ writeRoute('privacy', layout('Privacy', 'privacy/', `<section class="compact-inf
 writeRoute('legal', layout('Website Legal Information', 'legal/', `<section class="compact-information"><div class="narrow"><p class="eyebrow">WEBSITE LEGAL INFORMATION</p><h1>ROOF REPAIR WEBSITE INFORMATION.</h1><p>This website provides general information about roof repairs in Perth, including roof leaks, tile roofs, metal roofs, ridge capping, valleys, flashings and roof inspections. It is not a property-specific diagnosis, quote or repair specification.</p><h2>Using service information</h2><p>Service pages are intended to help visitors describe a visible roof or drainage detail and prepare a clearer enquiry. The suitable scope for a property depends on the actual material, access, condition and surrounding roofline details.</p><h2>Images and documented projects</h2><p>Some pages include supplied images and documented project records. A documented project describes the recorded situation and agreed scope for that property; it does not establish that the same approach, cost or outcome will apply elsewhere.</p><h2>Links and contact</h2><p>Links within this website are provided to help visitors move between related roof repair topics and contact information. For an enquiry, use the direct contact page rather than relying on general website information alone.</p><nav class="information-links" aria-label="Website legal information links"><a href="/services/">Roof repair services Perth <span aria-hidden="true">→</span></a><a href="/news/">Roof repair guides Perth <span aria-hidden="true">→</span></a><a href="/privacy/">Privacy for roof repair enquiries <span aria-hidden="true">→</span></a><a href="/contact/">Contact Ellis Services Group <span aria-hidden="true">→</span></a></nav><h2>Contact Ellis Services Group</h2><p>Call <a href="tel:+61405878406">0405 878 406</a> or email <a href="mailto:ellisservicesgroup3@outlook.com">ellisservicesgroup3@outlook.com</a>. The website office address is 140 St Georges Terrace, Perth WA 6000.</p></div></section>`));
 
 writeRoute('news', layout('Roof Repair Guides Perth', 'news/', `<section class="topic-rail"><div class="container"><p class="eyebrow">ROOF REPAIR GUIDES / PERTH</p><h1>ROOF REPAIR GUIDES PERTH.</h1><p>Short, practical guides that help visitors prepare a more useful roof repair enquiry. Each guide links to its relevant service topic.</p></div></section><section class="section guide-index"><div class="container"><div class="cards"><article class="card"><h2>Roof leak inspection Perth</h2><p>Heavy-rain leaks, wind-driven rain, ceiling stains and recurring leak questions.</p><a href="/roof-leak-repairs/">Go to Roof Leak Repairs Perth</a></article><article class="card"><h2>Tile roof repairs Perth</h2><p>Broken tiles, localised tile replacement, ridge details and nearby drainage context.</p><a href="/tile-roof-repairs/">Go to Tile Roof Repairs Perth</a></article><article class="card"><h2>Metal roof repairs Perth</h2><p>Sheets, fasteners, washers, overlaps, flashings and the documented project sequence.</p><a href="/metal-roof-repairs/">Go to Metal Roof Repairs Perth</a></article></div></div></section>`));
+
+// NEWS-001: focused, English-language guides built around the confirmed Perth search themes.
+// They deliberately describe observable context rather than promise a diagnosis, price or outcome.
+const newsArticleDate = '2026-09-27';
+const newsArticleRecords = [
+  {
+    slug: 'roof-leak-detection-perth',
+    title: 'Roof Leak Detection Perth: What to Record Before a Repair Enquiry',
+    description: 'A practical Perth roof leak guide covering visible water paths, safe observations and the details that make a repair enquiry clearer.',
+    serviceHref: '/roof-leak-repairs/', serviceLabel: 'Roof Leak Repairs Perth',
+    lead: 'A roof leak enquiry is more useful when it starts with the timing, the visible area and the nearby roofline detail instead of a guessed cause.',
+    points: ['Note the room or exterior area where the change is visible.', 'Record whether it follows rain, wind-driven rain or another pattern.', 'Include any nearby gutter, valley, flashing, ridge or roof material you can identify safely.'],
+    sections: [
+      ['Start with the water path, not a conclusion', 'A ceiling mark, dripping point or damp-looking wall is important context, but it does not by itself identify where water entered. Rain can travel along framing, under roof coverings or around a connected roofline detail before it becomes visible indoors. For a Perth roof leak repair enquiry, describe the area that changed, when you first noticed it and whether the observation is new, recurring or linked to particular weather.'],
+      ['What is useful to record safely', 'Ground-level photographs, a short timeline and the approximate location on the property can help organise an enquiry. If the roof material is visible from the ground, note whether it appears to be tile or metal. It can also help to mention a nearby valley, ridge, wall junction, gutter outlet or downpipe. Do not climb onto a roof, enter an unsafe ceiling space or move electrical fittings to collect evidence.'],
+      ['Why surrounding details matter', 'A visible leak can relate to a broader water route rather than one isolated component. A roof edge, flashing, valley, tile overlap, metal fastener or drainage connection can all be relevant to the conversation. The aim is not to name a repair remotely; it is to provide a clear starting point so the roofline context can be considered together.'],
+      ['Preparing a concise repair enquiry', 'Include the Perth property suburb, the best contact details, the roof material if known, the area where water is visible and any timing connected with rain or wind. If there has been prior work in the same area, say so without assuming that it explains the current observation. This creates a practical record for a roof leak repairs discussion.']
+    ],
+    questions: [
+      ['Should I wait for another storm before making an enquiry?', 'No. Record what you have already observed, including whether the timing followed rain, and share that context. Avoid unsafe access while waiting for more evidence.'],
+      ['Is a ceiling stain proof that the roof is leaking?', 'No. A stain is a useful observation, but it does not establish the source or scope of water entry. The surrounding property and roofline context still matters.']]
+  },
+  {
+    slug: 'tile-roof-repairs-perth-guide',
+    title: 'Tile Roof Repairs Perth: Broken Tiles, Ridge Details and Water Paths',
+    description: 'A Perth tile roof repairs guide to visible tiles, ridge details, valleys and drainage context before making an enquiry.',
+    serviceHref: '/tile-roof-repairs/', serviceLabel: 'Tile Roof Repairs Perth',
+    lead: 'Tile roofs work as overlapping systems, so a useful repair conversation considers tiles together with ridges, valleys, penetrations and drainage lines.',
+    points: ['Describe whether the visible change is at a field tile, ridge, valley or roof edge.', 'Keep a note of any recent rain and the direction of the roof slope.', 'Use safe ground-level observations and do not walk on tiles to inspect them.'],
+    sections: [
+      ['Read tiles as part of the roofline', 'A tile that appears cracked, displaced or weathered may be relevant, but its position is equally useful. Is it near a ridge, a valley, a penetration or a roof edge? Tile roof repairs Perth enquiries are clearer when they describe the local roofline rather than treating one visible tile as the whole story. Overlaps and adjacent details guide water across the roof surface, which is why nearby components should be noted too.'],
+      ['Ridge details, valleys and junctions', 'Ridge capping, bedding, pointing, valley lines and junctions are different roof details with different roles. A visible change around these areas may be worth recording, especially if it appears after weather. That observation is not a property diagnosis. It is practical background for a conversation about whether the concern relates to tile placement, a ridge detail, a valley water path or another connected component.'],
+      ['Drainage context can improve the enquiry', 'Where tile roofs meet gutters and downpipes, water movement at the roof edge can add useful context. Note a gutter that overflows, a valley that looks debris-affected from a safe position, or water that appears near an unexpected edge. The roof and drainage route should be described together where possible.'],
+      ['Information to share with Ellis Services Group', 'A concise tile roof repair enquiry can include the Perth suburb, roof material, visible area, timing, safe photographs and any nearby ridge, valley or drainage feature. Direct contact details make it easy to begin the next conversation without relying on a generic online diagnosis.']
+    ],
+    questions: [
+      ['Can a broken-looking tile explain every leak?', 'Not necessarily. Tile roofs have overlapping pieces and connected details, so the surrounding roofline and water path should also be considered.'],
+      ['Should I replace tiles myself before contacting someone?', 'Avoid roof access or walking on tiles solely to investigate. A safe ground-level description and photographs are more useful than creating a new access risk.']]
+  },
+  {
+    slug: 'metal-roof-repairs-perth-guide',
+    title: 'Metal Roof Repairs Perth: Fasteners, Washers, Overlaps and Leak Context',
+    description: 'A practical metal roof repairs Perth guide to observable fasteners, washers, sheet overlaps and roofline details.',
+    serviceHref: '/metal-roof-repairs/', serviceLabel: 'Metal Roof Repairs Perth',
+    lead: 'Metal roof repair questions often begin with a visible fastener, washer, overlap or flashing detail, but the most useful enquiry also includes the broader roofline context.',
+    points: ['Identify whether the visible issue is at a fastener, sheet lap, ridge, flashing or roof edge.', 'Photograph from a safe position; do not access a wet or steep roof.', 'Mention whether corrosion, sealant residue or a loose-looking component is visible.'],
+    sections: [
+      ['Why metal roof fasteners deserve context', 'Fasteners and washers are repeated across a metal roof, but one corroded or displaced-looking point does not automatically define the condition of the whole roof. A useful Perth metal roof repairs enquiry describes where the detail sits: near a ridge, valley, sheet overlap, penetration, gutter edge or another junction. This helps separate a visible observation from an assumed scope of work.'],
+      ['Look beyond the single screw or rivet', 'Water can be influenced by sheet laps, roof pitch, flashings, penetrations and surrounding drainage as well as a fastener detail. Note any rust staining, degraded-looking washer, previous sealant, loose-looking component or recurring interior symptom. These are useful facts to share, not proof of the cause or a repair method.'],
+      ['Use supplied project evidence carefully', 'Our documented metal roof fastener project shows a real five-image sequence: overall roof condition, corroded fastener details, recorded work and the completed surface. It is evidence of that recorded project, not a promise that every metal roof needs the same scope, cost or outcome.'],
+      ['A professional starting point for an enquiry', 'Share the property suburb, metal roof context, the visible roofline detail, weather timing and safe images. If a prior repair has been attempted, say where it was and what is visible now. That information is more useful than a broad statement that a metal roof needs replacement or resealing.']
+    ],
+    questions: [
+      ['Does rust around a fastener prove there is a leak?', 'No. It can be relevant context, but a roof repair discussion needs the surrounding roofline, interior observations and water-path information as well.'],
+      ['Can I seal every fastener myself?', 'Avoid assuming that a visible fastener needs a particular treatment. Roof access and material compatibility need to be considered for the actual property.']]
+  },
+  {
+    slug: 'ridge-capping-repairs-perth-guide',
+    title: 'Ridge Capping Repairs Perth: Repointing and Rebedding Explained',
+    description: 'A Perth ridge capping repairs guide covering visible ridge details, repointing, rebedding and enquiry context.',
+    serviceHref: '/ridge-capping-repointing/', serviceLabel: 'Ridge Capping & Repointing Perth',
+    lead: 'Ridge capping is a roofline detail, not just a surface finish. A clearer enquiry describes the ridge, adjacent tiles and any related weather or water observations.',
+    points: ['Identify the ridge line or hip line where the visible change appears.', 'Note whether material looks separated, weathered or displaced from a safe view.', 'Include nearby tile, valley or interior observations if they are relevant.'],
+    sections: [
+      ['What ridge capping does in a tiled roof', 'Ridge capping finishes the meeting point of roof slopes. Depending on the roof detail, the visible system may include capping tiles, bedding material and pointing. A Perth ridge capping repairs enquiry should distinguish the ridge line from nearby field tiles, valleys or flashings, because these are connected but not interchangeable roof details.'],
+      ['Repointing and rebedding are scope terms, not automatic answers', 'Visitors often search for ridge repointing or rebedding after seeing weathered-looking material. Those terms can help frame a conversation, but they do not establish what work a particular roof requires. Record the visible change, the part of the roofline and whether it is associated with rain or another observation. The condition of the actual roof determines the appropriate discussion.'],
+      ['Keep the whole roofline in view', 'A ridge observation can sit near a valley, a tile field, a roof penetration or a drainage route. Include these nearby details when they are visible. This helps avoid treating a single roofline feature as a remote diagnosis and keeps the enquiry focused on practical facts.'],
+      ['How to make contact', 'Provide the Perth property location, the visible ridge area, a safe photograph if available and a short note on timing. Ellis Services Group can be contacted directly by phone or email for an enquiry about ridge capping, roof repairs or connected tile roof details.']
+    ],
+    questions: [
+      ['Is cracked-looking ridge material always a leak source?', 'No. It is a relevant observation, but it does not prove the source of water entry or the scope of repair.'],
+      ['Can ridge work be considered separately from tiles?', 'Sometimes the ridge is the central concern, but nearby tile condition and connected roofline details are still useful enquiry context.']]
+  },
+  {
+    slug: 'roof-valleys-flashing-repairs-perth',
+    title: 'Roof Valleys and Flashing Repairs Perth: What Visible Changes Can Mean',
+    description: 'A Perth guide to roof valleys and flashing repairs, including safe observations, water paths and useful enquiry details.',
+    serviceHref: '/flashing-repairs/', serviceLabel: 'Roof Valleys & Flashing Repairs Perth',
+    lead: 'Valleys and flashings direct or manage water at roof transitions. Their visible condition should be recorded with the adjoining roof material and drainage path.',
+    points: ['Describe the junction: wall, chimney, penetration, ridge, valley or roof edge.', 'Note visible debris, separation, corrosion or water marks without touching the roof.', 'Mention the adjoining tile or metal material and any nearby gutter route.'],
+    sections: [
+      ['Valleys are water paths, not isolated strips', 'A roof valley collects water from adjoining roof slopes and directs it toward the roof edge and drainage system. Because it carries water from more than one surface, a valley observation is most useful when it includes surrounding tiles or sheets, the nearby gutter route and any change noticed during or after rain. Avoid accessing a valley to clear or inspect it unless it can be done safely by the appropriate person.'],
+      ['Flashing sits at transitions', 'Flashing is used around roof transitions such as walls, penetrations and changes in roof form. A visible gap, edge, corrosion mark or old sealant can be meaningful context, but it does not confirm how water is entering or what repair is needed. Record the location and what sits on each side of the junction.'],
+      ['What can make a Perth enquiry more precise', 'Use plain language: for example, a metal sheet meeting a wall, tiles alongside a valley, or a gutter below the observed section. Include the property suburb, a safe image, the weather timing and any interior mark or drainage behaviour that may relate to the same area. This creates a focused starting point for flashing repairs or related roof leak repairs.'],
+      ['Keep expectations realistic', 'General online information can explain roof components, but it cannot determine a property-specific cause, price, repair method or outcome. A useful service discussion follows the actual roof material, access, condition and connected details.']
+    ],
+    questions: [
+      ['Does debris in a valley always cause a leak?', 'No. It may be relevant to drainage context, but the full roofline and the actual condition need to be considered.'],
+      ['Is sealant the answer for every flashing concern?', 'No. A visible flashing detail does not establish a single repair method. The appropriate scope depends on the material and surrounding condition.']]
+  },
+  {
+    slug: 'roof-inspection-perth-guide',
+    title: 'Roof Inspection Perth: Preparing for Rainy-Season Roof Maintenance',
+    description: 'A roof inspection Perth guide for preparing a safe, useful maintenance or repair enquiry before rainy weather.',
+    serviceHref: '/roof-inspection/', serviceLabel: 'Roof Inspection & Maintenance Perth',
+    lead: 'A roof inspection enquiry is clearer when it explains why the inspection is being considered and which visible roof or drainage detail prompted the question.',
+    points: ['State whether the enquiry follows a leak, visible change, drainage issue or general maintenance concern.', 'List known roof material and nearby features such as valleys, gutters or downpipes.', 'Keep observations to safe ground-level or accessible areas; do not climb onto the roof.'],
+    sections: [
+      ['Choose a clear inspection purpose', 'Roof inspection Perth searches can cover many different concerns: a new ceiling mark, a metal fastener, aged tiles, a changed ridge line, an overflowing gutter or general preparation before seasonal rain. Naming the reason for the enquiry helps focus the discussion. It also avoids a vague request for an inspection without the roofline or drainage context that makes the request useful.'],
+      ['Prepare before periods of rain', 'Before rainy weather, take note of visible roof edges, drainage outlets, downpipes and any indoor changes already observed. Clear ground-level access where practical and keep safe photographs or notes together. Do not undertake roof-level access solely to gather information, particularly in wet or windy conditions.'],
+      ['Maintenance is not a fixed checklist for every property', 'Roof material, access, surrounding trees, roof form, valleys, gutters and local exposure all affect what is relevant. General maintenance information is a helpful starting point, but it cannot set a universal interval or determine the scope of a particular property. The actual inspection or repair conversation should follow the property context.'],
+      ['What to include when you contact us', 'Give the Perth property suburb, the purpose of the enquiry, roof type if known, the specific visible area and any recent rain or drainage observations. Established customers can use the same direct contact details when they have a new roof or drainage question; every enquiry still benefits from current property context.']
+    ],
+    questions: [
+      ['What should I include in a roof inspection enquiry?', 'Include the property location, what you observed, the roof material if known, timing and any safe supporting photographs.'],
+      ['Does maintenance information replace a property assessment?', 'No. General guidance helps organise an enquiry, but it cannot diagnose a roof or determine the correct scope for a specific property.']]
+  }
+];
+
+const xmlEscape = (value) => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+const articleSchema = (article) => `<script type="application/ld+json">${JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Article', headline: article.title, description: article.description,
+  datePublished: newsArticleDate, dateModified: newsArticleDate, inLanguage: 'en-AU',
+  mainEntityOfPage: { '@type': 'WebPage', '@id': `${site}/news/${article.slug}/` },
+  author: { '@type': 'Organization', name: 'Ellis Services Group', url: site },
+  publisher: { '@type': 'Organization', name: 'Ellis Services Group', url: site },
+  about: [article.serviceLabel, 'Roof repairs Perth']
+})}</script>`;
+
+const articlePage = (article) => `<article class="compact-information news-article"><div class="narrow"><p class="eyebrow">ROOF REPAIR GUIDE / PERTH</p><h1>${article.title.toUpperCase()}.</h1><p>${article.lead}</p><p class="article-byline">Prepared by Ellis Services Group · ${newsArticleDate}</p><section class="article-key-points"><h2>AT A GLANCE.</h2><ul>${article.points.map((point) => `<li>${point}</li>`).join('')}</ul></section>${article.sections.map(([heading, copy]) => `<section><h2>${heading}</h2><p>${copy}</p></section>`).join('')}<section><h2>Common questions</h2><div class="faq-list">${article.questions.map(([question, answer]) => `<details><summary>${question}</summary><p>${answer}</p></details>`).join('')}</div></section><section><h2>Customer feedback and returning clients</h2><p>Our strong Google review feedback and high level of repeat customer enquiries reflect the value of clear communication, practical roofline context and direct follow-up. Each new enquiry is still considered on its own current property details rather than being treated as a standard repair.</p></section><section><h2>Related Perth roof repair information</h2><nav class="information-links" aria-label="Related Perth roof repair information"><a href="${article.serviceHref}">${article.serviceLabel} <span aria-hidden="true">→</span></a><a href="/roof-repairs/">Roof Repairs Perth <span aria-hidden="true">→</span></a><a href="/contact/">Make a roof repair enquiry <span aria-hidden="true">→</span></a></nav></section><section><h2>Contact Ellis Services Group</h2><p>For a Perth roof repair enquiry, call <a href="tel:+61405878406">0405 878 406</a> or email <a href="mailto:ellisservicesgroup3@outlook.com">ellisservicesgroup3@outlook.com</a>. Website office: 140 St Georges Terrace, Perth WA 6000.</p></section></div></article>`;
+
+for (const article of newsArticleRecords) writeRoute(`news/${article.slug}`, layout(article.title, `news/${article.slug}/`, articlePage(article), articleSchema(article)));
+
+const newsCards = newsArticleRecords.map((article) => `<article class="card"><p class="eyebrow">ROOF REPAIR GUIDE</p><h2>${article.title}</h2><p>${article.description}</p><a href="/news/${article.slug}/">Read the guide <span aria-hidden="true">→</span></a></article>`).join('');
+writeRoute('news', layout('Roof Repair Guides Perth', 'news/', `<section class="topic-rail"><div class="container"><p class="eyebrow">ROOF REPAIR GUIDES / PERTH</p><h1>ROOF REPAIR GUIDES PERTH.</h1><p>English-language, practical guides for roof leaks, tile roofs, metal roofs, ridge capping, valleys, flashings and roof inspections. Each guide starts with observable details and links to its relevant Perth service page.</p></div></section><section class="section guide-index"><div class="container"><p class="eyebrow">PRACTICAL ROOF REPAIR INFORMATION</p><h2>SEARCH THE TOPIC THAT MATCHES THE ROOFLINE DETAIL.</h2><p>Our strong Google review feedback and high level of repeat customer enquiries reflect a service approach built around clear communication and practical roof-repair context.</p><div class="cards">${newsCards}</div></div></section><section class="section home-enquiry"><div class="container"><p class="eyebrow">DIRECT CONTACT</p><h2>USE A GUIDE, THEN START A CLEAR ENQUIRY.</h2><p>General information cannot diagnose a particular property. Share the property suburb, visible roof or drainage detail and any safe photographs when you contact Ellis Services Group.</p><p><a class="button" href="/contact/">Make an enquiry</a></p></div></section>`));
+amendRoute('news', (html) => html.replace('</head>', '<link rel="alternate" type="application/rss+xml" href="/news/feed.xml" title="Roof Repairs Perth News"></head>'));
+
+const rssItems = newsArticleRecords.map((article) => `<item><title>${xmlEscape(article.title)}</title><link>${site}/news/${article.slug}/</link><guid isPermaLink="true">${site}/news/${article.slug}/</guid><description>${xmlEscape(article.description)}</description><pubDate>Sun, 27 Sep 2026 00:00:00 +0000</pubDate></item>`).join('');
+writeFileSync(join(root, 'news', 'feed.xml'), `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Roof Repairs Perth News | Ellis Services Group</title><link>${site}/news/</link><description>Practical Perth roof repair guides from Ellis Services Group.</description><language>en-au</language><lastBuildDate>Sun, 27 Sep 2026 00:00:00 +0000</lastBuildDate>${rssItems}</channel></rss>`);
+
+const finalSitemapRoutes = [...new Set(['', ...routes.map((route) => route.path), ...newsArticleRecords.map((article) => `news/${article.slug}`)])];
+writeFileSync(join(root, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${finalSitemapRoutes.map((route) => `<url><loc>${site}/${route ? `${route}/` : ''}</loc></url>`).join('')}</urlset>`);

@@ -106,3 +106,24 @@ test('documented project pages preserve privacy and supplied evidence', () => {
   const roleystone = readFileSync(fileFor('projects/roleystone-metal-roof-fastener-leak-repair'), 'utf8'); const sequence = readFileSync(fileFor('projects/metal-roof-fastener-repair-sequence'), 'utf8'); const wa6121 = readFileSync(fileFor('projects/wa-6121-tile-roof-valley-gutter-cleaning'), 'utf8');
   assert.doesNotMatch(roleystone, /Heath Road|160-154/i); assert.match(roleystone, /structural adhesive/i); assert.match(sequence, /DOCUMENTED PROJECT \/ LOCATION NOT PUBLISHED/); assert.match(sequence, /metal-fastener-sequence-05-completed\.png/); assert.match(wa6121, /Western Australia 6121, Australia/); assert.match(wa6121, /valley gutter cleaning/i);
 });
+
+test('keyword-led news articles publish useful English guidance, schema and an RSS feed', () => {
+  const articles = [
+    'roof-leak-detection-perth', 'tile-roof-repairs-perth-guide', 'metal-roof-repairs-perth-guide',
+    'ridge-capping-repairs-perth-guide', 'roof-valleys-flashing-repairs-perth', 'roof-inspection-perth-guide'
+  ];
+  const feed = readFileSync(join(root, 'news', 'feed.xml'), 'utf8');
+  assert.match(feed, /<rss version="2\.0">/); assert.match(feed, /Roof Repairs Perth News/i);
+  for (const slug of articles) {
+    const html = readFileSync(fileFor(`news/${slug}`), 'utf8');
+    assert.equal((html.match(/<h1[\s>]/gi) ?? []).length, 1, `${slug} needs one H1`);
+    assert.match(html, /<script type="application\/ld\+json">[\s\S]*?"@type":"Article"/i, `${slug} needs Article JSON-LD`);
+    assert.match(html, /Ellis Services Group|0405 878 406/i, `${slug} needs editorial accountability or contact details`);
+    assert.match(html, /href="\/(?:roof-repairs|roof-leak-repairs|tile-roof-repairs|metal-roof-repairs|ridge-capping-repointing|flashing-repairs|roof-inspection)\//i, `${slug} needs a related service link`);
+    assert.match(feed, new RegExp(`/news/${slug}/`), `${slug} needs an RSS item`);
+    assert.match(html, /strong Google review feedback/i, `${slug} should present the confirmed Google-review signal`);
+    assert.match(html, /high level of repeat customer enquiries/i, `${slug} should present the confirmed returning-customer signal`);
+  }
+  assert.match(readFileSync(fileFor('news'), 'utf8'), /Roof Leak Detection Perth/i);
+  assert.match(readFileSync(fileFor('news'), 'utf8'), /rel="alternate" type="application\/rss\+xml" href="\/news\/feed\.xml"/i);
+});
