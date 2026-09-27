@@ -6,7 +6,7 @@ import { spawn } from 'node:child_process';
 
 const root = new URL('.', import.meta.url).pathname.replace(/^\/(.:)/, '$1');
 const fileFor = (route) => join(root, route || '.', 'index.html');
-const coreRoutes = ['roof-repairs', 'roof-leak-repairs', 'tile-roof-repairs', 'metal-roof-repairs', 'ridge-capping-repointing', 'flashing-repairs', 'roof-inspection'];
+const coreRoutes = ['roof-repairs', 'roof-leak-repairs', 'tile-roof-repairs', 'metal-roof-repairs', 'ridge-capping-repointing', 'flashing-repairs', 'roof-inspection', 'gutter-repairs', 'roof-maintenance'];
 const publishedRoutes = ['', 'services', ...coreRoutes, 'service-areas', 'news', 'about', 'contact', 'privacy', 'legal'];
 const contactFacts = ['0405878406', 'ellisservicesgroup3@outlook.com', '140 St Georges Terrace, Perth WA 6000'];
 const forbidden = /candidate|to be confirmed|local demo|placeholder|AI-generated|24\s*\/\s*7|fully insured|licensed|guaranteed/iu;
@@ -16,7 +16,8 @@ test('focused information architecture publishes one primary roof-repair destina
     '': 'ROOF REPAIRS PERTH.', services: 'ROOF REPAIR SERVICES PERTH.', 'roof-repairs': 'ROOF REPAIRS PERTH.',
     'roof-leak-repairs': 'ROOF LEAK REPAIRS PERTH.', 'tile-roof-repairs': 'TILE ROOF REPAIRS PERTH.',
     'metal-roof-repairs': 'METAL ROOF REPAIRS PERTH.', 'ridge-capping-repointing': 'RIDGE CAPPING REPAIRS PERTH.',
-    'flashing-repairs': 'ROOF VALLEYS & FLASHING REPAIRS PERTH.', 'roof-inspection': 'ROOF INSPECTION & MAINTENANCE PERTH.'
+    'flashing-repairs': 'ROOF VALLEYS & FLASHING REPAIRS PERTH.', 'roof-inspection': 'ROOF INSPECTION & MAINTENANCE PERTH.',
+    'gutter-repairs': 'GUTTER REPAIRS PERTH.', 'roof-maintenance': 'ROOF MAINTENANCE PERTH.'
   };
   for (const route of publishedRoutes) {
     const html = readFileSync(fileFor(route), 'utf8');
@@ -34,7 +35,7 @@ test('services navigation is viewport-contained, concise and has no projects hub
   assert.doesNotMatch(home, /<a href="\/projects\/">Projects<\/a>/i);
   assert.match(home, /id="services-submenu"[^>]*role="region"[^>]*aria-label="Services"/i);
   assert.match(home, /Choose one clear service topic rather than browsing a long list\./i);
-  for (const label of ['Core roof repairs', 'Roofline details', 'Roof Repairs Perth', 'Roof Valleys &amp; Flashing Repairs']) assert.match(home, new RegExp(label));
+  for (const label of ['Core roof repairs', 'Roofline details', 'Roof Repairs Perth', 'Roof Valleys &amp; Flashing Repairs', 'Gutter Repairs Perth', 'Roof Maintenance Perth']) assert.match(home, new RegExp(label));
   assert.match(css, /\.services-submenu\{[^}]*overflow:auto[^}]*max-height:calc\(100vh - 7rem\)/i);
   assert.match(script, /const menuWidth = Math\.min\(896, Math\.max\(280, window\.innerWidth - sideGap \* 2\)\)/);
   assert.match(script, /window\.innerWidth - menuWidth - sideGap/);
@@ -53,11 +54,12 @@ test('homepage carries the Roof Repairs Perth theme, focused paths and real work
   assert.match(css, /\.home-topic-rail\.home-hero-backdrop::before\{[^}]*linear-gradient/i);
 });
 
-test('every core service page is concise, keyword-led, practical and internally connected', () => {
+test('every core service page is keyword-led, substantial, practical and internally connected', () => {
   for (const route of coreRoutes) {
     const html = readFileSync(fileFor(route), 'utf8');
-    assert.match(html, /SERVICE FOCUS/i); assert.match(html, /USEFUL ENQUIRY NOTES/i); assert.match(html, /COMMON QUESTIONS/i); assert.match(html, /RELATED SERVICES/i);
-    assert.equal((html.match(/<details>/g) ?? []).length, 3, `${route} needs three focused questions`);
+    assert.match(html, /SERVICE FOCUS/i); assert.match(html, /USEFUL ENQUIRY NOTES/i); assert.match(html, /SERVICE DISCUSSION/i); assert.match(html, /COMMON QUESTIONS/i); assert.match(html, /RELATED SERVICES/i);
+    assert.equal((html.match(/<details>/g) ?? []).length, 5, `${route} needs five focused questions`);
+    assert.match(html, /PROPERTY CONTEXT/i, `${route} needs a substantial property-context section`);
     assert.match(html, /<nav aria-label="Related roof repair services">[\s\S]*?<a /, `${route} needs related links`);
     assert.doesNotMatch(html, /FIELD GUIDE \/ PRACTICAL CONTEXT|service-route-detail/i);
   }
