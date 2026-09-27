@@ -92,7 +92,13 @@ const stagedFiles = [
   ['ridge-case-03-bedding-detail.png', 'assets/images/ridge-case-03-bedding-detail.png'],
   ['ridge-case-04-interior-water-stain.png', 'assets/images/ridge-case-04-interior-water-stain.png'],
   ['ridge-case-05-repair-in-progress.png', 'assets/images/ridge-case-05-repair-in-progress.png'],
-  ['ridge-case-06-overview-after.png', 'assets/images/ridge-case-06-overview-after.png']
+  ['ridge-case-06-overview-after.png', 'assets/images/ridge-case-06-overview-after.png'],
+  ['valley-flashing-case-01-overall.png', 'assets/images/valley-flashing-case-01-overall.png'],
+  ['valley-flashing-case-02-valley-closeup.png', 'assets/images/valley-flashing-case-02-valley-closeup.png'],
+  ['valley-flashing-case-03-chimney-flashing.png', 'assets/images/valley-flashing-case-03-chimney-flashing.png'],
+  ['valley-flashing-case-04-roofline-detail.png', 'assets/images/valley-flashing-case-04-roofline-detail.png'],
+  ['valley-flashing-case-05-work-record.png', 'assets/images/valley-flashing-case-05-work-record.png'],
+  ['valley-flashing-case-06-after-record.png', 'assets/images/valley-flashing-case-06-after-record.png']
 ];
 
 for (const [source, destination] of stagedFiles) {
