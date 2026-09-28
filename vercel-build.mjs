@@ -112,7 +112,13 @@ const stagedFiles = [
   ['metal-roof-case-03-penetration-detail.png', 'assets/images/metal-roof-case-03-penetration-detail.png'],
   ['metal-roof-case-04-roof-edge-detail.png', 'assets/images/metal-roof-case-04-roof-edge-detail.png'],
   ['metal-roof-case-05-repair-in-progress.png', 'assets/images/metal-roof-case-05-repair-in-progress.png'],
-  ['metal-roof-case-06-overview-after.png', 'assets/images/metal-roof-case-06-overview-after.png']
+  ['metal-roof-case-06-overview-after.png', 'assets/images/metal-roof-case-06-overview-after.png'],
+  ['roof-inspection-case-01-overview.png', 'assets/images/roof-inspection-case-01-overview.png'],
+  ['roof-inspection-case-02-ridge-detail.png', 'assets/images/roof-inspection-case-02-ridge-detail.png'],
+  ['roof-inspection-case-03-flashing-detail.png', 'assets/images/roof-inspection-case-03-flashing-detail.png'],
+  ['roof-inspection-case-04-maintenance-point.png', 'assets/images/roof-inspection-case-04-maintenance-point.png'],
+  ['roof-inspection-case-05-maintenance-in-progress.png', 'assets/images/roof-inspection-case-05-maintenance-in-progress.png'],
+  ['roof-inspection-case-06-overview-after.png', 'assets/images/roof-inspection-case-06-overview-after.png']
 ];
 
 for (const [source, destination] of stagedFiles) {
