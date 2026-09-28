@@ -226,6 +226,16 @@ test('storm damage repairs presents the supplied six-image urgent-response recor
   assert.match(css, /\.storm-damage-evidence-grid\{display:grid;grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
   assert.match(css, /@media\(max-width:900px\)\{\.storm-damage-evidence-grid\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)\}\}/);
   assert.match(css, /@media\(max-width:560px\)\{\.storm-damage-evidence-grid\{grid-template-columns:1fr\}/);
+  assert.doesNotMatch(
+    css,
+    /main:has\(\.service-route-detail\)\s*>\s*\.section:not\(\.service-route-detail\)\{display:none\}/,
+    'the route-level visibility rule must not hide the urgent-response gallery',
+  );
+  assert.match(
+    css,
+    /main:has\(\.service-route-detail\)\s*>\s*\.section:not\(\.service-route-detail\):not\(\.storm-damage-case-evidence\)\{display:none\}/,
+    'the urgent-response gallery must be explicitly exempt from route-level hiding',
+  );
 });
 
 test('the production build runs the Vercel staging step before publishing the public directory', () => {
