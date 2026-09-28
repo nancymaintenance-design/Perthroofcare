@@ -118,7 +118,13 @@ const stagedFiles = [
   ['roof-inspection-case-03-flashing-detail.png', 'assets/images/roof-inspection-case-03-flashing-detail.png'],
   ['roof-inspection-case-04-maintenance-point.png', 'assets/images/roof-inspection-case-04-maintenance-point.png'],
   ['roof-inspection-case-05-maintenance-in-progress.png', 'assets/images/roof-inspection-case-05-maintenance-in-progress.png'],
-  ['roof-inspection-case-06-overview-after.png', 'assets/images/roof-inspection-case-06-overview-after.png']
+  ['roof-inspection-case-06-overview-after.png', 'assets/images/roof-inspection-case-06-overview-after.png'],
+  ['roof-maintenance-case-01-tile-edge.jpg', 'assets/images/roof-maintenance-case-01-tile-edge.jpg'],
+  ['roof-maintenance-case-02-cracked-tile.jpg', 'assets/images/roof-maintenance-case-02-cracked-tile.jpg'],
+  ['roof-maintenance-case-03-broken-tile-detail.jpg', 'assets/images/roof-maintenance-case-03-broken-tile-detail.jpg'],
+  ['roof-maintenance-case-04-ridge-junction.jpg', 'assets/images/roof-maintenance-case-04-ridge-junction.jpg'],
+  ['roof-maintenance-case-05-valley-edge.jpg', 'assets/images/roof-maintenance-case-05-valley-edge.jpg'],
+  ['roof-maintenance-case-06-local-seal-record.jpg', 'assets/images/roof-maintenance-case-06-local-seal-record.jpg']
 ];
 
 for (const [source, destination] of stagedFiles) {
