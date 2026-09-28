@@ -1,7 +1,8 @@
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const root = new URL('.', import.meta.url).pathname.replace(/^\/(.:)/, '$1');
+const root = fileURLToPath(new URL('.', import.meta.url));
 const site = 'https://www.perthroofcare.com.au';
 const contact = '<a href="tel:+61405878406">0405878406</a> · <a href="mailto:ellisservicesgroup3@outlook.com">ellisservicesgroup3@outlook.com</a> · 140 St Georges Terrace, Perth WA 6000';
 const routes = [

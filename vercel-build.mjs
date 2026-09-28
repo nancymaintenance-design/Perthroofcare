@@ -8,6 +8,8 @@ const publicDirectory = join(root, 'public');
 const outputDirectory = join(root, '.vercel', 'output');
 const build = spawnSync(process.execPath, ['build.mjs'], { cwd: root, stdio: 'inherit' });
 if (build.status !== 0) process.exit(build.status ?? 1);
+const annotateImages = spawnSync(process.execPath, ['tools/annotate-image-dimensions.mjs'], { cwd: root, stdio: 'inherit' });
+if (annotateImages.status !== 0) process.exit(annotateImages.status ?? 1);
 
 // Publish one brand-owned PNG icon path for browsers and search crawlers.
 const faviconMarkup = '<link rel="icon" type="image/png" sizes="512x512" href="/favicon.png"><link rel="apple-touch-icon" sizes="512x512" href="/favicon.png"><link rel="manifest" href="/site.webmanifest">';
