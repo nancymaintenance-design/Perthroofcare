@@ -219,9 +219,13 @@ test('storm damage repairs presents the supplied six-image urgent-response recor
   assert.match(html, /URGENT ROOF-RESPONSE RECORD \/ LOCATION NOT PUBLISHED/i);
   assert.match(html, /Urgent storm-related roof repair enquiries are prioritised/i);
   assert.match(html, /weather, site access and safety conditions allow/i);
+  assert.match(html, /SERVICE DETAILS/i, 'storm damage needs the same direct service-content structure');
+  assert.doesNotMatch(html, /service-route-detail|FIELD GUIDE \/ PRACTICAL CONTEXT/i, 'storm damage must not retain the old generic route template');
+  const linkSection = html.match(/<section class="section focus-links">[\s\S]*?<\/section>/)?.[0] ?? '';
+  assert.equal((linkSection.match(/<a href="\//g) ?? []).length, 3, 'storm damage needs exactly three contextual internal links');
   assert.ok(
-    html.indexOf('storm-damage-case-evidence') < html.indexOf('service-route-detail'),
-    'the urgent-response gallery should appear before the long practical-notes section',
+    html.indexOf('storm-damage-case-evidence') < html.indexOf('focus-links'),
+    'the urgent-response gallery should appear before the related-links section',
   );
   assert.equal((html.match(/class="storm-damage-evidence-item"/g) ?? []).length, 6, 'six supplied photos must form one complete gallery');
   for (const image of images) assert.match(html, new RegExp(image.replaceAll('.', '\\.'), 'i'));
