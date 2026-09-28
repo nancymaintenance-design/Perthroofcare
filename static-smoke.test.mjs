@@ -223,3 +223,8 @@ test('storm damage repairs presents the supplied six-image urgent-response recor
   assert.match(css, /@media\(max-width:900px\)\{\.storm-damage-evidence-grid\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)\}\}/);
   assert.match(css, /@media\(max-width:560px\)\{\.storm-damage-evidence-grid\{grid-template-columns:1fr\}/);
 });
+
+test('the production build runs the Vercel staging step before publishing the public directory', () => {
+  const packageJson = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
+  assert.equal(packageJson.scripts.build, 'node vercel-build.mjs');
+});
