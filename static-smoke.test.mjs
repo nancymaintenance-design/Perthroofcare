@@ -226,5 +226,7 @@ test('storm damage repairs presents the supplied six-image urgent-response recor
 
 test('the production build runs the Vercel staging step before publishing the public directory', () => {
   const packageJson = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
+  const vercelJson = JSON.parse(readFileSync(join(root, 'vercel.json'), 'utf8'));
   assert.equal(packageJson.scripts.build, 'node vercel-build.mjs');
+  assert.equal(vercelJson.buildCommand, 'node vercel-build.mjs');
 });
