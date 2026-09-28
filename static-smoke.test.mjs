@@ -217,6 +217,10 @@ test('storm damage repairs presents the supplied six-image urgent-response recor
   assert.match(html, /URGENT ROOF-RESPONSE RECORD \/ LOCATION NOT PUBLISHED/i);
   assert.match(html, /Urgent storm-related roof repair enquiries are prioritised/i);
   assert.match(html, /weather, site access and safety conditions allow/i);
+  assert.ok(
+    html.indexOf('storm-damage-case-evidence') < html.indexOf('service-route-detail'),
+    'the urgent-response gallery should appear before the long practical-notes section',
+  );
   assert.equal((html.match(/class="storm-damage-evidence-item"/g) ?? []).length, 6, 'six supplied photos must form one complete gallery');
   for (const image of images) assert.match(html, new RegExp(image.replaceAll('.', '\\.'), 'i'));
   assert.match(css, /\.storm-damage-evidence-grid\{display:grid;grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
