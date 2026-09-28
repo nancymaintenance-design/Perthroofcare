@@ -54,21 +54,23 @@ test('homepage carries the Roof Repairs Perth theme, focused paths and real work
   assert.match(css, /\.home-topic-rail\.home-hero-backdrop::before\{[^}]*linear-gradient/i);
 });
 
-test('every core service page is keyword-led, substantial, practical and internally connected', () => {
+test('every core service page uses a concise keyword-led service path with three useful links', () => {
   for (const route of coreRoutes) {
     const html = readFileSync(fileFor(route), 'utf8');
-    assert.match(html, /SERVICE FOCUS/i); assert.match(html, /USEFUL ENQUIRY NOTES/i); assert.match(html, /SERVICE DISCUSSION/i); assert.match(html, /COMMON QUESTIONS/i); assert.match(html, /RELATED SERVICES/i);
-    assert.equal((html.match(/<details>/g) ?? []).length, 5, `${route} needs five focused questions`);
-    assert.match(html, /PROPERTY CONTEXT/i, `${route} needs a substantial property-context section`);
-    assert.match(html, /<nav aria-label="Related roof repair services">[\s\S]*?<a /, `${route} needs related links`);
-    assert.doesNotMatch(html, /FIELD GUIDE \/ PRACTICAL CONTEXT|service-route-detail/i);
+    assert.match(html, /SERVICE DETAILS/i, `${route} needs a direct service-content section`);
+    assert.match(html, /SERVICES WE DISCUSS/i, `${route} needs a service-intent heading`);
+    assert.match(html, /<nav aria-label="Related roof repair services">[\s\S]*?<a /, `${route} needs crawlable related links`);
+    const linkSection = html.match(/<section class="section focus-links">[\s\S]*?<\/section>/)?.[0] ?? '';
+    assert.equal((linkSection.match(/<a href="\//g) ?? []).length, 3, `${route} needs exactly three contextual internal links`);
+    assert.doesNotMatch(html, /SERVICE DISCUSSION|PROPERTY CONTEXT|COMMON QUESTIONS|FIELD GUIDE \/ PRACTICAL CONTEXT|<details>/i, `${route} must not retain generic filler sections`);
+    assert.match(html, /case-evidence[\s\S]*?<section class="section focus-links">/i, `${route} must place the documented case before related links`);
   }
 });
 
-test('documented projects appear in their relevant services rather than a disconnected hub', () => {
-  assert.match(readFileSync(fileFor('roof-leak-repairs'), 'utf8'), /href="\/projects\/roleystone-metal-roof-fastener-leak-repair\/"/);
-  assert.match(readFileSync(fileFor('tile-roof-repairs'), 'utf8'), /href="\/projects\/wa-6121-tile-roof-valley-gutter-cleaning\/"/);
-  assert.match(readFileSync(fileFor('metal-roof-repairs'), 'utf8'), /href="\/projects\/metal-roof-fastener-repair-sequence\/"/);
+test('documented case records appear directly in their relevant services rather than a disconnected hub', () => {
+  assert.match(readFileSync(fileFor('roof-leak-repairs'), 'utf8'), /class="section roof-leak-case-evidence"/);
+  assert.match(readFileSync(fileFor('tile-roof-repairs'), 'utf8'), /class="section tile-roof-case-evidence"/);
+  assert.match(readFileSync(fileFor('metal-roof-repairs'), 'utf8'), /class="section metal-roof-case-evidence"/);
   assert.ok(!existsSync(join(root, 'projects', 'index.html')), 'there must be no published projects index');
 });
 
