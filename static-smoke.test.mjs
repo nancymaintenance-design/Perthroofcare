@@ -210,3 +210,16 @@ test('keyword-led news articles publish useful English guidance, schema and an R
   assert.match(readFileSync(fileFor('news'), 'utf8'), /Roof Leak Detection Perth/i);
   assert.match(readFileSync(fileFor('news'), 'utf8'), /rel="alternate" type="application\/rss\+xml" href="\/news\/feed\.xml"/i);
 });
+
+test('storm damage repairs presents the supplied six-image urgent-response record with safety conditions', () => {
+  const html = readFileSync(fileFor('storm-damage-roof-repairs'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
+  const images = ['storm-damage-case-01-roof-void-overview.jpg', 'storm-damage-case-02-roof-void-opening.jpg', 'storm-damage-case-03-under-tile-detail.jpg', 'storm-damage-case-04-roof-void-junction.jpg', 'storm-damage-case-05-roof-void-work-record.jpg', 'storm-damage-case-06-roof-void-inspection.jpg'];
+  assert.match(html, /URGENT ROOF-RESPONSE RECORD \/ LOCATION NOT PUBLISHED/i);
+  assert.match(html, /Urgent storm-related roof repair enquiries are prioritised/i);
+  assert.match(html, /weather, site access and safety conditions allow/i);
+  assert.equal((html.match(/class="storm-damage-evidence-item"/g) ?? []).length, 6, 'six supplied photos must form one complete gallery');
+  for (const image of images) assert.match(html, new RegExp(image.replaceAll('.', '\\.'), 'i'));
+  assert.match(css, /\.storm-damage-evidence-grid\{display:grid;grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
+  assert.match(css, /@media\(max-width:900px\)\{\.storm-damage-evidence-grid\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)\}\}/);
+  assert.match(css, /@media\(max-width:560px\)\{\.storm-damage-evidence-grid\{grid-template-columns:1fr\}/);
+});

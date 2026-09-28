@@ -130,7 +130,13 @@ const stagedFiles = [
   ['roof-repairs-case-03-under-tile-detail.jpg', 'assets/images/roof-repairs-case-03-under-tile-detail.jpg'],
   ['roof-repairs-case-04-flashing-detail.jpg', 'assets/images/roof-repairs-case-04-flashing-detail.jpg'],
   ['roof-repairs-case-05-roof-overview.jpg', 'assets/images/roof-repairs-case-05-roof-overview.jpg'],
-  ['roof-repairs-case-06-ridge-detail.jpg', 'assets/images/roof-repairs-case-06-ridge-detail.jpg']
+  ['roof-repairs-case-06-ridge-detail.jpg', 'assets/images/roof-repairs-case-06-ridge-detail.jpg'],
+  ['storm-damage-case-01-roof-void-overview.jpg', 'assets/images/storm-damage-case-01-roof-void-overview.jpg'],
+  ['storm-damage-case-02-roof-void-opening.jpg', 'assets/images/storm-damage-case-02-roof-void-opening.jpg'],
+  ['storm-damage-case-03-under-tile-detail.jpg', 'assets/images/storm-damage-case-03-under-tile-detail.jpg'],
+  ['storm-damage-case-04-roof-void-junction.jpg', 'assets/images/storm-damage-case-04-roof-void-junction.jpg'],
+  ['storm-damage-case-05-roof-void-work-record.jpg', 'assets/images/storm-damage-case-05-roof-void-work-record.jpg'],
+  ['storm-damage-case-06-roof-void-inspection.jpg', 'assets/images/storm-damage-case-06-roof-void-inspection.jpg']
 ];
 
 for (const [source, destination] of stagedFiles) {
