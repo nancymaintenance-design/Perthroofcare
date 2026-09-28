@@ -144,6 +144,15 @@ test('roof maintenance presents the supplied six-image tile-detail record in tit
   assert.match(css, /\.roof-maintenance-evidence-grid\{[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/i);
 });
 
+test('roof repairs presents the supplied six-image tile-repair record in title order', () => {
+  const html = readFileSync(fileFor('roof-repairs'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
+  const images = ['roof-repairs-case-01-opened-tile-area.jpg', 'roof-repairs-case-02-ridge-repair-detail.jpg', 'roof-repairs-case-03-under-tile-detail.jpg', 'roof-repairs-case-04-flashing-detail.jpg', 'roof-repairs-case-05-roof-overview.jpg', 'roof-repairs-case-06-ridge-detail.jpg'];
+  assert.match(html, new RegExp('REAL CASE RECORD / LOCATION NOT PUBLISHED', 'i'));
+  assert.equal((html.match(/class="roof-repairs-evidence-item"/g) ?? []).length, 6, 'six supplied photos must form one complete gallery');
+  for (const image of images) assert.match(html, new RegExp(`/assets/images/${image}`));
+  assert.match(css, /\.roof-repairs-evidence-grid\{[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/i);
+});
+
 test('privacy is compact, useful and directly contactable', () => {
   const html = readFileSync(fileFor('privacy'), 'utf8');
   assert.match(html, /<h1>PRIVACY FOR ROOF REPAIR ENQUIRIES\.<\/h1>/); assert.match(html, /Information you choose to send/i); assert.match(html, /How enquiry information is used/i); assert.match(html, /Questions about privacy/i); assert.match(html, /href="\/legal\/"/); assert.doesNotMatch(html, /class="hero inner"/i);

@@ -124,7 +124,13 @@ const stagedFiles = [
   ['roof-maintenance-case-03-broken-tile-detail.jpg', 'assets/images/roof-maintenance-case-03-broken-tile-detail.jpg'],
   ['roof-maintenance-case-04-ridge-junction.jpg', 'assets/images/roof-maintenance-case-04-ridge-junction.jpg'],
   ['roof-maintenance-case-05-valley-edge.jpg', 'assets/images/roof-maintenance-case-05-valley-edge.jpg'],
-  ['roof-maintenance-case-06-local-seal-record.jpg', 'assets/images/roof-maintenance-case-06-local-seal-record.jpg']
+  ['roof-maintenance-case-06-local-seal-record.jpg', 'assets/images/roof-maintenance-case-06-local-seal-record.jpg'],
+  ['roof-repairs-case-01-opened-tile-area.jpg', 'assets/images/roof-repairs-case-01-opened-tile-area.jpg'],
+  ['roof-repairs-case-02-ridge-repair-detail.jpg', 'assets/images/roof-repairs-case-02-ridge-repair-detail.jpg'],
+  ['roof-repairs-case-03-under-tile-detail.jpg', 'assets/images/roof-repairs-case-03-under-tile-detail.jpg'],
+  ['roof-repairs-case-04-flashing-detail.jpg', 'assets/images/roof-repairs-case-04-flashing-detail.jpg'],
+  ['roof-repairs-case-05-roof-overview.jpg', 'assets/images/roof-repairs-case-05-roof-overview.jpg'],
+  ['roof-repairs-case-06-ridge-detail.jpg', 'assets/images/roof-repairs-case-06-ridge-detail.jpg']
 ];
 
 for (const [source, destination] of stagedFiles) {
