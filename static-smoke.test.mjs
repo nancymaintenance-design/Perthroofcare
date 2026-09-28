@@ -55,11 +55,22 @@ test('homepage carries the Roof Repairs Perth theme, focused paths and real work
 });
 
 test('every core service page uses a concise keyword-led service path with three useful links', () => {
+  const heroImages = {
+    'roof-repairs': 'roof-repairs-case-05-roof-overview.jpg',
+    'roof-leak-repairs': 'roof-leak-case-01-overall.png',
+    'tile-roof-repairs': 'tile-roof-case-01-overall.png',
+    'metal-roof-repairs': 'metal-roof-case-06-overview-after.png',
+    'ridge-capping-repointing': 'ridge-case-01-overview-before.png',
+    'flashing-repairs': 'valley-flashing-case-01-overall.png',
+    'gutter-repairs': 'gutter-case-01-overall.png',
+    'roof-inspection': 'roof-inspection-case-01-overview.png',
+    'roof-maintenance': 'roof-maintenance-case-04-ridge-junction.jpg'
+  };
   for (const route of coreRoutes) {
     const html = readFileSync(fileFor(route), 'utf8');
     const css = readFileSync(join(root, 'site.css'), 'utf8');
-    assert.match(html, /<section class="topic-rail service-hero">/, `${route} needs a distinct dark image-backed title area`);
-    assert.match(css, /\.topic-rail\.service-hero\{[^}]*background-image:url\("\/assets\/images\/hero-roof\.png"\)/i, `${route} needs the shared roof-image title treatment`);
+    assert.ok(html.includes(`<section class="topic-rail service-hero" style="--service-hero-image:url('/assets/images/${heroImages[route]}')">`), `${route} needs its own documented-case title image`);
+    assert.match(css, /\.topic-rail\.service-hero\{[^}]*background-image:var\(--service-hero-image\)/i, `${route} needs the shared title treatment to use its selected case image`);
     assert.match(css, /\.topic-rail\.service-hero::before\{[^}]*linear-gradient/i, `${route} needs a readable dark image overlay`);
     assert.match(html, /SERVICE DETAILS/i, `${route} needs a direct service-content section`);
     assert.match(html, /SERVICES WE DISCUSS/i, `${route} needs a service-intent heading`);
@@ -219,7 +230,7 @@ test('keyword-led news articles publish useful English guidance, schema and an R
 
 test('storm damage repairs presents the supplied six-image urgent-response record with safety conditions', () => {
   const html = readFileSync(fileFor('storm-damage-roof-repairs'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
-  assert.match(html, /<section class="topic-rail service-hero">/, 'storm damage needs the shared dark image-backed title area');
+  assert.ok(html.includes(`<section class="topic-rail service-hero" style="--service-hero-image:url('/assets/images/storm-damage-case-06-roof-void-inspection.jpg')">`), 'storm damage needs its own documented-case title image');
   const images = ['storm-damage-case-01-roof-void-overview.jpg', 'storm-damage-case-02-roof-void-opening.jpg', 'storm-damage-case-03-under-tile-detail.jpg', 'storm-damage-case-04-roof-void-junction.jpg', 'storm-damage-case-05-roof-void-work-record.jpg', 'storm-damage-case-06-roof-void-inspection.jpg'];
   assert.match(html, /URGENT ROOF-RESPONSE RECORD \/ LOCATION NOT PUBLISHED/i);
   assert.match(html, /Urgent storm-related roof repair enquiries are prioritised/i);
