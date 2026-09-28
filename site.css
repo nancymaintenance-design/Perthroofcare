@@ -110,3 +110,14 @@ html{scroll-padding-top:6rem;scrollbar-color:var(--eucalyptus) var(--paper);scro
 .valley-flashing-evidence-item figcaption{padding:.8rem 1rem;font-size:.86rem;font-weight:700}
 @media(max-width:900px){.valley-flashing-evidence-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.valley-flashing-evidence-grid{grid-template-columns:1fr}.valley-flashing-evidence-item img{aspect-ratio:16/11}}
+
+/* Supplied gutter evidence: a complete six-image grid at every breakpoint. */
+.gutter-case-evidence{border-top:1px solid var(--sand-line);background:var(--paper)}
+.gutter-case-evidence h2{max-width:22ch;font-size:clamp(2rem,4vw,3.7rem);line-height:.94}
+.gutter-case-intro{max-width:62rem}
+.gutter-evidence-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin-top:1.5rem;background:var(--sand-line)}
+.gutter-evidence-item{display:grid;grid-template-rows:minmax(0,1fr) auto;margin:0;overflow:hidden;background:var(--paper)}
+.gutter-evidence-item img{display:block;width:100%;height:100%;min-height:0;aspect-ratio:4/3;object-fit:cover}
+.gutter-evidence-item figcaption{padding:.8rem 1rem;font-size:.86rem;font-weight:700}
+@media(max-width:900px){.gutter-evidence-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.gutter-evidence-grid{grid-template-columns:1fr}.gutter-evidence-item img{aspect-ratio:16/11}}
