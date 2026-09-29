@@ -99,6 +99,11 @@ test('local area enquiry panels keep their copy readable without a full-height b
   assert.match(html, /\.area-enquiry \.contact-layout>div:first-child\{[^}]*border-radius:[^}]*background:var\(--coastal-ink\)/i);
 });
 
+test('local area service links remain in normal flow on mobile', () => {
+  const html = readFileSync(fileFor('areas/cottesloe-roof-repairs'), 'utf8');
+  assert.match(html, /@media\(max-width:900px\)\{\.area-service-links\{position:static!important/i);
+});
+
 test('every core service page uses a concise keyword-led service path with three useful links', () => {
   const heroImages = {
     'roof-repairs': 'roof-repairs-case-05-roof-overview.jpg',
