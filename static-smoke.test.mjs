@@ -10,6 +10,13 @@ const coreRoutes = ['roof-repairs', 'roof-leak-repairs', 'tile-roof-repairs', 'm
 const publishedRoutes = ['', 'services', ...coreRoutes, 'service-areas', 'news', 'about', 'contact', 'privacy', 'legal'];
 const contactFacts = ['0405878406', 'ellisservicesgroup3@outlook.com', '140 St Georges Terrace, Perth WA 6000'];
 const forbidden = /candidate|to be confirmed|local demo|placeholder|AI-generated|24\s*\/\s*7|fully insured|licensed|guaranteed/iu;
+const popularAreaRoutes = {
+  'areas/cottesloe-roof-services': 'COTTESLOE ROOF SERVICES.',
+  'areas/subiaco-roof-services': 'SUBIACO ROOF SERVICES.',
+  'areas/joondalup-roof-services': 'JOONDALUP ROOF SERVICES.',
+  'areas/fremantle-roof-services': 'FREMANTLE ROOF SERVICES.',
+  'areas/kalamunda-roof-services': 'KALAMUNDA ROOF SERVICES.'
+};
 
 test('focused information architecture publishes one primary roof-repair destination per confirmed intent', () => {
   const headings = {
@@ -52,6 +59,20 @@ test('homepage carries the Roof Repairs Perth theme, focused paths and real work
   assert.match(home, /class="home-topic-rail home-hero-backdrop"/);
   assert.match(css, /\.home-topic-rail\.home-hero-backdrop\{[^}]*hero-australian-roofer-v2\.png[^}]*fixed/i);
   assert.match(css, /\.home-topic-rail\.home-hero-backdrop::before\{[^}]*linear-gradient/i);
+});
+
+test('service areas provide useful regional entry points, popular local service pages and the real enquiry form', () => {
+  const areas = readFileSync(fileFor('service-areas'), 'utf8');
+  assert.match(areas, /POPULAR PERTH LOCALITIES/i);
+  assert.match(areas, /class="enquiry-form" action="\/api\/enquiry"/i, 'service areas must end with the working contact form');
+  for (const [route, heading] of Object.entries(popularAreaRoutes)) {
+    assert.match(areas, new RegExp(`href="/${route}/"`), `service areas must link to ${route}`);
+    assert.ok(existsSync(fileFor(route)), `${route} needs a crawlable local service page`);
+    const html = readFileSync(fileFor(route), 'utf8');
+    assert.match(html, new RegExp(`<h1>${heading}<\\/h1>`));
+    for (const href of ['/roof-repairs/', '/roof-leak-repairs/', '/tile-roof-repairs/', '/gutter-repairs/']) assert.match(html, new RegExp(`href="${href}"`));
+    assert.match(html, /class="enquiry-form" action="\/api\/enquiry"/i, `${route} must keep the working contact form`);
+  }
 });
 
 test('every core service page uses a concise keyword-led service path with three useful links', () => {
