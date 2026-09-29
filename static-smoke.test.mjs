@@ -93,6 +93,12 @@ test('service areas provide six rounded regional entry points, specific local re
   }
 });
 
+test('local area enquiry panels keep their copy readable without a full-height blank side column', () => {
+  const html = readFileSync(fileFor('areas/cottesloe-roof-repairs'), 'utf8');
+  assert.match(html, /\.area-enquiry\{background:var\(--sky-wash\)!important;color:var\(--coastal-ink\)!important\}/i);
+  assert.match(html, /\.area-enquiry \.contact-layout>div:first-child\{[^}]*border-radius:[^}]*background:var\(--coastal-ink\)/i);
+});
+
 test('every core service page uses a concise keyword-led service path with three useful links', () => {
   const heroImages = {
     'roof-repairs': 'roof-repairs-case-05-roof-overview.jpg',
