@@ -11,11 +11,22 @@ const publishedRoutes = ['', 'services', ...coreRoutes, 'service-areas', 'news',
 const contactFacts = ['0405878406', 'ellisservicesgroup3@outlook.com', '140 St Georges Terrace, Perth WA 6000'];
 const forbidden = /candidate|to be confirmed|local demo|placeholder|AI-generated|24\s*\/\s*7|fully insured|licensed|guaranteed/iu;
 const popularAreaRoutes = {
-  'areas/cottesloe-roof-services': 'COTTESLOE ROOF SERVICES.',
-  'areas/subiaco-roof-services': 'SUBIACO ROOF SERVICES.',
-  'areas/joondalup-roof-services': 'JOONDALUP ROOF SERVICES.',
-  'areas/fremantle-roof-services': 'FREMANTLE ROOF SERVICES.',
-  'areas/kalamunda-roof-services': 'KALAMUNDA ROOF SERVICES.'
+  'areas/cottesloe-roof-repairs': 'COTTESLOE ROOF REPAIRS.',
+  'areas/mosman-park-roof-repairs': 'MOSMAN PARK ROOF REPAIRS.',
+  'areas/city-beach-roof-repairs': 'CITY BEACH ROOF REPAIRS.',
+  'areas/scarborough-roof-repairs': 'SCARBOROUGH ROOF REPAIRS.',
+  'areas/claremont-roof-repairs': 'CLAREMONT ROOF REPAIRS.',
+  'areas/nedlands-roof-repairs': 'NEDLANDS ROOF REPAIRS.',
+  'areas/subiaco-roof-repairs': 'SUBIACO ROOF REPAIRS.',
+  'areas/perth-roof-repairs': 'PERTH ROOF REPAIRS.',
+  'areas/leederville-roof-repairs': 'LEEDERVILLE ROOF REPAIRS.',
+  'areas/joondalup-roof-repairs': 'JOONDALUP ROOF REPAIRS.',
+  'areas/hillarys-roof-repairs': 'HILLARYS ROOF REPAIRS.',
+  'areas/fremantle-roof-repairs': 'FREMANTLE ROOF REPAIRS.',
+  'areas/rockingham-roof-repairs': 'ROCKINGHAM ROOF REPAIRS.',
+  'areas/kalamunda-roof-repairs': 'KALAMUNDA ROOF REPAIRS.',
+  'areas/victoria-park-roof-repairs': 'VICTORIA PARK ROOF REPAIRS.',
+  'areas/bayswater-roof-repairs': 'BAYSWATER ROOF REPAIRS.'
 };
 
 test('focused information architecture publishes one primary roof-repair destination per confirmed intent', () => {
@@ -61,9 +72,15 @@ test('homepage carries the Roof Repairs Perth theme, focused paths and real work
   assert.match(css, /\.home-topic-rail\.home-hero-backdrop::before\{[^}]*linear-gradient/i);
 });
 
-test('service areas provide useful regional entry points, popular local service pages and the real enquiry form', () => {
-  const areas = readFileSync(fileFor('service-areas'), 'utf8');
-  assert.match(areas, /POPULAR PERTH LOCALITIES/i);
+test('service areas provide six rounded regional entry points, specific local repair pages and the real enquiry form', () => {
+  const areas = readFileSync(fileFor('service-areas'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
+  assert.match(areas, /POPULAR PERTH ROOF REPAIR SEARCHES/i);
+  assert.equal((areas.match(/class="card area-region-card"/g) ?? []).length, 6, 'six regional cards must leave no empty grid tile');
+  assert.match(areas, /WESTERN COASTAL ROOF SERVICES/i);
+  assert.match(areas, /WESTERN INNER ROOF SERVICES/i);
+  assert.match(areas, /Cottesloe Roof Repairs/i);
+  assert.match(css, /\.area-directory \.cards[^}]*gap:1rem/i);
+  assert.match(css, /\.area-directory \.card[^}]*border-radius:/i);
   assert.match(areas, /class="enquiry-form" action="\/api\/enquiry"/i, 'service areas must end with the working contact form');
   for (const [route, heading] of Object.entries(popularAreaRoutes)) {
     assert.match(areas, new RegExp(`href="/${route}/"`), `service areas must link to ${route}`);
