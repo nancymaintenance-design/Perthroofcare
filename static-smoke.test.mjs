@@ -73,7 +73,7 @@ test('homepage carries the Roof Repairs Perth theme, focused paths and real work
 });
 
 test('service areas provide six rounded regional entry points, specific local repair pages and the real enquiry form', () => {
-  const areas = readFileSync(fileFor('service-areas'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
+  const areas = readFileSync(fileFor('service-areas'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8'); const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
   assert.match(areas, /POPULAR PERTH ROOF REPAIR SEARCHES/i);
   assert.equal((areas.match(/class="card area-region-card"/g) ?? []).length, 6, 'six regional cards must leave no empty grid tile');
   assert.match(areas, /WESTERN COASTAL ROOF SERVICES/i);
@@ -85,6 +85,7 @@ test('service areas provide six rounded regional entry points, specific local re
   for (const [route, heading] of Object.entries(popularAreaRoutes)) {
     assert.match(areas, new RegExp(`href="/${route}/"`), `service areas must link to ${route}`);
     assert.ok(existsSync(fileFor(route)), `${route} needs a crawlable local service page`);
+    assert.match(sitemap, new RegExp(`/${route}/`), `${route} needs a sitemap entry`);
     const html = readFileSync(fileFor(route), 'utf8');
     assert.match(html, new RegExp(`<h1>${heading}<\\/h1>`));
     for (const href of ['/roof-repairs/', '/roof-leak-repairs/', '/tile-roof-repairs/', '/gutter-repairs/']) assert.match(html, new RegExp(`href="${href}"`));

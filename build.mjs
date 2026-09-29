@@ -688,7 +688,7 @@ amendRoute('news', (html) => html.replace('</head>', '<link rel="alternate" type
 const rssItems = newsArticleRecords.map((article) => `<item><title>${xmlEscape(article.title)}</title><link>${site}/news/${article.slug}/</link><guid isPermaLink="true">${site}/news/${article.slug}/</guid><description>${xmlEscape(article.description)}</description><pubDate>Sun, 27 Sep 2026 00:00:00 +0000</pubDate></item>`).join('');
 writeFileSync(join(root, 'news', 'feed.xml'), `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Roof Repairs Perth News | Ellis Services Group</title><link>${site}/news/</link><description>Practical Perth roof repair guides from Ellis Services Group.</description><language>en-au</language><lastBuildDate>Sun, 27 Sep 2026 00:00:00 +0000</lastBuildDate>${rssItems}</channel></rss>`);
 
-const finalSitemapRoutes = [...new Set(['', ...routes.map((route) => route.path), ...newsArticleRecords.map((article) => `news/${article.slug}`)])];
+const finalSitemapRoutes = [...new Set(['', ...routes.map((route) => route.path), ...popularAreaServices.map(([slug]) => `areas/${slug}`), ...newsArticleRecords.map((article) => `news/${article.slug}`)])];
 writeFileSync(join(root, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${finalSitemapRoutes.map((route) => `<url><loc>${site}/${route ? `${route}/` : ''}</loc></url>`).join('')}</urlset>`);
 
 const roofLeakCaseImages = [
