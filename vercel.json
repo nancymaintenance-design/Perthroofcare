@@ -22,5 +22,18 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "perthroofcare.com.au"
+        }
+      ],
+      "destination": "https://www.perthroofcare.com.au/$1",
+      "permanent": true
+    }
   ]
 }
