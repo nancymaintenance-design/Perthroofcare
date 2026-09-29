@@ -146,6 +146,31 @@ test('storm damage repairs uses the same professional service structure with saf
   assert.doesNotMatch(html, /SERVICES WE DISCUSS|THE DETAILS WE CAN DISCUSS/i);
 });
 
+test('service metadata mirrors visible service content and publishes RSS discovery', () => {
+  for (const route of [...coreRoutes, 'storm-damage-roof-repairs']) {
+    const html = readFileSync(fileFor(route), 'utf8');
+    const graphs = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+      .map((match) => JSON.parse(match[1]))
+      .filter((entry) => Array.isArray(entry['@graph']));
+    assert.equal(graphs.length, 1, `${route} needs one service metadata graph`);
+    const entries = graphs[0]['@graph'];
+    const webPage = entries.find((entry) => entry['@type'] === 'WebPage');
+    const service = entries.find((entry) => entry['@type'] === 'Service');
+    const breadcrumb = entries.find((entry) => entry['@type'] === 'BreadcrumbList');
+    const h1 = html.match(/<h1>([^<]+)<\/h1>/)?.[1];
+    assert.ok(webPage && service && breadcrumb, `${route} needs WebPage, Service and BreadcrumbList metadata`);
+    assert.equal(service.name, h1?.replace(/\.$/, ''), `${route} service metadata must use the visible H1`);
+    assert.equal(service.url, `https://www.perthroofcare.com.au/${route}/`);
+    assert.equal(service.provider['@id'], 'https://www.perthroofcare.com.au/#business');
+    assert.match(html, /rel="alternate" type="application\/rss\+xml" href="\/news\/feed\.xml"/i, `${route} needs RSS discovery`);
+  }
+  const news = readFileSync(fileFor('news'), 'utf8');
+  const feed = readFileSync(join(root, 'news', 'feed.xml'), 'utf8');
+  assert.match(news, /rel="alternate" type="application\/rss\+xml" href="\/news\/feed\.xml"/i);
+  assert.match(news, /Roof repair guides RSS/i);
+  assert.match(feed, /<rss version="2\.0">/);
+});
+
 test('documented case records appear directly in their relevant services rather than a disconnected hub', () => {
   assert.match(readFileSync(fileFor('roof-leak-repairs'), 'utf8'), /class="section roof-leak-case-evidence"/);
   assert.match(readFileSync(fileFor('tile-roof-repairs'), 'utf8'), /class="section tile-roof-case-evidence"/);
