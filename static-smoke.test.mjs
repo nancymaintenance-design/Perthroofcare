@@ -104,7 +104,7 @@ test('local area service links remain in normal flow on mobile', () => {
   assert.match(html, /@media\(max-width:900px\)\{\.area-service-links\{position:static!important/i);
 });
 
-test('every core service page uses a concise keyword-led service path with three useful links', () => {
+test('every core service page publishes professional keyword-led scope and assessment content', () => {
   const heroImages = {
     'roof-repairs': 'roof-repairs-case-05-roof-overview.jpg',
     'roof-leak-repairs': 'roof-leak-case-01-overall.png',
@@ -122,14 +122,53 @@ test('every core service page uses a concise keyword-led service path with three
     assert.ok(html.includes(`<section class="topic-rail service-hero" style="--service-hero-image:url('/assets/images/${heroImages[route]}')">`), `${route} needs its own documented-case title image`);
     assert.match(css, /\.topic-rail\.service-hero\{[^}]*background-image:var\(--service-hero-image\)/i, `${route} needs the shared title treatment to use its selected case image`);
     assert.match(css, /\.topic-rail\.service-hero::before\{[^}]*linear-gradient/i, `${route} needs a readable dark image overlay`);
-    assert.match(html, /SERVICE DETAILS/i, `${route} needs a direct service-content section`);
-    assert.match(html, /SERVICES WE DISCUSS/i, `${route} needs a service-intent heading`);
+    assert.match(html, /class="[^"]*\bfocus-professional\b[^"]*"/i, `${route} needs a professional service-scope section`);
+    assert.match(html, /class="[^"]*\bfocus-assessment\b[^"]*"/i, `${route} needs a service-specific assessment section`);
+    assert.match(html, /class="[^"]*\bfocus-preparation\b[^"]*"/i, `${route} needs safe enquiry preparation`);
+    assert.equal((html.match(/class="card assessment-card"/g) ?? []).length, 3, `${route} needs three service-specific assessment cards`);
+    assert.doesNotMatch(html, /SERVICES WE DISCUSS|THE DETAILS WE CAN DISCUSS/i, `${route} must not retain generic service headings`);
     assert.match(html, /<nav aria-label="Related roof repair services">[\s\S]*?<a /, `${route} needs crawlable related links`);
     const linkSection = html.match(/<section class="section focus-links">[\s\S]*?<\/section>/)?.[0] ?? '';
     assert.equal((linkSection.match(/<a href="\//g) ?? []).length, 3, `${route} needs exactly three contextual internal links`);
     assert.doesNotMatch(html, /SERVICE DISCUSSION|PROPERTY CONTEXT|COMMON QUESTIONS|FIELD GUIDE \/ PRACTICAL CONTEXT|<details>/i, `${route} must not retain generic filler sections`);
     assert.match(html, /case-evidence[\s\S]*?<section class="section focus-links">/i, `${route} must place the documented case before related links`);
   }
+});
+
+test('storm damage repairs uses the same professional service structure with safe response conditions', () => {
+  const html = readFileSync(fileFor('storm-damage-roof-repairs'), 'utf8');
+  assert.match(html, /<h1>STORM DAMAGE ROOF REPAIRS PERTH\.<\/h1>/);
+  assert.match(html, /class="[^"]*\bfocus-professional\b[^"]*"/i);
+  assert.match(html, /class="[^"]*\bfocus-assessment\b[^"]*"/i);
+  assert.match(html, /class="[^"]*\bfocus-preparation\b[^"]*"/i);
+  assert.equal((html.match(/class="card assessment-card"/g) ?? []).length, 3);
+  assert.match(html, /weather, site access and safety conditions allow/i);
+  assert.doesNotMatch(html, /SERVICES WE DISCUSS|THE DETAILS WE CAN DISCUSS/i);
+});
+
+test('service metadata mirrors visible service content and publishes RSS discovery', () => {
+  for (const route of [...coreRoutes, 'storm-damage-roof-repairs']) {
+    const html = readFileSync(fileFor(route), 'utf8');
+    const graphs = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+      .map((match) => JSON.parse(match[1]))
+      .filter((entry) => Array.isArray(entry['@graph']));
+    assert.equal(graphs.length, 1, `${route} needs one service metadata graph`);
+    const entries = graphs[0]['@graph'];
+    const webPage = entries.find((entry) => entry['@type'] === 'WebPage');
+    const service = entries.find((entry) => entry['@type'] === 'Service');
+    const breadcrumb = entries.find((entry) => entry['@type'] === 'BreadcrumbList');
+    const h1 = html.match(/<h1>([^<]+)<\/h1>/)?.[1];
+    assert.ok(webPage && service && breadcrumb, `${route} needs WebPage, Service and BreadcrumbList metadata`);
+    assert.equal(service.name, h1?.replace(/\.$/, ''), `${route} service metadata must use the visible H1`);
+    assert.equal(service.url, `https://www.perthroofcare.com.au/${route}/`);
+    assert.equal(service.provider['@id'], 'https://www.perthroofcare.com.au/#business');
+    assert.match(html, /rel="alternate" type="application\/rss\+xml" href="\/news\/feed\.xml"/i, `${route} needs RSS discovery`);
+  }
+  const news = readFileSync(fileFor('news'), 'utf8');
+  const feed = readFileSync(join(root, 'news', 'feed.xml'), 'utf8');
+  assert.match(news, /rel="alternate" type="application\/rss\+xml" href="\/news\/feed\.xml"/i);
+  assert.match(news, /Roof repair guides RSS/i);
+  assert.match(feed, /<rss version="2\.0">/);
 });
 
 test('documented case records appear directly in their relevant services rather than a disconnected hub', () => {
@@ -285,7 +324,8 @@ test('storm damage repairs presents the supplied six-image urgent-response recor
   assert.match(html, /URGENT ROOF-RESPONSE RECORD \/ LOCATION NOT PUBLISHED/i);
   assert.match(html, /Urgent storm-related roof repair enquiries are prioritised/i);
   assert.match(html, /weather, site access and safety conditions allow/i);
-  assert.match(html, /SERVICE DETAILS/i, 'storm damage needs the same direct service-content structure');
+  assert.match(html, /class="[^"]*\bfocus-professional\b[^"]*"/i, 'storm damage needs the same professional service-content structure');
+  assert.doesNotMatch(html, /SERVICES WE DISCUSS|THE DETAILS WE CAN DISCUSS/i, 'storm damage must not retain generic service headings');
   assert.doesNotMatch(html, /service-route-detail|FIELD GUIDE \/ PRACTICAL CONTEXT/i, 'storm damage must not retain the old generic route template');
   const linkSection = html.match(/<section class="section focus-links">[\s\S]*?<\/section>/)?.[0] ?? '';
   assert.equal((linkSection.match(/<a href="\//g) ?? []).length, 3, 'storm damage needs exactly three contextual internal links');
