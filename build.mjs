@@ -1050,11 +1050,51 @@ for (const route of serviceFacingRoutes) amendRoute(route, (html) => html
 amendRoute('', (html) => html.replace('</main>', `<section class="section home-company-relationship"><div class="container narrow"><p class="eyebrow">PERTH ROOF CARE / ELLIS SERVICES GROUP</p><h2>ROOF REPAIR SERVICES DELIVERED BY ELLIS SERVICES GROUP.</h2><p>Perth Roof Care is operated by Ellis Services Group Pty Ltd. Our Perth office is at 140 St Georges Terrace, Perth WA 6000. Contact our team to discuss roof repairs, roof leaks, tile or metal roof work, flashing, gutters and downpipes.</p><p><a class="button" href="/contact/">Contact Ellis Services Group</a> <a class="text-link" href="/about/">View company details</a></p></div></section></main>`));
 amendRoute('about', (html) => html.replace('<h2>A clear starting point for roof and drainage enquiries.</h2>', '<h2>A clear starting point for roof and drainage services.</h2><p><strong>Perth Roof Care is operated by Ellis Services Group Pty Ltd.</strong> The Perth Roof Care website is the group’s roof-repair service website for Perth, Western Australia.</p>'));
 
+// Keep final public copy service-led. These replacements run after every route is
+// assembled so older guide, case-study and local-area templates cannot reintroduce
+// defensive or internally focused language during a later build.
+const publicCopyReplacements = [
+  ['Website office address', 'Perth office address'],
+  ['website office address', 'Perth office address'],
+  ['Website office:', 'Perth office:'],
+  ['website office:', 'Perth office:'],
+  ['Where is the website office located?', 'Where is the Perth office located?'],
+  ['The website office', 'The Perth office'],
+  ['static local roof repair page with clear service paths and the same direct enquiry form', 'local roof repair service page with relevant core repair links and a direct enquiry form'],
+  ['Each page links directly to the core repair topics rather than repeating generic area copy.', 'Each page explains a local roof-repair focus and connects directly to the relevant core repair services.'],
+  ['budget-aware', 'customer-approved targeted'],
+  ['Make a clear enquiry', 'Start a roof repair enquiry'],
+  ['MAKE A CLEAR ENQUIRY.', 'START A ROOF REPAIR ENQUIRY.'],
+  ['START A CLEAR ENQUIRY.', 'START A ROOF REPAIR ENQUIRY.'],
+  ['not a remote diagnosis or repair specification', 'a guide to the visible details and repair topics that can be discussed'],
+  ['not a property-specific diagnosis, quote or repair specification', 'service guidance; the final repair scope is confirmed from the property, access and roofline condition'],
+  ['not a property-specific diagnosis', 'with the final repair scope confirmed from the property condition'],
+  ['not a diagnosis', 'with the final repair scope confirmed from the property condition'],
+  ['This page provides practical inspection context, not a claim that every enquiry produces a formal property report.', 'Our roof inspection service considers the visible roofline, maintenance priorities and the scope appropriate to the property.'],
+  ['General information cannot diagnose a particular property.', 'The final repair scope is discussed from the property, its roofline condition and safe access.'],
+  ['general information', 'practical roof-repair guidance'],
+  ['General information', 'Practical roof-repair guidance'],
+  ['roof repair information', 'roof repair services'],
+  ['Roof repair information', 'Roof repair services'],
+  ['ROOF REPAIRS / INFORMATION', 'ROOF REPAIRS / SERVICES'],
+  ['Gutter and downpipe repair information', 'Gutter and downpipe repair services'],
+  ['Read roof inspection information', 'Explore roof inspection services'],
+  ['Our strong Google review feedback and high level of repeat customer enquiries reflect a service approach built around clear communication and property-specific context. No web page can replace the details of the actual roof or drainage route.', 'Our service approach is built around clear communication and property-specific context. The repair scope is confirmed from the actual roof or drainage route.'],
+  ['Our strong Google review feedback and high level of repeat customer enquiries reflect the value of clear communication, practical roofline context and direct follow-up. Each new enquiry is still considered on its own current property details rather than being treated as a standard repair.', 'Our work starts with clear communication, practical roofline context and direct follow-up. Each enquiry is considered from its current property details rather than being treated as a standard repair.'],
+  ['Our strong Google review feedback and high level of repeat customer enquiries reflect a service approach built around clear communication and practical roof-repair context.', 'Our roof repair guides support a service approach built around clear communication and practical roof-repair context.']
+];
+for (const route of finalSitemapRoutes) amendRoute(route, (html) => publicCopyReplacements.reduce((copy, [from, to]) => copy.replaceAll(from, to), html));
+
 writeFileSync(join(root, 'llms.txt'), readFileSync(join(root, 'llms.txt'), 'utf8')
   .replace('- Public business name: Ellis Services Group', '- Public business name: Ellis Services Group\n- Perth Roof Care is operated by Ellis Services Group Pty Ltd.')
   .replace(
     '- No price, availability, licence, insurance, warranty, rating or emergency-response claim is made here.',
     '- No price, licence, insurance, warranty or rating claim is made here. Urgent storm-related roof repair enquiries are prioritised; attendance is arranged promptly when weather, site access and safety conditions allow.'
-  ));
+  )
+  .replaceAll('Website office address', 'Perth office address')
+  .replaceAll('website office address', 'Perth office address')
+  .replaceAll('not a remote diagnosis or repair specification', 'a guide to visible roof and drainage details and the repair topics that can be discussed')
+  .replaceAll('No price, availability, licence, insurance, warranty, rating or emergency-response claim is made here.', 'No price, licence, insurance, warranty or rating claim is made here. Urgent storm-related roof repair enquiries are prioritised; attendance is arranged promptly when weather, site access and safety conditions allow.')
+);
 
 for (const route of finalSitemapRoutes) amendRoute(route, (html) => html.replace('</head>', '<link rel="alternate" type="text/plain" href="/llms.txt" title="Ellis Services Group machine-readable site guide"></head>'));

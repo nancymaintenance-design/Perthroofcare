@@ -388,9 +388,19 @@ test('privacy is compact, useful and directly contactable', () => {
 
 test('legal information is useful, bounded and linked to the relevant roof-repair paths', () => {
   const html = readFileSync(fileFor('legal'), 'utf8');
-  assert.match(html, /<h1>ROOF REPAIR WEBSITE INFORMATION\.<\/h1>/); assert.match(html, /not a property-specific diagnosis, quote or repair specification/i); assert.match(html, /Images and documented projects/i);
+  assert.match(html, /<h1>ROOF REPAIR WEBSITE INFORMATION\.<\/h1>/); assert.match(html, /final repair scope is confirmed from the property, access and roofline condition/i); assert.match(html, /Images and documented projects/i);
   for (const href of ['/services/', '/news/', '/privacy/', '/contact/']) assert.match(html, new RegExp(`href="${href}"`));
   assert.doesNotMatch(html, /class="hero inner"/i);
+});
+
+test('public copy uses direct service language and keeps machine-readable storm wording consistent', () => {
+  const routes = ['', 'service-areas', 'roof-inspection', 'roof-restoration', 'repair-options', 'news', 'news/roof-flashing-explained', 'projects/roleystone-metal-roof-fastener-leak-repair'];
+  const retiredPhrases = /website office|static local roof repair page|rather than repeating generic area copy|budget-aware|clear enquiry|not a remote diagnosis|not a property-specific diagnosis|not a diagnosis|emergency-response claim/i;
+  for (const route of routes) assert.doesNotMatch(readFileSync(fileFor(route), 'utf8'), retiredPhrases, `${route || 'home'} retains retired wording`);
+  const llms = readFileSync(join(root, 'llms.txt'), 'utf8');
+  assert.doesNotMatch(llms, /website office|not a remote diagnosis|emergency-response claim/i);
+  assert.match(llms, /Urgent storm-related roof repair enquiries are prioritised; attendance is arranged promptly when weather, site access and safety conditions allow\./i);
+  assert.match(readFileSync(fileFor('news/roof-leak-detection-perth'), 'utf8'), /Perth office: 140 St Georges Terrace, Perth WA 6000/i);
 });
 
 test('homepage keeps confirmed structured data and favicon declarations', () => {
@@ -432,8 +442,7 @@ test('keyword-led news articles publish useful English guidance, schema and an R
     assert.match(html, /Ellis Services Group|0405 878 406/i, `${slug} needs editorial accountability or contact details`);
     assert.match(html, /href="\/(?:roof-repairs|roof-leak-repairs|tile-roof-repairs|metal-roof-repairs|ridge-capping-repointing|flashing-repairs|roof-inspection)\//i, `${slug} needs a related service link`);
     assert.match(feed, new RegExp(`/news/${slug}/`), `${slug} needs an RSS item`);
-    assert.match(html, /strong Google review feedback/i, `${slug} should present the confirmed Google-review signal`);
-    assert.match(html, /high level of repeat customer enquiries/i, `${slug} should present the confirmed returning-customer signal`);
+    assert.match(html, /clear communication, practical roofline context and direct follow-up/i, `${slug} should present the service approach`);
   }
   assert.match(readFileSync(fileFor('news'), 'utf8'), /Roof Leak Detection Perth/i);
   assert.match(readFileSync(fileFor('news'), 'utf8'), /rel="alternate" type="application\/rss\+xml" href="\/news\/feed\.xml"/i);
