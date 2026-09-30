@@ -31,7 +31,9 @@ The detailed owner, intent and internal-link map is in [intent-map.csv](intent-m
 
 ## Structured data and feed guardrail
 
-The generated site continues to emit existing structured data/feed output. This change does not add synthetic reviews, ratings, author biographies, dates, service areas, emergency availability or other evidence that has not been supplied. Any future schema expansion must be based on owner-approved business facts and tested in a structured-data validator before release.
+The homepage now emits one linked `LocalBusiness`, `WebSite` and `WebPage` JSON-LD graph using only the public name, canonical URL, phone, email and address already visible on the site. The unverified founding date that had been generated previously was removed. Each priority service page now emits `WebPage`, `Service`, `FAQPage` and `BreadcrumbList` entries; the FAQ answers are exactly the visible answers on that page.
+
+The generated site also publishes `/llms.txt`, a plain-text guide to the public identity, key service URLs and content boundaries. It is not cloaked content, a ranking guarantee or a substitute for visible HTML. This change does not add synthetic reviews, ratings, author biographies, dates, service areas, emergency availability or other evidence that has not been supplied. Any future schema expansion must be based on owner-approved business facts and tested in a structured-data validator before release.
 
 ## Rollback
 

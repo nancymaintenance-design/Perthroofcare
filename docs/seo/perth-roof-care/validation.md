@@ -20,7 +20,7 @@ npm test
 
 Expected checks include generated routes, canonical tags, robots metadata, visible primary headings, distinct owner-page scope, internal HTML links, service-specific FAQs, article-to-service links and sitemap audit utility behaviour. Record the fresh final command output and test count below when preparing a release.
 
-Fresh result on 2026-09-30: the production build completed and the Node test runner reported **34 passed, 0 failed**.
+Fresh result on 2026-09-30: the production build completed and the Node test runner reported **35 passed, 0 failed**. The added checks parse the homepage identity graph, confirm no founding date is emitted, check the `llms.txt` boundaries, and require the service-page FAQ JSON-LD to have the same three questions as the visible FAQ.
 
 ## Sitemap and live technical audit
 

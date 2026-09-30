@@ -235,9 +235,11 @@ test('service metadata mirrors visible service content and publishes RSS discove
     const webPage = entries.find((entry) => entry['@type'] === 'WebPage');
     const service = entries.find((entry) => entry['@type'] === 'Service');
     const breadcrumb = entries.find((entry) => entry['@type'] === 'BreadcrumbList');
+    const faq = entries.find((entry) => entry['@type'] === 'FAQPage');
     const h1 = html.match(/<h1>([^<]+)<\/h1>/)?.[1];
-    assert.ok(webPage && service && breadcrumb, `${route} needs WebPage, Service and BreadcrumbList metadata`);
+    assert.ok(webPage && service && breadcrumb && faq, `${route} needs WebPage, Service, FAQPage and BreadcrumbList metadata`);
     assert.equal(service.name, h1?.replace(/\.$/, ''), `${route} service metadata must use the visible H1`);
+    assert.equal(faq.mainEntity.length, 3, `${route} needs three visible FAQ entries in metadata`);
     assert.equal(service.url, `https://www.perthroofcare.com.au/${route}/`);
     assert.equal(service.provider['@id'], 'https://www.perthroofcare.com.au/#business');
     assert.match(html, /rel="alternate" type="application\/rss\+xml" href="\/news\/feed\.xml"/i, `${route} needs RSS discovery`);
@@ -247,6 +249,22 @@ test('service metadata mirrors visible service content and publishes RSS discove
   assert.match(news, /rel="alternate" type="application\/rss\+xml" href="\/news\/feed\.xml"/i);
   assert.match(news, /Roof repair guides RSS/i);
   assert.match(feed, /<rss version="2\.0">/);
+});
+
+test('homepage identity graph and llms guide contain only visible, supportable facts', () => {
+  const home = readFileSync(fileFor(''), 'utf8');
+  const graphs = [...home.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
+  const identity = graphs.find((entry) => Array.isArray(entry['@graph']));
+  assert.ok(identity, 'homepage needs an identity graph');
+  const business = identity['@graph'].find((entry) => entry['@type'] === 'LocalBusiness');
+  const website = identity['@graph'].find((entry) => entry['@type'] === 'WebSite');
+  assert.equal(business.name, 'Ellis Services Group');
+  assert.equal(website.url, 'https://www.perthroofcare.com.au');
+  assert.equal('foundingDate' in business, false, 'do not publish an unverified founding date');
+  const llms = readFileSync(join(root, 'llms.txt'), 'utf8');
+  assert.match(llms, /^# Ellis Services Group/m);
+  assert.match(llms, /https:\/\/www\.perthroofcare\.com\.au\/roof-repairs\//);
+  assert.match(llms, /No price, availability, licence, insurance, warranty, rating or emergency-response claim is made here\./);
 });
 
 test('documented case records appear directly in their relevant services rather than a disconnected hub', () => {
@@ -351,7 +369,7 @@ test('legal information is useful, bounded and linked to the relevant roof-repai
 
 test('homepage keeps confirmed structured data and favicon declarations', () => {
   const home = readFileSync(fileFor(''), 'utf8'); const json = home.match(/<script type="application\/ld\+json">(.*?)<\/script>/i)?.[1]; assert.ok(json);
-  const organization = JSON.parse(json); assert.equal(organization.name, 'Ellis Services Group'); assert.equal(organization.foundingDate, '2020-11-11'); assert.equal(organization.telephone, '0405878406');
+  const identity = JSON.parse(json); const organization = identity['@graph'].find((entry) => entry['@type'] === 'LocalBusiness'); assert.equal(organization.name, 'Ellis Services Group'); assert.equal(organization.telephone, '0405878406');
   assert.match(home, /rel="icon" type="image\/png" sizes="512x512" href="\/favicon\.png"/); assert.match(home, /rel="apple-touch-icon" sizes="512x512" href="\/favicon\.png"/);
 });
 
