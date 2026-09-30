@@ -63,13 +63,49 @@ test('homepage carries the Roof Repairs Perth theme, focused paths and real work
   const home = readFileSync(fileFor(''), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
   assert.match(home, /<h1>ROOF REPAIRS PERTH\.<\/h1>/);
   assert.match(home, /ROOF REPAIRS PERTH — START WITH THE PROBLEM YOU CAN SEE\./);
-  assert.equal((home.match(/class="card"/g) ?? []).length, 9, 'home uses six service and three enquiry cards only');
-  for (const href of ['/roof-leak-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/', '/ridge-capping-repointing/', '/flashing-repairs/', '/roof-inspection/', '/projects/metal-roof-fastener-repair-sequence/', '/service-areas/', '/contact/']) assert.match(home, new RegExp(`href="${href}"`));
+  assert.equal((home.match(/class="card"/g) ?? []).length, 10, 'home uses seven service and three enquiry cards only');
+  for (const href of ['/roof-leak-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/', '/ridge-capping-repointing/', '/flashing-repairs/', '/gutters-downpipes/', '/roof-inspection/', '/projects/metal-roof-fastener-repair-sequence/', '/service-areas/', '/contact/']) assert.match(home, new RegExp(`href="${href}"`));
   assert.match(home, /REAL FASTENER WORK RECORD/i);
   assert.doesNotMatch(home, /hero-carousel|fixed-roofline-story|atlas-index|office-location/i);
   assert.match(home, /class="home-topic-rail home-hero-backdrop"/);
   assert.match(css, /\.home-topic-rail\.home-hero-backdrop\{[^}]*hero-australian-roofer-v2\.png[^}]*fixed/i);
   assert.match(css, /\.home-topic-rail\.home-hero-backdrop::before\{[^}]*linear-gradient/i);
+});
+
+test('priority owner pages use distinct service roles with crawlable supporting links', () => {
+  const expected = {
+    'roof-repairs': ['ROOF REPAIRS PERTH.', 'WHAT WE ASSESS FOR ROOF REPAIRS PERTH.', ['/roof-leak-repairs/', '/flashing-repairs/', '/gutters-downpipes/']],
+    'roof-leak-repairs': ['ROOF LEAK REPAIRS PERTH.', 'WHAT WE ASSESS FOR ROOF LEAK REPAIRS PERTH.', ['/roof-repairs/', '/flashing-repairs/', '/projects/roleystone-metal-roof-fastener-leak-repair/']],
+    'flashing-repairs': ['ROOF VALLEYS & FLASHING REPAIRS PERTH.', 'WHAT WE ASSESS FOR ROOF VALLEY & FLASHING REPAIRS PERTH.', ['/roof-leak-repairs/', '/news/roof-flashing-explained/']],
+    'gutters-downpipes': ['GUTTERS & DOWNPIPES PERTH.', 'GUTTERS & DOWNPIPES PERTH — ROOF-EDGE DRAINAGE AS ONE SYSTEM.', ['/gutter-repairs/', '/downpipe-repairs/', '/projects/wa-6121-tile-roof-valley-gutter-cleaning/']],
+    'downpipe-repairs': ['DOWNPIPE REPAIRS PERTH.', 'DOWNPIPE REPAIRS PERTH — THE VERTICAL PART OF THE ROOF DRAINAGE ROUTE.', ['/gutters-downpipes/', '/gutter-repairs/']]
+  };
+  for (const [route, [h1, section, links]] of Object.entries(expected)) {
+    const html = readFileSync(fileFor(route), 'utf8');
+    assert.match(html, new RegExp(`<h1>${h1.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<\\/h1>`));
+    assert.match(html, new RegExp(section.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    for (const href of links) assert.match(html, new RegExp(`href="${href}"`), `${route} needs ${href}`);
+    assert.match(html, /<link rel="canonical" href="https:\/\/www\.perthroofcare\.com\.au\//i);
+    assert.doesNotMatch(html, /<meta[^>]+name="robots"[^>]+noindex/i);
+  }
+});
+
+test('roof flashing guide stays informational and links naturally to flashing repairs', () => {
+  const article = readFileSync(fileFor('news/roof-flashing-explained'), 'utf8');
+  assert.match(article, /WHAT ROOF FLASHING DOES AT A JUNCTION/i);
+  assert.match(article, /WHEN A FLASHING DETAIL NEEDS A PROFESSIONAL REPAIR DISCUSSION/i);
+  assert.match(article, /href="\/flashing-repairs\/"/i);
+  assert.match(article, /href="\/roof-leak-repairs\/"/i);
+  assert.doesNotMatch(article, /24\s*\/\s*7|guaranteed|same-day/i);
+});
+
+test('gutter and downpipe pages distinguish their own service questions', () => {
+  const gutters = readFileSync(fileFor('gutters-downpipes'), 'utf8');
+  const downpipes = readFileSync(fileFor('downpipe-repairs'), 'utf8');
+  assert.match(gutters, /Gutters collect roof water; downpipes carry it from the outlet toward the ground-level connection/i);
+  assert.match(downpipes, /brackets, pipe sections, joints, bends and the (?:lower visible connection|connection below the gutter outlet)/i);
+  assert.match(downpipes, /does not represent underground stormwater work/i);
+  assert.notEqual(gutters.match(/<main[\s\S]*<\/main>/)?.[0], downpipes.match(/<main[\s\S]*<\/main>/)?.[0]);
 });
 
 test('service areas provide six rounded regional entry points, specific local repair pages and the real enquiry form', () => {
@@ -110,6 +146,30 @@ test('sitemap lists each canonical service URL once and news indexes the flashin
   assert.match(news, /href="\/news\/roof-flashing-explained\/"/i, 'news index needs a direct link to the flashing guide');
 });
 
+test('sitemap audit utility classifies every generated canonical URL without treating it as index status', async () => {
+  const { auditLocalSitemap } = await import('./scripts/audit-sitemap.mjs');
+  const rows = auditLocalSitemap(root);
+  const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
+  const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, location]) => location);
+  assert.equal(rows.length, locations.length);
+  assert.equal(new Set(rows.map((row) => row.url)).size, locations.length);
+  for (const row of rows) {
+    assert.equal(row.sitemap_member, 'yes');
+    assert.equal(row.local_http_status, '200');
+    assert.equal(row.canonical_matches_url, 'yes');
+    assert.equal(row.indexability, 'indexable');
+    assert.equal(row.gsc_status, 'unknown');
+  }
+});
+
+test('sitemap audit utility reads canonical, robots and X-Robots-Tag from an HTTP document separately', async () => {
+  const { inspectHttpDocument } = await import('./scripts/audit-sitemap.mjs');
+  assert.deepEqual(
+    inspectHttpDocument('<link rel="canonical" href="https://www.perthroofcare.com.au/roof-repairs/"><meta name="robots" content="index,follow">', 'index, follow'),
+    { live_canonical: 'https://www.perthroofcare.com.au/roof-repairs/', live_meta_robots: 'index,follow', live_x_robots_tag: 'index, follow' }
+  );
+});
+
 test('local area enquiry panels keep their copy readable without a full-height blank side column', () => {
   const html = readFileSync(fileFor('areas/cottesloe-roof-repairs'), 'utf8');
   assert.match(html, /\.area-enquiry\{background:var\(--sky-wash\)!important;color:var\(--coastal-ink\)!important\}/i);
@@ -146,8 +206,9 @@ test('every core service page publishes professional keyword-led scope and asses
     assert.doesNotMatch(html, /SERVICES WE DISCUSS|THE DETAILS WE CAN DISCUSS/i, `${route} must not retain generic service headings`);
     assert.match(html, /<nav aria-label="Related roof repair services">[\s\S]*?<a /, `${route} needs crawlable related links`);
     const linkSection = html.match(/<section class="section focus-links">[\s\S]*?<\/section>/)?.[0] ?? '';
-    assert.equal((linkSection.match(/<a href="\//g) ?? []).length, 3, `${route} needs exactly three contextual internal links`);
-    assert.doesNotMatch(html, /SERVICE DISCUSSION|PROPERTY CONTEXT|COMMON QUESTIONS|FIELD GUIDE \/ PRACTICAL CONTEXT|<details>/i, `${route} must not retain generic filler sections`);
+    assert.ok((linkSection.match(/<a href="\//g) ?? []).length >= 3, `${route} needs at least three contextual internal links`);
+    assert.equal((html.match(/<details>/g) ?? []).length, 3, `${route} needs three service-specific FAQs`);
+    assert.doesNotMatch(html, /SERVICE DISCUSSION|PROPERTY CONTEXT|COMMON QUESTIONS|FIELD GUIDE \/ PRACTICAL CONTEXT/i, `${route} must not retain generic filler sections`);
     assert.match(html, /case-evidence[\s\S]*?<section class="section focus-links">/i, `${route} must place the documented case before related links`);
   }
 });
