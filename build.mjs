@@ -142,8 +142,6 @@ for (const [path,title] of routes) {
 }
 // Case studies are surfaced from the relevant service pages; there is no standalone Projects hub.
 rmSync(join(root, 'projects', 'index.html'), { force: true });
-const urls=['',...routes.map(([p])=>p+'/')];
-writeFileSync(join(root,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map(p=>`<url><loc>${site}/${p}</loc></url>`).join('')}</urlset>`);
 
 const routeFile = (route) => join(root, route || '.', 'index.html');
 const writeRoute = (route, html) => {
@@ -273,8 +271,6 @@ amendRoute('service-areas', (html) => html.replace('</head>', `${areaEnquiryStyl
 const areaMobileLayoutStyle = `<style>@media(max-width:900px){.area-service-links{position:static!important;top:auto!important;left:auto!important;right:auto!important;padding:0!important;display:grid!important}}@media(max-width:560px){.area-local-services h2{font-size:clamp(2rem,10vw,3rem);margin-bottom:1rem}.area-service-links{margin-top:1rem}}</style>`;
 for (const [slug] of popularAreaServices) amendRoute(`areas/${slug}`, (html) => html.replace('</head>', `${areaMobileLayoutStyle}</head>`));
 amendRoute('service-areas', (html) => html.replace('</head>', `${areaMobileLayoutStyle}</head>`));
-const allSitemapRoutes = ['', ...routes.map(([path]) => path), ...popularAreaServices.map(([slug]) => `areas/${slug}`)];
-writeFileSync(join(root, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${allSitemapRoutes.map((path) => `<url><loc>${site}/${path}/</loc></url>`).join('')}</urlset>`);
 writeRoute('privacy', layout('Privacy', 'privacy/', `<section class="hero inner">${resourceMarkup('resources-gutter.png')}<div class="container hero-copy"><p class="eyebrow">PRIVACY / CONTACT</p><h1>PRIVACY INFORMATION.</h1><p>How this website handles information submitted through its contact form.</p></div></section><section class="section"><div class="narrow"><h2>Contact for privacy questions</h2><p>For a privacy-related question, contact Ellis Services Group directly by telephone or email: ${contact}.</p><h2>Contact form enquiries</h2><p>Enquiries submitted through the contact form are sent via Resend to Ellis Services Group at ellisservicesgroup3@outlook.com so the group can respond. Do not include information you do not wish to share in an enquiry.</p></div></section>`));
 writeFileSync(join(root,'robots.txt'),'User-agent: *\nAllow: /\nSitemap: https://www.perthroofcare.com.au/sitemap.xml\n');
 
@@ -784,14 +780,24 @@ const articlePage = (article) => `<article class="compact-information news-artic
 
 for (const article of newsArticleRecords) writeRoute(`news/${article.slug}`, layout(article.title, `news/${article.slug}/`, articlePage(article), articleSchema(article)));
 
-const newsCards = newsArticleRecords.map((article) => `<article class="card"><p class="eyebrow">ROOF REPAIR GUIDE</p><h2>${article.title}</h2><p>${article.description}</p><a href="/news/${article.slug}/">Read the guide <span aria-hidden="true">→</span></a></article>`).join('');
+const supplementaryNewsCards = [
+  {
+    href: '/news/roof-flashing-explained/',
+    title: 'Roof Flashing Explained',
+    description: 'A practical introduction to flashing lines, roof junctions, valleys and the related water-path details to note before an enquiry.'
+  }
+];
+const newsCards = [
+  ...newsArticleRecords.map((article) => ({ href: `/news/${article.slug}/`, title: article.title, description: article.description })),
+  ...supplementaryNewsCards
+].map((article) => `<article class="card"><p class="eyebrow">ROOF REPAIR GUIDE</p><h2>${article.title}</h2><p>${article.description}</p><a href="${article.href}">Read the guide <span aria-hidden="true">→</span></a></article>`).join('');
 writeRoute('news', layout('Roof Repair Guides Perth', 'news/', `<section class="topic-rail"><div class="container"><p class="eyebrow">ROOF REPAIR GUIDES / PERTH</p><h1>ROOF REPAIR GUIDES PERTH.</h1><p>English-language, practical guides for roof leaks, tile roofs, metal roofs, ridge capping, valleys, flashings and roof inspections. Each guide starts with observable details and links to its relevant Perth service page.</p></div></section><section class="section guide-index"><div class="container"><p class="eyebrow">PRACTICAL ROOF REPAIR INFORMATION</p><h2>SEARCH THE TOPIC THAT MATCHES THE ROOFLINE DETAIL.</h2><p>Our strong Google review feedback and high level of repeat customer enquiries reflect a service approach built around clear communication and practical roof-repair context.</p><div class="cards">${newsCards}</div></div></section><section class="section home-enquiry"><div class="container"><p class="eyebrow">DIRECT CONTACT</p><h2>USE A GUIDE, THEN START A CLEAR ENQUIRY.</h2><p>General information cannot diagnose a particular property. Share the property suburb, visible roof or drainage detail and any safe photographs when you contact Ellis Services Group.</p><p><a class="button" href="/contact/">Make an enquiry</a></p></div></section>`));
 amendRoute('news', (html) => html.replace('</head>', `${rssDiscoveryLink}</head>`).replace('</main>', '<section class="section rss-resource"><div class="container"><p class="eyebrow">RSS / ROOF REPAIR GUIDES</p><p><a href="/news/feed.xml">Roof repair guides RSS</a></p></div></section></main>'));
 
 const rssItems = newsArticleRecords.map((article) => `<item><title>${xmlEscape(article.title)}</title><link>${site}/news/${article.slug}/</link><guid isPermaLink="true">${site}/news/${article.slug}/</guid><description>${xmlEscape(article.description)}</description><pubDate>Sun, 27 Sep 2026 00:00:00 +0000</pubDate></item>`).join('');
 writeFileSync(join(root, 'news', 'feed.xml'), `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Roof Repairs Perth News | Ellis Services Group</title><link>${site}/news/</link><description>Practical Perth roof repair guides from Ellis Services Group.</description><language>en-au</language><lastBuildDate>Sun, 27 Sep 2026 00:00:00 +0000</lastBuildDate>${rssItems}</channel></rss>`);
 
-const finalSitemapRoutes = [...new Set(['', ...routes.map((route) => route.path), ...popularAreaServices.map(([slug]) => `areas/${slug}`), ...newsArticleRecords.map((article) => `news/${article.slug}`)])];
+const finalSitemapRoutes = [...new Set(['', ...routes.map(([path]) => path), ...popularAreaServices.map(([slug]) => `areas/${slug}`), ...newsArticleRecords.map((article) => `news/${article.slug}`)])];
 writeFileSync(join(root, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${finalSitemapRoutes.map((route) => `<url><loc>${site}/${route ? `${route}/` : ''}</loc></url>`).join('')}</urlset>`);
 
 const roofLeakCaseImages = [

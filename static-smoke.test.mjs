@@ -93,6 +93,23 @@ test('service areas provide six rounded regional entry points, specific local re
   }
 });
 
+test('sitemap lists each canonical service URL once and news indexes the flashing guide', () => {
+  const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
+  const news = readFileSync(fileFor('news'), 'utf8');
+  const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, location]) => location);
+  const required = [
+    'https://www.perthroofcare.com.au/',
+    'https://www.perthroofcare.com.au/roof-leak-repairs/',
+    'https://www.perthroofcare.com.au/flashing-repairs/',
+    'https://www.perthroofcare.com.au/news/roof-flashing-explained/'
+  ];
+  for (const location of required) {
+    assert.ok(locations.includes(location), `sitemap needs ${location}`);
+    assert.equal(locations.filter((entry) => entry === location).length, 1, `sitemap must list ${location} once`);
+  }
+  assert.match(news, /href="\/news\/roof-flashing-explained\/"/i, 'news index needs a direct link to the flashing guide');
+});
+
 test('local area enquiry panels keep their copy readable without a full-height blank side column', () => {
   const html = readFileSync(fileFor('areas/cottesloe-roof-repairs'), 'utf8');
   assert.match(html, /\.area-enquiry\{background:var\(--sky-wash\)!important;color:var\(--coastal-ink\)!important\}/i);
