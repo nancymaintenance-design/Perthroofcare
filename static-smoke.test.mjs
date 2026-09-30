@@ -63,13 +63,49 @@ test('homepage carries the Roof Repairs Perth theme, focused paths and real work
   const home = readFileSync(fileFor(''), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
   assert.match(home, /<h1>ROOF REPAIRS PERTH\.<\/h1>/);
   assert.match(home, /ROOF REPAIRS PERTH — START WITH THE PROBLEM YOU CAN SEE\./);
-  assert.equal((home.match(/class="card"/g) ?? []).length, 9, 'home uses six service and three enquiry cards only');
-  for (const href of ['/roof-leak-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/', '/ridge-capping-repointing/', '/flashing-repairs/', '/roof-inspection/', '/projects/metal-roof-fastener-repair-sequence/', '/service-areas/', '/contact/']) assert.match(home, new RegExp(`href="${href}"`));
+  assert.equal((home.match(/class="card"/g) ?? []).length, 10, 'home uses seven service and three enquiry cards only');
+  for (const href of ['/roof-leak-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/', '/ridge-capping-repointing/', '/flashing-repairs/', '/gutters-downpipes/', '/roof-inspection/', '/projects/metal-roof-fastener-repair-sequence/', '/service-areas/', '/contact/']) assert.match(home, new RegExp(`href="${href}"`));
   assert.match(home, /REAL FASTENER WORK RECORD/i);
   assert.doesNotMatch(home, /hero-carousel|fixed-roofline-story|atlas-index|office-location/i);
   assert.match(home, /class="home-topic-rail home-hero-backdrop"/);
   assert.match(css, /\.home-topic-rail\.home-hero-backdrop\{[^}]*hero-australian-roofer-v2\.png[^}]*fixed/i);
   assert.match(css, /\.home-topic-rail\.home-hero-backdrop::before\{[^}]*linear-gradient/i);
+});
+
+test('priority owner pages use distinct service roles with crawlable supporting links', () => {
+  const expected = {
+    'roof-repairs': ['ROOF REPAIRS PERTH.', 'WHAT WE ASSESS FOR ROOF REPAIRS PERTH.', ['/roof-leak-repairs/', '/flashing-repairs/', '/gutters-downpipes/']],
+    'roof-leak-repairs': ['ROOF LEAK REPAIRS PERTH.', 'WHAT WE ASSESS FOR ROOF LEAK REPAIRS PERTH.', ['/roof-repairs/', '/flashing-repairs/', '/projects/roleystone-metal-roof-fastener-leak-repair/']],
+    'flashing-repairs': ['ROOF VALLEYS & FLASHING REPAIRS PERTH.', 'WHAT WE ASSESS FOR ROOF VALLEY & FLASHING REPAIRS PERTH.', ['/roof-leak-repairs/', '/news/roof-flashing-explained/']],
+    'gutters-downpipes': ['GUTTERS & DOWNPIPES PERTH.', 'GUTTERS & DOWNPIPES PERTH — ROOF-EDGE DRAINAGE AS ONE SYSTEM.', ['/gutter-repairs/', '/downpipe-repairs/', '/projects/wa-6121-tile-roof-valley-gutter-cleaning/']],
+    'downpipe-repairs': ['DOWNPIPE REPAIRS PERTH.', 'DOWNPIPE REPAIRS PERTH — THE VERTICAL PART OF THE ROOF DRAINAGE ROUTE.', ['/gutters-downpipes/', '/gutter-repairs/']]
+  };
+  for (const [route, [h1, section, links]] of Object.entries(expected)) {
+    const html = readFileSync(fileFor(route), 'utf8');
+    assert.match(html, new RegExp(`<h1>${h1.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<\\/h1>`));
+    assert.match(html, new RegExp(section.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    for (const href of links) assert.match(html, new RegExp(`href="${href}"`), `${route} needs ${href}`);
+    assert.match(html, /<link rel="canonical" href="https:\/\/www\.perthroofcare\.com\.au\//i);
+    assert.doesNotMatch(html, /<meta[^>]+name="robots"[^>]+noindex/i);
+  }
+});
+
+test('roof flashing guide stays informational and links naturally to flashing repairs', () => {
+  const article = readFileSync(fileFor('news/roof-flashing-explained'), 'utf8');
+  assert.match(article, /WHAT ROOF FLASHING DOES AT A JUNCTION/i);
+  assert.match(article, /WHEN A FLASHING DETAIL NEEDS A PROFESSIONAL REPAIR DISCUSSION/i);
+  assert.match(article, /href="\/flashing-repairs\/"/i);
+  assert.match(article, /href="\/roof-leak-repairs\/"/i);
+  assert.doesNotMatch(article, /24\s*\/\s*7|guaranteed|same-day/i);
+});
+
+test('gutter and downpipe pages distinguish their own service questions', () => {
+  const gutters = readFileSync(fileFor('gutters-downpipes'), 'utf8');
+  const downpipes = readFileSync(fileFor('downpipe-repairs'), 'utf8');
+  assert.match(gutters, /Gutters collect roof water; downpipes carry it from the outlet toward the ground-level connection/i);
+  assert.match(downpipes, /brackets, pipe sections, joints, bends and the (?:lower visible connection|connection below the gutter outlet)/i);
+  assert.match(downpipes, /does not represent underground stormwater work/i);
+  assert.notEqual(gutters.match(/<main[\s\S]*<\/main>/)?.[0], downpipes.match(/<main[\s\S]*<\/main>/)?.[0]);
 });
 
 test('service areas provide six rounded regional entry points, specific local repair pages and the real enquiry form', () => {
@@ -93,6 +129,29 @@ test('service areas provide six rounded regional entry points, specific local re
   }
 });
 
+test('service pages present Ellis as a roof-repair provider and local pages add distinct area value', () => {
+  const home = readFileSync(fileFor(''), 'utf8');
+  const about = readFileSync(fileFor('about'), 'utf8');
+  const storm = readFileSync(fileFor('storm-damage-roof-repairs'), 'utf8');
+  const cottesloe = readFileSync(fileFor('areas/cottesloe-roof-repairs'), 'utf8');
+  const kalamunda = readFileSync(fileFor('areas/kalamunda-roof-repairs'), 'utf8');
+
+  assert.match(home, /PERTH ROOF CARE IS OPERATED BY ELLIS SERVICES GROUP PTY LTD/i);
+  assert.match(about, /Perth Roof Care is operated by Ellis Services Group Pty Ltd\./i);
+  assert.match(storm, /Urgent storm-related roof repair enquiries are prioritised\. Attendance is arranged promptly when weather, site access and safety conditions allow\./i);
+
+  for (const route of ['', 'services', 'roof-repairs', 'roof-leak-repairs', 'tile-roof-repairs', 'metal-roof-repairs', 'storm-damage-roof-repairs']) {
+    const html = readFileSync(fileFor(route), 'utf8');
+    assert.doesNotMatch(html, /reading room|clear enquiry|not a diagnosis/i, `${route || 'home'} must not use passive information-site wording`);
+  }
+
+  assert.match(cottesloe, /COASTAL ROOF REPAIR PRIORITIES/i);
+  assert.match(kalamunda, /HILLS PROPERTY ROOF REPAIR PRIORITIES/i);
+  assert.notEqual(cottesloe.match(/<main[\s\S]*<\/main>/)?.[0], kalamunda.match(/<main[\s\S]*<\/main>/)?.[0]);
+  assert.match(cottesloe, /Roof leak repairs Perth/i);
+  assert.match(kalamunda, /Gutter repairs Perth/i);
+});
+
 test('sitemap lists each canonical service URL once and news indexes the flashing guide', () => {
   const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
   const news = readFileSync(fileFor('news'), 'utf8');
@@ -108,6 +167,30 @@ test('sitemap lists each canonical service URL once and news indexes the flashin
     assert.equal(locations.filter((entry) => entry === location).length, 1, `sitemap must list ${location} once`);
   }
   assert.match(news, /href="\/news\/roof-flashing-explained\/"/i, 'news index needs a direct link to the flashing guide');
+});
+
+test('sitemap audit utility classifies every generated canonical URL without treating it as index status', async () => {
+  const { auditLocalSitemap } = await import('./scripts/audit-sitemap.mjs');
+  const rows = auditLocalSitemap(root);
+  const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
+  const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, location]) => location);
+  assert.equal(rows.length, locations.length);
+  assert.equal(new Set(rows.map((row) => row.url)).size, locations.length);
+  for (const row of rows) {
+    assert.equal(row.sitemap_member, 'yes');
+    assert.equal(row.local_http_status, '200');
+    assert.equal(row.canonical_matches_url, 'yes');
+    assert.equal(row.indexability, 'indexable');
+    assert.equal(row.gsc_status, 'unknown');
+  }
+});
+
+test('sitemap audit utility reads canonical, robots and X-Robots-Tag from an HTTP document separately', async () => {
+  const { inspectHttpDocument } = await import('./scripts/audit-sitemap.mjs');
+  assert.deepEqual(
+    inspectHttpDocument('<link rel="canonical" href="https://www.perthroofcare.com.au/roof-repairs/"><meta name="robots" content="index,follow">', 'index, follow'),
+    { live_canonical: 'https://www.perthroofcare.com.au/roof-repairs/', live_meta_robots: 'index,follow', live_x_robots_tag: 'index, follow' }
+  );
 });
 
 test('local area enquiry panels keep their copy readable without a full-height blank side column', () => {
@@ -146,8 +229,9 @@ test('every core service page publishes professional keyword-led scope and asses
     assert.doesNotMatch(html, /SERVICES WE DISCUSS|THE DETAILS WE CAN DISCUSS/i, `${route} must not retain generic service headings`);
     assert.match(html, /<nav aria-label="Related roof repair services">[\s\S]*?<a /, `${route} needs crawlable related links`);
     const linkSection = html.match(/<section class="section focus-links">[\s\S]*?<\/section>/)?.[0] ?? '';
-    assert.equal((linkSection.match(/<a href="\//g) ?? []).length, 3, `${route} needs exactly three contextual internal links`);
-    assert.doesNotMatch(html, /SERVICE DISCUSSION|PROPERTY CONTEXT|COMMON QUESTIONS|FIELD GUIDE \/ PRACTICAL CONTEXT|<details>/i, `${route} must not retain generic filler sections`);
+    assert.ok((linkSection.match(/<a href="\//g) ?? []).length >= 3, `${route} needs at least three contextual internal links`);
+    assert.equal((html.match(/<details>/g) ?? []).length, 3, `${route} needs three service-specific FAQs`);
+    assert.doesNotMatch(html, /SERVICE DISCUSSION|PROPERTY CONTEXT|COMMON QUESTIONS|FIELD GUIDE \/ PRACTICAL CONTEXT/i, `${route} must not retain generic filler sections`);
     assert.match(html, /case-evidence[\s\S]*?<section class="section focus-links">/i, `${route} must place the documented case before related links`);
   }
 });
@@ -174,9 +258,11 @@ test('service metadata mirrors visible service content and publishes RSS discove
     const webPage = entries.find((entry) => entry['@type'] === 'WebPage');
     const service = entries.find((entry) => entry['@type'] === 'Service');
     const breadcrumb = entries.find((entry) => entry['@type'] === 'BreadcrumbList');
+    const faq = entries.find((entry) => entry['@type'] === 'FAQPage');
     const h1 = html.match(/<h1>([^<]+)<\/h1>/)?.[1];
-    assert.ok(webPage && service && breadcrumb, `${route} needs WebPage, Service and BreadcrumbList metadata`);
+    assert.ok(webPage && service && breadcrumb && faq, `${route} needs WebPage, Service, FAQPage and BreadcrumbList metadata`);
     assert.equal(service.name, h1?.replace(/\.$/, ''), `${route} service metadata must use the visible H1`);
+    assert.equal(faq.mainEntity.length, 3, `${route} needs three visible FAQ entries in metadata`);
     assert.equal(service.url, `https://www.perthroofcare.com.au/${route}/`);
     assert.equal(service.provider['@id'], 'https://www.perthroofcare.com.au/#business');
     assert.match(html, /rel="alternate" type="application\/rss\+xml" href="\/news\/feed\.xml"/i, `${route} needs RSS discovery`);
@@ -186,6 +272,25 @@ test('service metadata mirrors visible service content and publishes RSS discove
   assert.match(news, /rel="alternate" type="application\/rss\+xml" href="\/news\/feed\.xml"/i);
   assert.match(news, /Roof repair guides RSS/i);
   assert.match(feed, /<rss version="2\.0">/);
+});
+
+test('homepage identity graph and llms guide contain only visible, supportable facts', () => {
+  const home = readFileSync(fileFor(''), 'utf8');
+  const graphs = [...home.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
+  const identity = graphs.find((entry) => Array.isArray(entry['@graph']));
+  assert.ok(identity, 'homepage needs an identity graph');
+  const business = identity['@graph'].find((entry) => entry['@type'] === 'LocalBusiness');
+  const website = identity['@graph'].find((entry) => entry['@type'] === 'WebSite');
+  assert.equal(business.name, 'Ellis Services Group');
+  assert.equal(business.alternateName, 'Perth Roof Care');
+  assert.equal(website.url, 'https://www.perthroofcare.com.au');
+  assert.equal('foundingDate' in business, false, 'do not publish an unverified founding date');
+  const llms = readFileSync(join(root, 'llms.txt'), 'utf8');
+  assert.match(llms, /^# Ellis Services Group/m);
+  assert.match(llms, /Perth Roof Care is operated by Ellis Services Group Pty Ltd\./);
+  assert.match(llms, /https:\/\/www\.perthroofcare\.com\.au\/roof-repairs\//);
+  assert.match(llms, /No price, licence, insurance, warranty or rating claim is made here\./);
+  assert.match(llms, /Urgent storm-related roof repair enquiries are prioritised; attendance is arranged promptly when weather, site access and safety conditions allow\./);
 });
 
 test('documented case records appear directly in their relevant services rather than a disconnected hub', () => {
@@ -290,7 +395,7 @@ test('legal information is useful, bounded and linked to the relevant roof-repai
 
 test('homepage keeps confirmed structured data and favicon declarations', () => {
   const home = readFileSync(fileFor(''), 'utf8'); const json = home.match(/<script type="application\/ld\+json">(.*?)<\/script>/i)?.[1]; assert.ok(json);
-  const organization = JSON.parse(json); assert.equal(organization.name, 'Ellis Services Group'); assert.equal(organization.foundingDate, '2020-11-11'); assert.equal(organization.telephone, '0405878406');
+  const identity = JSON.parse(json); const organization = identity['@graph'].find((entry) => entry['@type'] === 'LocalBusiness'); assert.equal(organization.name, 'Ellis Services Group'); assert.equal(organization.telephone, '0405878406');
   assert.match(home, /rel="icon" type="image\/png" sizes="512x512" href="\/favicon\.png"/); assert.match(home, /rel="apple-touch-icon" sizes="512x512" href="\/favicon\.png"/);
 });
 
