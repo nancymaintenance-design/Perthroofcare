@@ -2,7 +2,7 @@
 
 Validated on: 2026-09-30
 Branch: `seo/perth-roof-care-core-pages-20260930`
-Release state: **not deployed or submitted from this task**.
+Release state: deployed to Vercel production on 2026-09-30; no Search Console submission or URL Inspection was performed.
 
 ## Scope and evidence boundaries
 
@@ -39,7 +39,7 @@ The resulting [url-audit.csv](url-audit.csv) records each sitemap URL separately
 - `X-Robots-Tag`, and
 - `gsc_status`, which remains `unknown` until an owner-authorised Search Console review occurs.
 
-The 2026-09-30 live read-only run returned 55/55 `200` responses for the www sitemap URLs, with no canonical, meta-robots or `X-Robots-Tag` exception recorded. This confirms only the technical response observed at that time; it does not confirm indexing, ranking, or that local content edits are already live.
+The post-release 2026-09-30 live read-only run returned 55/55 `200` responses for the www sitemap URLs, with no canonical, meta-robots or `X-Robots-Tag` exception recorded. The formal domain also returned `200` for the updated home page, flashing service page, `/llms.txt` and sitemap. This confirms only the technical response observed at that time; it does not confirm indexing, ranking, or rich-result eligibility.
 
 ## Manual route/response checks
 
