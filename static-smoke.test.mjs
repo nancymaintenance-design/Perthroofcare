@@ -129,6 +129,29 @@ test('service areas provide six rounded regional entry points, specific local re
   }
 });
 
+test('service pages present Ellis as a roof-repair provider and local pages add distinct area value', () => {
+  const home = readFileSync(fileFor(''), 'utf8');
+  const about = readFileSync(fileFor('about'), 'utf8');
+  const storm = readFileSync(fileFor('storm-damage-roof-repairs'), 'utf8');
+  const cottesloe = readFileSync(fileFor('areas/cottesloe-roof-repairs'), 'utf8');
+  const kalamunda = readFileSync(fileFor('areas/kalamunda-roof-repairs'), 'utf8');
+
+  assert.match(home, /PERTH ROOF CARE IS OPERATED BY ELLIS SERVICES GROUP PTY LTD/i);
+  assert.match(about, /Perth Roof Care is operated by Ellis Services Group Pty Ltd\./i);
+  assert.match(storm, /Urgent storm-related roof repair enquiries are prioritised\. Attendance is arranged promptly when weather, site access and safety conditions allow\./i);
+
+  for (const route of ['', 'services', 'roof-repairs', 'roof-leak-repairs', 'tile-roof-repairs', 'metal-roof-repairs', 'storm-damage-roof-repairs']) {
+    const html = readFileSync(fileFor(route), 'utf8');
+    assert.doesNotMatch(html, /reading room|clear enquiry|not a diagnosis/i, `${route || 'home'} must not use passive information-site wording`);
+  }
+
+  assert.match(cottesloe, /COASTAL ROOF REPAIR PRIORITIES/i);
+  assert.match(kalamunda, /HILLS PROPERTY ROOF REPAIR PRIORITIES/i);
+  assert.notEqual(cottesloe.match(/<main[\s\S]*<\/main>/)?.[0], kalamunda.match(/<main[\s\S]*<\/main>/)?.[0]);
+  assert.match(cottesloe, /Roof leak repairs Perth/i);
+  assert.match(kalamunda, /Gutter repairs Perth/i);
+});
+
 test('sitemap lists each canonical service URL once and news indexes the flashing guide', () => {
   const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
   const news = readFileSync(fileFor('news'), 'utf8');
@@ -259,12 +282,15 @@ test('homepage identity graph and llms guide contain only visible, supportable f
   const business = identity['@graph'].find((entry) => entry['@type'] === 'LocalBusiness');
   const website = identity['@graph'].find((entry) => entry['@type'] === 'WebSite');
   assert.equal(business.name, 'Ellis Services Group');
+  assert.equal(business.alternateName, 'Perth Roof Care');
   assert.equal(website.url, 'https://www.perthroofcare.com.au');
   assert.equal('foundingDate' in business, false, 'do not publish an unverified founding date');
   const llms = readFileSync(join(root, 'llms.txt'), 'utf8');
   assert.match(llms, /^# Ellis Services Group/m);
+  assert.match(llms, /Perth Roof Care is operated by Ellis Services Group Pty Ltd\./);
   assert.match(llms, /https:\/\/www\.perthroofcare\.com\.au\/roof-repairs\//);
-  assert.match(llms, /No price, availability, licence, insurance, warranty, rating or emergency-response claim is made here\./);
+  assert.match(llms, /No price, licence, insurance, warranty or rating claim is made here\./);
+  assert.match(llms, /Urgent storm-related roof repair enquiries are prioritised; attendance is arranged promptly when weather, site access and safety conditions allow\./);
 });
 
 test('documented case records appear directly in their relevant services rather than a disconnected hub', () => {
