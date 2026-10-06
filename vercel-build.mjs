@@ -159,7 +159,7 @@ mkdirSync(functionDirectory, { recursive: true });
 cpSync(enquirySource, join(functionDirectory, 'index.js'));
 writeFileSync(join(functionDirectory, 'package.json'), JSON.stringify({ type: 'module' }));
 writeFileSync(join(functionDirectory, '.vc-config.json'), JSON.stringify({
-  runtime: 'nodejs20.x',
+  runtime: 'nodejs24.x',
   handler: 'index.js',
   launcherType: 'Nodejs',
   shouldAddHelpers: true
