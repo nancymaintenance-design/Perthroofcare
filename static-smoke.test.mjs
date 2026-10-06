@@ -449,6 +449,34 @@ test('keyword-led news articles publish useful English guidance, schema and an R
   assert.match(readFileSync(fileFor('news'), 'utf8'), /rel="alternate" type="application\/rss\+xml" href="\/news\/feed\.xml"/i);
 });
 
+test('five supplied four-image completed-work cases are indexable and exposed through a matching JSON Feed', () => {
+  const cases = [
+    ['metal-roof-ridge-capping-repair-perth', 'metal-roof-ridge-capping-case-01-complete-overview.png'],
+    ['tile-roof-chimney-flashing-repair-perth', 'tile-chimney-flashing-case-01-overview.png'],
+    ['metal-roof-hip-ridge-capping-repair-perth', 'metal-hip-ridge-case-01-overview.png'],
+    ['tile-roof-valley-chimney-flashing-repairs-perth', 'tile-valley-chimney-case-01-chimney-overview.png'],
+    ['metal-roof-ridge-flashing-repair-perth', 'metal-ridge-flashing-case-01-junction-detail.png']
+  ];
+  const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
+  const feed = JSON.parse(readFileSync(join(root, 'case-studies.json'), 'utf8'));
+  const gallery = readFileSync(fileFor('gallery'), 'utf8');
+  assert.equal(feed.version, 'https://jsonfeed.org/version/1.1');
+  assert.equal(feed.items.length, cases.length);
+  for (const [slug, image] of cases) {
+    const html = readFileSync(fileFor(`projects/${slug}`), 'utf8');
+    assert.equal((html.match(/<h1[\s>]/gi) ?? []).length, 1, `${slug} needs one H1`);
+    assert.equal((html.match(/<figure>/g) ?? []).length, 4, `${slug} must retain all four supplied photographs`);
+    assert.match(html, new RegExp(image.replaceAll('.', '\\.'), 'i'));
+    assert.match(html, /<script type="application\/ld\+json">[\s\S]*?"ImageObject"/i, `${slug} needs image JSON-LD`);
+    assert.match(sitemap, new RegExp(`/projects/${slug}/`), `${slug} must be in the sitemap`);
+    assert.match(gallery, new RegExp(`/projects/${slug}/`), `${slug} must be in the case-study index`);
+    assert.ok(existsSync(join(root, 'public', 'assets', 'images', image)), `${image} must be staged for production`);
+  }
+  assert.match(readFileSync(join(root, 'llms.txt'), 'utf8'), /Case-study JSON Feed/i);
+  assert.match(readFileSync(fileFor('metal-roof-repairs'), 'utf8'), /metal-roof-ridge-capping-repair-perth/i);
+  assert.match(readFileSync(fileFor('flashing-repairs'), 'utf8'), /tile-roof-chimney-flashing-repair-perth/i);
+});
+
 test('storm damage repairs presents the supplied six-image urgent-response record with safety conditions', () => {
   const html = readFileSync(fileFor('storm-damage-roof-repairs'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
   assert.ok(html.includes(`<section class="topic-rail service-hero" style="--service-hero-image:url('/assets/images/storm-damage-case-06-roof-void-inspection.jpg')">`), 'storm damage needs its own documented-case title image');

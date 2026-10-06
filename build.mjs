@@ -46,7 +46,12 @@ const descriptions = {
   'Metal Roof Fastener Leak Repair Project': 'Documented metal roof fastener leak repair sequence: overall roof condition, fastener details, recorded work and completed roof surface.',
   'Tile Roof and Valley Gutter Cleaning WA 6121': 'WA 6121 tile roof and valley gutter cleaning case study: documented roof-drainage cleaning and tile repair work in Western Australia.',
   'Tile Roof Repairs Perth': 'Tile roof repairs in Perth for cracked, displaced or weathered tiles, ridge details and connected drainage work.',
-  'Roof Restoration Perth': 'Roof restoration services for Perth properties, considering surface condition, ageing and previous repair history.'
+  'Roof Restoration Perth': 'Roof restoration services for Perth properties, considering surface condition, ageing and previous repair history.',
+  'Metal Roof Ridge Capping Repair Perth': 'Documented Perth metal roof ridge capping repair with completed roof, ridge, fixing and eave details.',
+  'Tile Roof Chimney Flashing Repair Perth': 'Documented Perth tile roof chimney flashing repair with completed valley, chimney and flashing details.',
+  'Metal Roof Hip & Ridge Capping Repair Perth': 'Documented Perth metal roof hip and ridge capping repair with completed junction and roofline details.',
+  'Tile Roof Valley & Chimney Flashing Repairs Perth': 'Documented Perth tile roof valley and chimney flashing repair with finished roof junction details.',
+  'Metal Roof Ridge Flashing Repair Perth': 'Documented Perth metal roof ridge flashing repair with completed ridge, hip and sheet-metal details.'
 };
 const description = (title) => (descriptions[title] ?? `${title} services from Ellis Services Group for Perth roof repairs, leaks, tiles, flashing, gutters and drainage.`).slice(0, 160);
 const image = (n=0) => { const files=['hero-roof.png','metal-roof.png','inspection.png','gutter.png']; return `<div class="media-frame"><img src="/assets/images/${files[n%4]}" alt="Roofing material and drainage detail"></div>`; };
@@ -134,8 +139,8 @@ for (const [path,title] of routes) {
     {question:'Where are flashing guides?',answer:'The Flashing Repairs page is available through Services, and the Roof Flashing Explained article is listed in the Resources section.'},
     {question:'Where are gutter guides?',answer:'Use the Gutters & Downpipes or Gutter Repairs pages for service information, and read Gutter Warning Signs in the Resources section for related context.'},
     {question:'Where are drainage guides?',answer:'The Drainage After Rain article and the Gutters & Downpipes page provide general reading about drainage routes, gutters and downpipes.'},
-    {question:'Does the site publish project stories?',answer:'The site provides general roof repair reading and illustrative material, roofline and drainage images. It does not present the gallery as customer project stories.'},
-    {question:'Are the images customer photographs?',answer:'No. The legal page states that website imagery is illustrative and does not depict client work.'},
+    {question:'Does the site publish project stories?',answer:'Yes. The documented completed-work case pages use supplied project photographs in four-image records. Other service and guide imagery may be illustrative.'},
+    {question:'Are the images customer photographs?',answer:'Pages labelled “Documented completed work” contain supplied project photographs. Their locations are not published; other website imagery may be illustrative.'},
     {question:'How can I contact Ellis Services Group?',answer:'Call 0405878406 or email ellisservicesgroup3@outlook.com to begin a direct conversation about Perth roof repairs.'},
     {question:'What is the address listed on the site?',answer:'The listed address is 140 St Georges Terrace, Perth WA 6000.'},
     {question:'Where can I read privacy information?',answer:'The Privacy page provides the website privacy contact point and explains that the site links visitors to direct phone and email contact channels.'}
@@ -144,7 +149,7 @@ for (const [path,title] of routes) {
   else if(path === 'news') html=layout(title,path+'/',`<section class="hero inner">${image(0)}<div class="container hero-copy"><p class="eyebrow">NEWS / GUIDES</p><h1>THE ROOF REPAIR READING ROOM.</h1><p>Long-form guides about materials, rooflines, drainage and observations.</p></div></section><section class="section"><div class="container cards news-guide-grid">${routes.filter(([p])=>p.startsWith('news/')).map(([p,t],i)=>`<article class="card">${image(i)}<p class="eyebrow">GUIDE</p><h2>${t}</h2><p>Read practical context for Perth roof repairs without claims about an individual roof.</p><a href="/${p}/">Read the guide</a></article>`).join('')}</div></section>`);
   else if(path.startsWith('news/')) html=layout(title,path+'/',`<article><section class="hero inner">${image(1)}<div class="container hero-copy"><p class="eyebrow">GUIDE / ROOF REPAIRS</p><h1>${title.toUpperCase()}.</h1><p>A closer reading of a roof-related topic in Perth roof repairs context.</p></div></section><section class="section"><div class="narrow"><h2>Start with the visible detail</h2><p>Roof materials and drainage components are easier to discuss when a visible detail is described with its location and neighbouring parts. A guide can help identify the language for that description, without turning an observation into a conclusion.</p><h2>Trace the relationship</h2><p>Consider how the observed point relates to a roof edge, a junction, a flashing line or a drainage route. This creates a useful map of the roofline and keeps the conversation grounded in what is actually visible.</p><h2>Use material context carefully</h2><p>Metal, tile, capping and gutter components have different forms. Naming a material gives useful context, but it does not determine what a condition means. Keep notes clear, short and specific.</p><h2>Continue the reading</h2><p>Ellis Services Group provides Perth roof repair information across related pages. Read a service guide or use the direct phone and email details when you are ready to make an enquiry.</p></div></section>${related}</article>`);
   else if(path === 'about') html=layout(title,path+'/',`<section class="hero inner">${image(0)}<div class="container hero-copy"><p class="eyebrow">ABOUT / PERTH, WESTERN AUSTRALIA</p><h1>ELLIS SERVICES GROUP.</h1><p>Home repairs and maintenance guided by integrity, clear communication and long-term trust.</p></div></section><article class="section"><div class="narrow"><h2>Established in Perth in 2011</h2><p>Ellis Services Group was established in 2011 with a straightforward view of home repairs and maintenance: the work should begin with integrity and a fair price. In Perth, Western Australia, homes and investment properties need attention over time. A roofline, drainage route, exterior detail or interior repair question can become part of a wider maintenance conversation. Our aim is to bring practical experience, careful communication and a service mindset to those conversations.</p><p>We work in a field where people often need help at a moment when something has changed at home or at a property they manage. The useful starting point is not a sweeping promise. It is listening to the detail, understanding the context and explaining the next conversation in plain English. That approach has shaped Ellis Services Group since 2011 and remains central to how we think about service in Perth.</p><h2>Integrity first, fair pricing always</h2><p>Integrity first and fair pricing are not marketing phrases to us; they are the principles we use to guide everyday decisions. Home repairs can involve unfamiliar terms, competing priorities and information that is difficult to compare. We believe people deserve a clear, respectful discussion that stays connected to the work being considered. Fair pricing means approaching the conversation honestly and without adding claims that the situation does not support.</p><p>For homeowners, this means having space to describe the maintenance issue in their own words. For property managers and real estate agencies, it means working with a team that understands the importance of clear information across many homes, tenants and owners. Each property has its own history and needs, but the standard of communication should remain consistent: listen carefully, be direct, and treat the relationship as more important than a single transaction.</p><h2>Built for property managers and real estate agencies</h2><p>Ellis Services Group has developed long-term cooperation with many real estate agencies. That experience matters because property managers coordinate home repairs and maintenance across different properties, schedules and stakeholders. A useful service relationship recognises that a maintenance request is rarely just one person’s question. It may involve a property manager gathering information, an owner considering a decision, and occupants living with the day-to-day effect of the issue.</p><p>Long-term cooperation is earned through dependable conduct over repeated interactions. We value the opportunity to support real estate agencies in Perth by bringing the same integrity-first approach to each discussion. We do not treat agency work as separate from homeowner work; both depend on accurate listening, sensible communication and respect for the property. Over time, these habits help create the trust that makes maintenance coordination more manageable.</p><h2>Experienced tradespeople and advanced equipment</h2><p>Our team includes experienced tradespeople who understand that practical skill and professional care belong together. Experience helps a team recognise the difference between a general question and a detail that needs closer attention. It also helps us communicate without turning a brief observation into an exaggerated conclusion. We use advanced equipment as part of a considered approach to home repairs and maintenance, supporting careful work and better-informed conversations.</p><p>Equipment alone does not define a service. It is useful when it is paired with experienced judgement, a respect for the home and a willingness to explain what is being considered. The value is in combining skilled people, appropriate tools and an organised way of working. That combination supports the quality of service we want clients and property managers to experience from the first conversation onward.</p><h2>Australian housing and maintenance standards</h2><p>Homes in Perth sit within the wider context of Australian housing and maintenance standards. Ellis Services Group is familiar with those standards and with the practical needs that arise as homes are repaired, maintained and remodelled. This familiarity informs how we discuss materials, building details and ongoing care. It is part of being useful in a local home repairs environment, where good work should respect both the building and the people who rely on it.</p><p>Maintenance is not only about responding to a visible issue. It is also about understanding how different parts of a home relate to one another over time. Home repairs may concern roof elements, drainage, exterior surfaces or other parts of a property, but the conversation benefits from a broader view of upkeep. We encourage a clear description of what has been noticed, what has changed and what information is already available. That gives everyone a better foundation for a productive next step.</p><h2>Raising the standard for after-sales care</h2><p>We believe the home repair and remodelling industry needs better integrity and better after-sales care. People should not feel forgotten once the immediate work discussion has ended. The quality of a service relationship includes how clearly people are treated before, during and after a repair or maintenance project. This belief is one reason Ellis Services Group continues to focus on long-term relationships rather than short-term impressions.</p><p>After-sales care, in our view, begins with responsibility. It means treating questions with respect, maintaining an open line of communication and recognising that trust is strengthened through follow-through. It does not require grand claims. It requires the discipline to keep the client experience in mind and to learn from every interaction. For property managers and real estate agencies, that mindset can support a more stable long-term working relationship. For homeowners, it can make an unfamiliar repair conversation feel more straightforward.</p><h2>Earn trust through high-quality service</h2><p>Our goal is to earn trust through high-quality service. We know that trust cannot be requested into existence; it is built through the way people are treated, the care brought to the work and the consistency of the experience. From Perth homeowners to property managers and real estate agencies across Western Australia, we want every contact with Ellis Services Group to reflect the values we have held since 2011: integrity first, fair pricing, experienced tradespeople, advanced equipment and a serious commitment to after-sales care.</p><p>This website is one place to begin. It offers general information about roof repairs, maintenance and related home repair topics so visitors can organise their questions before making direct contact. The information does not replace a conversation about a particular property. It is intended to make that conversation clearer. If you are a homeowner, property manager or real estate agency seeking a service partner with a long-term perspective, Ellis Services Group welcomes the opportunity to discuss your home repairs and maintenance needs.</p></div></article>`);
-  else if(path === 'legal') html=layout(title,path+'/',`<section class="hero inner">${image(3)}<div class="container hero-copy"><p class="eyebrow">LEGAL / SITE USE</p><h1>WEBSITE INFORMATION.</h1><p>General reading about Perth roof repairs, materials and drainage.</p></div></section><section class="section"><div class="narrow"><h2>General information</h2><p>Website content is provided as general reading about roof-related topics. It is not a diagnosis or a statement about a particular roof.</p><h2>Website imagery</h2><p>Website imagery is illustrative and does not depict client work.</p><h2>Contact</h2><p>Use the direct contact details for Ellis Services Group: ${contact}.</p></div></section>`);
+  else if(path === 'legal') html=layout(title,path+'/',`<section class="hero inner">${image(3)}<div class="container hero-copy"><p class="eyebrow">LEGAL / SITE USE</p><h1>WEBSITE INFORMATION.</h1><p>General reading about Perth roof repairs, materials and drainage.</p></div></section><section class="section"><div class="narrow"><h2>General information</h2><p>Website content is provided as general reading about roof-related topics. It is not a diagnosis or a statement about a particular roof.</p><h2>Website imagery</h2><p>Most service and guide imagery is illustrative. Pages labelled “Documented completed work” contain supplied project photographs in four-image records; project locations are not published.</p><h2>Contact</h2><p>Use the direct contact details for Ellis Services Group: ${contact}.</p></div></section>`);
   else html=standard(title,path+'/',routes.findIndex(([p])=>p===path));
   mkdirSync(dirname(join(root,path,'index.html')),{recursive:true}); writeFileSync(join(root,path,'index.html'),html);
 }
@@ -159,6 +164,128 @@ const writeRoute = (route, html) => {
   writeFileSync(routeFile(route), withFormStyles);
 };
 const amendRoute = (route, amend) => writeRoute(route, amend(readFileSync(routeFile(route), 'utf8')));
+
+// Supplied completion photographs are published as five distinct, visible case records.
+// A case is deliberately linked to the relevant service rather than being reused as generic
+// decoration across the site. Locations are not published because none were supplied.
+const documentedProjectRecords = [
+  {
+    slug: 'metal-roof-ridge-capping-repair-perth',
+    title: 'Metal Roof Ridge Capping Repair Perth',
+    serviceLabel: 'Metal Roof Repairs Perth', serviceHref: '/metal-roof-repairs/',
+    summary: 'A four-photo completed-work record showing a corrugated metal roof, the ridge-capping installation detail, the completed ridge line and the roof-edge connection.',
+    focus: 'Metal roof ridge capping',
+    details: [
+      ['Completed roof overview', 'The wide image records the completed corrugated-metal roof surface and the finished ridge and hip lines.'],
+      ['Fixing detail', 'The work-stage image shows a tradesperson securing the formed metal capping over the roof junction.'],
+      ['Ridge line', 'The close roofline view records the completed capping line and the screw-fixed connection along the corrugated sheets.'],
+      ['Roof edge', 'The final image records the relationship between the roof sheet, metal edge detail and adjoining gutter line.']
+    ],
+    images: [
+      ['metal-roof-ridge-capping-case-01-complete-overview.png', 'Completed corrugated metal roof with grey ridge and hip capping.', 'Completed metal roof overview'],
+      ['metal-roof-ridge-capping-case-02-installation-detail.png', 'Tradesperson securing grey metal ridge capping on a corrugated roof.', 'Ridge-capping installation detail'],
+      ['metal-roof-ridge-capping-case-03-ridge-detail.png', 'Completed grey metal ridge capping over corrugated roof sheets.', 'Completed ridge detail'],
+      ['metal-roof-ridge-capping-case-04-eave-detail.png', 'Completed corrugated metal roof edge with capping and gutter detail.', 'Roof-edge and gutter detail']
+    ],
+    related: [['Roof Leak Repairs Perth', '/roof-leak-repairs/'], ['Roof Valleys & Flashing Repairs Perth', '/flashing-repairs/'], ['Make a roof repair enquiry', '/contact/']]
+  },
+  {
+    slug: 'tile-roof-chimney-flashing-repair-perth',
+    title: 'Tile Roof Chimney Flashing Repair Perth',
+    serviceLabel: 'Roof Valleys & Flashing Repairs Perth', serviceHref: '/flashing-repairs/',
+    summary: 'A four-photo completed-work record showing formed grey flashing around a brick chimney and the adjoining tiled-roof valley.',
+    focus: 'Tile roof chimney flashing and valley detail',
+    details: [
+      ['Chimney and valley context', 'The opening view records the chimney base, tiled roof slopes and the formed metal valley route.'],
+      ['Valley detail', 'The close view records the new grey metal detail continuing from the chimney apron into the tiled valley.'],
+      ['Roofline overview', 'The wider view shows how the completed valley line sits between the adjoining tiled roof planes.'],
+      ['Chimney flashing detail', 'The final view records the stepped side flashing and apron detail at the brick chimney.']
+    ],
+    images: [
+      ['tile-chimney-flashing-case-01-overview.png', 'Completed tile roof chimney flashing and valley detail.', 'Chimney and valley overview'],
+      ['tile-chimney-flashing-case-02-valley-detail.png', 'Grey metal valley flashing beside tiled roof and brick chimney.', 'Valley flashing detail'],
+      ['tile-chimney-flashing-case-03-valley-overview.png', 'Completed grey valley flashing through a tiled roof junction.', 'Completed tiled-roof valley'],
+      ['tile-chimney-flashing-case-04-chimney-detail.png', 'Completed grey chimney flashing on a tiled roof.', 'Chimney flashing detail']
+    ],
+    related: [['Roof Leak Repairs Perth', '/roof-leak-repairs/'], ['Tile Roof Repairs Perth', '/tile-roof-repairs/'], ['Make a roof repair enquiry', '/contact/']]
+  },
+  {
+    slug: 'metal-roof-hip-ridge-capping-repair-perth',
+    title: 'Metal Roof Hip & Ridge Capping Repair Perth',
+    serviceLabel: 'Metal Roof Repairs Perth', serviceHref: '/metal-roof-repairs/',
+    summary: 'A four-photo completed-work record of a corrugated metal roof with formed hip and ridge capping at a multi-plane roof junction.',
+    focus: 'Metal roof hip and ridge capping',
+    details: [
+      ['Roofline context', 'The wide image records completed capping running from the roof ridge into the adjoining hip junction.'],
+      ['Hip junction', 'The close view records the formed metal intersection where multiple roof planes meet.'],
+      ['Ridge run', 'The roofline image shows the completed ridge-capping run over the corrugated roof sheets.'],
+      ['Completion check', 'The fourth image records a gloved hand checking the finished metal capping at the ridge junction.']
+    ],
+    images: [
+      ['metal-hip-ridge-case-01-overview.png', 'Completed corrugated metal roof with grey hip and ridge capping.', 'Completed roofline overview'],
+      ['metal-hip-ridge-case-02-hip-junction.png', 'Grey metal hip capping junction on a completed corrugated roof.', 'Hip-junction detail'],
+      ['metal-hip-ridge-case-03-ridge-detail.png', 'Completed grey ridge and hip capping over corrugated metal roof sheets.', 'Ridge-capping detail'],
+      ['metal-hip-ridge-case-04-check-detail.png', 'Gloved hand checking completed grey metal ridge capping.', 'Completion-check detail']
+    ],
+    related: [['Metal Roof Ridge Capping Repair Perth', '/projects/metal-roof-ridge-capping-repair-perth/'], ['Roof Leak Repairs Perth', '/roof-leak-repairs/'], ['Make a roof repair enquiry', '/contact/']]
+  },
+  {
+    slug: 'tile-roof-valley-chimney-flashing-repairs-perth',
+    title: 'Tile Roof Valley & Chimney Flashing Repairs Perth',
+    serviceLabel: 'Roof Valleys & Flashing Repairs Perth', serviceHref: '/flashing-repairs/',
+    summary: 'A four-photo completed-work record showing a tiled-roof valley, a brick chimney base and newly formed grey flashing at both junctions.',
+    focus: 'Tile roof valley and chimney flashing',
+    details: [
+      ['Chimney base', 'The opening image records the completed flashing at the base and side of a brick chimney.'],
+      ['Valley route', 'The second view records the newly formed valley detail between tiled roof slopes.'],
+      ['Chimney apron and side detail', 'The third image records the chimney flashing, apron edge and adjacent tile interface.'],
+      ['Valley termination', 'The close image records the metal valley as it continues below the tiled ridge area.']
+    ],
+    images: [
+      ['tile-valley-chimney-case-01-chimney-overview.png', 'Completed chimney flashing and grey valley detail on a tiled roof.', 'Chimney and valley overview'],
+      ['tile-valley-chimney-case-02-valley-overview.png', 'Completed grey metal valley and chimney flashing between tiled roof slopes.', 'Tiled-roof valley overview'],
+      ['tile-valley-chimney-case-03-flashing-detail.png', 'Completed grey flashing at a brick chimney on a tiled roof.', 'Chimney flashing detail'],
+      ['tile-valley-chimney-case-04-valley-detail.png', 'Completed grey metal valley flashing beside tiled roof ridge capping.', 'Valley termination detail']
+    ],
+    related: [['Tile Roof Repairs Perth', '/tile-roof-repairs/'], ['Roof Leak Repairs Perth', '/roof-leak-repairs/'], ['Make a roof repair enquiry', '/contact/']]
+  },
+  {
+    slug: 'metal-roof-ridge-flashing-repair-perth',
+    title: 'Metal Roof Ridge Flashing Repair Perth',
+    serviceLabel: 'Metal Roof Repairs Perth', serviceHref: '/metal-roof-repairs/',
+    summary: 'A four-photo completed-work record showing formed metal flashing at a corrugated-roof junction and the finished ridge-capping run.',
+    focus: 'Metal roof ridge flashing and capping',
+    details: [
+      ['Junction detail', 'The close image records formed grey metal flashing where the roof junction meets the corrugated sheets.'],
+      ['Overall ridge route', 'The wider view records the completed ridge-capping line across the corrugated metal roof.'],
+      ['Long ridge run', 'The third image records the fixing line and formed metal capping continuing along the ridge.'],
+      ['Finished capping check', 'The final image records the completed capping profile and the adjacent roof sheet line.']
+    ],
+    images: [
+      ['metal-ridge-flashing-case-01-junction-detail.png', 'Grey metal flashing installed at a corrugated metal roof junction.', 'Metal roof junction detail'],
+      ['metal-ridge-flashing-case-02-roof-overview.png', 'Completed grey ridge capping across a corrugated metal roof.', 'Completed ridge overview'],
+      ['metal-ridge-flashing-case-03-ridge-run.png', 'Long completed metal ridge-capping run over corrugated roof sheets.', 'Ridge-capping run'],
+      ['metal-ridge-flashing-case-04-ridge-check.png', 'Gloved hand checking completed grey metal ridge flashing and capping.', 'Finished ridge-capping detail']
+    ],
+    related: [['Metal Roof Hip & Ridge Capping Repair Perth', '/projects/metal-roof-hip-ridge-capping-repair-perth/'], ['Roof Valleys & Flashing Repairs Perth', '/flashing-repairs/'], ['Make a roof repair enquiry', '/contact/']]
+  }
+];
+
+const documentedProjectSchema = (record) => `<script type="application/ld+json">${JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'LocalBusiness', '@id': `${site}/#business`, name: 'Ellis Services Group', alternateName: 'Perth Roof Care', url: site, telephone: '0405878406', email: 'ellisservicesgroup3@outlook.com', address: { '@type': 'PostalAddress', streetAddress: '140 St Georges Terrace', addressLocality: 'Perth', addressRegion: 'WA', postalCode: '6000', addressCountry: 'AU' } },
+    { '@type': 'WebPage', '@id': `${site}/projects/${record.slug}/#webpage`, url: `${site}/projects/${record.slug}/`, name: record.title, description: record.summary, inLanguage: 'en-AU', about: { '@id': `${site}/projects/${record.slug}/#service` } },
+    { '@type': 'Service', '@id': `${site}/projects/${record.slug}/#service`, name: record.focus, provider: { '@id': `${site}/#business` }, areaServed: { '@type': 'City', name: 'Perth' }, url: `${site}/projects/${record.slug}/` },
+    { '@type': 'ItemList', name: `${record.title} image record`, numberOfItems: record.images.length, itemListElement: record.images.map(([src, alt], index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': 'ImageObject', contentUrl: `${site}/assets/images/${src}`, caption: alt } })) },
+    { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: site }, { '@type': 'ListItem', position: 2, name: 'Documented roof repair cases', item: `${site}/gallery/` }, { '@type': 'ListItem', position: 3, name: record.title, item: `${site}/projects/${record.slug}/` }] }
+  ]
+})}</script>`;
+
+const documentedProjectPage = (record) => `<article class="documented-case"><section class="topic-rail service-hero" style="--service-hero-image:url('/assets/images/${record.images[0][0]}')"><div class="container"><p class="eyebrow">DOCUMENTED COMPLETED WORK / LOCATION NOT PUBLISHED</p><h1>${record.title.toUpperCase()}.</h1><p>${record.summary}</p><p><a class="button" href="/contact/">Discuss a roof repair</a></p></div></section><section class="section"><div class="narrow"><p class="eyebrow">COMPLETED WORK RECORD</p><h2>FOUR PHOTOGRAPHS OF ONE COMPLETED ROOF REPAIR SCOPE.</h2><p>These supplied completion photographs are a record of visible roof materials, formed metal details and roofline connections at one property. They are published as a real project record for the service topic shown on this page. The project location is not published.</p><p>${record.summary} The materials, roof form, access, existing condition and the path water follows differ from one property to another. For that reason, these photographs show a completed scope at this property, not a universal repair specification, price, warranty or predicted outcome.</p></div></section><section class="section texture"><div class="container"><p class="eyebrow">WHAT THE PHOTO RECORD SHOWS</p><h2>${record.focus.toUpperCase()} — VISIBLE ROOFLINE DETAILS.</h2><div class="cards documented-case-points">${record.details.map(([heading, copy], index) => `<article class="card"><p class="eyebrow">0${index + 1}</p><h3>${heading}</h3><p>${copy}</p></article>`).join('')}</div></div></section><section class="section"><div class="container"><p class="eyebrow">COMPLETED PROJECT IMAGES</p><h2>THE DOCUMENTED FOUR-IMAGE SEQUENCE.</h2><div class="project-case-grid documented-case-grid">${record.images.map(([src, alt, label]) => `<figure><img src="/assets/images/${src}" alt="${alt}" loading="lazy" decoding="async"><figcaption>${label}</figcaption></figure>`).join('')}</div></div></section><section class="section grid"><div><p class="eyebrow">RELATED PERTH ROOF REPAIR SERVICES</p><h2>CONNECT THIS CASE TO THE RIGHT SERVICE TOPIC.</h2><p>For a separate property, begin with the relevant service page and describe the roof material, the visible detail, the location on the roofline and any weather-related change. That gives the repair discussion a clear, practical starting point.</p></div><nav class="project-related-links" aria-label="Related roof repair services"><a href="${record.serviceHref}">${record.serviceLabel}<span aria-hidden="true">→</span></a>${record.related.map(([label, href]) => `<a href="${href}">${label}<span aria-hidden="true">→</span></a>`).join('')}</nav></section></article>`;
+
+for (const record of documentedProjectRecords) writeRoute(`projects/${record.slug}`, layout(record.title, `projects/${record.slug}/`, documentedProjectPage(record), documentedProjectSchema(record)));
+
 const resourceImages = ['resources-metal-project.jpg', 'resources-gutter-project.jpg', 'resources-tile-project.jpg', 'resources-downpipe.png', 'resources-tools.png', 'resources-dusk.png'];
 const resourceImageAlt = {
   'resources-metal-project.jpg': 'Grey metal roof sheets viewed across a Perth roofline',
@@ -421,8 +548,11 @@ for (const [route, detail] of Object.entries(serviceDetailPages)) amendRoute(rou
   return html.replace('</main>', `<section class="section service-route-detail"><div class="container"><p class="eyebrow">${detail.eyebrow}</p><h2>${detail.title}</h2><p class="service-route-intro">${detail.intro}</p><div class="service-route-grid"><article><h3>What to note</h3><p>${detail.signs}</p></article><article><h3>Useful context</h3><p>${detail.context}</p></article><article><h3>Next step</h3><p>${detail.nextStep}</p><p><a href="${detail.guide}">${detail.guideLabel}</a></p>${detail.project ? `<p><a href="${detail.project}">${detail.projectLabel}</a></p>` : ''}${detail.additionalProject ? `<p><a href="${detail.additionalProject}">${detail.additionalProjectLabel}</a></p>` : ''}${detail.related ? `<p><a href="${detail.related}">${detail.relatedLabel}</a></p>` : ''}<p><a href="/service-areas/">Check Perth service areas</a></p><p><a href="/contact/">Make an enquiry</a></p></article></div><section class="service-field-guide"><p class="eyebrow">FIELD GUIDE / PRACTICAL CONTEXT</p><h3>UNDERSTAND THE ROOFLINE DETAIL BEFORE YOU ENQUIRE.</h3><p class="service-field-guide-intro">These notes explain the visible components and questions that commonly shape this service topic. They are general context, not a property-specific diagnosis.</p><div class="field-guide-grid">${fieldGuide}</div></section><div class="service-route-support"><article><p class="eyebrow">PRACTICAL SCOPE</p><h3>WHAT THIS CONVERSATION CAN COVER.</h3><p>${enhancement.scope}</p></article><article><p class="eyebrow">PREPARE / SAFE OBSERVATION</p><h3>DETAILS THAT HELP FRAME AN ENQUIRY.</h3><p>${enhancement.prepare}</p><p>Website information is general context, not a property-specific diagnosis. <a href="/about/">Read company information and direct contact details</a>.</p></article><nav class="service-route-related" aria-label="Related Perth roof services"><p class="eyebrow">RELATED PERTH ROOF SERVICES</p><h3>FOLLOW THE CONNECTED ROOFLINE DETAILS.</h3><div class="service-route-links">${links}</div><p><a href="/news/">Read practical roof and drainage guides</a> · <a href="/projects/metal-roof-fastener-repair-sequence/">View a documented roof repair project</a></p></nav></div></div></section></main>`);
 });
 
-const metalFastenerEvidence = `<aside class="service-real-project"><img src="/assets/images/metal-fastener-sequence-01-overall-before.png" alt="Overall metal roof condition before the documented fastener work" loading="lazy" decoding="async"><div><p class="eyebrow">REAL PROJECT / METAL ROOF FASTENERS</p><h3>SEE THE DOCUMENTED FASTENER REPAIR SEQUENCE.</h3><p>View the supplied five-image project record: overall roof condition, corroded fastener details, recorded fastener work and the completed roof surface. The project location is not published.</p><p><a class="button" href="/projects/metal-roof-fastener-repair-sequence/">View the real project</a></p></div></aside>`;
+const metalFastenerEvidence = `<aside class="service-real-project"><img src="/assets/images/metal-roof-ridge-capping-case-01-complete-overview.png" alt="Completed grey metal ridge and hip capping on a corrugated roof" loading="lazy" decoding="async"><div><p class="eyebrow">DOCUMENTED COMPLETED WORK / METAL ROOF</p><h3>METAL ROOF RIDGE, HIP AND FLASHING CASES.</h3><p>See supplied four-photo completion records for formed metal ridge capping, hip junctions, roof-edge details and flashing at corrugated-roof junctions. Project locations are not published.</p><p><a class="button" href="/projects/metal-roof-ridge-capping-repair-perth/">View metal roof ridge-capping case</a></p><p><a href="/projects/metal-roof-hip-ridge-capping-repair-perth/">View metal roof hip and ridge case</a> · <a href="/projects/metal-roof-ridge-flashing-repair-perth/">View metal roof flashing case</a></p></div></aside>`;
 amendRoute('metal-roof-repairs', (html) => html.replace('</section></main>', `${metalFastenerEvidence}</section></main>`));
+const flashingCaseEvidence = `<aside class="service-real-project"><img src="/assets/images/tile-chimney-flashing-case-01-overview.png" alt="Completed chimney flashing and tiled-roof valley detail" loading="lazy" decoding="async"><div><p class="eyebrow">DOCUMENTED COMPLETED WORK / TILE ROOF FLASHING</p><h3>TILE ROOF VALLEY AND CHIMNEY FLASHING CASES.</h3><p>See supplied four-photo completion records for formed flashing around tiled-roof valleys and brick chimney junctions. Project locations are not published.</p><p><a class="button" href="/projects/tile-roof-chimney-flashing-repair-perth/">View chimney flashing case</a></p><p><a href="/projects/tile-roof-valley-chimney-flashing-repairs-perth/">View tile valley and chimney flashing case</a></p></div></aside>`;
+amendRoute('flashing-repairs', (html) => html.replace('</section></main>', `${flashingCaseEvidence}</section></main>`));
+amendRoute('roof-leak-repairs', (html) => html.replace('</section></main>', `${flashingCaseEvidence}</section></main>`));
 amendRoute('services', (html) => html.replace('</main>', `<section class="section service-project-evidence"><div class="container"><p class="eyebrow">REAL PROJECT EVIDENCE</p><h2>SEE THE WORK BEHIND THE SERVICE TOPICS.</h2><div class="service-project-evidence-grid">${metalFastenerEvidence}<div class="service-project-evidence-links"><a href="/projects/roleystone-metal-roof-fastener-leak-repair/">Roleystone metal roof leak repair</a><a href="/projects/wa-6121-tile-roof-valley-gutter-cleaning/">WA 6121 tile roof and valley gutter work</a><a href="/metal-roof-repairs/">Explore metal roof repairs and the supplied project</a></div></div></div></section></main>`));
 
 const homepageServiceLinks = [...Object.entries(serviceDetailPages).map(([route, detail]) => `<a href="/${route}/">${detail.eyebrow.split(' / ')[0]}</a>`), '<a href="/news/roof-leak-inspection/">ROOF LEAK GUIDE</a>', '<a href="/news/drainage-after-rain/">DRAINAGE GUIDE</a>'].join('');
@@ -865,7 +995,26 @@ writeRoute('news/roof-flashing-explained', layout('Roof Flashing Explained', 'ne
 const rssItems = newsArticleRecords.map((article) => `<item><title>${xmlEscape(article.title)}</title><link>${site}/news/${article.slug}/</link><guid isPermaLink="true">${site}/news/${article.slug}/</guid><description>${xmlEscape(article.description)}</description><pubDate>Sun, 27 Sep 2026 00:00:00 +0000</pubDate></item>`).join('');
 writeFileSync(join(root, 'news', 'feed.xml'), `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Roof Repairs Perth News | Ellis Services Group</title><link>${site}/news/</link><description>Practical Perth roof repair guides from Ellis Services Group.</description><language>en-au</language><lastBuildDate>Sun, 27 Sep 2026 00:00:00 +0000</lastBuildDate>${rssItems}</channel></rss>`);
 
-const finalSitemapRoutes = [...new Set(['', ...routes.map(([path]) => path), ...popularAreaServices.map(([slug]) => `areas/${slug}`), ...newsArticleRecords.map((article) => `news/${article.slug}`)])];
+const documentedCaseCards = documentedProjectRecords.map((record) => `<article class="case-library-card"><img src="/assets/images/${record.images[0][0]}" alt="${record.images[0][1]}" loading="lazy" decoding="async"><div><p class="eyebrow">COMPLETED WORK / FOUR PHOTOS</p><h2>${record.title}</h2><p>${record.summary}</p><a href="/projects/${record.slug}/">View the documented case <span aria-hidden="true">→</span></a></div></article>`).join('');
+writeRoute('gallery', layout('Perth Roof Repair Case Studies', 'gallery/', `<section class="topic-rail"><div class="container"><p class="eyebrow">DOCUMENTED COMPLETED WORK / PERTH</p><h1>PERTH ROOF REPAIR CASE STUDIES.</h1><p>Five documented completed-work records organised by metal-roof capping, roof flashing, tiled-roof valleys and chimney flashing. Each case page contains four supplied completion photographs, a description of the visible roofline details and direct links to the matching Perth roof repair service.</p></div></section><section class="section case-library"><div class="container"><p class="eyebrow">COMPLETED PROJECT RECORDS</p><h2>FOUR-PHOTO ROOF REPAIR CASES.</h2><p class="case-library-intro">These photos document completed work at individual properties. Project locations are not published. A case record shows visible materials and details at that property; it does not set a universal scope, price, warranty or outcome for another roof.</p><div class="case-library-grid">${documentedCaseCards}</div></div></section><section class="section texture"><div class="container narrow"><p class="eyebrow">CHOOSE THE RELEVANT SERVICE</p><h2>START WITH THE ROOF DETAIL YOU CAN SEE.</h2><p>If your property has a metal roof, tile roof, ridge, hip, valley or chimney junction that needs attention, use the related service pages to describe the material and visible detail. The final repair scope is discussed from the actual property, access and roofline condition.</p><p><a class="button" href="/contact/">Discuss a roof repair</a> <a class="text-link" href="/services/">Explore roof repair services</a></p></div></section>`));
+
+const caseStudyJsonFeed = {
+  version: 'https://jsonfeed.org/version/1.1',
+  title: 'Perth Roof Care documented roof repair cases',
+  home_page_url: `${site}/gallery/`,
+  feed_url: `${site}/case-studies.json`,
+  description: 'Public, page-visible four-image records of completed roof repair work from Ellis Services Group in Perth, Western Australia.',
+  language: 'en-AU',
+  items: documentedProjectRecords.map((record) => ({
+    id: `${site}/projects/${record.slug}/`, url: `${site}/projects/${record.slug}/`, title: record.title,
+    summary: record.summary, content_text: `${record.summary} ${record.focus}. Project location not published.`,
+    tags: [record.focus, record.serviceLabel, 'Perth roof repairs'], image: `${site}/assets/images/${record.images[0][0]}`,
+    attachments: record.images.map(([src, alt]) => ({ url: `${site}/assets/images/${src}`, mime_type: 'image/png', title: alt }))
+  }))
+};
+writeFileSync(join(root, 'case-studies.json'), JSON.stringify(caseStudyJsonFeed, null, 2));
+
+const finalSitemapRoutes = [...new Set(['', ...routes.map(([path]) => path), ...popularAreaServices.map(([slug]) => `areas/${slug}`), ...newsArticleRecords.map((article) => `news/${article.slug}`), ...documentedProjectRecords.map((record) => `projects/${record.slug}`)])];
 writeFileSync(join(root, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${finalSitemapRoutes.map((route) => `<url><loc>${site}/${route ? `${route}/` : ''}</loc></url>`).join('')}</urlset>`);
 writeFileSync(join(root, 'llms.txt'), `# Ellis Services Group
 
@@ -886,6 +1035,15 @@ writeFileSync(join(root, 'llms.txt'), `# Ellis Services Group
 - [Gutters & Downpipes Perth](${site}/gutters-downpipes/): roof-edge drainage route information.
 - [Downpipe Repairs Perth](${site}/downpipe-repairs/): visible downpipe brackets, joints, bends and lower connections.
 - [Roof Flashing Explained](${site}/news/roof-flashing-explained/): informational article that links to related services.
+
+## Documented completed-work records
+
+Each linked case has four supplied completion photographs and page-visible project notes. Project locations are not published.
+
+${documentedProjectRecords.map((record) => `- [${record.title}](${site}/projects/${record.slug}/): ${record.summary}`).join('\n')}
+
+- [Case-study index](${site}/gallery/)
+- [Case-study JSON Feed](${site}/case-studies.json)
 
 ## Evidence and boundaries
 
@@ -1084,6 +1242,14 @@ const publicCopyReplacements = [
   ['Our strong Google review feedback and high level of repeat customer enquiries reflect a service approach built around clear communication and practical roof-repair context.', 'Our roof repair guides support a service approach built around clear communication and practical roof-repair context.']
 ];
 for (const route of finalSitemapRoutes) amendRoute(route, (html) => publicCopyReplacements.reduce((copy, [from, to]) => copy.replaceAll(from, to), html));
+
+// These links are applied after the focused service templates are finalised so the
+// documented cases remain visible on their matching service pages.
+const finalMetalCaseLinks = `<section class="section service-route-detail service-real-project"><div class="container"><p class="eyebrow">DOCUMENTED COMPLETED WORK / METAL ROOF</p><h2>METAL ROOF RIDGE, HIP AND FLASHING CASES.</h2><p>These four-photo records show completed formed-metal capping and flashing details on corrugated roofs. Project locations are not published.</p><p><a href="/projects/metal-roof-ridge-capping-repair-perth/">Metal roof ridge capping repair case</a> · <a href="/projects/metal-roof-hip-ridge-capping-repair-perth/">Metal roof hip and ridge capping case</a> · <a href="/projects/metal-roof-ridge-flashing-repair-perth/">Metal roof ridge flashing case</a></p></div></section>`;
+const finalFlashingCaseLinks = `<section class="section service-route-detail service-real-project"><div class="container"><p class="eyebrow">DOCUMENTED COMPLETED WORK / TILE ROOF FLASHING</p><h2>TILE ROOF VALLEY AND CHIMNEY FLASHING CASES.</h2><p>These four-photo records show completed metal flashing at tiled-roof valleys and brick chimney junctions. Project locations are not published.</p><p><a href="/projects/tile-roof-chimney-flashing-repair-perth/">Tile roof chimney flashing repair case</a> · <a href="/projects/tile-roof-valley-chimney-flashing-repairs-perth/">Tile roof valley and chimney flashing case</a></p></div></section>`;
+amendRoute('metal-roof-repairs', (html) => html.replace('</main>', `${finalMetalCaseLinks}</main>`));
+amendRoute('flashing-repairs', (html) => html.replace('</main>', `${finalFlashingCaseLinks}</main>`));
+amendRoute('roof-leak-repairs', (html) => html.replace('</main>', `${finalFlashingCaseLinks}</main>`));
 
 writeFileSync(join(root, 'llms.txt'), readFileSync(join(root, 'llms.txt'), 'utf8')
   .replace('- Public business name: Ellis Services Group', '- Public business name: Ellis Services Group\n- Perth Roof Care is operated by Ellis Services Group Pty Ltd.')
