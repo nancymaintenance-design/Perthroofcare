@@ -244,6 +244,7 @@ test('storm damage repairs uses the same professional service structure with saf
   assert.match(html, /class="[^"]*\bfocus-preparation\b[^"]*"/i);
   assert.equal((html.match(/class="card assessment-card"/g) ?? []).length, 3);
   assert.match(html, /weather, site access and safety conditions allow/i);
+  assert.doesNotMatch(html, /24-hour or unconditional attendance/i);
   assert.doesNotMatch(html, /SERVICES WE DISCUSS|THE DETAILS WE CAN DISCUSS/i);
 });
 
