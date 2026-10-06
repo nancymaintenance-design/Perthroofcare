@@ -41,6 +41,8 @@ const heading = (title) => (seoHeadings[title] ?? title).toUpperCase();
 const serviceLinks = routes.slice(0, 15).map(([path, title]) => `<a href="/${path}/">${title}</a>`).join('');
 const descriptions = {
   'Roof Repairs Perth': 'Roof repairs in Perth from Ellis Services Group for leaks, tiles, metal roofs, flashings, gutters and drainage.',
+  'Roof Valleys & Flashing Repairs Perth': 'Roof flashing and valley repairs in Perth: explore junction, chimney, skylight and valley concerns, then make a specific enquiry.',
+  'Gutter Repairs Perth': 'Gutter repairs in Perth: explore overflow, leaking joins, outlets and downpipe connections, then enquire with Ellis Services Group.',
   'Roof Leak Repairs Perth': 'Roof leak repairs in Perth: organise water-entry context around roof coverings, flashings, fasteners and drainage before an enquiry.',
   'Metal Roof Leak Repair Roleystone WA': 'Roleystone metal roof fastener leak repair case study: rusted fixing points, a budget-aware structural-adhesive and coating repair approach.',
   'Metal Roof Fastener Leak Repair Project': 'Documented metal roof fastener leak repair sequence: overall roof condition, fastener details, recorded work and completed roof surface.',
@@ -470,11 +472,11 @@ const focusedServices = {
   'roof-repairs': {
     title: 'Roof Repairs Perth',
     h1: 'ROOF REPAIRS PERTH.',
-    lead: 'Roof repair enquiries for Perth properties, from visible roof defects to targeted repair discussions. Start with the material, location and condition you can see.',
+    lead: 'Roof repairs for Perth properties with a visible tile, metal sheet, ridge or roof-edge defect. Start with the material, location and condition you can see to discuss a targeted repair.',
     scope: 'This is the broad starting point for roof repairs, small roof repairs and repair-versus-replacement questions. A property-specific scope is confirmed only after the relevant roof details are assessed.',
     notes: ['A changed tile, sheet, ridge, flashing line or roof edge', 'A ceiling mark or drip that appears after particular weather', 'A previous repair that has not resolved the same observation'],
     questions: ['Can a focused repair be discussed before a broader restoration?', 'What information should a roof repair quote identify?', 'When is further assessment more useful than assuming replacement?'],
-    links: [['Roof Leak Repairs Perth', '/roof-leak-repairs/'], ['Tile Roof Repairs Perth', '/tile-roof-repairs/'], ['Metal Roof Repairs Perth', '/metal-roof-repairs/'], ['Roof Valleys & Flashing Repairs', '/flashing-repairs/'], ['Gutters & Downpipes Perth', '/gutters-downpipes/']]
+    links: [['Roof Leak Repairs Perth', '/roof-leak-repairs/'], ['Tile Roof Repairs Perth', '/tile-roof-repairs/'], ['Metal Roof Repairs Perth', '/metal-roof-repairs/'], ['Roof Valleys & Flashing Repairs Perth', '/flashing-repairs/'], ['Gutters & Downpipes Perth', '/gutters-downpipes/']]
   },
   'roof-leak-repairs': {
     title: 'Roof Leak Repairs Perth',
