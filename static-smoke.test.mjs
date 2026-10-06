@@ -487,3 +487,10 @@ test('the production build runs the Vercel staging step before publishing the pu
   assert.equal(packageJson.scripts.build, 'node vercel-build.mjs');
   assert.equal(vercelJson.buildCommand, 'node vercel-build.mjs');
 });
+
+test('the generated enquiry function uses the supported Node 24 Vercel runtime', () => {
+  const packageJson = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
+  const functionConfig = JSON.parse(readFileSync(join(root, '.vercel', 'output', 'functions', 'api', 'enquiry.func', '.vc-config.json'), 'utf8'));
+  assert.equal(packageJson.engines?.node, '24.x');
+  assert.equal(functionConfig.runtime, 'nodejs24.x');
+});
