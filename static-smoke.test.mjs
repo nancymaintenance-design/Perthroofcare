@@ -244,6 +244,7 @@ test('storm damage repairs uses the same professional service structure with saf
   assert.match(html, /class="[^"]*\bfocus-preparation\b[^"]*"/i);
   assert.equal((html.match(/class="card assessment-card"/g) ?? []).length, 3);
   assert.match(html, /weather, site access and safety conditions allow/i);
+  assert.doesNotMatch(html, /24-hour or unconditional attendance/i);
   assert.doesNotMatch(html, /SERVICES WE DISCUSS|THE DETAILS WE CAN DISCUSS/i);
 });
 
@@ -388,9 +389,19 @@ test('privacy is compact, useful and directly contactable', () => {
 
 test('legal information is useful, bounded and linked to the relevant roof-repair paths', () => {
   const html = readFileSync(fileFor('legal'), 'utf8');
-  assert.match(html, /<h1>ROOF REPAIR WEBSITE INFORMATION\.<\/h1>/); assert.match(html, /not a property-specific diagnosis, quote or repair specification/i); assert.match(html, /Images and documented projects/i);
+  assert.match(html, /<h1>ROOF REPAIR WEBSITE INFORMATION\.<\/h1>/); assert.match(html, /final repair scope is confirmed from the property, access and roofline condition/i); assert.match(html, /Images and documented projects/i);
   for (const href of ['/services/', '/news/', '/privacy/', '/contact/']) assert.match(html, new RegExp(`href="${href}"`));
   assert.doesNotMatch(html, /class="hero inner"/i);
+});
+
+test('public copy uses direct service language and keeps machine-readable storm wording consistent', () => {
+  const routes = ['', 'service-areas', 'roof-inspection', 'roof-restoration', 'repair-options', 'news', 'news/roof-flashing-explained', 'projects/roleystone-metal-roof-fastener-leak-repair'];
+  const retiredPhrases = /website office|static local roof repair page|rather than repeating generic area copy|budget-aware|clear enquiry|not a remote diagnosis|not a property-specific diagnosis|not a diagnosis|emergency-response claim/i;
+  for (const route of routes) assert.doesNotMatch(readFileSync(fileFor(route), 'utf8'), retiredPhrases, `${route || 'home'} retains retired wording`);
+  const llms = readFileSync(join(root, 'llms.txt'), 'utf8');
+  assert.doesNotMatch(llms, /website office|not a remote diagnosis|emergency-response claim/i);
+  assert.match(llms, /Urgent storm-related roof repair enquiries are prioritised; attendance is arranged promptly when weather, site access and safety conditions allow\./i);
+  assert.match(readFileSync(fileFor('news/roof-leak-detection-perth'), 'utf8'), /Perth office: 140 St Georges Terrace, Perth WA 6000/i);
 });
 
 test('homepage keeps confirmed structured data and favicon declarations', () => {
@@ -432,11 +443,38 @@ test('keyword-led news articles publish useful English guidance, schema and an R
     assert.match(html, /Ellis Services Group|0405 878 406/i, `${slug} needs editorial accountability or contact details`);
     assert.match(html, /href="\/(?:roof-repairs|roof-leak-repairs|tile-roof-repairs|metal-roof-repairs|ridge-capping-repointing|flashing-repairs|roof-inspection)\//i, `${slug} needs a related service link`);
     assert.match(feed, new RegExp(`/news/${slug}/`), `${slug} needs an RSS item`);
-    assert.match(html, /strong Google review feedback/i, `${slug} should present the confirmed Google-review signal`);
-    assert.match(html, /high level of repeat customer enquiries/i, `${slug} should present the confirmed returning-customer signal`);
+    assert.match(html, /clear communication, practical roofline context and direct follow-up/i, `${slug} should present the service approach`);
   }
   assert.match(readFileSync(fileFor('news'), 'utf8'), /Roof Leak Detection Perth/i);
   assert.match(readFileSync(fileFor('news'), 'utf8'), /rel="alternate" type="application\/rss\+xml" href="\/news\/feed\.xml"/i);
+});
+
+test('five supplied four-image completed-work cases are indexable and exposed through a matching JSON Feed', () => {
+  const cases = [
+    ['metal-roof-ridge-capping-repair-perth', 'metal-roof-ridge-capping-case-01-complete-overview.png'],
+    ['tile-roof-chimney-flashing-repair-perth', 'tile-chimney-flashing-case-01-overview.png'],
+    ['metal-roof-hip-ridge-capping-repair-perth', 'metal-hip-ridge-case-01-overview.png'],
+    ['tile-roof-valley-chimney-flashing-repairs-perth', 'tile-valley-chimney-case-01-chimney-overview.png'],
+    ['metal-roof-ridge-flashing-repair-perth', 'metal-ridge-flashing-case-01-junction-detail.png']
+  ];
+  const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
+  const feed = JSON.parse(readFileSync(join(root, 'case-studies.json'), 'utf8'));
+  const gallery = readFileSync(fileFor('gallery'), 'utf8');
+  assert.equal(feed.version, 'https://jsonfeed.org/version/1.1');
+  assert.equal(feed.items.length, cases.length);
+  for (const [slug, image] of cases) {
+    const html = readFileSync(fileFor(`projects/${slug}`), 'utf8');
+    assert.equal((html.match(/<h1[\s>]/gi) ?? []).length, 1, `${slug} needs one H1`);
+    assert.equal((html.match(/<figure>/g) ?? []).length, 4, `${slug} must retain all four supplied photographs`);
+    assert.match(html, new RegExp(image.replaceAll('.', '\\.'), 'i'));
+    assert.match(html, /<script type="application\/ld\+json">[\s\S]*?"ImageObject"/i, `${slug} needs image JSON-LD`);
+    assert.match(sitemap, new RegExp(`/projects/${slug}/`), `${slug} must be in the sitemap`);
+    assert.match(gallery, new RegExp(`/projects/${slug}/`), `${slug} must be in the case-study index`);
+    assert.ok(existsSync(join(root, 'public', 'assets', 'images', image)), `${image} must be staged for production`);
+  }
+  assert.match(readFileSync(join(root, 'llms.txt'), 'utf8'), /Case-study JSON Feed/i);
+  assert.match(readFileSync(fileFor('metal-roof-repairs'), 'utf8'), /metal-roof-ridge-capping-repair-perth/i);
+  assert.match(readFileSync(fileFor('flashing-repairs'), 'utf8'), /tile-roof-chimney-flashing-repair-perth/i);
 });
 
 test('storm damage repairs presents the supplied six-image urgent-response record with safety conditions', () => {
@@ -477,4 +515,11 @@ test('the production build runs the Vercel staging step before publishing the pu
   const vercelJson = JSON.parse(readFileSync(join(root, 'vercel.json'), 'utf8'));
   assert.equal(packageJson.scripts.build, 'node vercel-build.mjs');
   assert.equal(vercelJson.buildCommand, 'node vercel-build.mjs');
+});
+
+test('the generated enquiry function uses the supported Node 24 Vercel runtime', () => {
+  const packageJson = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
+  const functionConfig = JSON.parse(readFileSync(join(root, '.vercel', 'output', 'functions', 'api', 'enquiry.func', '.vc-config.json'), 'utf8'));
+  assert.equal(packageJson.engines?.node, '24.x');
+  assert.equal(functionConfig.runtime, 'nodejs24.x');
 });

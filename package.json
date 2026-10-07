@@ -1,1 +1,1 @@
-{"name":"ellis-roofing-website","private":true,"type":"module","scripts":{"dev":"node local-server.mjs","test":"node vercel-build.mjs && node --test static-smoke.test.mjs","build":"node vercel-build.mjs","vercel-build":"node vercel-build.mjs"}}
+{"name":"ellis-roofing-website","private":true,"type":"module","engines":{"node":"24.x"},"scripts":{"dev":"node local-server.mjs","test":"node vercel-build.mjs && node --test static-smoke.test.mjs","build":"node vercel-build.mjs","vercel-build":"node vercel-build.mjs"}}

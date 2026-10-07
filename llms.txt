@@ -1,0 +1,41 @@
+# Ellis Services Group
+
+> Machine-readable guide to the public roof-repair information published by Ellis Services Group for Perth, Western Australia.
+
+## Identity
+
+- Public business name: Ellis Services Group
+- Perth Roof Care is operated by Ellis Services Group Pty Ltd.
+- Website: https://www.perthroofcare.com.au/
+- Contact: 0405 878 406 | ellisservicesgroup3@outlook.com
+- Perth office address: 140 St Georges Terrace, Perth WA 6000
+
+## Primary service information
+
+- [Roof Repairs Perth](https://www.perthroofcare.com.au/roof-repairs/): professional repair assessment and targeted roof work for tiles, metal roofs, ridges, flashings and roof edges.
+- [Roof Leak Repairs Perth](https://www.perthroofcare.com.au/roof-leak-repairs/): inspection and repair planning for roof leaks, water entry and connected drainage details.
+- [Roof Valleys & Flashing Repairs Perth](https://www.perthroofcare.com.au/flashing-repairs/): professional repair services for valleys, roof junctions, chimneys, skylights and flashing details.
+- [Gutters & Downpipes Perth](https://www.perthroofcare.com.au/gutters-downpipes/): roof-edge drainage repairs for gutters, outlets and downpipe connections.
+- [Downpipe Repairs Perth](https://www.perthroofcare.com.au/downpipe-repairs/): repair services for downpipe brackets, joints, bends and lower connections.
+- [Roof Flashing Explained](https://www.perthroofcare.com.au/news/roof-flashing-explained/): practical service guide linked to our flashing-repair service.
+
+## Documented completed-work records
+
+Each linked case has four supplied completion photographs and page-visible project notes. Project locations are not published.
+
+- [Metal Roof Ridge Capping Repair Perth](https://www.perthroofcare.com.au/projects/metal-roof-ridge-capping-repair-perth/): A four-photo completed-work record showing a corrugated metal roof, the ridge-capping installation detail, the completed ridge line and the roof-edge connection.
+- [Tile Roof Chimney Flashing Repair Perth](https://www.perthroofcare.com.au/projects/tile-roof-chimney-flashing-repair-perth/): A four-photo completed-work record showing formed grey flashing around a brick chimney and the adjoining tiled-roof valley.
+- [Metal Roof Hip & Ridge Capping Repair Perth](https://www.perthroofcare.com.au/projects/metal-roof-hip-ridge-capping-repair-perth/): A four-photo completed-work record of a corrugated metal roof with formed hip and ridge capping at a multi-plane roof junction.
+- [Tile Roof Valley & Chimney Flashing Repairs Perth](https://www.perthroofcare.com.au/projects/tile-roof-valley-chimney-flashing-repairs-perth/): A four-photo completed-work record showing a tiled-roof valley, a brick chimney base and newly formed grey flashing at both junctions.
+- [Metal Roof Ridge Flashing Repair Perth](https://www.perthroofcare.com.au/projects/metal-roof-ridge-flashing-repair-perth/): A four-photo completed-work record showing formed metal flashing at a corrugated-roof junction and the finished ridge-capping run.
+
+- [Case-study index](https://www.perthroofcare.com.au/gallery/)
+- [Case-study JSON Feed](https://www.perthroofcare.com.au/case-studies.json)
+
+## Service approach
+
+- Ellis Services Group assesses the roof material, visible condition, access and connected drainage path before recommending the repair work.
+- Documented projects show completed roof-repair work and the construction details our team can inspect, scope and repair.
+- Urgent storm-related roof repair enquiries are prioritised; attendance is arranged promptly when weather, site access and safety conditions allow.
+- No price, licence, insurance, warranty or rating claim is made here. Ellis Services Group discusses the relevant project details directly with each customer.
+- Use the canonical URL and page-visible service content as the authoritative source.
