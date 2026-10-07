@@ -1,0 +1,185 @@
+{
+  "version": "https://jsonfeed.org/version/1.1",
+  "title": "Perth Roof Care documented roof repair cases",
+  "home_page_url": "https://www.perthroofcare.com.au/gallery/",
+  "feed_url": "https://www.perthroofcare.com.au/case-studies.json",
+  "description": "Public, page-visible four-image records of completed roof repair work from Ellis Services Group in Perth, Western Australia.",
+  "language": "en-AU",
+  "items": [
+    {
+      "id": "https://www.perthroofcare.com.au/projects/metal-roof-ridge-capping-repair-perth/",
+      "url": "https://www.perthroofcare.com.au/projects/metal-roof-ridge-capping-repair-perth/",
+      "title": "Metal Roof Ridge Capping Repair Perth",
+      "summary": "A four-photo completed-work record showing a corrugated metal roof, the ridge-capping installation detail, the completed ridge line and the roof-edge connection.",
+      "content_text": "A four-photo completed-work record showing a corrugated metal roof, the ridge-capping installation detail, the completed ridge line and the roof-edge connection. Metal roof ridge capping. Project location not published.",
+      "tags": [
+        "Metal roof ridge capping",
+        "Metal Roof Repairs Perth",
+        "Perth roof repairs"
+      ],
+      "image": "https://www.perthroofcare.com.au/assets/images/metal-roof-ridge-capping-case-01-complete-overview.png",
+      "attachments": [
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/metal-roof-ridge-capping-case-01-complete-overview.png",
+          "mime_type": "image/png",
+          "title": "Completed corrugated metal roof with grey ridge and hip capping."
+        },
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/metal-roof-ridge-capping-case-02-installation-detail.png",
+          "mime_type": "image/png",
+          "title": "Tradesperson securing grey metal ridge capping on a corrugated roof."
+        },
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/metal-roof-ridge-capping-case-03-ridge-detail.png",
+          "mime_type": "image/png",
+          "title": "Completed grey metal ridge capping over corrugated roof sheets."
+        },
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/metal-roof-ridge-capping-case-04-eave-detail.png",
+          "mime_type": "image/png",
+          "title": "Completed corrugated metal roof edge with capping and gutter detail."
+        }
+      ]
+    },
+    {
+      "id": "https://www.perthroofcare.com.au/projects/tile-roof-chimney-flashing-repair-perth/",
+      "url": "https://www.perthroofcare.com.au/projects/tile-roof-chimney-flashing-repair-perth/",
+      "title": "Tile Roof Chimney Flashing Repair Perth",
+      "summary": "A four-photo completed-work record showing formed grey flashing around a brick chimney and the adjoining tiled-roof valley.",
+      "content_text": "A four-photo completed-work record showing formed grey flashing around a brick chimney and the adjoining tiled-roof valley. Tile roof chimney flashing and valley detail. Project location not published.",
+      "tags": [
+        "Tile roof chimney flashing and valley detail",
+        "Roof Valleys & Flashing Repairs Perth",
+        "Perth roof repairs"
+      ],
+      "image": "https://www.perthroofcare.com.au/assets/images/tile-chimney-flashing-case-01-overview.png",
+      "attachments": [
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/tile-chimney-flashing-case-01-overview.png",
+          "mime_type": "image/png",
+          "title": "Completed tile roof chimney flashing and valley detail."
+        },
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/tile-chimney-flashing-case-02-valley-detail.png",
+          "mime_type": "image/png",
+          "title": "Grey metal valley flashing beside tiled roof and brick chimney."
+        },
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/tile-chimney-flashing-case-03-valley-overview.png",
+          "mime_type": "image/png",
+          "title": "Completed grey valley flashing through a tiled roof junction."
+        },
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/tile-chimney-flashing-case-04-chimney-detail.png",
+          "mime_type": "image/png",
+          "title": "Completed grey chimney flashing on a tiled roof."
+        }
+      ]
+    },
+    {
+      "id": "https://www.perthroofcare.com.au/projects/metal-roof-hip-ridge-capping-repair-perth/",
+      "url": "https://www.perthroofcare.com.au/projects/metal-roof-hip-ridge-capping-repair-perth/",
+      "title": "Metal Roof Hip & Ridge Capping Repair Perth",
+      "summary": "A four-photo completed-work record of a corrugated metal roof with formed hip and ridge capping at a multi-plane roof junction.",
+      "content_text": "A four-photo completed-work record of a corrugated metal roof with formed hip and ridge capping at a multi-plane roof junction. Metal roof hip and ridge capping. Project location not published.",
+      "tags": [
+        "Metal roof hip and ridge capping",
+        "Metal Roof Repairs Perth",
+        "Perth roof repairs"
+      ],
+      "image": "https://www.perthroofcare.com.au/assets/images/metal-hip-ridge-case-01-overview.png",
+      "attachments": [
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/metal-hip-ridge-case-01-overview.png",
+          "mime_type": "image/png",
+          "title": "Completed corrugated metal roof with grey hip and ridge capping."
+        },
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/metal-hip-ridge-case-02-hip-junction.png",
+          "mime_type": "image/png",
+          "title": "Grey metal hip capping junction on a completed corrugated roof."
+        },
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/metal-hip-ridge-case-03-ridge-detail.png",
+          "mime_type": "image/png",
+          "title": "Completed grey ridge and hip capping over corrugated metal roof sheets."
+        },
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/metal-hip-ridge-case-04-check-detail.png",
+          "mime_type": "image/png",
+          "title": "Gloved hand checking completed grey metal ridge capping."
+        }
+      ]
+    },
+    {
+      "id": "https://www.perthroofcare.com.au/projects/tile-roof-valley-chimney-flashing-repairs-perth/",
+      "url": "https://www.perthroofcare.com.au/projects/tile-roof-valley-chimney-flashing-repairs-perth/",
+      "title": "Tile Roof Valley & Chimney Flashing Repairs Perth",
+      "summary": "A four-photo completed-work record showing a tiled-roof valley, a brick chimney base and newly formed grey flashing at both junctions.",
+      "content_text": "A four-photo completed-work record showing a tiled-roof valley, a brick chimney base and newly formed grey flashing at both junctions. Tile roof valley and chimney flashing. Project location not published.",
+      "tags": [
+        "Tile roof valley and chimney flashing",
+        "Roof Valleys & Flashing Repairs Perth",
+        "Perth roof repairs"
+      ],
+      "image": "https://www.perthroofcare.com.au/assets/images/tile-valley-chimney-case-01-chimney-overview.png",
+      "attachments": [
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/tile-valley-chimney-case-01-chimney-overview.png",
+          "mime_type": "image/png",
+          "title": "Completed chimney flashing and grey valley detail on a tiled roof."
+        },
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/tile-valley-chimney-case-02-valley-overview.png",
+          "mime_type": "image/png",
+          "title": "Completed grey metal valley and chimney flashing between tiled roof slopes."
+        },
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/tile-valley-chimney-case-03-flashing-detail.png",
+          "mime_type": "image/png",
+          "title": "Completed grey flashing at a brick chimney on a tiled roof."
+        },
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/tile-valley-chimney-case-04-valley-detail.png",
+          "mime_type": "image/png",
+          "title": "Completed grey metal valley flashing beside tiled roof ridge capping."
+        }
+      ]
+    },
+    {
+      "id": "https://www.perthroofcare.com.au/projects/metal-roof-ridge-flashing-repair-perth/",
+      "url": "https://www.perthroofcare.com.au/projects/metal-roof-ridge-flashing-repair-perth/",
+      "title": "Metal Roof Ridge Flashing Repair Perth",
+      "summary": "A four-photo completed-work record showing formed metal flashing at a corrugated-roof junction and the finished ridge-capping run.",
+      "content_text": "A four-photo completed-work record showing formed metal flashing at a corrugated-roof junction and the finished ridge-capping run. Metal roof ridge flashing and capping. Project location not published.",
+      "tags": [
+        "Metal roof ridge flashing and capping",
+        "Metal Roof Repairs Perth",
+        "Perth roof repairs"
+      ],
+      "image": "https://www.perthroofcare.com.au/assets/images/metal-ridge-flashing-case-01-junction-detail.png",
+      "attachments": [
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/metal-ridge-flashing-case-01-junction-detail.png",
+          "mime_type": "image/png",
+          "title": "Grey metal flashing installed at a corrugated metal roof junction."
+        },
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/metal-ridge-flashing-case-02-roof-overview.png",
+          "mime_type": "image/png",
+          "title": "Completed grey ridge capping across a corrugated metal roof."
+        },
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/metal-ridge-flashing-case-03-ridge-run.png",
+          "mime_type": "image/png",
+          "title": "Long completed metal ridge-capping run over corrugated roof sheets."
+        },
+        {
+          "url": "https://www.perthroofcare.com.au/assets/images/metal-ridge-flashing-case-04-ridge-check.png",
+          "mime_type": "image/png",
+          "title": "Gloved hand checking completed grey metal ridge flashing and capping."
+        }
+      ]
+    }
+  ]
+}

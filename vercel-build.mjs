@@ -42,6 +42,8 @@ const stagedFiles = [
   ['index.html', 'index.html'],
   ['robots.txt', 'robots.txt'],
   ['sitemap.xml', 'sitemap.xml'],
+  ['llms.txt', 'llms.txt'],
+  ['case-studies.json', 'case-studies.json'],
   ['site.css', 'assets/css/site.css'],
   ['office-location.css', 'assets/css/office-location.css'],
   ['brand-hero.css', 'assets/css/brand-hero.css'],
@@ -136,7 +138,27 @@ const stagedFiles = [
   ['storm-damage-case-03-under-tile-detail.jpg', 'assets/images/storm-damage-case-03-under-tile-detail.jpg'],
   ['storm-damage-case-04-roof-void-junction.jpg', 'assets/images/storm-damage-case-04-roof-void-junction.jpg'],
   ['storm-damage-case-05-roof-void-work-record.jpg', 'assets/images/storm-damage-case-05-roof-void-work-record.jpg'],
-  ['storm-damage-case-06-roof-void-inspection.jpg', 'assets/images/storm-damage-case-06-roof-void-inspection.jpg']
+  ['storm-damage-case-06-roof-void-inspection.jpg', 'assets/images/storm-damage-case-06-roof-void-inspection.jpg'],
+  ['metal-roof-ridge-capping-case-01-complete-overview.png', 'assets/images/metal-roof-ridge-capping-case-01-complete-overview.png'],
+  ['metal-roof-ridge-capping-case-02-installation-detail.png', 'assets/images/metal-roof-ridge-capping-case-02-installation-detail.png'],
+  ['metal-roof-ridge-capping-case-03-ridge-detail.png', 'assets/images/metal-roof-ridge-capping-case-03-ridge-detail.png'],
+  ['metal-roof-ridge-capping-case-04-eave-detail.png', 'assets/images/metal-roof-ridge-capping-case-04-eave-detail.png'],
+  ['tile-chimney-flashing-case-01-overview.png', 'assets/images/tile-chimney-flashing-case-01-overview.png'],
+  ['tile-chimney-flashing-case-02-valley-detail.png', 'assets/images/tile-chimney-flashing-case-02-valley-detail.png'],
+  ['tile-chimney-flashing-case-03-valley-overview.png', 'assets/images/tile-chimney-flashing-case-03-valley-overview.png'],
+  ['tile-chimney-flashing-case-04-chimney-detail.png', 'assets/images/tile-chimney-flashing-case-04-chimney-detail.png'],
+  ['metal-hip-ridge-case-01-overview.png', 'assets/images/metal-hip-ridge-case-01-overview.png'],
+  ['metal-hip-ridge-case-02-hip-junction.png', 'assets/images/metal-hip-ridge-case-02-hip-junction.png'],
+  ['metal-hip-ridge-case-03-ridge-detail.png', 'assets/images/metal-hip-ridge-case-03-ridge-detail.png'],
+  ['metal-hip-ridge-case-04-check-detail.png', 'assets/images/metal-hip-ridge-case-04-check-detail.png'],
+  ['tile-valley-chimney-case-01-chimney-overview.png', 'assets/images/tile-valley-chimney-case-01-chimney-overview.png'],
+  ['tile-valley-chimney-case-02-valley-overview.png', 'assets/images/tile-valley-chimney-case-02-valley-overview.png'],
+  ['tile-valley-chimney-case-03-flashing-detail.png', 'assets/images/tile-valley-chimney-case-03-flashing-detail.png'],
+  ['tile-valley-chimney-case-04-valley-detail.png', 'assets/images/tile-valley-chimney-case-04-valley-detail.png'],
+  ['metal-ridge-flashing-case-01-junction-detail.png', 'assets/images/metal-ridge-flashing-case-01-junction-detail.png'],
+  ['metal-ridge-flashing-case-02-roof-overview.png', 'assets/images/metal-ridge-flashing-case-02-roof-overview.png'],
+  ['metal-ridge-flashing-case-03-ridge-run.png', 'assets/images/metal-ridge-flashing-case-03-ridge-run.png'],
+  ['metal-ridge-flashing-case-04-ridge-check.png', 'assets/images/metal-ridge-flashing-case-04-ridge-check.png']
 ];
 
 for (const [source, destination] of stagedFiles) {
