@@ -1,6 +1,6 @@
 # Ellis Services Group
 
-> Machine-readable guide to the public roof-repair information published by Ellis Services Group for Perth, Western Australia.
+> Machine-readable guide to roof repairs, inspections and drainage services provided by Ellis Services Group in Perth, Western Australia.
 
 ## Identity
 

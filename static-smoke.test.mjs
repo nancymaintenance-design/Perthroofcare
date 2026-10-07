@@ -52,7 +52,7 @@ test('services navigation is viewport-contained, concise and has no projects hub
   const home = readFileSync(fileFor(''), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8'); const script = readFileSync(join(root, 'site.js'), 'utf8');
   assert.doesNotMatch(home, /<a href="\/projects\/">Projects<\/a>/i);
   assert.match(home, /id="services-submenu"[^>]*role="region"[^>]*aria-label="Services"/i);
-  assert.match(home, /Choose one clear service topic rather than browsing a long list\./i);
+  assert.match(home, /Need help choosing\? Describe the issue and we will arrange the right assessment\./i);
   for (const label of ['Core roof repairs', 'Roofline details', 'Roof Repairs Perth', 'Roof Valleys &amp; Flashing Repairs', 'Gutter Repairs Perth', 'Roof Maintenance Perth']) assert.match(home, new RegExp(label));
   assert.match(css, /\.services-submenu\{[^}]*overflow:auto[^}]*max-height:calc\(100vh - 7rem\)/i);
   assert.match(script, /const menuWidth = Math\.min\(896, Math\.max\(280, window\.innerWidth - sideGap \* 2\)\)/);
@@ -110,7 +110,7 @@ test('gutter and downpipe pages distinguish their own service questions', () => 
 
 test('service areas provide six rounded regional entry points, specific local repair pages and the real enquiry form', () => {
   const areas = readFileSync(fileFor('service-areas'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8'); const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
-  assert.match(areas, /POPULAR PERTH ROOF REPAIR SEARCHES/i);
+  assert.match(areas, /PERTH ROOF REPAIR SERVICE AREAS/i);
   assert.equal((areas.match(/class="card area-region-card"/g) ?? []).length, 6, 'six regional cards must leave no empty grid tile');
   assert.match(areas, /WESTERN COASTAL ROOF SERVICES/i);
   assert.match(areas, /WESTERN INNER ROOF SERVICES/i);
@@ -389,7 +389,7 @@ test('privacy is compact, useful and directly contactable', () => {
 
 test('legal information is useful, bounded and linked to the relevant roof-repair paths', () => {
   const html = readFileSync(fileFor('legal'), 'utf8');
-  assert.match(html, /<h1>ROOF REPAIR WEBSITE INFORMATION\.<\/h1>/); assert.match(html, /final repair scope is confirmed from the property, access and roofline condition/i); assert.match(html, /Images and documented projects/i);
+  assert.match(html, /<h1>ROOF REPAIR WEBSITE INFORMATION\.<\/h1>/); assert.match(html, /we assess the roof on site and confirm the work and written quote before proceeding/i); assert.match(html, /Images and documented projects/i);
   for (const href of ['/services/', '/news/', '/privacy/', '/contact/']) assert.match(html, new RegExp(`href="${href}"`));
   assert.doesNotMatch(html, /class="hero inner"/i);
 });
