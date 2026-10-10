@@ -69,7 +69,8 @@ if (enquiryForm) {
     try {
       const response = await fetch('/api/enquiry', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(data) });
       const result = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(result.error || 'We could not send your enquiry. Please try again or use the direct contact details.');
+      if (!response.ok || result.ok !== true) throw new Error(result.error || 'We could not send your enquiry. Please try again or use the direct contact details.');
+      window.ellisAnalytics?.leadConfirmed(response, result);
       enquiryForm.reset(); setStatus('Thanks — your enquiry has been sent.', 'success');
     } catch (error) { setStatus(error.message, 'error'); }
     finally { submit.disabled = false; submit.removeAttribute('aria-busy'); submit.textContent = original; }

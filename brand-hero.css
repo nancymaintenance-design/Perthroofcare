@@ -84,3 +84,25 @@ nav { white-space: normal; }
   .atlas-hero.home .hero-slide h1 { font-size: clamp(3rem, 14vw, 4.35rem); }
   .atlas-hero.home .hero-slide h2 { font-size: clamp(2.75rem, 12vw, 4rem); }
 }
+
+/* 2026-10-07: keep legacy atlas panels aligned with the shared graphite visual system. */
+.atlas-hero,
+.atlas-hero.home,
+.atlas-hero .hero-slide:first-child,
+.atlas-hero .hero-slide:nth-child(n + 2) { background-color: #1c2427; }
+.atlas-hero .hero-slide:first-child .hero-roofer-media::after,
+.atlas-hero .hero-slide:nth-child(2)::after,
+.atlas-hero .hero-slide:nth-child(3)::after,
+.atlas-hero .hero-slide:nth-child(n + 2) .hero-carousel-media::after {
+  background: linear-gradient(90deg, rgb(28 36 39 / .88) 0%, rgb(28 36 39 / .64) 48%, rgb(28 36 39 / .16) 100%);
+}
+.atlas-hero .hero-slide:first-child .eyebrow,
+.atlas-hero .hero-slide:nth-child(n + 2) .eyebrow,
+.atlas-hero.home .hero-copy .eyebrow { color: #e8a17b; }
+.atlas-hero.home .hero-copy,
+.atlas-hero.home .hero-slide:first-child .hero-copy,
+.atlas-hero.home .hero-slide:nth-child(n + 2) .hero-copy,
+.atlas-hero.home .hero-slide:nth-child(even) .hero-copy {
+  background: rgb(28 36 39 / .9);
+  border-color: rgb(233 225 210 / .34);
+}

@@ -2,6 +2,9 @@ import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, write
 import { dirname, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { optimizeImages } from './tools/optimize-images.mjs';
+import { bundleStylesheets } from './tools/bundle-stylesheets.mjs';
+import sharp from 'sharp';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
 const publicDirectory = join(root, 'public');
@@ -10,6 +13,7 @@ const build = spawnSync(process.execPath, ['build.mjs'], { cwd: root, stdio: 'in
 if (build.status !== 0) process.exit(build.status ?? 1);
 const annotateImages = spawnSync(process.execPath, ['tools/annotate-image-dimensions.mjs'], { cwd: root, stdio: 'inherit' });
 if (annotateImages.status !== 0) process.exit(annotateImages.status ?? 1);
+await optimizeImages(root);
 
 // Publish one brand-owned PNG icon path for browsers and search crawlers.
 const faviconMarkup = '<link rel="icon" type="image/png" sizes="512x512" href="/favicon.png"><link rel="apple-touch-icon" sizes="512x512" href="/favicon.png"><link rel="manifest" href="/site.webmanifest">';
@@ -28,11 +32,16 @@ stampFavicon(root);
 rmSync(publicDirectory, { recursive: true, force: true });
 mkdirSync(publicDirectory, { recursive: true });
 
-const excludedDirectories = new Set(['api', 'node_modules', 'public', 'tests', 'tools', '.vercel', '.git']);
-for (const entry of readdirSync(root, { withFileTypes: true })) {
-  if (entry.isDirectory() && !entry.name.startsWith('.') && !excludedDirectories.has(entry.name)) {
-    cpSync(join(root, entry.name), join(publicDirectory, entry.name), { recursive: true });
-  }
+// Canonical routes are the publication allowlist, not arbitrary source folders.
+const publishedRoutes = [...readFileSync(join(root, 'sitemap.xml'), 'utf8').matchAll(/<loc>(.*?)<\/loc>/g)]
+  .map((match) => new URL(match[1]).pathname.replace(/^\/|\/$/g, ''));
+for (const route of publishedRoutes.filter(Boolean)) {
+  const destination = join(publicDirectory, route, 'index.html');
+  mkdirSync(dirname(destination), { recursive: true });
+  cpSync(join(root, route, 'index.html'), destination);
+}
+for (const file of ['news/feed.xml', 'news/feed.json']) {
+  cpSync(join(root, file), join(publicDirectory, file));
 }
 
 const stagedFiles = [
@@ -45,17 +54,23 @@ const stagedFiles = [
   ['llms.txt', 'llms.txt'],
   ['case-studies.json', 'case-studies.json'],
   ['site.css', 'assets/css/site.css'],
+  ['refinement.css', 'assets/css/refinement.css'],
+  ['responsive-images.css', 'assets/css/responsive-images.css'],
   ['office-location.css', 'assets/css/office-location.css'],
   ['brand-hero.css', 'assets/css/brand-hero.css'],
   ['contact-form.css', 'assets/css/contact-form.css'],
   ['price-guide.css', 'assets/css/price-guide.css'],
   ['site.js', 'assets/js/site.js'],
+  ['analytics.js', 'assets/js/analytics.js'],
   ['ellis-logo.png', 'assets/images/ellis-logo.png'],
   ['gutter.png', 'assets/images/gutter.png'],
   ['hero-australian-roofer-v2.png', 'assets/images/hero-australian-roofer-v2.png'],
   ['hero-roof.png', 'assets/images/hero-roof.png'],
   ['inspection.png', 'assets/images/inspection.png'],
   ['instagram-icon.png', 'assets/images/instagram-icon.png'],
+  ['facebook-icon.svg', 'assets/images/facebook-icon.svg'],
+  ['linkedin-icon.svg', 'assets/images/linkedin-icon.svg'],
+  ['google-reviews-icon.svg', 'assets/images/google-reviews-icon.svg'],
   ['metal-roof.png', 'assets/images/metal-roof.png'],
   ['resources-downpipe.png', 'assets/images/resources-downpipe.png'],
   ['resources-dusk.png', 'assets/images/resources-dusk.png'],
@@ -63,6 +78,7 @@ const stagedFiles = [
   ['resources-gutter-project.jpg', 'assets/images/resources-gutter-project.jpg'],
   ['resources-metal.png', 'assets/images/resources-metal.png'],
   ['resources-metal-project.jpg', 'assets/images/resources-metal-project.jpg'],
+  ['metal-roof-perth-grey-roof-overview.png', 'assets/images/metal-roof-perth-grey-roof-overview.png'],
   ['resources-tile.png', 'assets/images/resources-tile.png'],
   ['resources-tile-project.jpg', 'assets/images/resources-tile-project.jpg'],
   ['resources-tools.png', 'assets/images/resources-tools.png'],
@@ -169,6 +185,14 @@ for (const [source, destination] of stagedFiles) {
   cpSync(sourcePath, destinationPath);
 }
 
+for (const entry of readdirSync(join(root, '.image-cache')).filter(name => name.endsWith('.webp'))) {
+  cpSync(join(root, '.image-cache', entry), join(publicDirectory, 'assets', 'images', entry));
+}
+
+bundleStylesheets(publicDirectory,publishedRoutes);
+// Preserve the 512px PNG artwork and transparency, but avoid oversized encoding.
+writeFileSync(join(publicDirectory,'favicon.png'),await sharp(join(root,'favicon.png')).png({compressionLevel:9,effort:10,palette:false}).toBuffer());
+
 rmSync(outputDirectory, { recursive: true, force: true });
 const staticDirectory = join(outputDirectory, 'static');
 mkdirSync(staticDirectory, { recursive: true });
@@ -186,4 +210,6 @@ writeFileSync(join(functionDirectory, '.vc-config.json'), JSON.stringify({
   launcherType: 'Nodejs',
   shouldAddHelpers: true
 }));
-writeFileSync(join(outputDirectory, 'config.json'), JSON.stringify({ version: 3 }));
+writeFileSync(join(outputDirectory, 'config.json'), JSON.stringify({ version: 3, routes: [
+  { src: '^/index\\.html$', headers: { Location: '/' }, status: 308 }
+] }));

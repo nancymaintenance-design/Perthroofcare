@@ -1,15 +1,20 @@
-# Stage3 release packaging: keep internal evidence out of deployment.
-node_modules
 .git
 .vercel
+node_modules
+.env*
+.seo-cache
+.image-cache
 .superpowers
+.worktrees
+public
 docs
+preview.env
+*.test.mjs
+tools/get-gsc-baseline.ps1
 .env
 .env.*
-!.env.example
 **/*.log
 **/*.diff
 **/*.patch
-public
 dist
 /*.zip

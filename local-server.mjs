@@ -3,9 +3,10 @@ import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const root = fileURLToPath(new URL('.', import.meta.url));
-const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.png': 'image/png', '.ico': 'image/x-icon', '.xml': 'application/xml; charset=utf-8', '.txt': 'text/plain; charset=utf-8' };
+const root = fileURLToPath(new URL('./public/', import.meta.url));
+const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.json': 'application/feed+json; charset=utf-8', '.png': 'image/png', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.xml': 'application/xml; charset=utf-8', '.txt': 'text/plain; charset=utf-8' };
 const port = Number(process.env.PORT || 4173);
+const previewOnly = process.env.PREVIEW_ONLY === '1';
 const maxBodyBytes = 12_000;
 const requestWindowMs = 10 * 60 * 1000;
 const requestLimit = 5;
@@ -28,6 +29,7 @@ const isRateLimited = (ip) => {
 const validEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 const handleEnquiry = async (req, res) => {
+  if (previewOnly) return json(res, 503, { error: 'This local preview does not send enquiries. Please review the form without submitting personal details.' });
   if (req.method !== 'POST') return json(res, 405, { error: 'Method not allowed.' });
   if (!String(req.headers['content-type'] || '').toLowerCase().startsWith('application/json')) return json(res, 415, { error: 'Use application/json.' });
   if (Number(req.headers['content-length'] || 0) > maxBodyBytes) return json(res, 413, { error: 'Enquiry is too large.' });
@@ -52,13 +54,20 @@ const handleEnquiry = async (req, res) => {
 
 createServer(async (req, res) => {
   try {
-    const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+    const requestUrl = new URL(req.url, 'http://localhost');
+    const pathname = decodeURIComponent(requestUrl.pathname);
+    if (previewOnly) res.setHeader('x-robots-tag', 'noindex, nofollow');
+    if (pathname === '/index.html') { res.writeHead(308, { location: `/${requestUrl.search}` }); res.end(); return; }
     if (pathname === '/api/enquiry') return handleEnquiry(req, res);
     if (pathname.includes('..')) throw new Error('invalid-path');
-    const asset = pathname.match(/^\/assets\/(?:css|images|js)\/([^/]+)$/);
-    let file = asset ? join(root, asset[1]) : join(root, normalize(pathname).replace(/^[/\\]+/, ''));
+    let file = join(root, normalize(pathname).replace(/^[/\\]+/, ''));
     if (pathname.endsWith('/')) file = join(file, 'index.html');
     try { if ((await stat(file)).isDirectory()) file = join(file, 'index.html'); } catch {}
-    const data = await readFile(file); res.writeHead(200, { 'content-type': types[extname(file)] || 'application/octet-stream' }); res.end(data);
+    let data = await readFile(file);
+    if (previewOnly && extname(file) === '.html') data = Buffer.from(data.toString('utf8')
+      .replace(/<script\b[^>]*src="https:\/\/www\.googletagmanager\.com[^>]*><\/script>/g, '')
+      .replace(/<script>window\.dataLayer=[\s\S]*?<\/script>/g, '')
+      .replace(/<script\b[^>]*src="\/_vercel\/(?:speed-)?insights\/script\.js"[^>]*><\/script>/g, ''));
+    res.writeHead(200, { 'content-type': types[extname(file)] || 'application/octet-stream' }); res.end(data);
   } catch { res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' }); res.end('Not found'); }
-}).listen(port, () => console.log(`Static site: http://localhost:${port}`));
+}).listen(port, '127.0.0.1', () => console.log(`Static site: http://127.0.0.1:${port}${previewOnly ? ' (local preview, no email or analytics)' : ''}`));

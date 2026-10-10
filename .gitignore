@@ -1,2 +1,9 @@
 .worktrees/
 .superpowers/
+.image-cache/
+node_modules/
+.env*
+.vercel/
+public/
+responsive-images.css
+.seo-cache/

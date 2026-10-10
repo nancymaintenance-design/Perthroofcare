@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
 
-const html = fs.readFileSync('index.html', 'utf8');
+const html = fs.readFileSync(new URL('./public/index.html', import.meta.url), 'utf8');
 const images = [...html.matchAll(/<img\b[^>]*>/gi)].map((match) => match[0]);
 
 test('content images reserve layout space and defer below-fold loading', () => {
@@ -14,6 +14,7 @@ test('content images reserve layout space and defer below-fold loading', () => {
   for (const image of images) {
     if (/\bclass="brand-logo"/i.test(image)) continue;
     if (/\bclass="instagram-icon"/i.test(image)) continue;
+    if (/\bclass="social-icon"/i.test(image)) continue;
     if (/\bfetchpriority="high"/i.test(image)) continue;
     assert.match(image, /\bloading="lazy"/i, image);
   }

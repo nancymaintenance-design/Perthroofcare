@@ -2,8 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { load } from 'cheerio';
 const collect = dir => readdirSync(dir, {withFileTypes:true}).flatMap(e => e.isDirectory() ? collect(join(dir,e.name)) : e.name.endsWith('.html') ? [join(dir,e.name)] : []);
-const visible = html => html.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi,'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+const visible = html => { const $=load(html); $('script,style').remove(); return $('body').text().replace(/\s+/g,' ').trim(); };
 
 test('all generated public pages avoid enquiry-only, reader-work and editorial positioning', () => {
  const bad = /Request (?:a roof repair enquiry|an enquiry)|primary roof repair intent|disconnected project hub|gather related terms|frame (?:the discussion|a repair conversation)|provides information across|organise water-entry context|information paths|popular local roof repair search|Those details make the related service links|WHAT THIS CONVERSATION CAN COVER/i;
@@ -13,8 +14,9 @@ test('all generated public pages avoid enquiry-only, reader-work and editorial p
 test('every service FAQ answers its own question and matches structured data', () => {
  for (const route of ['roof-repairs','roof-leak-repairs','tile-roof-repairs','metal-roof-repairs','ridge-capping-repointing','flashing-repairs','gutters-downpipes','downpipe-repairs','roof-inspection','gutter-repairs','roof-maintenance','storm-damage-roof-repairs']) {
   const html=readFileSync('public/'+route+'/index.html','utf8');
-  const faqSection=html.match(/<section class="section focus-faq">([\s\S]*?)<\/section>/)[1];
-  const answers=[...faqSection.matchAll(/<details><summary>(.*?)<\/summary><p>(.*?)<\/p><\/details>/g)].map(m=>[visible(m[1]),visible(m[2])]);
+  const $=load(html);
+  const answers=$('main details').toArray().map(el=>[$(el).find('summary').text(),$(el).find('p').text()]);
+  assert.ok($('.focus-faq details').length>=3,route+' must retain its service questions');
   assert.equal(new Set(answers.map(a=>a[1])).size,answers.length,route+' repeats one generic answer');
   assert.doesNotMatch(answers.map(a=>a[1]).join(' '),/assesses the visible condition, surrounding roofline, access and drainage path/);
   const graphs=[...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].flatMap(m=>{const j=JSON.parse(m[1]);return j['@graph']||[j]});
@@ -45,7 +47,8 @@ test('general FAQ explains components and distinguishes optional photos from ass
  assert.match(txt,/Flashing.*direct.*water/i);
  assert.match(txt,/Ridge capping.*cover.*junction/i);
  assert.match(txt,/photograph.*on-site assessment/i);
- for(const entry of [...html.matchAll(/"acceptedAnswer":\{"@type":"Answer","text":"([^"]+)"/g)]) assert.ok(txt.includes(entry[1]));
+ const $=load(html),graph=JSON.parse($('script[type="application/ld+json"]').text())['@graph'];
+ for(const entry of graph.find(n=>n['@type']==='FAQPage').mainEntity) assert.ok(txt.includes(entry.acceptedAnswer.text));
 });
 
 test('four practical guides have substantive individual openings instead of reader-language work',()=>{
@@ -53,7 +56,9 @@ test('four practical guides have substantive individual openings instead of read
  for(const route of ['drainage-after-rain','metal-roofing-perth','roof-leak-inspection','roof-maintenance-basics']){
   const txt=visible(readFileSync('public/news/'+route+'/index.html','utf8'));
   assert.doesNotMatch(txt,/A closer reading|identify the language|conversation grounded|Continue the reading/);
-  intros.push(txt.match(/GUIDE \/ ROOF REPAIRS.*?\. (.*?) Start/)[1]);
+  const intro=load(readFileSync('public/news/'+route+'/index.html','utf8'))('.article-lead').text();
+  assert.ok(intro.length>100,route+' needs a substantive topic-specific opening');
+  intros.push(intro);
  }
  assert.equal(new Set(intros).size,4);
 });
@@ -61,11 +66,10 @@ test('four practical guides have substantive individual openings instead of read
 test('drainage preparation photos are locally optional and restoration describes actual assessment',()=>{
  for(const route of ['downpipe-repairs','gutter-repairs']){
   const txt=visible(readFileSync('public/'+route+'/index.html','utf8'));
-  assert.match(txt,/If .*photos.*ellisservicesgroup3@outlook.com/i);
+  assert.match(txt,/photographs are optional.*ellisservicesgroup3@outlook.com/i);
   assert.match(txt,/No photos are needed to request an assessment/);
  }
  const txt=visible(readFileSync('public/roof-restoration/index.html','utf8'));
  assert.doesNotMatch(txt,/can be discussed separately before a scope|DETAILS THAT HELP FRAME AN ENQUIRY/);
  assert.match(txt,/materials, deterioration.*preparation/i);
 });
-
