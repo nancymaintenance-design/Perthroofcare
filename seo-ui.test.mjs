@@ -3,8 +3,9 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { load } from 'cheerio';
+import { fileURLToPath } from 'node:url';
 import { serviceAnswers } from './content/service-faqs.mjs';
-const root = new URL('./public/', import.meta.url).pathname.replace(/^\/([A-Z]:)/i,'$1');
+const root = fileURLToPath(new URL('./public/', import.meta.url));
 const routes = [...readFileSync(join(root,'sitemap.xml'),'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname);
 const pages = new Map(routes.map(r=>[r,load(readFileSync(join(root,r,'index.html'),'utf8'))]));
 test('42 service answers are specific, unique and match visible FAQ schema',()=>{
@@ -14,7 +15,7 @@ test('42 service answers are specific, unique and match visible FAQ schema',()=>
     const dom=pages.get(`/${slug}/`);
     assert.deepEqual(dom('.focus-faq details p').map((_,e)=>dom(e).text()).get(),expected);
     const graph=JSON.parse(dom('script[type="application/ld+json"]').text())['@graph'];
-    assert.deepEqual(graph.find(n=>n['@type']==='FAQPage').mainEntity.map(q=>q.acceptedAnswer.text),expected);
+    assert.deepEqual(graph.find(n=>n['@type']==='FAQPage').mainEntity.map(q=>q.acceptedAnswer.text),dom('main details p').map((_,e)=>dom(e).text()).get());
   }
 });
 test('all canonical pages are reachable within three clicks and local assets exist',()=>{

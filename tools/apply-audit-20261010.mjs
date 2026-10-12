@@ -4,9 +4,12 @@ import {load} from 'cheerio';
 import {sameAs,googleMapsUrl,businessHoursText,openingHoursSpecification,localTeamIdentity,groupIdentifiers} from '../content/business-links.mjs';
 import {completeAuditContent,substantiveRoutes} from '../content/audit-completion.mjs';
 import {applyContentIntent,syncContentKnowledge} from '../content/content-intent.mjs';
+import {keywordGapRoutes} from '../content/keyword-gap-content.mjs';
+import {keywordMapRoutes} from '../content/keyword-map-content.mjs';
 
-const updated='2026-10-10';
+const contentUpdateRoutes=new Set([...keywordGapRoutes,...keywordMapRoutes,'gutters-downpipes']);
 const articleImages={
+  'roof-repair-cost-perth':['metal-fastener-sequence-02-fastener-detail.png','Existing metal-roof fastener photograph illustrating component condition, not a quote or a price comparison'],
   'metal-roofing-perth':['metal-roof-perth-grey-roof-overview.png','Grey corrugated metal roof with ridge capping and adjoining roof junctions'],
   'gutter-warning-signs':['gutter-case-04-downpipe-detail.png','Gutter outlet and connected downpipe detail from a roof drainage project'],
   'roof-leak-inspection':['roof-leak-case-03-junction-detail.png','Roof junction photographed during a leak repair project'],
@@ -26,6 +29,7 @@ export function applyAudit20261010({root,site}){
   const routes=[...readFileSync(join(root,'sitemap.xml'),'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname.replace(/^\/|\/$/g,''));
   const newsFeed=JSON.parse(readFileSync(join(root,'news/feed.json'),'utf8'));
   for(const route of routes){
+    const updated=contentUpdateRoutes.has(route)?'2026-10-12':'2026-10-10';
     const file=join(root,route,'index.html'),$=load(readFileSync(file,'utf8'),{xml:{xmlMode:false,decodeEntities:false}});
     completeAuditContent($,route);
     // Preserve GitHub's assessment-to-written-quote path after local editorial passes.
@@ -97,6 +101,13 @@ export function applyAudit20261010({root,site}){
       $('textarea[name="enquiry"]').attr('placeholder','Your suburb or postcode, roof type, affected area and when the problem occurs.');
     }
     const slug=route.startsWith('news/')?route.slice(5):'';
+    if(slug==='roof-repair-cost-perth'){
+      const article=graph.find(n=>n['@type']==='Article');
+      article.datePublished='2026-10-12';article.dateModified=updated;
+      article.headline=$('h1').text();article.description=$('meta[name="description"]').attr('content');
+      const item=newsFeed.items.find(i=>i.url===canonical);
+      if(item){item.date_published='2026-10-12T00:00:00+08:00';item.date_modified='2026-10-12T00:00:00+08:00';item.content_text=$('main p,main li').map((_,e)=>$(e).text()).get().join('\n\n');}
+    }
     if(articleImages[slug]){
       const [name,alt]=articleImages[slug],imagePath=`/assets/images/${name}`;
       const image=$('main img').first();
@@ -125,6 +136,7 @@ export function applyAudit20261010({root,site}){
   writeFileSync(join(root,'news/feed.xml'),`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Roof Repairs Perth News — Ellis Services Group</title><link>${site}/news/</link><description>Practical roof repair and maintenance guidance.</description><language>en-au</language>${newsFeed.items.map(i=>`<item><title>${esc(i.title)}</title><link>${esc(i.url)}</link><guid isPermaLink="true">${esc(i.id)}</guid><description>${esc(i.content_text)}</description></item>`).join('')}</channel></rss>`);
   const sitemap=load(readFileSync(join(root,'sitemap.xml'),'utf8'),{xmlMode:true});
   sitemap('url').each((_,el)=>{const route=new URL(sitemap(el).find('loc').text()).pathname.replace(/^\/|\/$/g,'');
+    const updated=contentUpdateRoutes.has(route)?'2026-10-12':'2026-10-10';
     if(substantiveRoutes.has(route)||articleImages[route.replace(/^news\//,'')]||(!route.startsWith('projects/')&&!['privacy','legal'].includes(route))){sitemap(el).find('lastmod').remove();sitemap(el).append(`<lastmod>${updated}</lastmod>`);}
   });
   writeFileSync(join(root,'sitemap.xml'),sitemap.xml());

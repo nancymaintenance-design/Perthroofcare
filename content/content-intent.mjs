@@ -43,6 +43,7 @@ const areaNotes={
  bayswater:['Does the roof share a drainage or access route?','Identify the affected building or extension, any shared outlet and the person who can authorise access. Do not assume that a shared route establishes responsibility for the defect or permission to work on another property.','gutters-downpipes']
 };
 const guideServices={
+ 'roof-repair-cost-perth':'roof-repairs',
  'metal-roofing-perth':'metal-roof-repairs','gutter-warning-signs':'gutter-repairs','roof-leak-inspection':'roof-inspection','roof-maintenance-basics':'roof-maintenance','roof-flashing-explained':'flashing-repairs','drainage-after-rain':'gutters-downpipes',
  'roof-leak-detection-perth':'roof-leak-repairs','tile-roof-repairs-perth-guide':'tile-roof-repairs','metal-roof-repairs-perth-guide':'metal-roof-repairs','ridge-capping-repairs-perth-guide':'ridge-capping-repointing','roof-valleys-flashing-repairs-perth':'flashing-repairs','roof-inspection-perth-guide':'roof-inspection'
 };
@@ -97,7 +98,7 @@ export function applyContentIntent($,route){
    ['Does dampness without rain always need a roof repair?','No. Condensation, plumbing or equipment can also be relevant. Note whether moisture follows rain or occurs in dry weather and explain any nearby equipment. The enquiry should be directed to the appropriate assessment rather than assuming that sealing the roof will resolve it.','roof-leak-repairs'],
    [serviceIntents['flashing-repairs'].q,serviceIntents['flashing-repairs'].a,'flashing-repairs'],
    ['What should I confirm about a repair warranty?','Ask for the terms applicable to the agreed work, including duration, covered components, exclusions and how to report a concern. Keep the accepted scope and repair records. If the area leaks again, provide the timing and previous work details so the current condition can be reviewed; do not assume a website describes the terms of your particular job.','contact'],
-   ['Can I book an internal or box gutter repair from this page?','Describe the system and affected area to the team first. Blockages, outlet condition and damaged material can require different work. Scope, access and any specialist requirements need confirming; the external gutter service description does not establish that every internal drainage job is included.','gutter-repairs']
+   ['Can I book an internal or box gutter repair from this page?','Yes. We undertake box gutter repairs. Describe the system, affected area and overflow history so the inspection and repair scope can be arranged. Blockages, outlet condition and damaged material can require different work; the scope and access are agreed for the particular property.','box-gutter-repairs']
   ];
   $('.content-intent').before(block('Fees, equipment and scope questions.',`<div class="faq-list">${extra.map(([q,a,r])=>`<details><summary>${esc(q)}</summary><p>${esc(a)} ${link(r,'Discuss the related scope')}</p></details>`).join('')}</div>`));
  }

@@ -5,7 +5,7 @@ import {load} from 'cheerio';
 const routes=[...readFileSync('public/sitemap.xml','utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname);
 const pages=new Map(routes.map(r=>[r,load(readFileSync(`public${r}index.html`,'utf8'))]));
 test('content revision provides contextual next steps on every published page',()=>{
- assert.equal(pages.size,62);
+ assert.equal(pages.size,69);
  for(const [r,$] of pages){assert.ok($('main .content-intent').length,r);assert.ok($('main .content-intent a[href^="/"]').length,r);}
 });
 test('questions in schema and page knowledge match final visible answers',()=>{

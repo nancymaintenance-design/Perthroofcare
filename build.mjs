@@ -3,6 +3,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { load } from 'cheerio';
 import {instagramUrl,facebookUrl,linkedinUrl,googleMapsUrl} from './content/business-links.mjs';
+import {newServices,costGuide} from './content/keyword-map-content.mjs';
 const root = fileURLToPath(new URL('.', import.meta.url));
 const site = 'https://www.perthroofcare.com.au';
 const ga4Tag = '<script async src="https://www.googletagmanager.com/gtag/js?id=G-35M6VYNBDV"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag(\'js\',new Date());gtag(\'config\', \'G-35M6VYNBDV\');</script>';
@@ -234,6 +235,7 @@ const practicalGuideOpenings = {
     ]
   }
 };
+routes.push(...newServices.map(s=>[s.route,s.title]));
 for (const [path,title] of routes) {
   let html;
   if (path === 'contact') html = layout(title,path+'/',`<section class="hero inner">${image(0)}<div class="container hero-copy"><p class="eyebrow">CONTACT / DIRECT</p><h1>CONTACT ELLIS SERVICES GROUP.</h1><p>Call or email to arrange an on-site Perth roof assessment and written repair quote.</p></div></section><section class="section grid"><div><p class="eyebrow">CALL OR EMAIL</p><h2>Use the contact channel that suits you.</h2><p><a class="button" href="tel:+61405878406">Call 0405878406</a></p><p><a class="button outline" href="mailto:ellisservicesgroup3@outlook.com">Email Ellis Services Group</a></p></div><div class="card"><p class="eyebrow">ADDRESS</p><h2>140 St Georges Terrace, Perth WA 6000</h2><p>For privacy information relating to this website, read the <a href="/privacy/">privacy page</a>.</p></div></section>`);
@@ -1143,6 +1145,7 @@ const articleSchema = (article) => `<script type="application/ld+json">${JSON.st
 
 const articlePage = (article) => `<article class="compact-information news-article"><div class="narrow"><p class="eyebrow">ROOF REPAIR GUIDE / PERTH</p><h1>${article.title.toUpperCase()}.</h1><p>${article.lead}</p><p class="article-byline">Prepared by Ellis Services Group · ${newsArticleDate}</p><section class="article-key-points"><h2>AT A GLANCE.</h2><ul>${article.points.map((point) => `<li>${point}</li>`).join('')}</ul></section>${article.sections.map(([heading, copy]) => `<section><h2>${heading}</h2><p>${copy}</p></section>`).join('')}<section><h2>Common questions</h2><div class="faq-list">${article.questions.map(([question, answer]) => `<details><summary>${question}</summary><p>${answer}</p></details>`).join('')}</div></section><section><h2>Customer feedback and returning clients</h2><p>Our strong Google review feedback and high level of repeat customer enquiries reflect the value of clear communication, practical roofline context and direct follow-up. Each new enquiry is still considered on its own current property details rather than being treated as a standard repair.</p></section><section><h2>Related Perth roof repair information</h2><nav class="information-links" aria-label="Related Perth roof repair information"><a href="${article.serviceHref}">${article.serviceLabel} <span aria-hidden="true">→</span></a><a href="/roof-repairs/">Roof Repairs Perth <span aria-hidden="true">→</span></a><a href="/contact/">Make a roof repair enquiry <span aria-hidden="true">→</span></a></nav></section><section><h2>Contact Ellis Services Group</h2><p>For a Perth roof repair enquiry, call <a href="tel:+61405878406">0405 878 406</a> or email <a href="mailto:ellisservicesgroup3@outlook.com">ellisservicesgroup3@outlook.com</a>. Website office: 140 St Georges Terrace, Perth WA 6000.</p></section></div></article>`;
 
+newsArticleRecords.push(costGuide);
 for (const article of newsArticleRecords) writeRoute(`news/${article.slug}`, layout(article.title, `news/${article.slug}/`, articlePage(article), articleSchema(article)));
 
 const supplementaryNewsCards = [

@@ -191,3 +191,19 @@ footer a:focus-visible,.contact-band a:focus-visible,.home-enquiry a:focus-visib
 .content-toc li{margin:.45rem 0;line-height:1.5}
 .content-toc a,.content-intent a{text-underline-offset:.2em}
 .article-reading h2[id]{scroll-margin-top:7rem}
+/* Content navigation is not the collapsible mobile header menu. */
+main nav.content-toc,main nav.faq-topic-nav{display:block}
+main nav.faq-topic-nav{margin:1.5rem 0 2rem;padding:1rem 1.25rem;border-left:3px solid var(--accent);background:var(--sand)}
+main nav.faq-topic-nav ul{margin:0;padding-left:1.25rem}
+main nav.faq-topic-nav li{margin:.6rem 0;line-height:1.5}
+#educational-questions section[id],#educational-questions details[id]{scroll-margin-top:7rem}
+#perth-cleaning-painting-project{scroll-margin-top:7rem}
+#perth-gutter-tile-project{scroll-margin-top:7rem}
+.keyword-map-content .project-case-grid{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:1.25rem}
+.keyword-map-content .project-case-grid figure{display:flex;flex-direction:column;margin:0;min-width:0}
+.keyword-map-content .project-case-grid img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;background:#eef1f4}
+.keyword-map-content .project-case-grid figcaption{flex:1}
+#perth-strata-skylight-project .project-case-grid img{aspect-ratio:3/4;object-position:center}
+.two-storey-project-photo img{width:100%;height:auto}
+@media(min-width:721px){.keyword-map-content .project-case-grid:has(>figure:nth-child(3):last-child){grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:720px){.keyword-map-content .project-case-grid{grid-template-columns:1fr}}

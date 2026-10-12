@@ -4,8 +4,9 @@ import { join } from 'node:path';
 import test from 'node:test';
 import { spawn } from 'node:child_process';
 import { load } from 'cheerio';
+import { fileURLToPath } from 'node:url';
 
-const root = new URL('.', import.meta.url).pathname.replace(/^\/(.:)/, '$1');
+const root = fileURLToPath(new URL('.', import.meta.url));
 const fileFor = (route) => join(root, route || '.', 'index.html');
 const coreRoutes = ['roof-repairs', 'roof-leak-repairs', 'tile-roof-repairs', 'metal-roof-repairs', 'ridge-capping-repointing', 'flashing-repairs', 'roof-inspection', 'gutter-repairs', 'roof-maintenance'];
 const publishedRoutes = ['', 'services', ...coreRoutes, 'service-areas', 'news', 'about', 'contact', 'privacy', 'legal'];
@@ -136,7 +137,7 @@ test('new service routes, shared social links and JSON Feed are discoverable', (
     const html = readFileSync(fileFor(route), 'utf8');
     assert.equal((html.match(/<h1[\s>]/gi) ?? []).length, 1, `${route} needs one H1`);
     assert.match(html, /<script type="application\/ld\+json">[\s\S]*?"@type":"Service"/i, `${route} needs Service schema`);
-    assert.equal((html.match(/<details>/g) ?? []).length, 3, `${route} needs three visible FAQs`);
+    assert.equal(load(html)('.focus-faq details').length, 3, `${route} needs three visible service FAQs`);
   }
   for (const route of footerRoutes) {
     const html = readFileSync(fileFor(route), 'utf8');
@@ -308,7 +309,7 @@ test('every core service page publishes professional keyword-led scope and asses
     const linkSection = html.match(/<section class="section service-path">[\s\S]*?<\/section>/)?.[0] ?? '';
     const primaryServiceLinks = linkSection.match(/<nav aria-label="Related roof repair services">[\s\S]*?<\/nav>/)?.[0] ?? '';
     assert.equal((primaryServiceLinks.match(/<a href="\//g) ?? []).length, 3, `${route} needs three primary service links alongside contextual project links`);
-    assert.equal((html.match(/<details>/g) ?? []).length, 3, `${route} needs three service-specific FAQs`);
+    assert.equal(load(html)('.focus-faq details').length, 3, `${route} needs three service-specific FAQs in its main service FAQ block`);
     assert.doesNotMatch(html, /SERVICE DISCUSSION|PROPERTY CONTEXT|COMMON QUESTIONS|FIELD GUIDE \/ PRACTICAL CONTEXT/i, `${route} must not retain generic filler sections`);
     assert.doesNotMatch(html, /class="section focus-context"|class="section core-service-cases"/i, `${route} must not retain repeated template sections`);
   }
@@ -328,7 +329,7 @@ test('roof leak and flashing pages retain contextual, H1-targeted service links 
 
 test('storm damage repairs uses the same professional service structure with safe response conditions', () => {
   const html = readFileSync(fileFor('storm-damage-roof-repairs'), 'utf8');
-  assert.match(html, /<h1 id="service-overview">STORM DAMAGE ROOF REPAIRS PERTH\.<\/h1>/);
+  assert.match(load(html)('h1#service-overview').text(), /^EMERGENCY & STORM DAMAGE ROOF REPAIRS PERTH\.$/);
   assert.match(html, /class="section service-brief"/i);
   assert.equal((html.match(/class="service-work-card"/g) ?? []).length, 3);
   assert.match(html, /class="section service-path"/i);
@@ -352,7 +353,8 @@ test('service metadata mirrors visible service content and publishes RSS discove
     const h1 = html.match(/<h1(?: [^>]*)?>([^<]+)<\/h1>/)?.[1];
     assert.ok(webPage && service && breadcrumb && faq, `${route} needs WebPage, Service, FAQPage and BreadcrumbList metadata`);
     assert.equal(service.name, h1?.replace(/\.$/, ''), `${route} service metadata must use the visible H1`);
-    assert.equal(faq.mainEntity.length, 3, `${route} needs three visible FAQ entries in metadata`);
+    const visible=load(html);
+    assert.deepEqual(faq.mainEntity.map(q=>({question:q.name,answer:q.acceptedAnswer.text})),visible('main details').map((_,el)=>({question:visible(el).find('summary').text(),answer:visible(el).find('p').text()})).get(), `${route} metadata must reproduce all visible FAQ entries`);
     assert.equal(service.url, `https://www.perthroofcare.com.au/${route}/`);
     assert.equal(service.provider['@id'], 'https://www.perthroofcare.com.au/#business');
     assert.match(html, /rel="alternate" type="application\/rss\+xml" href="https:\/\/www\.perthroofcare\.com\.au\/news\/feed\.xml"/i, `${route} needs RSS discovery`);

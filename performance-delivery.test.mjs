@@ -8,8 +8,9 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {bundleStylesheets} from './tools/bundle-stylesheets.mjs';
 import sharp from 'sharp';
+import { fileURLToPath } from 'node:url';
 
-const root = new URL('.', import.meta.url).pathname.replace(/^\/(.:)/, '$1');
+const root = fileURLToPath(new URL('.', import.meta.url));
 const home = readFileSync(`${root}/public/index.html`, 'utf8');
 
 test('home preloads its LCP background and avoids a hidden duplicate image', () => {

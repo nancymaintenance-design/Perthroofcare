@@ -118,7 +118,7 @@ test('sitemap dates identify actual editorial changes instead of dating every bu
   const xml=readFileSync(join(root,'sitemap.xml'),'utf8'),$=load(xml,{xmlMode:true});
   for(const path of ['/roof-repairs/','/news/roof-flashing-explained/','/areas/leederville-roof-repairs/']){
     const entry=$('url').filter((_,e)=>$(e).find('loc').text()===`https://www.perthroofcare.com.au${path}`);
-    assert.equal(entry.find('lastmod').text(),'2026-10-10');
+    assert.equal(entry.find('lastmod').text(),path==='/news/roof-flashing-explained/'?'2026-10-10':'2026-10-12');
   }
   assert.equal($('url').filter((_,e)=>$(e).find('loc').text().endsWith('/privacy/')).find('lastmod').length,0);
 });
@@ -130,8 +130,9 @@ test('all articles identify visible image, author, publisher and truthful modifi
     assert.ok(existsSync(join(root,imagePath)),path);assert.ok($(`main img[src="${imagePath}"]`).length,path);
     assert.deepEqual(article.author,{'@id':'https://www.perthroofcare.com.au/#business'});
     assert.deepEqual(article.publisher,{'@id':'https://www.perthroofcare.com.au/#business'});
-    assert.equal(article.dateModified,'2026-10-10');assert.match($('.article-byline').text(),/Updated 2026-10-10/);
-    assert.equal(feed.items.find(i=>new URL(i.url).pathname===path).date_modified,'2026-10-10T00:00:00+08:00');
+    const expectedDate=['/news/ridge-capping-repairs-perth-guide/','/news/roof-repair-cost-perth/'].includes(path)?'2026-10-12':'2026-10-10';
+    assert.equal(article.dateModified,expectedDate);assert.ok($('.article-byline').text().includes('Updated '+expectedDate));
+    assert.equal(feed.items.find(i=>new URL(i.url).pathname===path).date_modified,expectedDate+'T00:00:00+08:00');
   }
 });
 

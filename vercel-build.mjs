@@ -177,6 +177,11 @@ const stagedFiles = [
   ['metal-ridge-flashing-case-04-ridge-check.png', 'assets/images/metal-ridge-flashing-case-04-ridge-check.png']
 ];
 
+stagedFiles.push(...['perth-tile-roof-cleaning-in-progress.jpg','perth-tile-roof-painting-finish-01.jpg','perth-tile-roof-painting-finish-02.jpg','perth-tile-roof-painting-finish-03.jpg','perth-gutter-leaf-build-up.jpg','perth-roof-tile-junction-condition.jpg','perth-roof-ridge-joint-condition.jpg','perth-roof-eaves-tile-repair-overview.jpg'].map(name=>[name,`assets/images/${name}`]));
+stagedFiles.push(...['perth-roof-replacement-original-tiles.jpg','perth-roof-replacement-tile-removal.jpg','perth-roof-replacement-valley-installation.jpg'].map(name=>[name,`assets/images/${name}`]));
+stagedFiles.push(...['perth-strata-skylight-installation-detail.jpg','perth-strata-skylight-installation-overview.jpg'].map(name=>[name,`assets/images/${name}`]));
+stagedFiles.push(...['perth-box-gutter-pooling-before.png','perth-box-gutter-joint-sealing.png','perth-box-gutter-local-coating.png','perth-box-gutter-coating-work.png','perth-roof-drainage-leaves-water.png','perth-roof-drainage-wall-junction-work.png','perth-gutter-edge-preparation.png','perth-gutter-joint-treatment.png'].map(name=>[name,`assets/images/${name}`]));
+stagedFiles.push(['perth-two-storey-tile-roof-repair.png','assets/images/perth-two-storey-tile-roof-repair.png']);
 for (const [source, destination] of stagedFiles) {
   const sourcePath = join(root, source);
   if (!existsSync(sourcePath)) throw new Error(`Missing static file: ${source}`);

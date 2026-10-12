@@ -21,7 +21,7 @@ test('project service links sit in a full-width section instead of a nested spli
 });
 test('revised guide feed modification dates agree with visible updates',()=>{
  const feed=JSON.parse(readFileSync(join(root,'news/feed.json'),'utf8'));
- for(const slug of guides){const item=feed.items.find(i=>i.url.endsWith('/news/'+slug+'/'));assert.equal(item.date_modified?.slice(0,10),'2026-10-10',slug);}
+ for(const slug of guides){const item=feed.items.find(i=>i.url.endsWith('/news/'+slug+'/'));const expectedDate=slug==='ridge-capping-repairs-perth-guide'?'2026-10-12':'2026-10-10';assert.equal(item.date_modified?.slice(0,10),expectedDate,slug);}
 });
 test('revised guides have matching feed summaries and reciprocal service paths',()=>{
  const feed=JSON.parse(readFileSync(join(root,'news/feed.json'),'utf8'));
