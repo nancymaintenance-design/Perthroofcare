@@ -62,7 +62,20 @@ test('fifteen weak area pages offer matching guides without claiming local proje
   assert.equal(context.length,1,area);
   assert.ok(context.find('a[href^="/news/"]').length,area+' matching guide');
   assert.doesNotMatch(context.text(),/our .*project in|completed .*in this suburb/i);
+  assert.doesNotMatch(context.text(),/the guide explains the component and decision|does not establish the condition of this property/i,area+' focused component link');
  }
+});
+
+test('refined service copy names work and photo stages directly while retaining their limits',()=>{
+ for(const route of services){
+  const scope=page(route)('[id^="scope-"]').text();
+  assert.doesNotMatch(scope,/our confirmed sequence|read the finished-roof photographs accurately|supplied (?:gallery|photographs|set|finished-roof|Perth strata project)|one confirmed Perth project|this confirms the work shown/i,route+' customer-facing wording');
+ }
+ assert.match(page('roof-cleaning')('#scope-1').text(),/we clean.*before spray painting/i);
+ assert.match(page('roof-painting')('#scope-2').text(),/we clean.*before spray painting/i);
+ assert.match(page('roof-painting')('#scope-3').text(),/after spray painting.*do not (?:include|show) spray application in progress/i);
+ assert.match(page('roof-replacement')('#scope-3').text(),/construction.stage.*does not show the completed replacement roof/i);
+ assert.match(page('strata-roof-repairs')('#scope-3').text(),/skylight.*does not document a leak investigation or whole.roof replacement/i);
 });
 
 test('project counts and factual construction-stage labels survive content refinement',()=>{

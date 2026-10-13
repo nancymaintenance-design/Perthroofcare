@@ -77,7 +77,7 @@ export function applyContentIntent($,route){
  if(areaNotes[area]){
   const [q,a,target]=areaNotes[area];
   const context=areaContextLinks[area];
-  const supporting=context?`<p data-area-context>For background on this roof detail: ${link('news/'+context[0],context[1])}. The guide explains the component and decision; it does not establish the condition of this property.</p>`:'';
+  const supporting=context?`<p data-area-context>For background on this roof detail: ${link('news/'+context[0],context[1])}.</p>`:'';
   $('main').append(block('A useful starting point for this property.',`<h3>${esc(q)}</h3>${paragraphs([a])}${supporting}<p>${link(target,'Review the relevant repair scope')} · ${link('contact','Confirm the location and access arrangements')}</p>`));
  }
  const slug=route.startsWith('news/')?route.slice(5):'';
@@ -126,5 +126,14 @@ export function syncContentKnowledge($,graph,site,canonical){
  const existing=graph.findIndex(n=>n['@type']==='FAQPage');
  const faq={'@type':'FAQPage','@id':`${canonical}#faq`,mainEntity:questions.map(q=>({'@type':'Question',name:q.question,acceptedAnswer:{'@type':'Answer',text:q.answer}}))};
  if(questions.length){if(existing>=0)graph[existing]=faq;else graph.push(faq);}
- const knowledge=$('#page-knowledge');if(knowledge.length){const k=JSON.parse(knowledge.text());k.questions=questions;k.summary=rendered('main p:not(.eyebrow)').first().text();k.relatedUrls=[...new Set(rendered('main a[href^="/"]').map((_,e)=>site+rendered(e).attr('href').split('#')[0]).get())];knowledge.text(JSON.stringify(k).replaceAll('<','\\u003c'));}
+ const knowledge=$('#page-knowledge');if(knowledge.length){
+  const candidates=rendered('main p').filter((_,e)=>{
+   const p=rendered(e),text=p.text().trim();
+   if(!text||p.is('.eyebrow,.article-byline,.inspection-charge-notice,.utility,[class*="disclosure"]')||p.closest('nav,aside,footer,form,details,figure,.utility').length)return false;
+   if(/^(?:Prepared by|Updated\s+\d{4}-\d{2}-\d{2})\b/i.test(text))return false;
+   return Boolean(p.clone().find('a').remove().end().text().replace(/[\s→·|.,:;]/g,''));
+  });
+  const lead=candidates.filter('.article-lead').first(),summary=lead.length?lead:candidates.first();
+  const k=JSON.parse(knowledge.text());k.questions=questions;k.summary=summary.text();k.relatedUrls=[...new Set(rendered('main a[href^="/"]').map((_,e)=>site+rendered(e).attr('href').split('#')[0]).get())];knowledge.text(JSON.stringify(k).replaceAll('<','\\u003c'));
+ }
 }

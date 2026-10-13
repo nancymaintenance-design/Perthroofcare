@@ -9,23 +9,23 @@ const scopes={
  'roof-cleaning':[
   ['Cleaning alone, painting or restoration?',
    'Choose the work by its purpose. Cleaning alone addresses surface deposits and debris. Painting adds a finish to a suitable surface. Restoration can combine component repairs with agreed surface work. A cleaner appearance does not establish that cracked tiles, corroded metal or a leaking connection have been repaired.',
-   'If your concern is a ceiling stain or recurring leak, describe that first. If the roof is sound and the aim is removing build-up, discuss cleaning as a separate scope. Cleaning before spray painting is our confirmed sequence when painting is agreed; painting is not required with every cleaning enquiry.'],
+   'If your concern is a ceiling stain or recurring leak, describe that first. If the roof is sound and the aim is removing build-up, discuss cleaning as a separate scope. We clean the roof before spray painting when painting is agreed; painting is not required with every cleaning enquiry.'],
   ['Material and deposits change the cleaning decision',
    'Tile, metal, existing coatings and weathered surfaces can respond differently to cleaning. The condition of the covering, loose components, junctions and surface deposits matters when choosing a suitable method. A photograph of staining alone cannot establish the appropriate pressure, treatment or preparation.',
    'For a written quote, ask which roof areas and deposits are included and whether any component repairs need a separate item. If the roof has been coated before, share the records you already have. Product and method selection needs to suit the assessed surface.'],
   ['Include the route for debris and runoff',
    'Roof slopes connect to valleys, gutters, outlets and downpipes. Deposits removed from a roof and existing restrictions in the drainage route are different issues. Clarify whether clearing those components and managing runoff form part of the proposed cleaning scope.',
-   'The photograph below records cleaning in progress at one Perth property. It shows a work stage, not the method or result promised for every roof. Compare the separate painting page for the supplied finished-roof views. Use existing safe photographs only; there is no need to access the roof.']
+   'The photograph below records cleaning in progress at one Perth property. It shows a work stage, not the method or result promised for every roof. See the separate painting page for views of the roof after spray painting. Use existing safe photographs only; there is no need to access the roof.']
  ],
  'roof-painting':[
   ['Existing coating and product compatibility',
    'Roof painting is a finishing decision for a suitable surface. Roof material, an existing coating, weathering and exposed damage can affect product compatibility and preparation. A colour preference alone does not establish which system is appropriate or whether the covering is suitable for painting.',
    'Share any records of previous coating work and explain whether appearance or water entry prompted the enquiry. Ask the quote to name the proposed finish and the surface it covers. Product details and applicable terms need confirmation for the property rather than a general promise on this page.'],
   ['Cleaning before spray painting; repairs remain distinct',
-   'Our confirmed sequence is cleaning before spray painting. In a quote, distinguish component repairs, surface cleaning, any necessary preparation and the finish. These items serve different purposes: a coating is not a substitute for addressing a damaged tile, sheet or flashing.',
+   'We clean the roof before spray painting. In a quote, distinguish component repairs, surface cleaning, any necessary preparation and the finish. These items serve different purposes: a coating is not a substitute for addressing a damaged tile, sheet or flashing.',
    'For an active leak, begin with assessment of the affected area before deciding on a wider finish. Where the priority is appearance, compare painting with cleaning alone and the broader restoration option. The useful comparison is the work included and the condition it addresses.'],
-  ['Read the finished-roof photographs accurately',
-   'The three photographs below show the roof after spray painting at one confirmed Perth project. They are separate views of that finished roof. The related cleaning page shows the cleaning stage; the supplied photographs do not include spray application in progress.',
+  ['The roof after spray painting',
+   'The three photographs below show the roof after spray painting at one Perth property. They are separate views of that finished roof. The related cleaning page shows the cleaning stage; these photographs do not show spray application in progress.',
    'For another roof, confirm the surfaces, preparation, proposed products, access and any exclusions in the written quote. The photographs cannot establish coating life or the suitability of the same finish for a different material.']
  ],
  'box-gutter-repairs':[
@@ -36,7 +36,7 @@ const scopes={
    'Debris at an outlet and deterioration through a gutter channel call for different decisions. Clearing can address a restriction where that is the problem. A damaged joint or adjoining roof connection may require local component work. Wider corrosion or repeated overflow can require consideration of the connected run and drainage arrangement.',
    'Ask a written quote to identify the affected component, adjoining material retained and any drainage changes included. A local coating shown in a project photograph does not establish that coating is suitable for every gutter, or that outlet and overflow limitations have been resolved.'],
   ['Use the photographs to describe the components',
-   'The supplied gallery shows standing water and debris, adjoining connections and work in progress. The captions distinguish the original condition from local repair stages. They do not record a completed drainage performance test.',
+   'The photographs below show standing water and debris, adjoining connections and work in progress. The captions distinguish the original condition from local repair stages. They do not record a completed drainage performance test.',
    'Include building height, the affected roof level and the authorised access contact. For managed premises, mention operating hours and permission requirements. Agree which findings and repair items are required for your building before accepting a scope.']
  ],
  'roof-replacement':[
@@ -47,7 +47,7 @@ const scopes={
    'A replacement quote should identify the covering to be removed, proposed material, affected flashings, roof penetrations and drainage connections. The roof area alone does not explain all of these work items. Removal and disposal should be clear enough to compare proposals on the same basis.',
    'Supporting or concealed components may not be fully visible before opening the roof. Ask how unexpected deterioration will be recorded and further work agreed. Clarify access, occupancy and exclusions; suspected asbestos requires separate identification and specialist arrangements.'],
   ['Distinguish construction records from completion',
-   'The three photographs below show the original tiled roof, tile removal exposing battens and installation of a new metal valley in a Perth whole-roof replacement project. They are construction-stage records. The supplied set does not show the completed replacement roof.',
+   'The three photographs below show the original tiled roof, tile removal exposing battens and installation of a new metal valley in a Perth whole-roof replacement project. They are construction-stage records. This gallery does not show the completed replacement roof.',
    'These views help explain why a replacement scope includes more than a visible surface finish. They cannot establish the condition of another roof, the replacement material needed there or a standard project duration. Arrange a property assessment and compare the written repair and replacement options.']
  ],
  'flat-roof-repairs':[
@@ -69,7 +69,7 @@ const scopes={
    'Explain access restrictions, occupied areas and any records the manager needs to consider a quote. Confirm the requested photograph or written-record format before booking. A roof assessment and written repair quote are distinct from a whole-building engineering report or an insurance determination.',
    'For the proposed work, ask which roof or drainage components are included, who approves the scope and how additional work would be agreed. If another lot or shared area needs access, arrange that permission through the authorised contact rather than assuming it is available.'],
   ['A recorded skylight addition at a strata property',
-   'The supplied Perth strata project involved adding a skylight to an existing metal roof. Two photographs show the new skylight and its surrounding flashing from different viewpoints. This confirms the work shown; it does not document a leak investigation or whole-roof replacement.',
+   'The Perth strata project shown below involved adding a skylight to an existing metal roof. Two photographs show the new skylight and its surrounding flashing from different viewpoints. This gallery does not document a leak investigation or whole-roof replacement.',
    'The separate drainage photographs show gutter-edge preparation and local joint treatment. Neither gallery establishes common-property boundaries, work approval or payment responsibility. Use the visible components to explain a similar enquiry, then confirm the assessment and quote for your own building.']
  ]
 };

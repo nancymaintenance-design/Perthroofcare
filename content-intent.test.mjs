@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {load} from 'cheerio';
+import {syncContentKnowledge} from './content/content-intent.mjs';
 const routes=[...readFileSync('public/sitemap.xml','utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname);
 const pages=new Map(routes.map(r=>[r,load(readFileSync(`public${r}index.html`,'utf8'))]));
 test('content revision provides contextual next steps on every published page',()=>{
@@ -35,4 +36,28 @@ test('published headings retain one H1 and never skip a level',()=>{
 });
 test('Roleystone project evidence links use the same place spelling as the project',()=>{
  for(const [r,$] of pages)for(const e of $('main a[href="/projects/roleystone-metal-roof-fastener-leak-repair/"]').toArray())assert.doesNotMatch($(e).text(),/ROYLEYSTONE/i,r);
+});
+
+// Catch summaries selecting the author/date or another non-content paragraph.
+for(const [slug,opening] of [
+ ['drainage-after-rain','Water overflowing at an eave, gutter or downpipe during rain needs the connected roof drainage route checked.'],
+ ['metal-roofing-perth','Metal roof repairs in Perth involve more than the visible sheet surface.'],
+ ['roof-leak-inspection','A roof leak inspection connects the water seen indoors with the roof detail that needs repair.'],
+ ['roof-maintenance-basics','Roof maintenance in Perth combines inspection of the covering with practical work on the parts that carry rainwater away.']
+]) test(`${slug}: generated knowledge summary describes the article subject`,()=>{
+ const $=pages.get(`/news/${slug}/`),summary=JSON.parse($('#page-knowledge').text()).summary;
+ assert.ok(summary.startsWith(opening),slug+' meaningful article opening');
+ assert.equal(summary,$('.article-lead').text(),slug+' complete article lead');
+});
+
+test('knowledge summary prefers the article lead over preceding body and utility copy',()=>{
+ const $=load('<main><p>Introductory body context.</p><article><p class="article-byline">Prepared by Ellis</p><p class="article-lead">Roof valleys connect adjoining slopes &amp; drainage.</p></article></main><script id="page-knowledge">{}</script>');
+ syncContentKnowledge($,[],'https://www.perthroofcare.com.au','https://www.perthroofcare.com.au/news/example/');
+ assert.equal(JSON.parse($('#page-knowledge').text()).summary,'Roof valleys connect adjoining slopes & drainage.');
+});
+
+test('knowledge summary fallback skips bylines, disclosures and navigation paragraphs',()=>{
+ const $=load('<main><p class="eyebrow">GUIDE</p><p class="article-byline">Prepared by Ellis</p><p class="inspection-charge-notice">Confirm the inspection fee.</p><aside><p>Project disclosure.</p></aside><nav><p>On this page</p></nav><p class="utility">Contact details.</p><p class="disclosure">Photograph limitations.</p><p><a href="/contact/">Enquire now</a></p><p>Valley outlets carry water into connected gutters.</p></main><script id="page-knowledge">{}</script>');
+ syncContentKnowledge($,[],'https://www.perthroofcare.com.au','https://www.perthroofcare.com.au/example/');
+ assert.equal(JSON.parse($('#page-knowledge').text()).summary,'Valley outlets carry water into connected gutters.');
 });
