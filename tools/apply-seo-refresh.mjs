@@ -2,6 +2,7 @@ import { revisedGuides, serviceEditorial, faqGroups } from '../content/seo-refre
 import { applyProjectStories } from './apply-project-stories.mjs';
 import { applyKeywordGapContent } from '../content/keyword-gap-content.mjs';
 import { applyKeywordMapContent } from '../content/keyword-map-content.mjs';
+import { refineLocalContent } from '../content/audit-local-content.mjs';
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const paragraphs=items=>items.map(p=>`<p>${esc(p)}</p>`).join('');
 const metadata=($,title,description)=>{
@@ -104,6 +105,8 @@ export function applySeoRefresh(documents){
  const home=documents.get('');
  home('.home-hero-copy h1').text('PERTH ROOF CARE — ROOF REPAIRS PERTH.');
  applyProjectStories(documents);
+ // Project metadata must precede the CreativeWork graph and case-feed generation.
+ for(const [route,$] of documents)if(route.startsWith('projects/'))refineLocalContent($,route);
  applyKeywordGapContent(documents);
  applyKeywordMapContent(documents);
  // Every existing card and image is retained; only the brand/service heading changes.

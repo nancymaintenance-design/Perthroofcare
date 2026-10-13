@@ -1,5 +1,6 @@
 // Approved local-only content revision. Candidate phrases are not service promises.
 import {load} from 'cheerio';
+import {refineLocalContent,areaContextLinks,localMetadataRoutes} from './audit-local-content.mjs';
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const link=(route,label)=>`<a href="/${route ? route+'/' : ''}">${esc(label)} →</a>`;
 const paragraphs=items=>items.map(p=>`<p>${esc(p)}</p>`).join('');
@@ -61,6 +62,7 @@ const hubCopy={
 };
 
 export function applyContentIntent($,route){
+ refineLocalContent($,route);
  $('main a[href="/projects/roleystone-metal-roof-fastener-leak-repair/"]').each((_,e)=>{
   $(e).contents().each((__,node)=>{if(node.type==='text')node.data=node.data.replace(/ROYLEYSTONE/g,'ROLEYSTONE');});
  });
@@ -74,7 +76,9 @@ export function applyContentIntent($,route){
  const area=route.match(/^areas\/(.*)-roof-repairs$/)?.[1];
  if(areaNotes[area]){
   const [q,a,target]=areaNotes[area];
-  $('main').append(block('A useful starting point for this property.',`<h3>${esc(q)}</h3>${paragraphs([a])}<p>${link(target,'Review the relevant repair scope')} · ${link('contact','Confirm the location and access arrangements')}</p>`));
+  const context=areaContextLinks[area];
+  const supporting=context?`<p data-area-context>For background on this roof detail: ${link('news/'+context[0],context[1])}. The guide explains the component and decision; it does not establish the condition of this property.</p>`:'';
+  $('main').append(block('A useful starting point for this property.',`<h3>${esc(q)}</h3>${paragraphs([a])}${supporting}<p>${link(target,'Review the relevant repair scope')} · ${link('contact','Confirm the location and access arrangements')}</p>`));
  }
  const slug=route.startsWith('news/')?route.slice(5):'';
  if(guideServices[slug]){
@@ -109,6 +113,15 @@ export function applyContentIntent($,route){
 export function syncContentKnowledge($,graph,site,canonical){
  // Read the serialized page with HTML entity decoding, as browsers do.
  const rendered=load($.html());
+ const route=new URL(canonical).pathname.replace(/^\/|\/$/g,'');
+ if(localMetadataRoutes.includes(route)){
+  const webPage=graph.find(n=>n['@type']==='WebPage');
+  if(webPage){webPage.name=rendered('title').text();webPage.description=rendered('meta[name="description"]').attr('content');}
+ }
+ if(route==='news/roof-repair-cost-perth'){
+  const breadcrumb=graph.find(n=>n['@type']==='BreadcrumbList');
+  if(breadcrumb?.itemListElement?.length)breadcrumb.itemListElement.at(-1).name=rendered('main h1').first().text().trim();
+ }
  const questions=rendered('main details').map((_,e)=>({question:rendered(e).find('summary').text(),answer:rendered(e).find('p').text()})).get();
  const existing=graph.findIndex(n=>n['@type']==='FAQPage');
  const faq={'@type':'FAQPage','@id':`${canonical}#faq`,mainEntity:questions.map(q=>({'@type':'Question',name:q.question,acceptedAnswer:{'@type':'Answer',text:q.answer}}))};
