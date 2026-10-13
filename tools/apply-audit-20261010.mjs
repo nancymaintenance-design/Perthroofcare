@@ -6,6 +6,7 @@ import {completeAuditContent,substantiveRoutes} from '../content/audit-completio
 import {applyContentIntent,syncContentKnowledge} from '../content/content-intent.mjs';
 import {keywordGapRoutes} from '../content/keyword-gap-content.mjs';
 import {keywordMapRoutes} from '../content/keyword-map-content.mjs';
+import {refineLocalServiceGraph,localEditorialRoutes,localEditorialDate} from '../content/audit-local-schema.mjs';
 
 const contentUpdateRoutes=new Set([...keywordGapRoutes,...keywordMapRoutes,'gutters-downpipes']);
 const articleImages={
@@ -29,7 +30,7 @@ export function applyAudit20261010({root,site}){
   const routes=[...readFileSync(join(root,'sitemap.xml'),'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname.replace(/^\/|\/$/g,''));
   const newsFeed=JSON.parse(readFileSync(join(root,'news/feed.json'),'utf8'));
   for(const route of routes){
-    const updated=contentUpdateRoutes.has(route)?'2026-10-12':'2026-10-10';
+    const updated=localEditorialRoutes.has(route)?localEditorialDate:contentUpdateRoutes.has(route)?'2026-10-12':'2026-10-10';
     const file=join(root,route,'index.html'),$=load(readFileSync(file,'utf8'),{xml:{xmlMode:false,decodeEntities:false}});
     completeAuditContent($,route);
     // Preserve GitHub's assessment-to-written-quote path after local editorial passes.
@@ -128,16 +129,23 @@ export function applyAudit20261010({root,site}){
       if(item){item.title=article.headline;item.summary=article.description;item.date_modified=`${updated}T00:00:00+08:00`;item.image=article.image;item.content_text=renderedArticle('main p,main li,main td,main th').not('.eyebrow,.article-byline').map((_,e)=>renderedArticle(e).text()).get().join('\n\n');}
     }
     syncContentKnowledge($,graph,site,canonical);
+    refineLocalServiceGraph($,graph,route,canonical);
     $('script[type="application/ld+json"]').text(JSON.stringify({'@context':'https://schema.org','@graph':graph}).replaceAll('<','\\u003c'));
     $('head').append('<script defer src="/assets/js/analytics.js"></script>');
     writeFileSync(file,$.html());
   }
   writeFileSync(join(root,'news/feed.json'),JSON.stringify(newsFeed,null,2));
+  const projectFeed=JSON.parse(readFileSync(join(root,'case-studies.json'),'utf8'));
+  for(const item of projectFeed.items){
+    const route=new URL(item.url).pathname.replace(/^\/|\/$/g,'');
+    if(localEditorialRoutes.has(route))item.date_modified=`${localEditorialDate}T00:00:00+08:00`;
+  }
+  writeFileSync(join(root,'case-studies.json'),JSON.stringify(projectFeed,null,2));
   writeFileSync(join(root,'news/feed.xml'),`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Roof Repairs Perth News — Ellis Services Group</title><link>${site}/news/</link><description>Practical roof repair and maintenance guidance.</description><language>en-au</language>${newsFeed.items.map(i=>`<item><title>${esc(i.title)}</title><link>${esc(i.url)}</link><guid isPermaLink="true">${esc(i.id)}</guid><description>${esc(i.content_text)}</description></item>`).join('')}</channel></rss>`);
   const sitemap=load(readFileSync(join(root,'sitemap.xml'),'utf8'),{xmlMode:true});
   sitemap('url').each((_,el)=>{const route=new URL(sitemap(el).find('loc').text()).pathname.replace(/^\/|\/$/g,'');
-    const updated=contentUpdateRoutes.has(route)?'2026-10-12':'2026-10-10';
-    if(substantiveRoutes.has(route)||articleImages[route.replace(/^news\//,'')]||(!route.startsWith('projects/')&&!['privacy','legal'].includes(route))){sitemap(el).find('lastmod').remove();sitemap(el).append(`<lastmod>${updated}</lastmod>`);}
+    const updated=localEditorialRoutes.has(route)?localEditorialDate:contentUpdateRoutes.has(route)?'2026-10-12':'2026-10-10';
+    if(localEditorialRoutes.has(route)||substantiveRoutes.has(route)||articleImages[route.replace(/^news\//,'')]||(!route.startsWith('projects/')&&!['privacy','legal'].includes(route))){sitemap(el).find('lastmod').remove();sitemap(el).append(`<lastmod>${updated}</lastmod>`);}
   });
   writeFileSync(join(root,'sitemap.xml'),sitemap.xml());
 }

@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { load } from 'cheerio';
 import {instagramUrl,facebookUrl,linkedinUrl,googleMapsUrl} from './content/business-links.mjs';
 import {newServices,costGuide} from './content/keyword-map-content.mjs';
+import {localServices} from './content/audit-local-schema.mjs';
 const root = fileURLToPath(new URL('.', import.meta.url));
 const site = 'https://www.perthroofcare.com.au';
 const ga4Tag = '<script async src="https://www.googletagmanager.com/gtag/js?id=G-35M6VYNBDV"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag(\'js\',new Date());gtag(\'config\', \'G-35M6VYNBDV\');</script>';
@@ -1228,6 +1229,8 @@ writeFileSync(join(root, 'llms.txt'), `# Ellis Services Group
 - [Gutters & Downpipes Perth](${site}/gutters-downpipes/): roof-edge drainage repairs for gutters, outlets and downpipe connections.
 - [Downpipe Repairs Perth](${site}/downpipe-repairs/): repair services for downpipe brackets, joints, bends and lower connections.
 - [Roof Flashing Explained](${site}/news/roof-flashing-explained/): practical service guide linked to our flashing-repair service.
+${Object.entries(localServices).map(([route,name])=>`- [${name} Perth](${site}/${route}/): service scope, assessment considerations and related project photographs.`).join('\n')}
+- [Roof repair cost factors Perth](${site}/news/roof-repair-cost-perth/): questions for comparing written repair quotes and inspection scope.
 
 ## Documented completed-work records
 
