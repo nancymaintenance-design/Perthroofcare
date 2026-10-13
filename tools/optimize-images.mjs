@@ -3,6 +3,15 @@ import { join, basename, extname } from 'node:path';
 import sharp from 'sharp';
 import { load } from 'cheerio';
 
+// These detailed tile photographs have unusually costly WebP variants. Keep
+// all other photographs, including the hero backgrounds, on their existing policy.
+const selectiveCompression = new Set([
+  'resources-tile-project.jpg',
+  'roof-maintenance-case-01-tile-edge.jpg',
+  'wa6121-tile-valley-gutter-04.jpg',
+  'roof-maintenance-case-03-broken-tile-detail.jpg'
+]);
+
 export async function optimizeImages(root) {
   const routes=[...readFileSync(join(root,'sitemap.xml'),'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname.replace(/^\/|\/$/g,''));
   const cache=join(root,'.image-cache');mkdirSync(cache,{recursive:true});
@@ -15,15 +24,15 @@ export async function optimizeImages(root) {
   let originalBytes=0,optimizedBytes=0;
   for(const name of assets){
     const file=join(root,name);if(!existsSync(file))throw new Error(`Missing image: ${name}`);
-    const small=smallAssets.has(name),maxWidth=small?128:1920;
-    const stamp=`${statSync(file).size}:${statSync(file).mtimeMs}:webp82-v2-${maxWidth}`;
+    const small=smallAssets.has(name),maxWidth=small?128:1920,quality=selectiveCompression.has(name)?74:82;
+    const stamp=`${statSync(file).size}:${statSync(file).mtimeMs}:webp${quality}-v2-${maxWidth}`;
     let record=manifest[name];
     if(record?.stamp!==stamp||record.variants.some(v=>!existsSync(join(cache,v.file)))){
       const metadata=await sharp(file).metadata();const widths=(small?[64,128]:[400,640,800,1280,1920]).filter(w=>w<metadata.width);widths.push(Math.min(metadata.width,maxWidth));
       const variants=[];
       for(const width of [...new Set(widths)]){
         const output=`${basename(name,extname(name))}-${width}.webp`;
-        await sharp(file).rotate().resize({width,withoutEnlargement:true}).webp({quality:82,effort:4}).toFile(join(cache,output));
+        await sharp(file).rotate().resize({width,withoutEnlargement:true}).webp({quality,effort:4}).toFile(join(cache,output));
         variants.push({file:output,width,bytes:statSync(join(cache,output)).size});
       }
       record=manifest[name]={stamp,width:metadata.width,height:metadata.height,variants};

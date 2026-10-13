@@ -110,3 +110,19 @@ test('the one applicable hero preload competes at high priority rather than behi
   const dom=load(home);
   for(const el of dom('link[rel="preload"][as="image"]').toArray())assert.equal(dom(el).attr('fetchpriority'),'high');
 });
+
+test('published targeted roof details preserve dimensions with smaller WebP transfers',async()=>{
+  const targets=[
+    {file:'resources-tile-project-1280.webp',width:1280,height:1707,baselineBytes:834832},
+    {file:'roof-maintenance-case-01-tile-edge-1707.webp',width:1707,height:1280,baselineBytes:671080},
+    {file:'wa6121-tile-valley-gutter-04-1280.webp',width:1280,height:1707,baselineBytes:668608},
+    {file:'roof-maintenance-case-03-broken-tile-detail-1280.webp',width:1280,height:1707,baselineBytes:574946}
+  ];
+  for(const target of targets){
+    const file=join(root,'public/assets/images',target.file),metadata=await sharp(file).metadata();
+    assert.equal(metadata.format,'webp');
+    assert.equal(metadata.width,target.width);
+    assert.equal(metadata.height,target.height);
+    assert.ok(statSync(file).size<=target.baselineBytes*0.9,`${target.file}: improve the recorded quality-82 transfer by at least ten percent`);
+  }
+});
