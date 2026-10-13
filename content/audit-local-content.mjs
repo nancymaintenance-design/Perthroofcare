@@ -142,9 +142,9 @@ export function refineLocalContent($,route){
  }
  if(route==='about'){
   // Keep the company record, credentials distinction and direct contacts; remove
-  // duplicated general enquiry explanation from the company introduction.
+  // duplicated defect summary marked by the earlier wording rewrite.
   const intro=$('main > article').first();
-  intro.find('p').filter((_,e)=>$(e).text().startsWith('A roof question may start')).remove();
+  intro.find('p.about-duplicate-defect-summary').remove();
  }
  if(titles[route]){
   const title=`${titles[route]} | Ellis Services Group`;
