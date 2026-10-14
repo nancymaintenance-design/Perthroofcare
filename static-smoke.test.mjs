@@ -56,7 +56,8 @@ test('services navigation is viewport-contained, concise and has no projects hub
   assert.doesNotMatch(home, /<a href="\/projects\/">Projects<\/a>/i);
   assert.doesNotMatch(serviceMenu, /href="\/projects\//i, 'service navigation must only point to standard service pages');
   assert.match(home, /id="services-submenu"[^>]*role="region"[^>]*aria-label="Services"/i);
-  assert.match(home, /Need help choosing\? Describe the issue and we will arrange the right assessment\./i);
+  assert.match(load(home)('.services-panel-intro').text(),/Our team arranges the roof assessment/i);
+  assert.doesNotMatch(load(home)('.services-panel-intro').text(),/\?/);
   for (const label of ['Core roof repairs', 'Roofline details', 'Roof Repairs Perth', 'Roof Valleys &amp; Flashing Repairs', 'Gutter Repairs Perth', 'Roof Maintenance Perth']) assert.match(home, new RegExp(label));
   assert.match(css, /\.services-submenu\{[^}]*overflow:auto[^}]*max-height:calc\(100vh - 7rem\)/i);
   assert.match(script, /const menuWidth = Math\.min\(896, Math\.max\(280, window\.innerWidth - sideGap \* 2\)\)/);
@@ -123,10 +124,11 @@ test('footer social destinations are visible and declared by the business entity
   assert.deepEqual(business.sameAs, [instagram, facebook, linkedin]);
 });
 
-test('guides and FAQ publish visible questions as matching structured data', () => {
+test('guides publish declarative disclosures while FAQ retains question schema', () => {
   const guide = readFileSync(fileFor('news/metal-roof-repairs-perth-guide'), 'utf8');
   const faq = readFileSync(fileFor('faq'), 'utf8');
-  assert.match(guide, /"@type":"FAQPage"/i, 'guide FAQ content needs FAQPage schema');
+  assert.doesNotMatch(guide, /"@type":"FAQPage"/i, 'declarative guide must not claim FAQPage schema');
+  assert.ok(load(guide)('main details').length,'guide retains its useful disclosures');
   assert.match(faq, /"@type":"FAQPage"/i, 'site FAQ needs FAQPage schema');
   assert.match(guide, /type="application\/feed\+json"/i, 'guide needs JSON Feed discovery');
 });
@@ -173,8 +175,8 @@ test('priority owner pages use distinct service roles with crawlable supporting 
 
 test('roof flashing guide stays informational and links naturally to flashing repairs', () => {
   const article = readFileSync(fileFor('news/roof-flashing-explained'), 'utf8');
-  assert.match(article, /WHAT ROOF FLASHING DOES AT A JUNCTION/i);
-  assert.match(article, /WHEN A FLASHING DETAIL NEEDS A PROFESSIONAL REPAIR DISCUSSION/i);
+  assert.match(article, /Roof flashing functions at building junctions/i);
+  assert.match(article, /Flashing defects requiring professional assessment/i);
   assert.match(article, /href="\/flashing-repairs\/"/i);
   assert.match(article, /href="\/roof-leak-repairs\/"/i);
   assert.doesNotMatch(article, /24\s*\/\s*7|guaranteed|same-day/i);
@@ -351,10 +353,11 @@ test('service metadata mirrors visible service content and publishes RSS discove
     const breadcrumb = entries.find((entry) => entry['@type'] === 'BreadcrumbList');
     const faq = entries.find((entry) => entry['@type'] === 'FAQPage');
     const h1 = html.match(/<h1(?: [^>]*)?>([^<]+)<\/h1>/)?.[1];
-    assert.ok(webPage && service && breadcrumb && faq, `${route} needs WebPage, Service, FAQPage and BreadcrumbList metadata`);
+    assert.ok(webPage && service && breadcrumb, `${route} needs WebPage, Service and BreadcrumbList metadata`);
+    assert.equal(faq,undefined,`${route} service guidance must not claim FAQPage`);
     assert.equal(service.name, h1?.replace(/\.$/, ''), `${route} service metadata must use the visible H1`);
     const visible=load(html);
-    assert.deepEqual(faq.mainEntity.map(q=>({question:q.name,answer:q.acceptedAnswer.text})),visible('main details').map((_,el)=>({question:visible(el).find('summary').text(),answer:visible(el).find('p').text()})).get(), `${route} metadata must reproduce all visible FAQ entries`);
+    assert.deepEqual(JSON.parse(visible('#page-knowledge').text()).guidance,visible('main details').map((_,el)=>({heading:visible(el).find('summary').text(),body:visible(el).find('p').text()})).get(), `${route} knowledge must reproduce every visible guidance disclosure`);
     assert.equal(service.url, `https://www.perthroofcare.com.au/${route}/`);
     assert.equal(service.provider['@id'], 'https://www.perthroofcare.com.au/#business');
     assert.match(html, /rel="alternate" type="application\/rss\+xml" href="https:\/\/www\.perthroofcare\.com\.au\/news\/feed\.xml"/i, `${route} needs RSS discovery`);
@@ -475,7 +478,7 @@ test('roof repairs presents the supplied six-image tile-repair record in title o
 
 test('privacy is compact, useful and directly contactable', () => {
   const html = readFileSync(fileFor('privacy'), 'utf8');
-  assert.match(html, /<h1>PRIVACY FOR ROOF REPAIR ENQUIRIES\.<\/h1>/); assert.match(html, /Information you choose to send/i); assert.match(html, /How enquiry information is used/i); assert.match(html, /Questions about privacy/i); assert.match(html, /href="\/legal\/"/); assert.doesNotMatch(html, /class="hero inner"/i);
+  assert.match(html, /<h1>PRIVACY FOR ROOF REPAIR ENQUIRIES\.<\/h1>/); assert.match(html, /Information you choose to send/i); assert.match(html, /Enquiry information use and contact arrangements/i); assert.match(html, /Privacy enquiries and information requests/i); assert.match(html, /href="\/legal\/"/); assert.doesNotMatch(html, /class="hero inner"/i);
 });
 
 test('legal information is useful, bounded and linked to the relevant roof-repair paths', () => {

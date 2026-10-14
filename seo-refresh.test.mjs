@@ -21,7 +21,7 @@ test('project service links sit in a full-width section instead of a nested spli
 });
 test('revised guide feed modification dates agree with visible updates',()=>{
  const feed=JSON.parse(readFileSync(join(root,'news/feed.json'),'utf8'));
- for(const slug of guides){const item=feed.items.find(i=>i.url.endsWith('/news/'+slug+'/'));assert.equal(item.date_modified?.slice(0,10),'2026-10-13',slug);}
+ for(const slug of guides){const item=feed.items.find(i=>i.url.endsWith('/news/'+slug+'/'));assert.equal(item.date_modified?.slice(0,10),'2026-10-14',slug);}
 });
 test('revised guides have matching feed summaries and reciprocal service paths',()=>{
  const feed=JSON.parse(readFileSync(join(root,'news/feed.json'),'utf8'));
@@ -64,7 +64,8 @@ test('core repairs explain work and completion in addition to enquiry preparatio
 });
 test('FAQ machine answers and article metadata follow the revised visible content',()=>{
  for(const [r,d] of pages){const graph=JSON.parse(d('script[type="application/ld+json"]').text())['@graph'];const faqs=d('main details').toArray();const node=graph.find(n=>n['@type']==='FAQPage');
- if(faqs.length)assert.deepEqual(node.mainEntity.map(q=>q.acceptedAnswer.text),faqs.map(e=>d(e).find('p').text()));
+ if(r==='/faq/')assert.deepEqual(node.mainEntity.map(q=>q.acceptedAnswer.text),faqs.map(e=>d(e).find('p').text()));
+ else {assert.equal(node,undefined,r);assert.deepEqual(JSON.parse(d('#page-knowledge').text()).guidance.map(g=>g.body),faqs.map(e=>d(e).find('p').text()),r);}
  if(r.startsWith('/news/')&&r!=='/news/'){const a=graph.find(n=>n['@type']==='Article');assert.equal(a.description,d('meta[name="description"]').attr('content'),r);}
  }
 });
@@ -83,8 +84,8 @@ test('case-story machine data and feed reproduce visible narratives without assi
  for(const [r,d] of pages){if(!r.startsWith('/projects/'))continue;const graph=JSON.parse(d('script[type="application/ld+json"]').text())['@graph'];const story=graph.find(n=>n['@type']==='CreativeWork'&&n['@id'].endsWith('#project-story'));assert.ok(story,r);
  assert.equal(story.text,d('.project-story-topic p').map((i,e)=>d(e).text()).get().join('\n\n'),r);
  assert.equal(story.description,d('meta[name="description"]').attr('content'),r);assert.equal(story.dateCreated,undefined,r);
- const modifiedProjects=['/projects/tile-roof-chimney-flashing-repair-perth/','/projects/tile-roof-valley-chimney-flashing-repairs-perth/','/projects/roleystone-metal-roof-fastener-leak-repair/','/projects/metal-roof-fastener-repair-sequence/'];
- const item=feed.items.find(i=>new URL(i.url).pathname===r);assert.ok(item.content_text.includes(d('.project-story-topic p').first().text()),r);assert.equal(item.summary,story.description,r);assert.equal(item.date_modified.slice(0,10),modifiedProjects.includes(r)?'2026-10-13':'2026-10-09',r);
+ const item=feed.items.find(i=>new URL(i.url).pathname===r);assert.ok(item.content_text.includes(d('.project-story-topic p').first().text()),r);assert.equal(item.summary,story.description,r);assert.equal(item.date_modified.slice(0,10),'2026-10-14',r);
+ assert.equal(story.dateModified,item.date_modified.slice(0,10),r+' visible story edits and feed share one modification date');
  }
  assert.match(pages.get('/gallery/')('main').text(),/Most of the projects.*2025.*early 2026/i);
 });

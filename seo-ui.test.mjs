@@ -8,14 +8,15 @@ import { serviceAnswers } from './content/service-faqs.mjs';
 const root = fileURLToPath(new URL('./public/', import.meta.url));
 const routes = [...readFileSync(join(root,'sitemap.xml'),'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname);
 const pages = new Map(routes.map(r=>[r,load(readFileSync(join(root,r,'index.html'),'utf8'))]));
-test('42 service answers are specific, unique and match visible FAQ schema',()=>{
+test('42 service answers are specific, unique and match declarative page knowledge',()=>{
   const answers=Object.values(serviceAnswers).flat();
   assert.equal(answers.length,42);assert.equal(new Set(answers).size,42);
   for(const [slug,expected] of Object.entries(serviceAnswers)){
     const dom=pages.get(`/${slug}/`);
     assert.deepEqual(dom('.focus-faq details p').map((_,e)=>dom(e).text()).get(),expected);
     const graph=JSON.parse(dom('script[type="application/ld+json"]').text())['@graph'];
-    assert.deepEqual(graph.find(n=>n['@type']==='FAQPage').mainEntity.map(q=>q.acceptedAnswer.text),dom('main details p').map((_,e)=>dom(e).text()).get());
+    assert.equal(graph.find(n=>n['@type']==='FAQPage'),undefined);
+    assert.deepEqual(JSON.parse(dom('#page-knowledge').text()).guidance.map(g=>g.body),dom('main details').map((_,e)=>dom(e).find('p').text()).get());
   }
 });
 test('all canonical pages are reachable within three clicks and local assets exist',()=>{

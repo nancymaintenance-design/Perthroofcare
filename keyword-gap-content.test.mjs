@@ -58,7 +58,8 @@ test('urgent title and added answers remain consistent with structured data',()=
   const faqs=graph.find(n=>n['@type']==='FAQPage');
   for(const d of $('main .keyword-gap-content details').toArray()){
    const question=$(d).find('summary').text(),answer=$(d).find('p').text();
-   assert.ok(faqs.mainEntity.some(q=>q.name===question&&q.acceptedAnswer.text===answer),path+' FAQ mismatch');
+   if(path==='/faq/')assert.ok(faqs.mainEntity.some(q=>q.name===question&&q.acceptedAnswer.text===answer),path+' FAQ mismatch');
+   else {assert.equal(faqs,undefined,path);assert.ok(JSON.parse($('#page-knowledge').text()).guidance.some(g=>g.heading===question&&g.body===answer),path+' guidance mismatch');}
   }
  }
 });

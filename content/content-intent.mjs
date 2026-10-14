@@ -122,10 +122,12 @@ export function syncContentKnowledge($,graph,site,canonical){
   const breadcrumb=graph.find(n=>n['@type']==='BreadcrumbList');
   if(breadcrumb?.itemListElement?.length)breadcrumb.itemListElement.at(-1).name=rendered('main h1').first().text().trim();
  }
- const questions=rendered('main details').map((_,e)=>({question:rendered(e).find('summary').text(),answer:rendered(e).find('p').text()})).get();
+ const disclosures=rendered('main details').map((_,e)=>({question:rendered(e).find('summary').text(),answer:rendered(e).find('p').text()})).get();
+ const questions=route==='faq'?disclosures:[];
  const existing=graph.findIndex(n=>n['@type']==='FAQPage');
  const faq={'@type':'FAQPage','@id':`${canonical}#faq`,mainEntity:questions.map(q=>({'@type':'Question',name:q.question,acceptedAnswer:{'@type':'Answer',text:q.answer}}))};
  if(questions.length){if(existing>=0)graph[existing]=faq;else graph.push(faq);}
+ else if(existing>=0)graph.splice(existing,1);
  const knowledge=$('#page-knowledge');if(knowledge.length){
   const candidates=rendered('main p').filter((_,e)=>{
    const p=rendered(e),text=p.text().trim();
@@ -134,6 +136,6 @@ export function syncContentKnowledge($,graph,site,canonical){
    return Boolean(p.clone().find('a').remove().end().text().replace(/[\s→·|.,:;]/g,''));
   });
   const lead=candidates.filter('.article-lead').first(),summary=lead.length?lead:candidates.first();
-  const k=JSON.parse(knowledge.text());k.questions=questions;k.summary=summary.text();k.relatedUrls=[...new Set(rendered('main a[href^="/"]').map((_,e)=>site+rendered(e).attr('href').split('#')[0]).get())];knowledge.text(JSON.stringify(k).replaceAll('<','\\u003c'));
+  const k=JSON.parse(knowledge.text());k.questions=questions;k.guidance=route==='faq'?[]:disclosures.map(d=>({heading:d.question,body:d.answer}));k.summary=summary.text();k.relatedUrls=[...new Set(rendered('main a[href^="/"]').map((_,e)=>site+rendered(e).attr('href').split('#')[0]).get())];knowledge.text(JSON.stringify(k).replaceAll('<','\\u003c'));
  }
 }

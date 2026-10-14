@@ -25,7 +25,7 @@ for(const route of [...services,'roof-inspection','contact']) test(`${route}: in
 
 test('six service scopes explain distinct component decisions without unconfirmed company methods',()=>{
  const expectations={
-  'roof-cleaning':[/cleaning alone/i,/restoration/i,/surface deposits/i],
+  'roof-cleaning':[/cleaning service addresses surface deposits/i,/painting adds a finish/i,/restoration/i],
   'roof-painting':[/existing coating/i,/cleaning before spray painting/i,/product compatibility/i],
   'box-gutter-repairs':[/outlet/i,/joint/i,/overflow route/i],
   'roof-replacement':[/local repair/i,/retained/i,/concealed/i],
@@ -48,7 +48,7 @@ test('metadata is concise and cost guide promises quote factors, retaining origi
  assert.match(about('main').text(),/Perth Roof Care is operated by Ellis Services Group Pty Ltd/);
  const cost=page('news/roof-repair-cost-perth');
  assert.match(cost('title').text(),/Roof Repair Cost Factors Perth/);
- assert.match(cost('.article-lead').text(),/compare.*quotes/i);
+ assert.match(cost('.article-lead').text(),/quote.*assessment.*defect.*materials.*access/i);
  for(const path of ['news/drainage-after-rain','news/metal-roof-repairs-perth-guide','news/roof-leak-inspection','projects/tile-roof-valley-chimney-flashing-repairs-perth','news/roof-maintenance-basics','projects/metal-roof-fastener-repair-sequence','projects/roleystone-metal-roof-fastener-leak-repair']){
   const $=page(path),title=$('title').text();assert.ok(title.length<=80,`${path}: ${title}`);
   assert.equal($('meta[property="og:title"]').attr('content'),title);

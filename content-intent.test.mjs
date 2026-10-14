@@ -9,11 +9,12 @@ test('content revision provides contextual next steps on every published page',(
  assert.equal(pages.size,69);
  for(const [r,$] of pages){assert.ok($('main .content-intent').length,r);assert.ok($('main .content-intent a[href^="/"]').length,r);}
 });
-test('questions in schema and page knowledge match final visible answers',()=>{
+test('FAQ questions and declarative guidance match their final visible answers',()=>{
  for(const [r,$] of pages){const questions=$('main details').map((_,e)=>({question:$(e).find('summary').text(),answer:$(e).find('p').text()})).get();
  const graph=JSON.parse($('script[type="application/ld+json"]').text())['@graph'];const faq=graph.find(n=>n['@type']==='FAQPage');
- if(questions.length)assert.deepEqual(faq.mainEntity.map(q=>({question:q.name,answer:q.acceptedAnswer.text})),questions,r);
- const k=JSON.parse($('#page-knowledge').text());assert.deepEqual(k.questions,questions,r);
+ const k=JSON.parse($('#page-knowledge').text());
+ if(r==='/faq/'){assert.deepEqual(faq.mainEntity.map(q=>({question:q.name,answer:q.acceptedAnswer.text})),questions,r);assert.deepEqual(k.questions,questions,r);}
+ else {assert.equal(faq,undefined,r);assert.deepEqual(k.questions,[],r);assert.deepEqual(k.guidance,questions.map(q=>({heading:q.question,body:q.answer})),r);}
  for(const link of $('main .content-intent a[href^="/"]').toArray()){const path=$(link).attr('href').split('#')[0];assert.ok(pages.has(path),r+' -> '+path);assert.ok(k.relatedUrls.includes('https://www.perthroofcare.com.au'+path),r+' missing knowledge link '+path);}
  }
 });

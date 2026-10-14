@@ -8,6 +8,7 @@ import {keywordGapRoutes} from '../content/keyword-gap-content.mjs';
 import {keywordMapRoutes} from '../content/keyword-map-content.mjs';
 import {refineLocalServiceGraph,localEditorialRoutes,localEditorialDate} from '../content/audit-local-schema.mjs';
 import {applyAboutCompany} from '../content/about-company.mjs';
+import {applyDeclarativeContent} from '../content/declarative-content.mjs';
 
 const contentUpdateRoutes=new Set([...keywordGapRoutes,...keywordMapRoutes,'gutters-downpipes']);
 const articleImages={
@@ -30,6 +31,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 export function applyAudit20261010({root,site}){
   const routes=[...readFileSync(join(root,'sitemap.xml'),'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname.replace(/^\/|\/$/g,''));
   const newsFeed=JSON.parse(readFileSync(join(root,'news/feed.json'),'utf8'));
+  const declarativeRoutes=new Set();
   for(const route of routes){
     const updated=localEditorialRoutes.has(route)?localEditorialDate:contentUpdateRoutes.has(route)?'2026-10-12':'2026-10-10';
     const file=join(root,route,'index.html'),$=load(readFileSync(file,'utf8'),{xml:{xmlMode:false,decodeEntities:false}});
@@ -130,8 +132,22 @@ export function applyAudit20261010({root,site}){
       if(item){item.title=article.headline;item.summary=article.description;item.date_modified=`${updated}T00:00:00+08:00`;item.image=article.image;item.content_text=renderedArticle('main p,main li,main td,main th').not('.eyebrow,.article-byline').map((_,e)=>renderedArticle(e).text()).get().join('\n\n');}
     }
     if(route==='about')applyAboutCompany($,graph,canonical);
+    if(applyDeclarativeContent($,route,graph))declarativeRoutes.add(route);
     syncContentKnowledge($,graph,site,canonical);
     refineLocalServiceGraph($,graph,route,canonical);
+    if(declarativeRoutes.has(route)){
+      const finalRendered=load($.html()),heading=finalRendered('main h1').text().trim();
+      if(route.startsWith('news/'))$('[aria-current="page"]').text(heading);
+      for(const node of graph){
+        if(['WebPage','Article','CreativeWork'].includes(node['@type']))node.dateModified='2026-10-14';
+        if(node['@type']==='WebPage'){node.name=finalRendered('title').text();node.description=finalRendered('meta[name="description"]').attr('content');}
+        if(node['@type']==='Article')node.headline=heading;
+        if(node['@type']==='BreadcrumbList'&&node.itemListElement?.length)node.itemListElement.at(-1).name=route.startsWith('news/')?heading:heading.replace(/\.$/,'');
+      }
+      $('.article-byline').each((_,e)=>$(e).html($(e).html().replace(/Updated \d{4}-\d{2}-\d{2}/,'Updated 2026-10-14')));
+      const item=newsFeed.items.find(i=>i.url===canonical);
+      if(item){item.date_modified='2026-10-14T00:00:00+08:00';item.title=heading;item.summary=finalRendered('meta[name="description"]').attr('content');item.content_text=finalRendered('main p,main li,main td,main th').not('.eyebrow,.article-byline').map((_,e)=>finalRendered(e).text()).get().join('\n\n');}
+    }
     $('script[type="application/ld+json"]').text(JSON.stringify({'@context':'https://schema.org','@graph':graph}).replaceAll('<','\\u003c'));
     $('head').append('<script defer src="/assets/js/analytics.js"></script>');
     writeFileSync(file,$.html());
@@ -140,14 +156,19 @@ export function applyAudit20261010({root,site}){
   const projectFeed=JSON.parse(readFileSync(join(root,'case-studies.json'),'utf8'));
   for(const item of projectFeed.items){
     const route=new URL(item.url).pathname.replace(/^\/|\/$/g,'');
-    if(localEditorialRoutes.has(route))item.date_modified=`${localEditorialDate}T00:00:00+08:00`;
+    if(declarativeRoutes.has(route))item.date_modified='2026-10-14T00:00:00+08:00';
+    else if(localEditorialRoutes.has(route))item.date_modified=`${localEditorialDate}T00:00:00+08:00`;
+    const $=load(readFileSync(join(root,route,'index.html'),'utf8'));
+    item.content_text=$('main p,main li').not('.eyebrow').map((_,e)=>$(e).text()).get().join('\n\n');
   }
   writeFileSync(join(root,'case-studies.json'),JSON.stringify(projectFeed,null,2));
   writeFileSync(join(root,'news/feed.xml'),`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Roof Repairs Perth News — Ellis Services Group</title><link>${site}/news/</link><description>Practical roof repair and maintenance guidance.</description><language>en-au</language>${newsFeed.items.map(i=>`<item><title>${esc(i.title)}</title><link>${esc(i.url)}</link><guid isPermaLink="true">${esc(i.id)}</guid><description>${esc(i.content_text)}</description></item>`).join('')}</channel></rss>`);
   const sitemap=load(readFileSync(join(root,'sitemap.xml'),'utf8'),{xmlMode:true});
   sitemap('url').each((_,el)=>{const route=new URL(sitemap(el).find('loc').text()).pathname.replace(/^\/|\/$/g,'');
-    const updated=localEditorialRoutes.has(route)?localEditorialDate:contentUpdateRoutes.has(route)?'2026-10-12':'2026-10-10';
-    if(localEditorialRoutes.has(route)||substantiveRoutes.has(route)||articleImages[route.replace(/^news\//,'')]||(!route.startsWith('projects/')&&!['privacy','legal'].includes(route))){sitemap(el).find('lastmod').remove();sitemap(el).append(`<lastmod>${updated}</lastmod>`);}
+    const updated=declarativeRoutes.has(route)||route==='about'?'2026-10-14':localEditorialRoutes.has(route)?localEditorialDate:contentUpdateRoutes.has(route)?'2026-10-12':'2026-10-10';
+    if(declarativeRoutes.has(route)||localEditorialRoutes.has(route)||substantiveRoutes.has(route)||articleImages[route.replace(/^news\//,'')]||(!route.startsWith('projects/')&&!['privacy','legal'].includes(route))){sitemap(el).find('lastmod').remove();sitemap(el).append(`<lastmod>${updated}</lastmod>`);}
   });
   writeFileSync(join(root,'sitemap.xml'),sitemap.xml());
+  const llmsFile=join(root,'llms.txt');
+  writeFileSync(llmsFile,readFileSync(llmsFile,'utf8').replace('questions for comparing written repair quotes and inspection scope.','repair quote inclusions, materials, access and chargeable inspection scope.'));
 }

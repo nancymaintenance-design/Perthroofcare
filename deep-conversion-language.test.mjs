@@ -11,17 +11,18 @@ test('all generated public pages avoid enquiry-only, reader-work and editorial p
  const failures=collect('public').filter(p=>bad.test(visible(readFileSync(p,'utf8'))+' '+readFileSync(p,'utf8').match(/<meta[^>]+description[^>]+>/g)?.join(' ')));
  assert.deepEqual(failures,[]);
 });
-test('every service FAQ answers its own question and matches structured data', () => {
+test('every service disclosure retains distinct useful answers and matching page knowledge', () => {
  for (const route of ['roof-repairs','roof-leak-repairs','tile-roof-repairs','metal-roof-repairs','ridge-capping-repointing','flashing-repairs','gutters-downpipes','downpipe-repairs','roof-inspection','gutter-repairs','roof-maintenance','storm-damage-roof-repairs']) {
   const html=readFileSync('public/'+route+'/index.html','utf8');
   const $=load(html);
   const answers=$('main details').toArray().map(el=>[$(el).find('summary').text(),$(el).find('p').text()]);
-  assert.ok($('.focus-faq details').length>=3,route+' must retain its service questions');
+  assert.ok($('.focus-faq details').length>=3,route+' must retain its service guidance');
   assert.equal(new Set(answers.map(a=>a[1])).size,answers.length,route+' repeats one generic answer');
   assert.doesNotMatch(answers.map(a=>a[1]).join(' '),/assesses the visible condition, surrounding roofline, access and drainage path/);
   const graphs=[...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].flatMap(m=>{const j=JSON.parse(m[1]);return j['@graph']||[j]});
   const schema=graphs.find(j=>j['@type']==='FAQPage');
-  assert.deepEqual(schema.mainEntity.map(q=>[q.name,q.acceptedAnswer.text]),answers);
+  assert.equal(schema,undefined,route+' declarative guidance must not claim FAQPage');
+  assert.deepEqual(JSON.parse($('#page-knowledge').text()).guidance.map(g=>[g.heading,g.body]),answers);
  }
  const ridge=visible(readFileSync('public/ridge-capping-repointing/index.html','utf8'));
  assert.match(ridge,/Bedding supports.*pointing is/i);

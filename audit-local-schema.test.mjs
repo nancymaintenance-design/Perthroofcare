@@ -11,12 +11,6 @@ const services={
  'box-gutter-repairs':'Box gutter repair', 'roof-replacement':'Whole-roof replacement',
  'flat-roof-repairs':'Flat roof repair', 'strata-roof-repairs':'Strata roof repair'
 };
-const modified=[
- 'about','contact','roof-inspection',...Object.keys(services),
- ...['bayswater','city-beach','claremont','cottesloe','fremantle','hillarys','joondalup','kalamunda','leederville','mosman-park','nedlands','rockingham','scarborough','subiaco','victoria-park'].map(s=>`areas/${s}-roof-repairs`),
- ...['drainage-after-rain','metal-roof-repairs-perth-guide','metal-roofing-perth','ridge-capping-repairs-perth-guide','roof-inspection-perth-guide','roof-leak-detection-perth','roof-leak-inspection','roof-maintenance-basics','roof-repair-cost-perth','roof-valleys-flashing-repairs-perth','tile-roof-repairs-perth-guide'].map(s=>'news/'+s),
- ...['metal-roof-fastener-repair-sequence','roleystone-metal-roof-fastener-leak-repair','tile-roof-chimney-flashing-repair-perth','tile-roof-valley-chimney-flashing-repairs-perth'].map(s=>'projects/'+s)
-];
 const sitemap=load(readFileSync('public/sitemap.xml','utf8'),{xmlMode:true});
 const routes=sitemap('loc').map((_,e)=>new URL(sitemap(e).text()).pathname.replace(/^\/|\/$/g,'')).get();
 
@@ -68,14 +62,10 @@ test('reapplying the graph refinement preserves identifiers and emits one servic
  }
 });
 
-test('only the thirty-nine actual editorial changes receive the local refinement date',()=>{
- const previous10=['','service-areas','gallery','areas/perth-roof-repairs','news/gutter-warning-signs','news/roof-flashing-explained'];
- const previous12=['services','roof-repairs','roof-leak-repairs','tile-roof-repairs','metal-roof-repairs','ridge-capping-repointing','flashing-repairs','gutter-repairs','gutters-downpipes','downpipe-repairs','roof-maintenance','roof-cleaning-painting','commercial-roof-repairs','storm-damage-roof-repairs','roof-restoration','repair-options','faq','news'];
- const undated=['privacy','legal','projects/wa-6121-tile-roof-valley-gutter-cleaning','projects/metal-roof-ridge-capping-repair-perth','projects/metal-roof-hip-ridge-capping-repair-perth','projects/metal-roof-ridge-flashing-repair-perth'];
- assert.equal(modified.length,39);assert.equal(routes.length,69);
+test('declarative route edits advance modification dates while unchanged FAQ content retains its date',()=>{
+ assert.equal(routes.length,69);
  for(const route of routes){
-  const expected=modified.includes(route)?'2026-10-13':previous10.includes(route)?'2026-10-10':previous12.includes(route)?'2026-10-12':undated.includes(route)?'':undefined;
-  assert.notEqual(expected,undefined,route+' must have an independently checked date expectation');
+  const expected=route==='faq'?'2026-10-12':'2026-10-14';
   const entry=sitemap('url').filter((_,e)=>sitemap(e).find('loc').text()===`${site}/${route?route+'/':''}`);
   assert.equal(entry.find('lastmod').text(),expected,route);
  }
@@ -84,7 +74,7 @@ test('only the thirty-nine actual editorial changes receive the local refinement
 test('article dates agree across the visible byline, graph and feed while publication dates stay intact',()=>{
  const feed=JSON.parse(readFileSync('public/news/feed.json','utf8'));
  for(const item of feed.items){const route=new URL(item.url).pathname.replace(/^\/|\/$/g,''),$=page(route);
-  const expected=modified.includes(route)?'2026-10-13':'2026-10-10';
+  const expected='2026-10-14';
   assert.equal(graph($).find(n=>n['@type']==='Article').dateModified,expected,route);
   assert.ok($('.article-byline').text().includes('Updated '+expected),route);
   assert.equal(item.date_modified,expected+'T00:00:00+08:00',route);
@@ -92,7 +82,7 @@ test('article dates agree across the visible byline, graph and feed while public
  assert.equal(feed.items.find(i=>i.url.endsWith('/roof-repair-cost-perth/')).date_published,'2026-10-12T00:00:00+08:00');
  const projects=JSON.parse(readFileSync('public/case-studies.json','utf8'));
  for(const item of projects.items){const route=new URL(item.url).pathname.replace(/^\/|\/$/g,'');
-  assert.equal(item.date_modified,(modified.includes(route)?'2026-10-13':'2026-10-09')+'T00:00:00+08:00',route);
+  assert.equal(item.date_modified,'2026-10-14T00:00:00+08:00',route);
  }
 });
 
