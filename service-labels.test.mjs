@@ -55,6 +55,24 @@ test('linked factual phrases and the actual FAQ answers retain their original wo
  assert.equal($('details').text(),'A question?An original answer.Read the related service explanation');
 });
 
+test('production parser entity spelling does not prevent recognised inline service names from shortening',()=>{
+ const $=load('<main><p>See <a href="/flashing-repairs/#service-overview"><strong>Roof Valleys &amp; Flashing Repairs Perth</strong></a> before assessment.</p><p>See <a href="/gutters-downpipes/#service-overview">Gutters &amp; Downpipes Perth</a> before assessment.</p><p>See <a href="/gutters-downpipes/">Gutters &#38; Downpipes Perth</a>.</p><p>See <a href="/flashing-repairs/">Roof Valleys &#x26; Flashing Repairs Perth</a>.</p><p>Learn <a href="/flashing-repairs/">how valleys &amp; flashing carry rainwater</a> before discussing repairs.</p><details><summary>Original question?</summary><p>Original answer with <a href="/flashing-repairs/">Roof Valleys &amp; Flashing Repairs Perth</a>.</p></details></main>',{xml:{xmlMode:false,decodeEntities:false}});
+ const originalFacts=$('main>p').last().html(),originalFaq=$('details').html();
+ applyServiceLabels($,'faq',[]);
+ const browser=load($.html());
+ assert.deepEqual(browser('main>p').slice(0,4).map((_,e)=>browser(e).text()).get(),[
+  'See roof valleys & flashing repairs before assessment.',
+  'See gutters & downpipes before assessment.',
+  'See gutters & downpipes.',
+  'See roof valleys & flashing repairs.'
+ ]);
+ assert.equal(browser('strong').text(),'roof valleys & flashing repairs');
+ assert.equal(browser('main>p a').first().attr('href'),'/flashing-repairs/#service-overview');
+ assert.equal($('main>p').last().html(),originalFacts,'factual linked clause retains entity spelling and wording');
+ assert.equal($('details').html(),originalFaq,'FAQ answer payload remains untouched');
+ const once=$.html();applyServiceLabels($,'faq',[]);assert.equal($.html(),once);
+});
+
 test('home and directory service cards use core headings without place-stacked service eyebrows',()=>{
  for(const route of ['/','/services/']){const $=page(route);
   $('.home-service-map article').each((_,e)=>{const card=$(e),href=card.find('a[href]').first().attr('href'),label=labels[href?.replace(/^\/|\/$/g,'')];

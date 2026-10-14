@@ -20,7 +20,9 @@ const legacyLabelAliases={
  'storm-damage-roof-repairs':['Emergency roof repairs','Emergency & storm damage roof repairs'],
  'repair-options':['Roof repair options']
 };
-const comparableLabel=text=>text.toLowerCase().replace(/\s*&\s*/g,' and ').replace(/\s+/g,' ').trim();
+// The final audit preserves entities in text nodes. Compare ampersand spellings
+// as the same conjunction without changing that parser or unrelated prose.
+const comparableLabel=text=>text.toLowerCase().replace(/&(?:amp|#0*38|#x0*26);/g,'&').replace(/\s*&\s*/g,' and ').replace(/\s+/g,' ').trim();
 
 function replaceLinkLabel($,anchor,label,target){
  const texts=[];

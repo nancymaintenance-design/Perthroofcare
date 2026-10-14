@@ -77,6 +77,18 @@ test('leak, tile, ridge, area and project guidance retains its particular decisi
  assert.match(page('/projects/metal-roof-ridge-capping-repair-perth/')('.content-intent h2').text(),/metal.*ridge.*capping/i);
 });
 
+test('generated leak guidance shortens both recognised inline ampersand service names',()=>{
+ const $=page('/roof-leak-repairs/');
+ for(const [href,label] of [
+  ['/flashing-repairs/#service-overview','roof valleys & flashing repairs'],
+  ['/gutters-downpipes/#service-overview','gutters & downpipes']
+ ]){
+  const links=$(`main p a[href="${href}"]`);
+  assert.ok(links.length,href+' contextual link remains present');
+  links.each((_,e)=>assert.equal($(e).text(),label,href+' generated inline name'));
+ }
+});
+
 test('all 30 educational answers survive the declarative pass with their FAQ originals',async()=>{
  const {educationalTopics}=await import('./content/keyword-map-content.mjs');assert.equal(educationalTopics.length,30);
  const faq=page('/faq/'),schema=nodes(faq).find(n=>n['@type']==='FAQPage');
