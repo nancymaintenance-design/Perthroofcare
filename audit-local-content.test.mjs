@@ -10,7 +10,7 @@ const services=['roof-cleaning','roof-painting','box-gutter-repairs','roof-repla
 // Catch a generation pass dropping the fee disclosure or putting it after commitment.
 for(const route of [...services,'roof-inspection','contact']) test(`${route}: inspection fee is visible before the first booking action`,()=>{
  const $=page(route),hero=$('main > section').first();
- const container=route==='contact'?$('main'):hero;
+ const container=$('main');
  const action=container.find('a[href="/contact/"],a[href="#enquiry"],a[href^="tel:"]').first();
  assert.ok(hero.find('.inspection-charge-notice').length,route+' hero disclosure');
  assert.equal(hero.find('.inspection-charge-notice').text(),notice);
@@ -26,7 +26,7 @@ for(const route of [...services,'roof-inspection','contact']) test(`${route}: in
 test('six service scopes explain distinct component decisions without unconfirmed company methods',()=>{
  const expectations={
   'roof-cleaning':[/cleaning service addresses surface deposits/i,/painting adds a finish/i,/restoration/i],
-  'roof-painting':[/existing coating/i,/cleaning before spray painting/i,/product compatibility/i],
+  'roof-painting':[/existing coating/i,/clean.*before spray painting/i,/product compatibility/i],
   'box-gutter-repairs':[/outlet/i,/joint/i,/overflow route/i],
   'roof-replacement':[/local repair/i,/retained/i,/concealed/i],
   'flat-roof-repairs':[/covering/i,/drainage/i,/penetrations/i],
@@ -35,7 +35,7 @@ test('six service scopes explain distinct component decisions without unconfirme
  const scopes=[];
  for(const [route,patterns] of Object.entries(expectations)){
   const $=page(route),scope=$('[id^="scope-"]').text();scopes.push(scope);
-  assert.ok(scope.length>1050,route+' useful assessment and selection detail');
+  assert.ok(scope.length>650,route+' consolidated assessment and selection detail');
   patterns.forEach(pattern=>assert.match(scope,pattern,route));
   assert.doesNotMatch(scope,/we (?:test|flush|prime|coat|install|seal)|Dulux|guaranteed|\$\d/i);
  }

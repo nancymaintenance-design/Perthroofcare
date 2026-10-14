@@ -28,7 +28,7 @@ test('long guides expose working descriptive contents links and linked publisher
 test('service questions explain fees and scope without invented offers',()=>{
  assert.match(pages.get('/roof-inspection/')('.content-intent').text(),/fee.*before.*book/i);
  assert.match(pages.get('/roof-leak-repairs/')('.content-intent').text(),/solar.*cause/i);
- assert.match(pages.get('/repair-options/')('.content-intent').text(),/replacement.*separate/i);
+ assert.match(pages.get('/repair-options/')('[data-service-section="content"]').text(),/replacement.*separate/i);
  for(const [r,$] of pages)assert.doesNotMatch($('.content-intent').text(),/24\/7|free inspection|guaranteed same.day|fully licensed|five.star/i,r);
 });
 test('published headings retain one H1 and never skip a level',()=>{

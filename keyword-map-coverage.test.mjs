@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {load} from 'cheerio';
 const page=r=>load(readFileSync(`public/${r}/index.html`,'utf8'));
-test('all 30 educational topics have service prose and a visible FAQ answer',async()=>{
+test('all 30 educational topics have a service owner, full linked explanation and visible FAQ answer',async()=>{
  const {educationalTopics}=await import('./content/keyword-map-content.mjs');
  assert.equal(educationalTopics.length,30);
  const faq=page('faq');
@@ -11,7 +11,8 @@ test('all 30 educational topics have service prose and a visible FAQ answer',asy
   const $=page(t.route),prose=$(`[data-topic="${t.id}"]`);
   assert.equal(prose.length,1,t.id+' service prose');
   assert.equal(prose.closest('details').length,0,t.id+' must not be FAQ-only');
-  assert.ok(prose.find('p').text().length>100,t.id+' substantive explanation');
+  const target=new URL(prose.find('a').attr('href'),'https://www.perthroofcare.com.au');
+  assert.equal(page(target.pathname.slice(1,-1))(target.hash).find('p').first().text(),t.body,t.id+' substantive explanation');
   assert.equal(faq(`#topic-${t.id.toLowerCase()} summary`).text(),t.q,t.id);
   assert.ok(faq(`#topic-${t.id.toLowerCase()} p`).text().length>60,t.id);
  }
@@ -73,7 +74,7 @@ test('Perth whole-roof replacement gallery distinguishes construction from compl
  const $=page('roof-replacement'),section=$('#perth-roof-replacement-project');
  assert.equal(section.find('img').length,3);
  assert.equal(new Set(section.find('img').map((_,e)=>$(e).attr('src')).get()).size,3);
- assert.match(section.find('h2').text(),/whole-roof replacement.*Perth/i);
+ assert.match(section.find('h3').text(),/whole-roof replacement.*construction/i);
  assert.match(section.text(),/not views of the completed replacement roof/);
  for(const img of section.find('img').toArray()){
   assert.ok($(img).attr('alt').length>20);
@@ -81,7 +82,7 @@ test('Perth whole-roof replacement gallery distinguishes construction from compl
   assert.equal($(img).attr('loading'),'lazy');
   assert.ok(Number($(img).attr('width'))>0&&Number($(img).attr('height'))>0);
  }
- assert.ok(section.find('a[href="/contact/"]').length);
+ assert.ok($('main .service-enquiry a[href="/contact/"]').length);
 });
 test('confirmed Perth gutter photographs retain accurate component captions',()=>{
  for(const route of ['gutter-repairs','gutters-downpipes']){

@@ -51,12 +51,13 @@ test('home project thumbnails describe their two-column mobile layout and have i
   }
 });
 
-test('published pages deliver fingerprinted stylesheets with only About and Contact receiving small layout bundles',()=>{
+test('published pages deliver fingerprinted shared styles with small route-owned layout bundles',()=>{
   const routes=[...readFileSync(`${root}/public/sitemap.xml`,'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname);
   for(const route of routes){
     const dom=load(readFileSync(`${root}/public${route}index.html`,'utf8'));
     const styles=dom('link[rel="stylesheet"]');
-    assert.equal(styles.length,['/about/','/contact/'].includes(route)?2:1,`${route}: consolidate shared styles and isolate route layout`);
+    const routeLayout=['/about/','/contact/'].includes(route)||dom('main.service-layout').length;
+    assert.equal(styles.length,routeLayout?2:1,`${route}: consolidate shared styles and isolate route layout`);
     for(const style of styles.toArray()){
     const href=dom(style).attr('href'),css=readFileSync(`${root}/public${href}`);
     const digest=createHash('sha256').update(css).digest('hex').slice(0,16);
@@ -67,7 +68,7 @@ test('published pages deliver fingerprinted stylesheets with only About and Cont
     const sharedCss=readFileSync(`${root}/public${styles.first().attr('href')}`,'utf8');
     assert.ok(sharedCss.includes('prefers-reduced-motion'),'retain accessibility rules');
     assert.ok(sharedCss.includes('services-submenu'),'retain interactive menu styles');
-    if(['/about/','/contact/'].includes(route)){
+    if(routeLayout){
       const layoutCss=readFileSync(`${root}/public${styles.last().attr('href')}`);
       assert.ok(layoutCss.length<4000,`${route} layout stays small`);
       assert.ok(Buffer.byteLength(sharedCss)+layoutCss.length<90000,`${route} total CSS remains below 90KB`);

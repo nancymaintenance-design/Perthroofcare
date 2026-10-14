@@ -43,7 +43,8 @@ test('maintenance and region links are bidirectional, and new guide topics enter
 // Catch a shared selector inserting long answers into the service brief's sidebar grid.
 test('new reading sections do not become nested service sidebar grid cells',()=>{
  for(const [path,$] of pages) for(const section of $('main .keyword-gap-content').toArray()){
-  assert.ok($(section).parent().is('main, .article-reading'),path+' content nested in '+$(section).parent().attr('class'));
+  assert.ok($(section).parent().is('main, .article-reading, .service-solution-body'),path+' content nested in '+$(section).parent().attr('class'));
+  assert.equal($(section).closest('.service-brief-enquiry').length,0,path+' no preparation sidebar');
  }
 });
 

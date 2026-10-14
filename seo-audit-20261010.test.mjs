@@ -89,10 +89,11 @@ test('footer destination descriptions do not present a Maps link as a reviews pa
 test('priority service pages explain repair decisions and quote scope with existing evidence paths',()=>{
   for(const path of ['/roof-repairs/','/roof-leak-repairs/','/metal-roof-repairs/','/tile-roof-repairs/']){
     const $=page(path);
-    assert.ok($('.audit-repair-decision li').length>=3,path);
-    assert.ok($('.audit-quote-scope li').length>=4,path);
-    assert.ok($('.audit-repair-decision a[href^="/projects/"]').length,path);
-    assert.ok($('.audit-quote-scope a[href="/contact/"]').length,path);
+    assert.equal($('.service-steps li').length,3,path+' inspection, repair and completion');
+    const scope=$('[data-service-section="solution"]').text();
+    for(const pattern of [/materials|compatible/i,/access/i,/exclusions|excluded|limits/i,/quote/i])assert.match(scope,pattern,path+' quoted scope');
+    assert.ok($('main a[href^="/projects/"]').length,path+' existing evidence paths');
+    assert.equal($('.service-enquiry a[href="/contact/"]').length,1,path+' single final action');
   }
 });
 
@@ -111,7 +112,9 @@ test('key guides offer practical checklists, decision comparisons and manufactur
     assert.ok($('.audit-technical-sources a[href^="https://lysaght.com/"]').length,path);
   }
   assert.ok(page('/news/ridge-capping-repairs-perth-guide/')('.audit-decision-comparison tbody tr').length>=3);
-  assert.ok(page('/roof-restoration/')('.audit-decision-comparison tbody tr').length>=3);
+  const restoration=page('/roof-restoration/');
+  for(const pattern of [/local repair/i,/restoration.*cleaning.*preparation/i,/replacement.*separate decision/i])assert.match(restoration('main').text(),pattern);
+  assert.ok(restoration('main a[href^="/repair-options/"]').length,'full repair/restoration/replacement comparison remains reachable');
 });
 
 test('sitemap dates identify actual editorial changes instead of dating every build',()=>{

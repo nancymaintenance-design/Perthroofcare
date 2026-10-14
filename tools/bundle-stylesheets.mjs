@@ -20,7 +20,7 @@ export function bundleStylesheets(publicDirectory,routes){
     const links=$('link[rel="stylesheet"]');
     // About and Contact add a small route-owned layer without enlarging the shared bundle.
     // Both files are linked directly; no @import request chain is introduced.
-    const routeStyle=route==='about'?'about-company.css':route==='contact'?'contact-layout.css':null;
+    const routeStyle=route==='about'?'about-company.css':route==='contact'?'contact-layout.css':$('main.service-layout').length?'service-layout.css':null;
     const routeLayout=routeStyle?$(`link[href="/assets/css/${routeStyle}"]`):null;
     let routeHref;
     if(routeLayout?.length){

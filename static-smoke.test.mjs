@@ -33,7 +33,7 @@ const popularAreaRoutes = {
 
 test('focused information architecture publishes one primary roof-repair destination per confirmed intent', () => {
   const headings = {
-    '': 'PERTH ROOF CARE — ROOF REPAIRS PERTH.', services: 'ROOF REPAIR SERVICES PERTH.', 'roof-repairs': 'Roof repairs',
+    '': 'PERTH ROOF CARE — ROOF REPAIRS PERTH.', services: 'Roof repair services', 'roof-repairs': 'Roof repairs',
     'roof-leak-repairs': 'Roof leak repairs', 'tile-roof-repairs': 'Tile roof repairs',
     'metal-roof-repairs': 'Metal roof repairs', 'ridge-capping-repointing': 'Ridge capping & repointing',
     'flashing-repairs': 'Roof valleys & flashing repairs', 'roof-inspection': 'Roof inspection',
@@ -69,10 +69,11 @@ test('every service-menu destination uses the full standard service-page structu
   for (const route of routes) {
     const html = readFileSync(fileFor(route), 'utf8');
     assert.match(html, /<h1 id="service-overview">/i, `${route} needs a targetable service H1`);
-    assert.match(html, /class="section service-brief"/i, `${route} needs one compact professional service brief`);
-    assert.equal((html.match(/class="service-work-card"/g) ?? []).length, 3, `${route} needs three concrete work categories`);
-    assert.match(html, /class="section focus-faq"/i, `${route} needs service FAQs`);
-    assert.match(html, /class="section service-path"/i, `${route} needs a compact related-service path`);
+    const $=load(html);
+    assert.equal($('[data-service-section="content"]').length,1,`${route} service content`);
+    assert.equal($('.service-steps li').length,3,`${route} inspection, repair and completion`);
+    assert.equal($('[data-service-section="solution"] .focus-faq details').length,3,`${route} service guidance`);
+    assert.ok($('[data-service-section="solution"] .service-related a').length,`${route} contextual paths`);
     assert.match(html, /href="\/contact\/"/i, `${route} needs a direct enquiry route`);
     assert.doesNotMatch(html, /class="section service-route-detail service-real-project"/i, `${route} must not render a one-paragraph case-link block as a standalone service section`);
     assert.doesNotMatch(html, /class="section focus-context"|class="section core-service-cases"/i, `${route} must not stack duplicated template sections`);
@@ -83,7 +84,8 @@ test('homepage carries the Roof Repairs Perth theme, focused paths and real work
   const home = readFileSync(fileFor(''), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
   assert.match(home, /<h1>PERTH ROOF CARE — ROOF REPAIRS PERTH\.<\/h1>/);
   assert.ok(load(home)('.home-service-map h2').text().length > 10);
-  assert.equal((home.match(/class="card"/g) ?? []).length, 12, 'home uses nine service and three enquiry cards');
+  assert.equal(load(home)('.home-service-map article').length,9,'nine service cards remain');
+  assert.equal(load(home)('.home-enquiry').length,0,'repeated enquiry cards are consolidated');
   for (const href of ['/roof-leak-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/', '/ridge-capping-repointing/', '/flashing-repairs/', '/gutters-downpipes/', '/roof-inspection/', '/roof-cleaning-painting/', '/commercial-roof-repairs/', '/projects/metal-roof-fastener-repair-sequence/', '/service-areas/', '/contact/']) assert.match(home, new RegExp(`href="${href}"`));
   assert.ok(load(home)('.home-proof a[href="/projects/metal-roof-fastener-repair-sequence/"]').length);
   assert.doesNotMatch(home, /hero-carousel|fixed-roofline-story|atlas-index|office-location/i);
@@ -95,7 +97,8 @@ test('homepage carries the Roof Repairs Perth theme, focused paths and real work
 test('home service map completes nine services and the hero uses one readable overlay', () => {
   const home = readFileSync(fileFor(''), 'utf8');
   const css = readFileSync(join(root, 'site.css'), 'utf8');
-  assert.equal((home.match(/<article class="card">/g) ?? []).length, 12, 'homepage preserves three enquiry cards beside nine services');
+  assert.equal(load(home)('.home-service-map article').length,9,'homepage preserves nine service cards');
+  assert.equal(load(home)('.hub-enquiry a[href="/contact/"]').length,1,'one short assessment action');
   assert.ok(load(home)('.home-service-map a[href="/roof-cleaning-painting/"]').length);
   assert.ok(load(home)('.home-service-map a[href="/commercial-roof-repairs/"]').length);
   assert.match(css, /\.home-topic-rail\.home-hero-backdrop::before\{[^}]*linear-gradient/i);
@@ -157,11 +160,11 @@ test('new service routes, shared social links and JSON Feed are discoverable', (
 
 test('priority owner pages use distinct service roles with crawlable supporting links', () => {
   const expected = {
-    'roof-repairs': ['Roof repairs', 'Tile and metal roof repairs — the work we carry out', ['/roof-leak-repairs/', '/flashing-repairs/', '/gutters-downpipes/']],
-    'roof-leak-repairs': ['Roof leak repairs', 'Tracing water entry and repairing the connected roof defects', ['/flashing-repairs/#service-overview', '/tile-roof-repairs/#service-overview', '/metal-roof-repairs/#service-overview']],
-    'flashing-repairs': ['Roof valleys & flashing repairs', 'Repairing valleys and formed flashings at roof junctions', ['/roof-leak-repairs/#service-overview', '/tile-roof-repairs/#service-overview', '/metal-roof-repairs/#service-overview']],
-    'gutters-downpipes': ['Gutters & downpipes', 'Restoring the connected drainage route from roof edge to discharge', ['/gutter-repairs/', '/downpipe-repairs/', '/roof-maintenance/']],
-    'downpipe-repairs': ['Downpipe repairs', 'Repairing downpipe joints, supports and damaged pipe sections', ['/gutters-downpipes/', '/gutter-repairs/']]
+    'roof-repairs': ['Roof repairs', 'Local defects and connected roof components', ['/roof-leak-repairs/', '/flashing-repairs/', '/gutters-downpipes/']],
+    'roof-leak-repairs': ['Roof leak repairs', 'Rain patterns and indoor water marks', ['/flashing-repairs/#service-overview', '/tile-roof-repairs/#service-overview', '/metal-roof-repairs/#service-overview']],
+    'flashing-repairs': ['Roof valleys & flashing repairs', 'Valleys and roof junctions', ['/roof-leak-repairs/#service-overview', '/tile-roof-repairs/#service-overview', '/metal-roof-repairs/#service-overview']],
+    'gutters-downpipes': ['Gutters & downpipes', 'The route from roof edge to discharge', ['/gutter-repairs/', '/downpipe-repairs/', '/roof-maintenance/']],
+    'downpipe-repairs': ['Downpipe repairs', 'Pipe sections, joints and supports', ['/gutters-downpipes/', '/gutter-repairs/']]
   };
   for (const [route, [h1, section, links]] of Object.entries(expected)) {
     const html = readFileSync(fileFor(route), 'utf8');
@@ -185,9 +188,9 @@ test('roof flashing guide stays informational and links naturally to flashing re
 test('gutter and downpipe pages distinguish their own service questions', () => {
   const gutters = readFileSync(fileFor('gutters-downpipes'), 'utf8');
   const downpipes = readFileSync(fileFor('downpipe-repairs'), 'utf8');
-  assert.match(gutters, /gutters, outlets and downpipes as a connected system/i);
-  assert.match(downpipes, /downpipe joints, damaged pipe sections and loose supports/i);
-  assert.match(downpipes, /separate underground drainage work/i);
+  assert.match(load(gutters)('[data-service-section="content"]').text(),/run, outlet, downpipe joints and supports together/i);
+  assert.match(load(downpipes)('[data-service-section="content"]').text(),/joint or support repair.*pipe section/i);
+  assert.match(load(downpipes)('main').text(),/underground.*outside|separate underground drainage/i);
   assert.notEqual(gutters.match(/<main[\s\S]*<\/main>/)?.[0], downpipes.match(/<main[\s\S]*<\/main>/)?.[0]);
 });
 
@@ -305,12 +308,10 @@ test('every core service page publishes professional keyword-led scope and asses
     assert.ok(html.includes(`<section class="topic-rail service-hero" style="--service-hero-image:url('/assets/images/${heroImages[route]}')">`), `${route} needs its own documented-case title image`);
     assert.match(css, /\.topic-rail\.service-hero\{[^}]*background-image:var\(--service-hero-image\)/i, `${route} needs the shared title treatment to use its selected case image`);
     assert.match(css, /\.topic-rail\.service-hero::before\{[^}]*linear-gradient/i, `${route} needs a readable dark image overlay`);
-    assert.match(html, /class="section service-brief"/i, `${route} needs one compact professional service brief`);
-    assert.equal((html.match(/class="service-work-card"/g) ?? []).length, 3, `${route} needs three service-specific assessment cards`);
+    assert.equal(load(html)('[data-service-section="content"]').length,1,`${route} compact service description`);
+    assert.equal(load(html)('.service-steps li').length,3,`${route} assessment, work and completion`);
     assert.doesNotMatch(html, /SERVICES WE DISCUSS|THE DETAILS WE CAN DISCUSS/i, `${route} must not retain generic service headings`);
-    const linkSection = html.match(/<section class="section service-path">[\s\S]*?<\/section>/)?.[0] ?? '';
-    const primaryServiceLinks = linkSection.match(/<nav aria-label="Related roof repair services">[\s\S]*?<\/nav>/)?.[0] ?? '';
-    assert.equal((primaryServiceLinks.match(/<a href="\//g) ?? []).length, 3, `${route} needs three primary service links alongside contextual project links`);
+    assert.ok(load(html)('.service-related a[href^="/"]').length>=3,`${route} contextual service and guide links`);
     assert.equal(load(html)('.focus-faq details').length, 3, `${route} needs three service-specific FAQs in its main service FAQ block`);
     assert.doesNotMatch(html, /SERVICE DISCUSSION|PROPERTY CONTEXT|COMMON QUESTIONS|FIELD GUIDE \/ PRACTICAL CONTEXT/i, `${route} must not retain generic filler sections`);
     assert.doesNotMatch(html, /class="section focus-context"|class="section core-service-cases"/i, `${route} must not retain repeated template sections`);
@@ -320,21 +321,21 @@ test('every core service page publishes professional keyword-led scope and asses
 test('roof leak and flashing pages retain contextual, H1-targeted service links inside the service brief', () => {
   const leak = readFileSync(fileFor('roof-leak-repairs'), 'utf8');
   const flashing = readFileSync(fileFor('flashing-repairs'), 'utf8');
-  for (const html of [leak, flashing]) assert.match(html, /<section class="section service-path">/i);
+  for (const html of [leak, flashing]) assert.ok(load(html)('[data-service-section="solution"] .service-related').length);
   assert.equal(load(leak)('h1#service-overview').text(),'Roof leak repairs');
   assert.equal(load(flashing)('h1#service-overview').text(),'Roof valleys & flashing repairs');
   for (const href of ['/flashing-repairs/#service-overview', '/tile-roof-repairs/#service-overview', '/metal-roof-repairs/#service-overview', '/gutters-downpipes/#service-overview']) assert.match(leak, new RegExp(`href="${href.replaceAll('/', '\\/')}"`));
   for (const href of ['/roof-leak-repairs/#service-overview', '/tile-roof-repairs/#service-overview', '/metal-roof-repairs/#service-overview']) assert.match(flashing, new RegExp(`href="${href.replaceAll('/', '\\/')}"`));
-  assert.match(leak, /FIVE COMMON ROOF-LEAK PATHS WE ASSESS/i);
-  assert.match(flashing, /FIVE FLASHING AND VALLEY DETAILS WE REPAIR/i);
+  assert.match(load(leak)('[data-service-section="content"]').text(),/tiles or sheets, ridges, valleys, flashings and drainage/i);
+  assert.match(load(flashing)('[data-service-section="content"]').text(),/walls, chimneys, skylights and penetrations/i);
 });
 
 test('storm damage repairs uses the same professional service structure with safe response conditions', () => {
   const html = readFileSync(fileFor('storm-damage-roof-repairs'), 'utf8');
   assert.equal(load(html)('h1#service-overview').text(),'Storm damage roof repairs');
-  assert.match(html, /class="section service-brief"/i);
-  assert.equal((html.match(/class="service-work-card"/g) ?? []).length, 3);
-  assert.match(html, /class="section service-path"/i);
+  assert.equal(load(html)('[data-service-section="content"]').length,1);
+  assert.equal(load(html)('.service-steps li').length,3);
+  assert.ok(load(html)('[data-service-section="solution"] .service-related a').length);
   assert.match(html, /weather, site access and safety conditions allow/i);
   assert.doesNotMatch(html, /24-hour or unconditional attendance/i);
   assert.doesNotMatch(html, /SERVICES WE DISCUSS|THE DETAILS WE CAN DISCUSS/i);
@@ -389,9 +390,9 @@ test('homepage identity graph and llms guide contain only visible, supportable f
 });
 
 test('documented case records appear directly in their relevant services rather than a disconnected hub', () => {
-  assert.match(readFileSync(fileFor('roof-leak-repairs'), 'utf8'), /class="section roof-leak-case-evidence"/);
-  assert.match(readFileSync(fileFor('tile-roof-repairs'), 'utf8'), /class="section tile-roof-case-evidence"/);
-  assert.match(readFileSync(fileFor('metal-roof-repairs'), 'utf8'), /class="section metal-roof-case-evidence"/);
+  for(const [route,cls] of [['roof-leak-repairs','roof-leak-case-evidence'],['tile-roof-repairs','tile-roof-case-evidence'],['metal-roof-repairs','metal-roof-case-evidence']]){
+    const $=load(readFileSync(fileFor(route),'utf8'));assert.equal($(`[data-service-section="work"] .${cls} img`).length,6);
+  }
   assert.ok(!existsSync(join(root, 'projects', 'index.html')), 'there must be no published projects index');
 });
 
@@ -514,7 +515,7 @@ test('contact form and enquiry endpoint remain safely configured', async (t) => 
 test('the local server and Vercel build publish the focused routes and assets', async (t) => {
   const port = 4801; const child = spawn(process.execPath, ['local-server.mjs'], { cwd: root, env: { ...process.env, PORT: String(port) }, stdio: 'ignore' }); t.after(() => child.kill());
   let response; for (let attempt = 0; attempt < 20; attempt += 1) { try { response = await fetch(`http://127.0.0.1:${port}/metal-roof-repairs/`); break; } catch { await new Promise((resolve) => setTimeout(resolve, 100)); } }
-  assert.equal(response?.status, 200); assert.match(await response.text(), /METAL ROOF REPAIRS PERTH/);
+  assert.equal(response?.status, 200); assert.equal(load(await response.text())('main h1').text(),'Metal roof repairs');
   assert.ok(existsSync(join(root, 'public', 'roof-leak-repairs', 'index.html'))); assert.ok(existsSync(join(root, 'public', 'assets', 'css', 'site.css'))); assert.ok(existsSync(join(root, 'public', 'favicon.png')));
 });
 
@@ -567,7 +568,7 @@ test('five supplied four-image completed-work cases are indexable and exposed th
     assert.ok(existsSync(join(root, 'public', 'assets', 'images', image)), `${image} must be staged for production`);
   }
   assert.match(readFileSync(join(root, 'llms.txt'), 'utf8'), /Case-study JSON Feed/i);
-  assert.match(readFileSync(fileFor('metal-roof-repairs'), 'utf8'), /METAL ROOF REPAIRS PERTH — DOCUMENTED ROOF, JUNCTION AND ROOF-EDGE SEQUENCE/i);
+  assert.match(load(readFileSync(fileFor('metal-roof-repairs'),'utf8'))('[data-service-section="work"] h3').first().text(),/metal roof and junction repair sequence/i);
   for (const route of ['roof-leak-repairs', 'flashing-repairs']) assert.doesNotMatch(readFileSync(fileFor(route), 'utf8'), /TILE ROOF VALLEY AND CHIMNEY FLASHING CASES\./i, `${route} must not present a documented case as a service item`);
 });
 
@@ -607,15 +608,11 @@ test('storm damage repairs presents the supplied six-image urgent-response recor
   assert.match(html, /URGENT ROOF-RESPONSE RECORD \/ LOCATION NOT PUBLISHED/i);
   assert.match(html, /Urgent storm-related roof repair enquiries are prioritised/i);
   assert.match(html, /weather, site access and safety conditions allow/i);
-  assert.match(html, /class="section service-brief"/i, 'storm damage needs the same compact professional service structure');
+  assert.equal(load(html)('[data-service-section="content"]').length,1,'storm damage compact service description');
   assert.doesNotMatch(html, /SERVICES WE DISCUSS|THE DETAILS WE CAN DISCUSS/i, 'storm damage must not retain generic service headings');
   assert.doesNotMatch(html, /service-route-detail|FIELD GUIDE \/ PRACTICAL CONTEXT/i, 'storm damage must not retain the old generic route template');
-  const linkSection = html.match(/<section class="section service-path">[\s\S]*?<\/section>/)?.[0] ?? '';
-  assert.equal((linkSection.match(/<a href="\//g) ?? []).length, 3, 'storm damage needs exactly three contextual internal links');
-  assert.ok(
-    html.indexOf('storm-damage-case-evidence') < html.indexOf('service-path'),
-    'the urgent-response gallery should appear before the related-links section',
-  );
+  assert.ok(load(html)('.service-related a[href^="/"]').length>=3,'storm damage retains contextual internal links');
+  assert.equal(load(html)('[data-service-section="work"] .storm-damage-case-evidence').length,1,'urgent-response evidence belongs in Our work');
   assert.equal((html.match(/class="storm-damage-evidence-item"/g) ?? []).length, 6, 'six supplied photos must form one complete gallery');
   for (const image of images) assert.match(html, new RegExp(image.replaceAll('.', '\\.'), 'i'));
   assert.match(css, /\.storm-damage-evidence-grid\{display:grid;grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
@@ -626,11 +623,7 @@ test('storm damage repairs presents the supplied six-image urgent-response recor
     /main:has\(\.service-route-detail\)\s*>\s*\.section:not\(\.service-route-detail\)\{display:none\}/,
     'the route-level visibility rule must not hide the urgent-response gallery',
   );
-  assert.match(
-    css,
-    /main:has\(\.service-route-detail\)\s*>\s*\.section:not\(\.service-route-detail\):not\(\.storm-damage-case-evidence\)\{display:none\}/,
-    'the urgent-response gallery must be explicitly exempt from route-level hiding',
-  );
+  assert.equal(load(html)('.service-route-detail').length,0,'retired visibility mechanism is not used');
 });
 
 test('the production build runs the Vercel staging step before publishing the public directory', () => {
