@@ -36,7 +36,9 @@ test('owner-confirmed seven-day Perth opening hours agree in visible copy and ev
     assert.equal($('footer .business-hours').length,1,path);
     assert.equal($('footer .business-hours').text(),'Opening hours: Monday–Sunday, 9am–9pm (Perth local time).',path);
   }
-  for(const path of ['/about/','/contact/'])assert.equal(page(path)('main .business-hours').length,1,path);
+  assert.equal(page('/about/')('main .business-hours').length,0,'About contact facts live in its intact footer');
+  assert.equal(page('/about/')('footer .business-hours').length,1,'About footer retains opening hours');
+  assert.equal(page('/contact/')('main .business-hours').length,1,'/contact/');
 });
 
 test('company registration remains directly verifiable without being represented as a trade licence',()=>{

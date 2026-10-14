@@ -1,4 +1,4 @@
-import {localTeamIdentity,businessHoursText} from './business-links.mjs';
+import {localTeamIdentity} from './business-links.mjs';
 import {inspectionChargeNotice} from './audit-local-content.mjs';
 
 export const aboutTitle='About Ellis Services Group | Perth Roof Care';
@@ -21,15 +21,16 @@ export function renderAboutCompany(){
   <div><p class="eyebrow">OUR WORKING APPROACH</p><h2>Assess the roof. Explain the work.</h2></div>
   <div><p>Our team assesses the property, explains the findings and provides a repair plan and written quote before work begins. The repair scope follows the condition of your roof.</p><p>The quote identifies the affected components, materials and access needed for the agreed work. Local repairs, wider roof work and optional surface treatments are considered according to the assessed condition.</p><p>Share your suburb, roof type if known and the issue you have noticed. Existing ground-level photographs are optional; there is no need to access the roof to make an enquiry.</p></div>
  </div></section>
- <section class="section about-company-business" data-about-section="business"><div class="container"><p class="eyebrow">COMPANY &amp; CONTACT</p><h2>Ellis Services Group Pty Ltd</h2><div class="about-company-facts">
-  <div><h3>Business registration</h3><p>Australian Private Company<br>ABN 96 645 821 745<br>ACN 645 821 745</p><p>ABN active and GST registered from 11 November 2020.</p><a href="https://abr.business.gov.au/ABN/View?id=645821745" target="_blank" rel="noopener noreferrer">Official ABN Lookup record</a><p class="about-company-registration-note">The ABR company-registration record does not establish a trade licence or insurance.</p></div>
-  <div><h3>Perth office</h3><p>140 St Georges Terrace, Perth WA 6000</p><p class="business-hours">${businessHoursText}</p></div>
-  <div><h3>Contact our team</h3><p><a href="tel:+61405878406">0405 878 406</a><br><a href="mailto:ellisservicesgroup3@outlook.com">ellisservicesgroup3@outlook.com</a></p><p class="inspection-charge-notice">${inspectionChargeNotice}</p><a class="button" href="/contact/">Arrange an assessment</a></div>
- </div></div></section></div>`;
+ <section class="section about-company-business" data-about-section="business"><div class="container"><p class="eyebrow">BUSINESS REGISTRATION</p><h2>Ellis Services Group Pty Ltd</h2>
+ <dl class="about-company-facts"><div><dt>Company type</dt><dd>Australian Private Company</dd></div><div><dt>ABN</dt><dd>96 645 821 745</dd></div><div><dt>ACN</dt><dd>645 821 745</dd></div></dl>
+ <p>ABN active and GST registered from 11 November 2020. <a href="https://abr.business.gov.au/ABN/View?id=645821745" target="_blank" rel="noopener noreferrer">Official ABN Lookup record</a></p>
+ <p class="about-company-registration-note">The ABR company-registration record does not establish a trade licence or insurance.</p>
+ </div></section></div>`;
 }
 
 // Run after the historical editorial passes so the company narrative has one owner.
 export function applyAboutCompany($,graph,canonical){
+ $('.contact-band').remove();
  if(!$('link[href="/assets/css/about-company.css"]').length)$('head').append('<link rel="stylesheet" href="/assets/css/about-company.css">');
  $('main').html(renderAboutCompany());
  $('title').text(aboutTitle);

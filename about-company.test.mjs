@@ -4,6 +4,7 @@ import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {join} from 'node:path';
 import {load} from 'cheerio';
+import {applyAboutCompany} from './content/about-company.mjs';
 
 const root=fileURLToPath(new URL('./public/',import.meta.url));
 const page=()=>load(readFileSync(join(root,'about/index.html'),'utf8'));
@@ -39,14 +40,40 @@ test('About is a company introduction without project photographs, captions or s
  assert.doesNotMatch($('meta[name="description"]').attr('content'),/photographed|project/i);
 });
 
-test('About retains direct verified facts and a chargeable inspection notice at each booking CTA',()=>{
+test('About ends with registration facts and retains only the hero assessment with its fee notice',()=>{
  const $=page(),facts=$('[data-about-section="business"]');
- for(const fact of ['96 645 821 745','645 821 745','140 St Georges Terrace, Perth WA 6000','Monday–Sunday, 9am–9pm'])assert.ok(facts.text().includes(fact),fact);
+ for(const fact of ['Ellis Services Group Pty Ltd','96 645 821 745','645 821 745'])assert.ok(facts.text().includes(fact),fact);
  assert.equal(facts.find('a[href="https://abr.business.gov.au/ABN/View?id=645821745"]').length,1);
- assert.ok(facts.find('a[href="tel:+61405878406"]').length);
- assert.ok(facts.find('a[href="mailto:ellisservicesgroup3@outlook.com"]').length);
- $('main a.button[href="/contact/"]').each((_,e)=>assert.match($(e).closest('[data-about-section]').text(),/Roof inspections are chargeable\. Confirm the fee and scope before booking\./));
+ assert.equal($('main a[href^="tel:"],main a[href^="mailto:"],main .business-hours').length,0);
+ assert.doesNotMatch(facts.text(),/Perth office|Contact our team|140 St Georges Terrace|Monday–Sunday|Arrange an assessment/);
+ assert.equal($('main a.button[href="/contact/"]').length,1);
+ assert.equal($('.about-company-hero a.button[href="/contact/"]').length,1);
+ assert.match($('.about-company-hero .inspection-charge-notice').text(),/Roof inspections are chargeable\. Confirm the fee and scope before booking\./);
  assert.doesNotMatch(facts.text(),/registered (?:office|address)/i);
+});
+
+test('About omits the pre-footer contact band while preserving the actual shared footer',()=>{
+ const $=page();
+ assert.equal($('.contact-band').length,0);
+ assert.equal($('footer').length,1);
+ for(const route of ['','contact','tile-roof-repairs']){
+  const sibling=load(readFileSync(join(root,route,'index.html'),'utf8'));
+  assert.equal(sibling('.contact-band').length,1,route||'Home');
+  assert.equal(sibling('footer').length,1,route||'Home');
+  assert.equal($('footer').toString(),sibling('footer').toString(),route||'Home');
+ }
+});
+
+test('repeated final About transformation removes a reintroduced contact band and preserves the footer',()=>{
+ const $=page(),footer=$('footer').toString();
+ const graph=JSON.parse($('script[type="application/ld+json"]').text())['@graph'];
+ for(let pass=0;pass<2;pass++){
+  $('footer').before('<section class="contact-band"><h2>Contact our team</h2></section>');
+  applyAboutCompany($,graph,'https://www.perthroofcare.com.au/about/');
+  assert.equal($('.contact-band').length,0);
+  assert.equal($('footer').toString(),footer);
+  assert.equal(graph.filter(n=>n['@type']==='AboutPage').length,1);
+ }
 });
 
 test('About structured data describes the company and contains no removed FAQ',()=>{

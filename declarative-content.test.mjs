@@ -103,7 +103,8 @@ test('all 30 educational answers survive the declarative pass with their FAQ ori
 
 test('shared contact heading and menu present the roof repair service directly',()=>{
  for(const r of routes){const $=page(r);
-  assert.match($('.footer-cta h2,.contact-band h2,.cta-band h2').text()||$('h2').last().text(),/Perth roof repair enquir/i,r);
+  if(r==='/about/')assert.equal($('.contact-band').length,0,'About keeps registration above the actual footer');
+  else assert.match($('.footer-cta h2,.contact-band h2,.cta-band h2').text()||$('h2').last().text(),/Perth roof repair enquir/i,r);
   assert.doesNotMatch($('.services-panel-intro').text(),/Need help choosing\?/);
  }
 });
