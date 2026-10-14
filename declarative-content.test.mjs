@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
 import {load} from 'cheerio';
-import {spawnSync} from 'node:child_process';
+import {spawnSync,execFileSync} from 'node:child_process';
 const routes=[...readFileSync('public/sitemap.xml','utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname);
 const page=r=>load(readFileSync(`public${r}index.html`,'utf8'));
 const nodes=$=>$('script[type="application/ld+json"]').toArray().flatMap(e=>{const n=JSON.parse($(e).text());return n['@graph']||[n];});
@@ -14,6 +14,7 @@ test('all 69 routes publish declarative topic headings except the actual FAQ',()
  const generic=/^(?:Start with the roof detail you can see|Use the project detail to compare the work, not just the finish|A useful starting point for this property|Explore the related work|Questions before booking|Discuss your property and the next step|What to compare in a roof repair quote)\.?$/i;
  for(const r of routes){const $=page(r);assert.equal($('main h1').length,1,r);
   assert.equal($('link[rel="canonical"]').attr('href'),'https://www.perthroofcare.com.au'+r);
+  for(const e of $('main h1,main h2,main h3,main summary').toArray())assert.doesNotMatch($(e).text(),generic,r+' '+$(e).text());
   if(r==='/faq/')continue;
   assert.doesNotMatch($('title').text(),/\?|^(?:what|why|how|can|does|do|is|are|when|which|who|should)\b/i,r+' declarative title');
   for(const e of $('main h1,main h2,main h3,main summary').toArray()){
@@ -24,6 +25,40 @@ test('all 69 routes publish declarative topic headings except the actual FAQ',()
   for(const e of $('main details').toArray())assert.ok($(e).find('p').text().length>30,r+' retained answer');
   const k=JSON.parse($('#page-knowledge').text());assert.deepEqual(k.questions,[],r+' no invented questions');
  }
+});
+
+test('FAQ related repair heading is descriptive while all questions, answers and publication dates survive',()=>{
+ const $=page('/faq/'),before=load(execFileSync('git',['show','ab6ea8f:faq/index.html'],{encoding:'utf8',maxBuffer:4*1024*1024}));
+ assert.ok($('main h2').toArray().some(e=>$(e).text()==='Roof repairs and inspections'));
+ const disclosures=p=>p('main details').map((_,e)=>({question:p(e).find('summary').text(),answer:p(e).find('p').text()})).get();
+ assert.equal(disclosures($).length,58);assert.deepEqual(disclosures($),disclosures(before));
+ assert.deepEqual(nodes($).find(n=>n['@type']==='FAQPage'),nodes(before).find(n=>n['@type']==='FAQPage'));
+ const current=nodes($).find(n=>n['@type']==='WebPage'),original=nodes(before).find(n=>n['@type']==='WebPage');
+ assert.equal(current.dateModified,'2026-10-14');assert.equal(current.datePublished,original.datePublished);
+});
+
+test('all routes use concise component headings without assembled topic suffixes',()=>{
+ const filler=/ — (?:causes and repair decisions|connected service scopes|service guidance|assessment arrangements|quote inclusions|inspection and work scope|practical guidance|repairs and assessment|components we assess|property details|enquiry information|inspection details)$| for another property$/i;
+ for(const r of routes){const $=page(r);for(const e of $('main h1,main h2,main h3,main summary').toArray())assert.doesNotMatch($(e).text(),filler,r+' '+$(e).text());}
+ // Independent, paragraph-reviewed examples catch replacement by empty labels.
+ for(const [route,headings] of [
+  ['/roof-leak-repairs/',['Rain patterns and indoor water marks','Water-entry paths and recurring leaks','Leak repair materials, access and exclusions']],
+  ['/areas/hillarys-roof-repairs/',['Roof material and visible damage','Fixings, capping and rainwater drainage','Arrange a roof assessment']],
+  ['/news/roof-inspection-perth-guide/',['Inspection findings and maintenance priorities','Roof inspection and drainage repair records','Inspection fees and agreed access']]
+ ]){const $=page(route),actual=$('main h2,main h3').map((_,e)=>$(e).text()).get();for(const heading of headings)assert.ok(actual.includes(heading),route+' missing '+heading);}
+});
+
+test('section heading edits preserve body answers, images, anchors and educational topic ownership on all routes',()=>{
+ const extract=$=>({
+  h1:$('main h1').text(),
+  paragraphs:$('main p').map((_,e)=>$(e).text()).get(),
+  answers:$('main details').map((_,e)=>$(e).find('p').text()).get(),
+  images:$('main img').map((_,e)=>$(e).attr('src')).get(),
+  links:$('main a').map((_,e)=>$(e).attr('href')).get(),
+  anchors:$('main [id]').map((_,e)=>$(e).attr('id')).get(),
+  topics:$('main [data-topic]').map((_,e)=>$(e).attr('data-topic')).get()
+ });
+ for(const r of routes){const before=load(execFileSync('git',['show','ab6ea8f:'+(r==='/'?'':r.slice(1))+'index.html'],{encoding:'utf8',maxBuffer:4*1024*1024}));assert.deepEqual(extract(page(r)),extract(before),r);}
 });
 
 test('leak, tile, ridge, area and project guidance retains its particular decision',()=>{

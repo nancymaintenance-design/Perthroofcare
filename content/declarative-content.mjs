@@ -1,3 +1,5 @@
+import {sectionHeadings,sectionSlots} from './section-headings.mjs';
+
 // Reviewed subject map: question wording is research intent, not a heading template.
 // Each output below names the actual component, investigation or decision.
 export const routeSubjects={
@@ -331,8 +333,12 @@ export function applyDeclarativeContent($,route,graph){
  $('.contact-band h2').text('Perth roof repair enquiries');
  $('.services-panel-intro p').text('Our team arranges the roof assessment for your repair needs.');
  $('.services-panel-intro small').text('Tile, metal, leak and roofline repair services.');
- if(route==='faq'||route==='about')return false;
+ if(route==='about')return false;
  const before=$('main').html()+$('title').text();
+ if(route==='faq'){
+  $('main h2').filter((_,e)=>key($(e).text())==='explore the related work').text('Roof repairs and inspections');
+  return before!==$('main').html()+$('title').text();
+ }
  $('main p').not('[data-topic] p').each((_,p)=>{
   // Edit text nodes so contextual service links and accessibility survive.
   const replace=node=>{if(node.type==='text'){for(const [from,to] of providerCopy)node.data=node.data.replaceAll(from,to);}else for(const child of node.children||[])replace(child);};
@@ -342,31 +348,15 @@ export function applyDeclarativeContent($,route,graph){
   const t=$(e).text(),normal=key(t);
   let output=reviewed.get(normal);
   if(normal==='a useful starting point for this property')output=subject;
-  if(normal==='understand the roof problem before choosing the work')output=subject+' — causes and repair decisions';
-  if(normal==='explore the related work')output=subject+' — connected service scopes';
-  if(!output&&(normal==='questions before booking'||normal.startsWith('questions about ')))output=subject+' — service guidance';
-  if(normal==='discuss your property and the next step')output=subject+' — assessment arrangements';
-  if(normal==='what to compare in a roof repair quote')output=subject+' — quote inclusions';
-  if(normal==='planning similar work on your own roof?')output=subject+' for another property';
-  if(normal==='before arranging the work')output=subject+' — inspection and work scope';
-  if(normal==='related questions')output=subject+' — practical guidance';
-  if(normal==='explore the work and arrange a repair')output=subject+' — repairs and assessment';
-  if(normal==='what we check and repair')output=subject+' — components we assess';
-  if(normal==='start with the affected roofline')output=subject+' — property details';
-  if(normal==='tell us what you have noticed')output=subject+' — enquiry information';
-  if(normal.startsWith('prepare a ')&&normal.endsWith(' enquiry'))output=subject+' — inspection details';
+  let slot=sectionSlots[normal];
+  if(!output&&(normal==='questions before booking'||normal.startsWith('questions about ')))slot='guidance';
+  if(normal.startsWith('prepare a ')&&normal.endsWith(' enquiry'))slot='inspection';
+  if(slot){
+   output=sectionHeadings[route]?.[slot];
+   if(!output)throw new Error(`Missing reviewed section heading: ${route} / ${slot}`);
+  }
   if(output)$(e).text(output);
  });
- // The regional enquiry headings contain actual local names and lead into
- // useful access instructions. They are replaced individually, not stripped.
- const regionalEnquiries={
-  'areas/perth-roof-repairs':'Perth CBD roof assessment arrangements',
-  'areas/leederville-roof-repairs':'Leederville roof assessment arrangements',
-  'areas/joondalup-roof-repairs':'Joondalup roof assessment arrangements',
-  'areas/fremantle-roof-repairs':'Fremantle roof assessment arrangements',
-  'areas/bayswater-roof-repairs':'Bayswater roof assessment arrangements'
- };
- if(regionalEnquiries[route])$('h2').filter((_,e)=>/^Prepare a .* roof repair enquiry\.$/i.test($(e).text())).text(regionalEnquiries[route]);
  // An accessible disclosure can contain service guidance without claiming FAQ
  // eligibility. Visible answers and their order remain intact.
  $('.focus-faq .eyebrow').text('SERVICE GUIDANCE');

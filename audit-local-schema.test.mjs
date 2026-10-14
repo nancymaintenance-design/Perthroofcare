@@ -62,10 +62,10 @@ test('reapplying the graph refinement preserves identifiers and emits one servic
  }
 });
 
-test('declarative route edits advance modification dates while unchanged FAQ content retains its date',()=>{
+test('declarative route edits and the FAQ heading update advance modification dates',()=>{
  assert.equal(routes.length,69);
  for(const route of routes){
-  const expected=route==='faq'?'2026-10-12':'2026-10-14';
+  const expected='2026-10-14';
   const entry=sitemap('url').filter((_,e)=>sitemap(e).find('loc').text()===`${site}/${route?route+'/':''}`);
   assert.equal(entry.find('lastmod').text(),expected,route);
  }

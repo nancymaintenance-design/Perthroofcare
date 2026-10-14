@@ -121,7 +121,7 @@ test('sitemap dates identify actual editorial changes instead of dating every bu
     assert.equal(entry.find('lastmod').text(),'2026-10-14');
   }
   assert.equal($('url').filter((_,e)=>$(e).find('loc').text().endsWith('/privacy/')).find('lastmod').text(),'2026-10-14');
-  assert.equal($('url').filter((_,e)=>$(e).find('loc').text().endsWith('/faq/')).find('lastmod').text(),'2026-10-12','unchanged FAQ content retains its previous date');
+  assert.equal($('url').filter((_,e)=>$(e).find('loc').text().endsWith('/faq/')).find('lastmod').text(),'2026-10-14','FAQ related-service heading has an actual editorial update');
 });
 test('all articles identify visible image, author, publisher and truthful modification date',()=>{
   const feed=JSON.parse(readFileSync(join(root,'news/feed.json'),'utf8'));

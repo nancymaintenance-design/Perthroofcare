@@ -11,7 +11,7 @@ export function renderAboutCompany(){
   <p class="local-team-identity">${localTeamIdentity}</p><p>We inspect, repair and maintain roofs and their connected drainage across Perth. Our work covers roof leaks, damaged tiles, metal sheets and fixings, ridge capping, flashing, gutters and downpipes.</p>
   <p>Our team assesses the property, explains the findings and provides a repair plan and written quote before work begins. The repair scope follows the condition of your roof.</p>
   <p class="inspection-charge-notice">${inspectionChargeNotice}</p><a class="button" href="/contact/">Arrange an assessment</a></div>
-  <figure class="about-company-hero-photo"><img src="/assets/images/metal-fastener-sequence-05-completed.png" alt="Completed metal roof photographed in the Ellis Services Group fastener repair sequence" fetchpriority="high"><figcaption>Metal roof fastener repair · Ellis Services Group project</figcaption></figure>
+  <figure class="about-company-hero-photo"><img src="/assets/images/metal-fastener-sequence-05-completed.png" alt="Completed metal roof photographed in the Ellis Services Group fastener repair sequence" loading="eager" fetchpriority="high"><figcaption>Metal roof fastener repair · Ellis Services Group project</figcaption></figure>
  </div></section>
  <section class="section about-company-services" data-about-section="services"><div class="container"><p class="eyebrow">OUR REPAIR SERVICES</p><h2>Roof repairs and drainage, from the surface to the outlet.</h2>
  <div class="about-company-service-columns">

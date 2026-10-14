@@ -38,6 +38,13 @@ test('About project images are real assets with reserved dimensions and linked r
  assert.ok($('[data-about-section="project"] a[href="/projects/metal-roof-fastener-repair-sequence/"]').length);
 });
 
+test('About hero requests eagerly at high priority while the later project image stays lazy',()=>{
+ const $=page();
+ assert.equal($('.about-company-hero img').attr('loading'),'eager');
+ assert.equal($('.about-company-hero img').attr('fetchpriority'),'high');
+ assert.equal($('[data-about-section="project"] img').attr('loading'),'lazy');
+});
+
 test('About retains direct verified facts and a chargeable inspection notice at each booking CTA',()=>{
  const $=page(),facts=$('[data-about-section="business"]');
  for(const fact of ['96 645 821 745','645 821 745','140 St Georges Terrace, Perth WA 6000','Monday–Sunday, 9am–9pm'])assert.ok(facts.text().includes(fact),fact);
