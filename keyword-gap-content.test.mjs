@@ -49,7 +49,7 @@ test('new reading sections do not become nested service sidebar grid cells',()=>
 
 // Catch metadata/schema left stale after the urgent-page title or answers change.
 test('urgent title and added answers remain consistent with structured data',()=>{
- const storm=pages.get('/storm-damage-roof-repairs/');assert.match(storm('main h1').text(),/emergency.*storm/i);
+ const storm=pages.get('/storm-damage-roof-repairs/');assert.equal(storm('main h1').text(),'Storm damage roof repairs');
  for(const [path,$] of pages){
   const graph=JSON.parse($('script[type="application/ld+json"]').text())['@graph'];
   const crumb=graph.find(n=>n['@type']==='BreadcrumbList');

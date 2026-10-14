@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
 import {load} from 'cheerio';
 import {spawnSync,execFileSync} from 'node:child_process';
+import {serviceLabels} from './content/service-labels.mjs';
 const routes=[...readFileSync('public/sitemap.xml','utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname);
 const page=r=>load(readFileSync(`public${r}index.html`,'utf8'));
 const nodes=$=>$('script[type="application/ld+json"]').toArray().flatMap(e=>{const n=JSON.parse($(e).text());return n['@graph']||[n];});
@@ -48,17 +49,21 @@ test('all routes use concise component headings without assembled topic suffixes
  ]){const $=page(route),actual=$('main h2,main h3').map((_,e)=>$(e).text()).get();for(const heading of headings)assert.ok(actual.includes(heading),route+' missing '+heading);}
 });
 
-test('section heading edits preserve body answers, images, anchors and educational topic ownership on all routes',()=>{
+test('company and service-label edits preserve other prose, evidence, anchors and topic ownership',()=>{
+ const prose=($,selector)=>$(selector).map((_,e)=>{const copy=$(e).clone();copy.find('a').text('[link]');return copy.text();}).get();
  const extract=$=>({
-  h1:$('main h1').text(),
-  paragraphs:$('main p').map((_,e)=>$(e).text()).get(),
-  answers:$('main details').map((_,e)=>$(e).find('p').text()).get(),
+  paragraphs:prose($,'main p:not(.topic-rail .eyebrow,.services-directory .eyebrow)'),
+  answers:prose($,'main details'),
   images:$('main img').map((_,e)=>$(e).attr('src')).get(),
   links:$('main a').map((_,e)=>$(e).attr('href')).get(),
   anchors:$('main [id]').map((_,e)=>$(e).attr('id')).get(),
   topics:$('main [data-topic]').map((_,e)=>$(e).attr('data-topic')).get()
  });
- for(const r of routes){const before=load(execFileSync('git',['show','ab6ea8f:'+(r==='/'?'':r.slice(1))+'index.html'],{encoding:'utf8',maxBuffer:4*1024*1024}));assert.deepEqual(extract(page(r)),extract(before),r);}
+ for(const r of routes){if(r==='/about/')continue; // Company-only composition is covered by about-company.test.mjs.
+  const before=load(execFileSync('git',['show','ab6ea8f:'+(r==='/'?'':r.slice(1))+'index.html'],{encoding:'utf8',maxBuffer:4*1024*1024}));
+  assert.deepEqual(extract(page(r)),extract(before),r);
+  if(!serviceLabels[r.slice(1,-1)])assert.equal(page(r)('main h1').text(),before('main h1').text(),r+' unchanged identity');
+ }
 });
 
 test('leak, tile, ridge, area and project guidance retains its particular decision',()=>{

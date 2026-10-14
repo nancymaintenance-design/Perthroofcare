@@ -63,7 +63,10 @@ export function applySeoRefresh(documents){
  faq('h1').text('Roof Repairs Perth — Frequently Asked Questions');
  faq('main > section:first-child p:not(.eyebrow)').text('Answers from Ellis Services Group about leak repairs, roof materials, drainage, inspections, quotes and arranging the work.');
  const list=faq('.faq-list').first();
- list.parent().html(faqGroups.map(([heading,items])=>`<section class="faq-category"><h2>${esc(heading)}</h2><div class="faq-list">${items.map(([q,a,route])=>`<details><summary>${esc(q)}</summary><p>${esc(a)} <a href="/${route}/">${esc(documents.get(route)('h1').text().replace(/\.$/,''))} →</a></p></details>`).join('')}</div></section>`).join(''));
+ // FAQ answers are protected records, including their contextual link labels.
+ // The company-only About H1 must not rewrite this existing answer payload.
+ const faqLinkLabel=route=>route==='about'?'Perth Roof Repair Company — Ellis Services Group':documents.get(route)('h1').text().replace(/\.$/,'');
+ list.parent().html(faqGroups.map(([heading,items])=>`<section class="faq-category"><h2>${esc(heading)}</h2><div class="faq-list">${items.map(([q,a,route])=>`<details><summary>${esc(q)}</summary><p>${esc(a)} <a href="/${route}/">${esc(faqLinkLabel(route))} →</a></p></details>`).join('')}</div></section>`).join(''));
  metadata(faq,'Roof Repairs Perth FAQ','Answers about Perth roof leak repairs, tiles, metal roofing, gutters, inspections and quotes, with direct links to Ellis Services Group services.');
 
  for(const [slug,g] of Object.entries(revisedGuides)){

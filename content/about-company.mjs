@@ -1,17 +1,15 @@
 import {localTeamIdentity,businessHoursText} from './business-links.mjs';
 import {inspectionChargeNotice} from './audit-local-content.mjs';
 
-export const aboutTitle='Roof Repair Company Perth | Ellis Services Group';
-const aboutDescription='Meet Ellis Services Group, the Perth team behind Perth Roof Care. Explore our roof repair services, photographed work, company record and contact details.';
+export const aboutTitle='About Ellis Services Group | Perth Roof Care';
+const aboutDescription='Meet Ellis Services Group, the company behind Perth Roof Care. Explore our roofing capabilities, working approach, business record and contact details.';
 
 export function renderAboutCompany(){
  return `<div class="about-company content-intent">
  <section class="about-company-hero" data-about-section="company"><div class="container about-company-hero-grid">
-  <div class="about-company-intro"><p class="eyebrow">PERTH ROOF CARE / OUR COMPANY</p><h1>Perth Roof Repair Company — Ellis Services Group</h1>
-  <p class="local-team-identity">${localTeamIdentity}</p><p>We inspect, repair and maintain roofs and their connected drainage across Perth. Our work covers roof leaks, damaged tiles, metal sheets and fixings, ridge capping, flashing, gutters and downpipes.</p>
-  <p>Our team assesses the property, explains the findings and provides a repair plan and written quote before work begins. The repair scope follows the condition of your roof.</p>
+  <div class="about-company-intro"><p class="eyebrow">PERTH ROOF CARE / OUR COMPANY</p><h1>Ellis Services Group</h1><p class="about-company-statement">Roof repairs and connected drainage, with a scope shaped around your property.</p></div>
+  <div class="about-company-position"><p class="local-team-identity">${localTeamIdentity}</p><p>We inspect, repair and maintain roofs and their connected drainage across Perth. Our work covers roof leaks, damaged tiles, metal sheets and fixings, ridge capping, flashing, gutters and downpipes.</p>
   <p class="inspection-charge-notice">${inspectionChargeNotice}</p><a class="button" href="/contact/">Arrange an assessment</a></div>
-  <figure class="about-company-hero-photo"><img src="/assets/images/metal-fastener-sequence-05-completed.png" alt="Completed metal roof photographed in the Ellis Services Group fastener repair sequence" loading="eager" fetchpriority="high"><figcaption>Metal roof fastener repair · Ellis Services Group project</figcaption></figure>
  </div></section>
  <section class="section about-company-services" data-about-section="services"><div class="container"><p class="eyebrow">OUR REPAIR SERVICES</p><h2>Roof repairs and drainage, from the surface to the outlet.</h2>
  <div class="about-company-service-columns">
@@ -19,9 +17,9 @@ export function renderAboutCompany(){
   <article><h3>Ridges, valleys and flashing</h3><p>We assess ridge mortar, valley condition and flashing at roof junctions. The findings determine whether the work needs local repair, repointing, rebedding or replacement of affected components.</p><ul><li><a href="/ridge-capping-repointing/">Ridge capping and repointing</a></li><li><a href="/flashing-repairs/">Roof valleys and flashing repairs</a></li><li><a href="/roof-repairs/">Roof repair services</a></li></ul></article>
   <article><h3>Drainage, inspections and maintenance</h3><p>We check gutters, outlets and downpipes as a connected route, then quote for clearing or repairs. Roof inspections and maintenance help identify deterioration and plan the work needed.</p><ul><li><a href="/gutters-downpipes/">Gutters and downpipes</a></li><li><a href="/roof-inspection/">Roof inspections</a></li><li><a href="/roof-maintenance/">Roof maintenance</a></li></ul></article>
  </div><p class="about-company-area-link"><a href="/service-areas/">Explore our Perth service areas</a></p></div></section>
- <section class="section about-company-project" data-about-section="project"><div class="container about-company-project-grid">
-  <figure><img src="/assets/images/metal-fastener-sequence-04-fastener-work.png" alt="Work around metal roof fastener points during the recorded Ellis repair project" loading="lazy" decoding="async"><figcaption>Fastener work in progress in the same recorded project.</figcaption></figure>
-  <div><p class="eyebrow">A CLOSER LOOK AT OUR WORK</p><h2>A metal roof fastener repair, photographed through the work.</h2><p>This project record follows the roof surface and corroded fastener details through repair work to completed roof views. It shows the components and work at that property, with photographs of the different stages.</p><p>For your roof, we confirm the affected components and repair scope through an on-site assessment.</p><a class="text-link" href="/projects/metal-roof-fastener-repair-sequence/">View the metal roof fastener repair project</a></div>
+ <section class="section about-company-approach" data-about-section="approach"><div class="container about-company-approach-grid">
+  <div><p class="eyebrow">OUR WORKING APPROACH</p><h2>Assess the roof. Explain the work.</h2></div>
+  <div><p>Our team assesses the property, explains the findings and provides a repair plan and written quote before work begins. The repair scope follows the condition of your roof.</p><p>The quote identifies the affected components, materials and access needed for the agreed work. Local repairs, wider roof work and optional surface treatments are considered according to the assessed condition.</p><p>Share your suburb, roof type if known and the issue you have noticed. Existing ground-level photographs are optional; there is no need to access the roof to make an enquiry.</p></div>
  </div></section>
  <section class="section about-company-business" data-about-section="business"><div class="container"><p class="eyebrow">COMPANY &amp; CONTACT</p><h2>Ellis Services Group Pty Ltd</h2><div class="about-company-facts">
   <div><h3>Business registration</h3><p>Australian Private Company<br>ABN 96 645 821 745<br>ACN 645 821 745</p><p>ABN active and GST registered from 11 November 2020.</p><a href="https://abr.business.gov.au/ABN/View?id=645821745" target="_blank" rel="noopener noreferrer">Official ABN Lookup record</a><p class="about-company-registration-note">The ABR company-registration record does not establish a trade licence or insurance.</p></div>

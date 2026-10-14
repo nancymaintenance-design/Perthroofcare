@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync,existsSync} from 'node:fs';
+import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {join} from 'node:path';
 import {load} from 'cheerio';
@@ -11,38 +11,32 @@ const page=()=>load(readFileSync(join(root,'about/index.html'),'utf8'));
 test('About has one company identity heading with consistent company-intent metadata',()=>{
  const $=page();
  assert.equal($('main h1').length,1);
- assert.equal($('main h1').text(),'Perth Roof Repair Company — Ellis Services Group');
- assert.equal($('title').text(),'Roof Repair Company Perth | Ellis Services Group');
+ assert.equal($('main h1').text(),'Ellis Services Group');
+ assert.equal($('title').text(),'About Ellis Services Group | Perth Roof Care');
  for(const name of ['og:title','twitter:title'])assert.equal($(`meta[property="${name}"],meta[name="${name}"]`).attr('content'),$('title').text());
  assert.equal($('link[rel="canonical"]').attr('href'),'https://www.perthroofcare.com.au/about/');
 });
 
-test('About presents the team, services, genuine project and business facts without a second tutorial or FAQ',()=>{
+test('About presents company positioning, capabilities, working approach and business facts',()=>{
  const $=page(),main=$('main');
  assert.equal(main.find('details,summary').length,0);
  main.find('h1,h2,h3').each((_,e)=>assert.doesNotMatch($(e).text(),/\?|^(?:how|what|why|where|can|does)\b/i));
  assert.equal((main.text().match(/Perth Roof Care is operated by Ellis Services Group Pty Ltd/g)||[]).length,1);
  assert.match(main.find('.local-team-identity').text(),/Perth-based team/);
  const sections=main.find('[data-about-section]').map((_,e)=>$(e).attr('data-about-section')).get();
- assert.deepEqual(sections,['company','services','project','business']);
+ assert.deepEqual(sections,['company','services','approach','business']);
+ assert.match(main.find('[data-about-section="approach"]').text(),/assess.*findings.*written quote/s);
  for(const route of ['roof-repairs','roof-leak-repairs','tile-roof-repairs','metal-roof-repairs','ridge-capping-repointing','flashing-repairs','gutters-downpipes','roof-inspection']){
   assert.ok(main.find(`[data-about-section="services"] a[href="/${route}/"]`).length,route);
  }
  assert.doesNotMatch(main.text(),/Questions people often ask|HOW AN ENQUIRY IS ARRANGED|Registration and project-specific credentials/);
 });
 
-test('About project images are real assets with reserved dimensions and linked recorded context',()=>{
- const $=page(),images=$('main .about-company img');
- assert.equal(images.length,2);
- images.each((_,e)=>{const img=$(e);assert.ok(existsSync(join(root,img.attr('src'))));assert.ok(Number(img.attr('width'))>0);assert.ok(Number(img.attr('height'))>0);assert.ok(img.attr('alt').length>20);});
- assert.ok($('[data-about-section="project"] a[href="/projects/metal-roof-fastener-repair-sequence/"]').length);
-});
-
-test('About hero requests eagerly at high priority while the later project image stays lazy',()=>{
+test('About is a company introduction without project photographs, captions or showcase links',()=>{
  const $=page();
- assert.equal($('.about-company-hero img').attr('loading'),'eager');
- assert.equal($('.about-company-hero img').attr('fetchpriority'),'high');
- assert.equal($('[data-about-section="project"] img').attr('loading'),'lazy');
+ assert.equal($('main img,main figure,main figcaption,main a[href^="/projects/"],main a[href="/gallery/"]').length,0);
+ assert.doesNotMatch($('main').text(),/fastener repair|photographed|same recorded project|completed roof views/i);
+ assert.doesNotMatch($('meta[name="description"]').attr('content'),/photographed|project/i);
 });
 
 test('About retains direct verified facts and a chargeable inspection notice at each booking CTA',()=>{
@@ -61,6 +55,12 @@ test('About structured data describes the company and contains no removed FAQ',(
  const about=graph.find(n=>n['@type']==='AboutPage');
  assert.ok(about,'AboutPage entity');
  assert.equal(about.url,'https://www.perthroofcare.com.au/about/');
+ assert.equal(about.name,$('title').text());
+ assert.equal(about.description,$('meta[name="description"]').attr('content'));
+ const knowledge=JSON.parse($('#page-knowledge').text());
+ assert.equal(knowledge.pageType,'AboutPage');
+ assert.equal(knowledge.summary,$('.about-company-statement').text());
+ assert.ok(!knowledge.relatedUrls.some(url=>url.includes('/projects/')));
  const company=graph.find(n=>n['@id']===about.about['@id']);
  assert.equal(company.legalName,'Ellis Services Group Pty Ltd');
  assert.deepEqual(company.identifier.map(n=>n.value),['96645821745','645821745']);

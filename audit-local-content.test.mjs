@@ -44,7 +44,7 @@ test('six service scopes explain distinct component decisions without unconfirme
 
 test('metadata is concise and cost guide promises quote factors, retaining original brand relationship',()=>{
  const about=page('about');
- assert.equal(about('title').text(),'Roof Repair Company Perth | Ellis Services Group');
+ assert.equal(about('title').text(),'About Ellis Services Group | Perth Roof Care');
  assert.match(about('main').text(),/Perth Roof Care is operated by Ellis Services Group Pty Ltd/);
  const cost=page('news/roof-repair-cost-perth');
  assert.match(cost('title').text(),/Roof Repair Cost Factors Perth/);
@@ -109,7 +109,7 @@ test('reapplying the local refinement preserves disclosure, sections and seriali
 });
 
 test('About introduction consolidates the repeated defect list while retaining company and service information',()=>{
- const $=page('about'),intro=$('.about-company-intro');
+ const $=page('about'),intro=$('.about-company-hero');
  assert.doesNotMatch(intro.text(),/ceiling stains and rainwater entry/i,'intro must not repeat the detailed defect list');
  assert.match(intro.text(),/Perth Roof Care is operated by Ellis Services Group Pty Ltd/);
  assert.match(intro.text(),/roof leaks, damaged tiles, metal sheets and fixings, ridge capping, flashing, gutters and downpipes/i);

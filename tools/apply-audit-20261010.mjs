@@ -10,6 +10,7 @@ import {refineLocalServiceGraph,localEditorialRoutes,localEditorialDate} from '.
 import {applyAboutCompany} from '../content/about-company.mjs';
 import {applyDeclarativeContent} from '../content/declarative-content.mjs';
 import {applyContactLayout} from '../content/contact-layout.mjs';
+import {applyServiceLabels} from '../content/service-labels.mjs';
 
 const contentUpdateRoutes=new Set([...keywordGapRoutes,...keywordMapRoutes,'gutters-downpipes']);
 const articleImages={
@@ -135,6 +136,7 @@ export function applyAudit20261010({root,site}){
     if(route==='about')applyAboutCompany($,graph,canonical);
     if(applyDeclarativeContent($,route,graph))declarativeRoutes.add(route);
     if(route==='contact'){applyContactLayout($);declarativeRoutes.add(route);}
+    if(applyServiceLabels($,route,graph))declarativeRoutes.add(route);
     syncContentKnowledge($,graph,site,canonical);
     refineLocalServiceGraph($,graph,route,canonical);
     if(declarativeRoutes.has(route)){

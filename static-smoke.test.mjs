@@ -33,11 +33,11 @@ const popularAreaRoutes = {
 
 test('focused information architecture publishes one primary roof-repair destination per confirmed intent', () => {
   const headings = {
-    '': 'PERTH ROOF CARE — ROOF REPAIRS PERTH.', services: 'ROOF REPAIR SERVICES PERTH.', 'roof-repairs': 'ROOF REPAIRS PERTH.',
-    'roof-leak-repairs': 'ROOF LEAK REPAIRS PERTH.', 'tile-roof-repairs': 'TILE ROOF REPAIRS PERTH.',
-    'metal-roof-repairs': 'METAL ROOF REPAIRS PERTH.', 'ridge-capping-repointing': 'RIDGE CAPPING REPAIRS PERTH.',
-    'flashing-repairs': 'ROOF VALLEYS & FLASHING REPAIRS PERTH.', 'roof-inspection': 'ROOF INSPECTION PERTH.',
-    'gutter-repairs': 'GUTTER REPAIRS PERTH.', 'roof-maintenance': 'ROOF MAINTENANCE PERTH.'
+    '': 'PERTH ROOF CARE — ROOF REPAIRS PERTH.', services: 'ROOF REPAIR SERVICES PERTH.', 'roof-repairs': 'Roof repairs',
+    'roof-leak-repairs': 'Roof leak repairs', 'tile-roof-repairs': 'Tile roof repairs',
+    'metal-roof-repairs': 'Metal roof repairs', 'ridge-capping-repointing': 'Ridge capping & repointing',
+    'flashing-repairs': 'Roof valleys & flashing repairs', 'roof-inspection': 'Roof inspection',
+    'gutter-repairs': 'Gutter repairs', 'roof-maintenance': 'Roof maintenance'
   };
   for (const route of publishedRoutes) {
     const html = readFileSync(fileFor(route), 'utf8');
@@ -47,7 +47,7 @@ test('focused information architecture publishes one primary roof-repair destina
     for (const fact of contactFacts) assert.match(html, new RegExp(fact), `${route || '/'} needs confirmed contact data`);
     assert.doesNotMatch(load(html)('body').text(), forbidden, `${route || '/'} must not publish unconfirmed commercial claims`);
   }
-  for (const [route, heading] of Object.entries(headings)) assert.match(readFileSync(fileFor(route), 'utf8'), new RegExp(`<h1(?: [^>]*)?>${heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<\\/h1>`));
+  for (const [route, heading] of Object.entries(headings)) assert.equal(load(readFileSync(fileFor(route), 'utf8'))('main h1').text(),heading);
 });
 
 test('services navigation is viewport-contained, concise and has no projects hub', () => {
@@ -58,7 +58,7 @@ test('services navigation is viewport-contained, concise and has no projects hub
   assert.match(home, /id="services-submenu"[^>]*role="region"[^>]*aria-label="Services"/i);
   assert.match(load(home)('.services-panel-intro').text(),/Our team arranges the roof assessment/i);
   assert.doesNotMatch(load(home)('.services-panel-intro').text(),/\?/);
-  for (const label of ['Core roof repairs', 'Roofline details', 'Roof Repairs Perth', 'Roof Valleys &amp; Flashing Repairs', 'Gutter Repairs Perth', 'Roof Maintenance Perth']) assert.match(home, new RegExp(label));
+  for (const label of ['Core roof repairs', 'Roofline details', 'Roof repairs', 'Roof valleys & flashing repairs', 'Gutter repairs', 'Roof maintenance']) assert.ok(load(home)('#services-submenu').text().includes(label),label);
   assert.match(css, /\.services-submenu\{[^}]*overflow:auto[^}]*max-height:calc\(100vh - 7rem\)/i);
   assert.match(script, /const menuWidth = Math\.min\(896, Math\.max\(280, window\.innerWidth - sideGap \* 2\)\)/);
   assert.match(script, /window\.innerWidth - menuWidth - sideGap/);
@@ -157,15 +157,15 @@ test('new service routes, shared social links and JSON Feed are discoverable', (
 
 test('priority owner pages use distinct service roles with crawlable supporting links', () => {
   const expected = {
-    'roof-repairs': ['ROOF REPAIRS PERTH.', 'Tile and metal roof repairs — the work we carry out', ['/roof-leak-repairs/', '/flashing-repairs/', '/gutters-downpipes/']],
-    'roof-leak-repairs': ['ROOF LEAK REPAIRS PERTH.', 'Tracing water entry and repairing the connected roof defects', ['/flashing-repairs/#service-overview', '/tile-roof-repairs/#service-overview', '/metal-roof-repairs/#service-overview']],
-    'flashing-repairs': ['ROOF VALLEYS & FLASHING REPAIRS PERTH.', 'Repairing valleys and formed flashings at roof junctions', ['/roof-leak-repairs/#service-overview', '/tile-roof-repairs/#service-overview', '/metal-roof-repairs/#service-overview']],
-    'gutters-downpipes': ['GUTTERS & DOWNPIPES PERTH.', 'Restoring the connected drainage route from roof edge to discharge', ['/gutter-repairs/', '/downpipe-repairs/', '/roof-maintenance/']],
-    'downpipe-repairs': ['DOWNPIPE REPAIRS PERTH.', 'Repairing downpipe joints, supports and damaged pipe sections', ['/gutters-downpipes/', '/gutter-repairs/']]
+    'roof-repairs': ['Roof repairs', 'Tile and metal roof repairs — the work we carry out', ['/roof-leak-repairs/', '/flashing-repairs/', '/gutters-downpipes/']],
+    'roof-leak-repairs': ['Roof leak repairs', 'Tracing water entry and repairing the connected roof defects', ['/flashing-repairs/#service-overview', '/tile-roof-repairs/#service-overview', '/metal-roof-repairs/#service-overview']],
+    'flashing-repairs': ['Roof valleys & flashing repairs', 'Repairing valleys and formed flashings at roof junctions', ['/roof-leak-repairs/#service-overview', '/tile-roof-repairs/#service-overview', '/metal-roof-repairs/#service-overview']],
+    'gutters-downpipes': ['Gutters & downpipes', 'Restoring the connected drainage route from roof edge to discharge', ['/gutter-repairs/', '/downpipe-repairs/', '/roof-maintenance/']],
+    'downpipe-repairs': ['Downpipe repairs', 'Repairing downpipe joints, supports and damaged pipe sections', ['/gutters-downpipes/', '/gutter-repairs/']]
   };
   for (const [route, [h1, section, links]] of Object.entries(expected)) {
     const html = readFileSync(fileFor(route), 'utf8');
-    assert.match(html, new RegExp(`<h1(?: [^>]*)?>${h1.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<\\/h1>`));
+    assert.equal(load(html)('main h1').text(),h1);
     assert.match(html, new RegExp(section.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
     for (const href of links) assert.match(html, new RegExp(`href="${href}"`), `${route} needs ${href}`);
     assert.match(html, /<link rel="canonical" href="https:\/\/www\.perthroofcare\.com\.au\//i);
@@ -231,8 +231,8 @@ test('service pages present Ellis as a roof-repair provider and local pages add 
   assert.match(cottesloe, /COASTAL ROOF REPAIR PRIORITIES/i);
   assert.match(kalamunda, /HILLS PROPERTY ROOF REPAIR PRIORITIES/i);
   assert.notEqual(cottesloe.match(/<main[\s\S]*<\/main>/)?.[0], kalamunda.match(/<main[\s\S]*<\/main>/)?.[0]);
-  assert.match(cottesloe, /Roof leak repairs Perth/i);
-  assert.match(kalamunda, /Gutter repairs Perth/i);
+  assert.equal(load(cottesloe)('main a[href="/roof-leak-repairs/"]').first().text().replace(/\s*→$/,''),'Roof leak repairs');
+  assert.equal(load(kalamunda)('main a[href="/gutter-repairs/"]').first().text().replace(/\s*→$/,''),'Gutter repairs');
 });
 
 test('sitemap lists each canonical service URL once and news indexes the flashing guide', () => {
@@ -321,8 +321,8 @@ test('roof leak and flashing pages retain contextual, H1-targeted service links 
   const leak = readFileSync(fileFor('roof-leak-repairs'), 'utf8');
   const flashing = readFileSync(fileFor('flashing-repairs'), 'utf8');
   for (const html of [leak, flashing]) assert.match(html, /<section class="section service-path">/i);
-  assert.match(leak, /<h1 id="service-overview">ROOF LEAK REPAIRS PERTH\.<\/h1>/);
-  assert.match(flashing, /<h1 id="service-overview">ROOF VALLEYS & FLASHING REPAIRS PERTH\.<\/h1>/);
+  assert.equal(load(leak)('h1#service-overview').text(),'Roof leak repairs');
+  assert.equal(load(flashing)('h1#service-overview').text(),'Roof valleys & flashing repairs');
   for (const href of ['/flashing-repairs/#service-overview', '/tile-roof-repairs/#service-overview', '/metal-roof-repairs/#service-overview', '/gutters-downpipes/#service-overview']) assert.match(leak, new RegExp(`href="${href.replaceAll('/', '\\/')}"`));
   for (const href of ['/roof-leak-repairs/#service-overview', '/tile-roof-repairs/#service-overview', '/metal-roof-repairs/#service-overview']) assert.match(flashing, new RegExp(`href="${href.replaceAll('/', '\\/')}"`));
   assert.match(leak, /FIVE COMMON ROOF-LEAK PATHS WE ASSESS/i);
@@ -331,7 +331,7 @@ test('roof leak and flashing pages retain contextual, H1-targeted service links 
 
 test('storm damage repairs uses the same professional service structure with safe response conditions', () => {
   const html = readFileSync(fileFor('storm-damage-roof-repairs'), 'utf8');
-  assert.match(load(html)('h1#service-overview').text(), /^EMERGENCY & STORM DAMAGE ROOF REPAIRS PERTH\.$/);
+  assert.equal(load(html)('h1#service-overview').text(),'Storm damage roof repairs');
   assert.match(html, /class="section service-brief"/i);
   assert.equal((html.match(/class="service-work-card"/g) ?? []).length, 3);
   assert.match(html, /class="section service-path"/i);
