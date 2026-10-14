@@ -18,18 +18,19 @@ export function bundleStylesheets(publicDirectory,routes){
     const file=join(publicDirectory,route,'index.html');
     const $=load(readFileSync(file,'utf8'));
     const links=$('link[rel="stylesheet"]');
-    // About adds a small route-owned layer without enlarging the shared bundle.
+    // About and Contact add a small route-owned layer without enlarging the shared bundle.
     // Both files are linked directly; no @import request chain is introduced.
-    const aboutLayout=route==='about'?$('link[href="/assets/css/about-company.css"]'):null;
-    let aboutHref;
-    if(aboutLayout?.length){
-      const {code}=transform({filename:'about-company.css',code:readFileSync(join(publicDirectory,'assets/css/about-company.css')),minify:true});
+    const routeStyle=route==='about'?'about-company.css':route==='contact'?'contact-layout.css':null;
+    const routeLayout=routeStyle?$(`link[href="/assets/css/${routeStyle}"]`):null;
+    let routeHref;
+    if(routeLayout?.length){
+      const {code}=transform({filename:routeStyle,code:readFileSync(join(publicDirectory,'assets/css',routeStyle)),minify:true});
       const digest=createHash('sha256').update(code).digest('hex').slice(0,16);
-      aboutHref=`/assets/css/site-${digest}.css`;
-      routeBundles.add(aboutHref);
-      writeFileSync(join(publicDirectory,aboutHref),code);
+      routeHref=`/assets/css/site-${digest}.css`;
+      routeBundles.add(routeHref);
+      writeFileSync(join(publicDirectory,routeHref),code);
     }
-    const cascade=$('link[rel="stylesheet"],style').filter((_,el)=>!aboutHref||el!==aboutLayout[0]);
+    const cascade=$('link[rel="stylesheet"],style').filter((_,el)=>!routeHref||el!==routeLayout[0]);
     if(!links.length)throw new Error(`No stylesheet for ${route||'/'}`);
     const inputs=cascade.toArray().map(el=>{
       if(el.tagName==='style')return $(el).html();
@@ -55,7 +56,7 @@ export function bundleStylesheets(publicDirectory,routes){
     }
     links.first().attr('href',href).removeAttr('media');
     links.slice(1).remove();
-    if(aboutHref)links.first().after(`<link rel="stylesheet" href="${aboutHref}">`);
+    if(routeHref)links.first().after(`<link rel="stylesheet" href="${routeHref}">`);
     $('style').remove();
     writeFileSync(file,$.html());
   }

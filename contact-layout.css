@@ -1,0 +1,28 @@
+/* Contact owns this natural-height layout; area enquiry grids stay unchanged. */
+.contact-page .contact-hero{padding:2rem 0 1.5rem}
+.contact-page .contact-hero h1{max-width:18ch;font-size:clamp(2.6rem,4.5vw,4.5rem);line-height:1.06;margin:.6rem 0 1rem}
+.contact-page .contact-hero p{max-width:78ch;margin:.7rem 0}
+.contact-page .contact-intro{font-size:1.125rem}
+.contact-page .local-team-identity{font-size:.95rem}
+.contact-page .contact-details-band{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.3fr) minmax(0,1.2fr);gap:1rem 2rem;padding:1.5rem 2rem;background:var(--ink);color:var(--paper);border-bottom:3px solid var(--accent)}
+.contact-page .contact-details-band h2{font-size:.9rem;line-height:1.3;color:var(--accent);margin:0 0 .5rem}
+.contact-page .contact-details-band p{margin:0}
+.contact-page .contact-details-band a{color:var(--paper);overflow-wrap:anywhere;text-decoration:underline;text-underline-offset:.2em}
+.contact-page .contact-details-band a:hover{color:var(--accent)}
+.contact-page .contact-details-band .business-hours{grid-column:1/-1;font-size:.9rem;border-top:1px solid var(--sand-line);padding-top:.8rem}
+.contact-page .contact-form-section{padding:2rem 0 3rem}
+.contact-page .contact-enquiry-box{max-width:760px;margin-inline:auto;padding:clamp(1.25rem,3vw,2rem);background:var(--sand);border-top:3px solid var(--accent)}
+.contact-page .contact-enquiry-box h2{font-size:clamp(1.6rem,2.5vw,2rem);line-height:1.2;margin:.4rem 0 1rem}
+.contact-page .contact-enquiry-box>p{margin:.7rem 0 1rem}
+.contact-page .contact-photo-note{font-size:.9rem}
+.contact-page .enquiry-form{grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem 1.25rem;margin-top:1.5rem}
+.contact-page .enquiry-form>*{min-width:0}
+.contact-page .contact-form-wide,.contact-page .privacy-check,.contact-page .form-status,.contact-page form .inspection-charge-notice,.contact-page .form-submit{grid-column:1/-1}
+.contact-page .privacy-check{flex-wrap:wrap;gap:.35rem .5rem}
+.contact-page .privacy-check .field-error{flex-basis:100%}
+.contact-page .enquiry-form textarea{min-height:9rem}
+.contact-page .form-status{min-height:1.65em}
+.contact-page form .inspection-charge-notice{margin:0;font-size:.95rem}
+.contact-page .form-submit{justify-self:start;min-width:10rem}
+.contact-page .contact-scope-link{font-size:.9rem}
+@media(max-width:720px){.contact-page .contact-details-band,.contact-page .enquiry-form{grid-template-columns:minmax(0,1fr)}.contact-page .contact-details-band{padding:1.25rem;gap:1rem}.contact-page .contact-form-section{padding-top:1.5rem}.contact-page .contact-hero{padding-top:1.5rem}}

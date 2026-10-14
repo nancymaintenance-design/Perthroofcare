@@ -46,6 +46,7 @@ for (const file of ['news/feed.xml', 'news/feed.json']) {
 
 const stagedFiles = [
   ['about-company.css', 'assets/css/about-company.css'],
+  ['contact-layout.css', 'assets/css/contact-layout.css'],
   ['favicon.ico', 'favicon.ico'],
   ['favicon.png', 'favicon.png'],
   ['site.webmanifest', 'site.webmanifest'],
