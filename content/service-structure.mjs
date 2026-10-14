@@ -1,5 +1,5 @@
 import {serviceLabels} from './service-labels.mjs';
-import {serviceCopy,topicGuide,topicPlacement} from './service-structure-data.mjs';
+import {serviceCopy,serviceRelated,serviceProjectReferences,topicGuide,topicPlacement} from './service-structure-data.mjs';
 import {educationalTopics} from './keyword-map-content.mjs';
 import {inspectionChargeNotice} from './audit-local-content.mjs';
 
@@ -7,6 +7,31 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 const paragraph=s=>`<p>${esc(s)}</p>`;
 const topicHref=t=>`/news/${topicGuide[t.route]}/#education-${t.id.toLowerCase()}`;
 const section=(purpose,title,body)=>`<section class="section service-section" data-service-section="${purpose}"><div class="container"><h2>${title}</h2>${body}</div></section>`;
+
+function relatedLink(entry){
+ if(Array.isArray(entry))return `<li><a href="${esc(entry[0])}">${esc(entry[1])}</a></li>`;
+ const [route,fragment]=entry.split('#');
+ return `<li><a href="/${route}/${fragment?'#'+fragment:''}">${esc(serviceLabels[route])}</a></li>`;
+}
+
+function removeCaseContactLinks($,record){
+ record.find('a[href="/contact/"]').each((_,element)=>{
+  const anchor=$(element),p=anchor.parent('p');
+  anchor.remove();if(!p.length)return;
+  // These short navigation rows contain only anchors and middot separators.
+  // Rebuild those rows; narrative paragraphs keep their original words/markup.
+  const prose=p.clone().find('a').remove().end().text().replace(/[·\s]/g,'');
+  if(!prose){
+   const links=p.find('a').toArray().map(a=>$.html(a));
+   if(links.length)p.html(links.join(' · '));else p.remove();
+  }else{
+   p.contents().each((_,node)=>{if(node.type==='text')node.data=node.data.replace(/·\s*·/g,'·');});
+   const first=p.contents().first()[0],last=p.contents().last()[0];
+   if(first?.type==='text')first.data=first.data.replace(/^[\s·]+/,'');
+   if(last?.type==='text')last.data=last.data.replace(/[\s·]+$/,'');
+  }
+ });
+}
 
 function addGuideEducation($,route){
  const topics=educationalTopics.filter(t=>route===`news/${topicGuide[t.route]}`);
@@ -65,21 +90,17 @@ export function applyServiceStructure($,route){
   const heading=record.find('h2').first();
   if(!copy.caseTitles[index])throw new Error(`Unreviewed service evidence: ${route} / ${index}`);
   heading[0].tagName='h3';heading.text(copy.caseTitles[index]);
-  record.find('a[href="/contact/"]').each((_,a)=>{const p=$(a).parent('p');if(p.length&&p.text().trim()===$(a).text().trim())p.remove();else $(a).remove();});
+  removeCaseContactLinks($,record);
+  const projects=serviceProjectReferences[route]?.[index];
+  if(projects?.length)record.append(`<nav class="service-project-references" aria-label="Related project records"><p>Related project records</p><ul>${projects.map(([slug,label])=>`<li><a href="/projects/${esc(slug)}/">${esc(label)}</a></li>`).join('')}</ul></nav>`);
   return record;
  });
  if(evidence.length!==copy.caseTitles.length)throw new Error(`Evidence count differs from reviewed manifest: ${route}`);
 
- const links=new Map();
- main.find('a[href]').each((_,e)=>{
-  const a=$(e),href=a.attr('href');
-  if(!href.startsWith('/')||href==='/contact/'||a.closest('.breadcrumbs').length||evidence.some(record=>record.find('a').toArray().some(n=>$(n).attr('href')===href)))return;
-  if(!links.has(href))links.set(href,$.html(a));
- });
  const guidance=main.find('.focus-faq details,#service-questions details').clone();
  const topics=educationalTopics.filter(t=>t.route===route);
  const reading=topics.length?`<div class="service-reading" id="roof-questions-explained"><h3>Further reading</h3><ul>${topics.map(t=>`<li data-topic="${t.id}"><a href="${topicHref(t)}">${esc(topicPlacement[t.id][1])}</a></li>`).join('')}</ul></div>`:'';
- const related=`<p class="service-related keyword-gap-content"${originalIds.includes('related-work-options')?' id="related-work-options"':''}>Related services and guides: ${[...links.values()].join(' · ')}</p>`;
+ const related=`<nav class="service-related keyword-gap-content" aria-label="Related services and guides"${originalIds.includes('related-work-options')?' id="related-work-options"':''}><ul>${serviceRelated[route].map(relatedLink).join('')}</ul></nav>`;
  const guidanceMarkup=guidance.length?`<div class="focus-faq service-guidance"><h3>Scope details</h3>${guidance.toArray().map(e=>$.html(e)).join('')}</div>`:'';
  main.empty().addClass('service-layout').append(hero);
  main.append(section('content','Service content',`<div class="service-description"><h3>${esc(copy.heading)}</h3>${paragraph(copy.content)}</div>`));

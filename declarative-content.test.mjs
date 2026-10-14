@@ -78,15 +78,15 @@ test('leak, tile, ridge, area and project guidance retains its particular decisi
  assert.match(page('/projects/metal-roof-ridge-capping-repair-perth/')('.content-intent h2').text(),/metal.*ridge.*capping/i);
 });
 
-test('generated leak guidance shortens both recognised inline ampersand service names',()=>{
+test('generated leak navigation uses both concise ampersand service names',()=>{
  const $=page('/roof-leak-repairs/');
  for(const [href,label] of [
-  ['/flashing-repairs/#service-overview','roof valleys & flashing repairs'],
-  ['/gutters-downpipes/#service-overview','gutters & downpipes']
+  ['/flashing-repairs/','Roof valleys & flashing repairs'],
+  ['/gutters-downpipes/','Gutters & downpipes']
  ]){
-  const links=$(`main p a[href="${href}"]`);
+  const links=$(`[data-service-section="solution"] .service-related li a[href="${href}"]`);
   assert.ok(links.length,href+' contextual link remains present');
-  links.each((_,e)=>assert.equal($(e).text(),label,href+' generated inline name'));
+  links.each((_,e)=>assert.equal($(e).text(),label,href+' generated navigation name'));
  }
 });
 

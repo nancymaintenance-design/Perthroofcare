@@ -1,5 +1,44 @@
 // Reviewed service decisions. Existing topic bodies, answers and photo records
 // retain their own source owners; this manifest replaces repeated sales prose.
+// Curated next decisions, separate from the full educational topic links and
+// actual project references retained with their matching work records.
+export const serviceRelated={
+ 'roof-repairs':['roof-leak-repairs','metal-roof-repairs','repair-options#compare-repair-options','roof-inspection',['/news/roof-repair-cost-perth/','Repair quote inclusions']],
+ 'roof-leak-repairs':['tile-roof-repairs','metal-roof-repairs','flashing-repairs','gutters-downpipes',['/news/roof-repair-cost-perth/','Repair quote inclusions']],
+ 'tile-roof-repairs':['roof-leak-repairs','ridge-capping-repointing','flashing-repairs','repair-options'],
+ 'metal-roof-repairs':['roof-leak-repairs','flashing-repairs','roof-replacement','repair-options'],
+ 'ridge-capping-repointing':['tile-roof-repairs','roof-leak-repairs','roof-repairs'],
+ 'flashing-repairs':['roof-leak-repairs','tile-roof-repairs','metal-roof-repairs'],
+ 'gutter-repairs':['gutters-downpipes','downpipe-repairs#downpipe-repair-or-replace','box-gutter-repairs','roof-maintenance',['/news/gutter-warning-signs/','Gutter warning signs']],
+ 'gutters-downpipes':['gutter-repairs','downpipe-repairs','box-gutter-repairs','roof-maintenance',['/news/drainage-after-rain/','Drainage after rain']],
+ 'downpipe-repairs':['gutter-repairs#gutter-repair-or-replace','gutters-downpipes',['/news/gutter-warning-signs/','Gutter warning signs']],
+ 'roof-maintenance':['roof-inspection','gutter-repairs','roof-cleaning',['/areas/leederville-roof-repairs/#leederville-maintenance','Leederville maintenance'],['/news/roof-maintenance-basics/','Roof maintenance priorities']],
+ 'roof-cleaning-painting':['roof-cleaning','roof-painting','roof-maintenance','roof-leak-repairs','roof-restoration#restoration-quote-factors'],
+ 'commercial-roof-repairs':['metal-roof-repairs','box-gutter-repairs','flat-roof-repairs','roof-inspection','strata-roof-repairs'],
+ 'storm-damage-roof-repairs':['roof-leak-repairs','tile-roof-repairs','flashing-repairs','roof-repairs#repair-quote-factors'],
+ 'roof-restoration':['repair-options#compare-repair-options','roof-cleaning','roof-painting','roof-repairs','roof-replacement'],
+ 'roof-inspection':['repair-options#compare-repair-options','roof-leak-repairs','roof-maintenance','strata-roof-repairs','roof-replacement'],
+ 'repair-options':['roof-repairs#repair-quote-factors','roof-restoration#restoration-quote-factors','roof-replacement','roof-inspection',['/news/roof-repair-cost-perth/','Repair quote inclusions']],
+ 'roof-cleaning':['roof-painting','roof-maintenance','roof-leak-repairs'],
+ 'roof-painting':['roof-cleaning','roof-restoration','roof-leak-repairs'],
+ 'box-gutter-repairs':['gutter-repairs','gutters-downpipes','flat-roof-repairs','commercial-roof-repairs'],
+ 'roof-replacement':['repair-options#compare-repair-options','roof-repairs','roof-inspection'],
+ 'flat-roof-repairs':['box-gutter-repairs','roof-leak-repairs','commercial-roof-repairs'],
+ 'strata-roof-repairs':['roof-inspection','commercial-roof-repairs','roof-leak-repairs']
+};
+
+// Separate jobs illustrating the case's components, not identity claims about
+// the photographs in that case. Keys identify the reviewed case index.
+export const serviceProjectReferences={
+ 'roof-repairs':{0:[['tile-roof-valley-chimney-flashing-repairs-perth','Perth tile valley and chimney flashing project']]},
+ 'roof-leak-repairs':{0:[['tile-roof-chimney-flashing-repair-perth','Perth tile roof chimney flashing project']]},
+ 'tile-roof-repairs':{0:[['tile-roof-valley-chimney-flashing-repairs-perth','Perth tile valley and chimney flashing project'],['tile-roof-chimney-flashing-repair-perth','Perth tile roof chimney flashing project']]},
+ 'metal-roof-repairs':{0:[['roleystone-metal-roof-fastener-leak-repair','Roleystone metal roof fastener repairs'],['metal-roof-ridge-capping-repair-perth','Perth metal roof ridge capping project'],['metal-roof-hip-ridge-capping-repair-perth','Perth metal roof hip and ridge capping project'],['metal-roof-ridge-flashing-repair-perth','Perth metal roof ridge flashing project']]},
+ 'flashing-repairs':{0:[['tile-roof-chimney-flashing-repair-perth','Perth tile roof chimney flashing project'],['metal-roof-ridge-flashing-repair-perth','Perth metal roof ridge flashing project']]},
+ 'gutter-repairs':{1:[['wa-6121-tile-roof-valley-gutter-cleaning','WA 6121 valley gutter cleaning and tile repairs']]},
+ 'gutters-downpipes':{0:[['wa-6121-tile-roof-valley-gutter-cleaning','WA 6121 valley gutter cleaning and tile repairs']]}
+};
+
 export const serviceCopy={
  'roof-repairs':{
   heading:'Local defects and connected roof components',

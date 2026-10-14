@@ -21,19 +21,22 @@
 .service-layout .service-reading{margin-top:1.5rem}
 .service-layout .service-reading ul{columns:2;column-gap:2rem;padding-left:1.2rem;margin:0}
 .service-layout .service-reading li{break-inside:avoid;margin-bottom:.4rem}
-.service-layout .service-related{font-size:.9rem;margin:1.5rem 0 0;padding:0;background:none}
+.service-layout :is(.service-related,.service-project-references){font-size:.9rem;margin:1.5rem 0 0;padding:0;background:none}
+.service-layout :is(.service-related,.service-project-references) ul{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;list-style:none;margin:0;padding:0}
 .service-layout .service-case{padding:0;margin:0 0 2.5rem;background:none;border:0;max-width:none}
 .service-layout .service-case > p{max-width:82ch}
 .service-layout .service-case .eyebrow{font-size:.75rem;margin-top:0}
-.service-layout .service-case-list [class$="-evidence-grid"],.service-layout .project-case-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:1.25rem}
+.service-layout .service-case-list :is(.aligned-photo-grid,.project-case-grid){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:1.25rem;background:none;border:0}
 .service-layout .service-case-list figure{min-width:0;margin:0}
 .service-layout .service-case-list img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:12px}
+.service-layout .service-case-list #perth-strata-skylight-project img{aspect-ratio:3/4;object-fit:contain}
+.service-layout .service-case-list .two-storey-project-photo img{aspect-ratio:4/3;object-fit:contain}
 .service-layout .service-case-list figcaption{font-size:.85rem;line-height:1.5;padding:.6rem 0}
-.service-layout .service-case-list .project-case-grid:has(> :nth-child(2):last-child),.service-layout .service-case-list .project-case-grid:has(> :nth-child(4):last-child){grid-template-columns:repeat(2,minmax(0,1fr))}
+.service-layout .service-case-list .project-case-grid:has(> :is(:nth-child(2),:nth-child(4)):last-child){grid-template-columns:repeat(2,minmax(0,1fr))}
 .service-layout .service-case-list .project-case-grid:has(> :only-child){grid-template-columns:minmax(0,1fr);max-width:720px}
 .service-layout .service-enquiry{border-top:1px solid var(--sand-line);padding-top:1.25rem;margin-top:1.5rem;max-width:82ch}
 .service-layout .service-enquiry p{font-size:.9rem}
 .service-layout [id]{scroll-margin-top:7rem}
 .service-layout a:focus-visible{outline:3px solid var(--clay);outline-offset:4px}
-@media(max-width:720px){.service-layout .service-reading ul{columns:1}.service-layout .service-case-list [class$="-evidence-grid"],.service-layout .service-case-list .project-case-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:480px){.service-layout .service-case-list [class$="-evidence-grid"],.service-layout .service-case-list .project-case-grid,.service-layout .service-case-list .project-case-grid:has(> :nth-child(2):last-child),.service-layout .service-case-list .project-case-grid:has(> :nth-child(4):last-child){grid-template-columns:minmax(0,1fr)}}
+@media(max-width:720px){.service-layout .service-reading ul{columns:1}.service-layout .service-case-list :is(.aligned-photo-grid,.project-case-grid){grid-template-columns:repeat(2,minmax(0,1fr))}.service-layout .service-case-list .project-case-grid:has(> :only-child){grid-template-columns:minmax(0,1fr)}}
+@media(max-width:480px){.service-layout .service-case-list :is(.aligned-photo-grid,.project-case-grid,.project-case-grid:has(> :is(:nth-child(2),:nth-child(4)):last-child)){grid-template-columns:minmax(0,1fr)}}

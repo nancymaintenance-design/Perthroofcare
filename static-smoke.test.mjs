@@ -160,9 +160,9 @@ test('new service routes, shared social links and JSON Feed are discoverable', (
 
 test('priority owner pages use distinct service roles with crawlable supporting links', () => {
   const expected = {
-    'roof-repairs': ['Roof repairs', 'Local defects and connected roof components', ['/roof-leak-repairs/', '/flashing-repairs/', '/gutters-downpipes/']],
-    'roof-leak-repairs': ['Roof leak repairs', 'Rain patterns and indoor water marks', ['/flashing-repairs/#service-overview', '/tile-roof-repairs/#service-overview', '/metal-roof-repairs/#service-overview']],
-    'flashing-repairs': ['Roof valleys & flashing repairs', 'Valleys and roof junctions', ['/roof-leak-repairs/#service-overview', '/tile-roof-repairs/#service-overview', '/metal-roof-repairs/#service-overview']],
+    'roof-repairs': ['Roof repairs', 'Local defects and connected roof components', ['/roof-leak-repairs/', '/metal-roof-repairs/', '/repair-options/']],
+    'roof-leak-repairs': ['Roof leak repairs', 'Rain patterns and indoor water marks', ['/flashing-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/']],
+    'flashing-repairs': ['Roof valleys & flashing repairs', 'Valleys and roof junctions', ['/roof-leak-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/']],
     'gutters-downpipes': ['Gutters & downpipes', 'The route from roof edge to discharge', ['/gutter-repairs/', '/downpipe-repairs/', '/roof-maintenance/']],
     'downpipe-repairs': ['Downpipe repairs', 'Pipe sections, joints and supports', ['/gutters-downpipes/', '/gutter-repairs/']]
   };
@@ -170,7 +170,8 @@ test('priority owner pages use distinct service roles with crawlable supporting 
     const html = readFileSync(fileFor(route), 'utf8');
     assert.equal(load(html)('main h1').text(),h1);
     assert.match(html, new RegExp(section.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
-    for (const href of links) assert.match(html, new RegExp(`href="${href}"`), `${route} needs ${href}`);
+    const $=load(html),destinations=$('[data-service-section="solution"] .service-related a').map((_,e)=>new URL($(e).attr('href'),'https://www.perthroofcare.com.au').pathname).get();
+    for (const href of links) assert.ok(destinations.includes(href), `${route} needs ${href}`);
     assert.match(html, /<link rel="canonical" href="https:\/\/www\.perthroofcare\.com\.au\//i);
     assert.doesNotMatch(html, /<meta[^>]+name="robots"[^>]+noindex/i);
   }
@@ -318,14 +319,21 @@ test('every core service page publishes professional keyword-led scope and asses
   }
 });
 
-test('roof leak and flashing pages retain contextual, H1-targeted service links inside the service brief', () => {
+test('roof leak and flashing pages retain contextual service links inside the solution with valid targets', () => {
   const leak = readFileSync(fileFor('roof-leak-repairs'), 'utf8');
   const flashing = readFileSync(fileFor('flashing-repairs'), 'utf8');
   for (const html of [leak, flashing]) assert.ok(load(html)('[data-service-section="solution"] .service-related').length);
   assert.equal(load(leak)('h1#service-overview').text(),'Roof leak repairs');
   assert.equal(load(flashing)('h1#service-overview').text(),'Roof valleys & flashing repairs');
-  for (const href of ['/flashing-repairs/#service-overview', '/tile-roof-repairs/#service-overview', '/metal-roof-repairs/#service-overview', '/gutters-downpipes/#service-overview']) assert.match(leak, new RegExp(`href="${href.replaceAll('/', '\\/')}"`));
-  for (const href of ['/roof-leak-repairs/#service-overview', '/tile-roof-repairs/#service-overview', '/metal-roof-repairs/#service-overview']) assert.match(flashing, new RegExp(`href="${href.replaceAll('/', '\\/')}"`));
+  for (const [html,paths] of [[leak,['/flashing-repairs/','/tile-roof-repairs/','/metal-roof-repairs/','/gutters-downpipes/']],[flashing,['/roof-leak-repairs/','/tile-roof-repairs/','/metal-roof-repairs/']]]) {
+    const $=load(html),links=$('[data-service-section="solution"] .service-related a').map((_,e)=>new URL($(e).attr('href'),'https://www.perthroofcare.com.au')).get();
+    for (const path of paths) {
+      const destination=links.find(url=>url.pathname===path);assert.ok(destination,path+' contextual destination');
+      const target=load(readFileSync(fileFor(path.slice(1,-1)),'utf8'));
+      assert.equal(target(destination.hash||'main h1').length,1,path+' published target');
+      assert.equal(target('h1#service-overview').length,1,path+' original inbound anchor preserved');
+    }
+  }
   assert.match(load(leak)('[data-service-section="content"]').text(),/tiles or sheets, ridges, valleys, flashings and drainage/i);
   assert.match(load(flashing)('[data-service-section="content"]').text(),/walls, chimneys, skylights and penetrations/i);
 });

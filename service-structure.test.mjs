@@ -77,3 +77,91 @@ test('inspection credit remains a booking question rather than an invented busin
  assert.doesNotMatch(text,/no[^.]*inspection credit is offered/i);
  assert.match(text,/credit.*confirm|confirm.*credit/i);
 });
+
+test('solution navigation is curated, scannable and distinct from education and project records',()=>{
+ for(const route of Object.keys(expected)){
+  const $=page(route),group=$('[data-service-section="solution"] .service-related'),links=group.find('a');
+  assert.equal(group.find('ul > li > a').length,links.length,route+' open list');
+  assert.ok(links.length>0&&links.length<=5,route+' at most five related destinations');
+  const paths=links.map((_,e)=>new URL($(e).attr('href'),'https://www.perthroofcare.com.au').pathname).get();
+  assert.equal(new Set(paths).size,paths.length,route+' no root/fragment duplication');
+  assert.equal($('[data-service-section="solution"] a[href^="/projects/"]').length,0,route+' projects stay with work');
+  for(const a of links.toArray())assert.doesNotMatch($(a).text(),/→|Explore|Compare|Perth/i,route+' short labels');
+ }
+ const roof=page('roof-repairs');
+ assert.deepEqual(roof('.service-related a').map((_,e)=>roof(e).attr('href')).get(),['/roof-leak-repairs/','/metal-roof-repairs/','/repair-options/#compare-repair-options','/roof-inspection/','/news/roof-repair-cost-perth/']);
+ const downpipe=page('downpipe-repairs');
+ assert.equal(downpipe('.service-related a[href="/gutter-repairs/#gutter-repair-or-replace"]').length,1,'useful decision fragment retained');
+ assert.equal(page('metal-roof-repairs')('#metal-fastener-project a[href="/projects/metal-roof-fastener-repair-sequence/"]').length,1);
+});
+
+test('retained case links remove Contact separators without losing prose or genuine destinations',async()=>{
+ const {applyServiceStructure}=await import('./content/service-structure.mjs');
+ const $=baseline('tile-roof-repairs'),record=$('main #two-storey-access');
+ record.append('<p data-check="mixed"><a href="/flashing-repairs/">Flashing details</a> · <a href="/contact/">Contact</a> · <a href="/roof-leak-repairs/">Leak repairs</a></p><p data-check="leading"><a href="/contact/">Contact</a> · <a href="/flashing-repairs/">Flashing details</a></p><p data-check="contact-only"> · <a href="/contact/">Contact</a> · </p><p data-check="narrative">The composite records roof access and ridge work. <a href="/flashing-repairs/">Flashing details</a> · <a href="/contact/">Contact</a></p>');
+ applyServiceStructure($,'tile-roof-repairs');
+ assert.equal($('[data-check="mixed"]').text(),'Flashing details · Leak repairs');
+ assert.equal($('[data-check="leading"]').text(),'Flashing details');
+ assert.equal($('[data-check="contact-only"]').length,0,'Contact-only separator row removed');
+ assert.equal($('[data-check="narrative"]').text(),'The composite records roof access and ridge work. Flashing details');
+ assert.deepEqual($('[data-check="mixed"] a').map((_,a)=>$(a).attr('href')).get(),['/flashing-repairs/','/roof-leak-repairs/']);
+ for(const route of Object.keys(expected)){
+  const published=page(route);
+  for(const p of published('.service-case p').toArray()){
+   const text=published(p).text().trim();assert.ok(text,route+' no empty case paragraph');
+   assert.doesNotMatch(text,/^[·\s]|[·\s]$|·\s*·/,route+' no orphan separator');
+  }
+ }
+});
+
+test('component-related project references stay explicitly separate within matching work',()=>{
+ const metal=page('metal-roof-repairs'),references=metal('.service-case').first().find('.service-project-references');
+ assert.match(references.text(),/Related project records/);
+ assert.equal(references.find('a[href="/projects/roleystone-metal-roof-fastener-leak-repair/"]').length,1);
+ assert.match(references.text(),/Roleystone/);
+ assert.equal(page('gutters-downpipes')('#perth-gutter-tile-project .service-project-references a[href="/projects/wa-6121-tile-roof-valley-gutter-cleaning/"]').length,1);
+ assert.equal(page('tile-roof-repairs')('.service-case').first().find('.service-project-references a[href="/projects/tile-roof-valley-chimney-flashing-repairs-perth/"]').length,1);
+ assert.equal(page('roof-cleaning-painting')('main a[href="/projects/wa-6121-tile-roof-valley-gutter-cleaning/"]').length,0,'separate drainage job does not imply a painting result');
+});
+
+// Apply the small route stylesheet to real DOM selectors at each width. This
+// catches selectors missing appended class tokens without claiming rendering.
+function routeStyle($,element,width){
+ const result={};
+ function visit(css){
+  let offset=0;
+  while(offset<css.length){
+   const open=css.indexOf('{',offset);if(open<0)break;
+   let end=open+1,depth=1;for(;depth&&end<css.length;end++){if(css[end]==='{')depth++;if(css[end]==='}')depth--;}
+   const selector=css.slice(offset,open).trim(),body=css.slice(open+1,end-1);offset=end;
+   if(selector.startsWith('@media')){const max=selector.match(/max-width:\s*(\d+)px/);if(max&&width<=Number(max[1]))visit(body);continue;}
+   if(selector.startsWith('@')||selector.includes('::')||selector.includes(':focus-visible'))continue;
+   if($(element).is(selector)){
+    for(const declaration of body.split(';')){const colon=declaration.indexOf(':');if(colon>0)result[declaration.slice(0,colon).trim()]=declaration.slice(colon+1).trim();}
+   }
+  }
+ }
+ visit(readFileSync('service-layout.css','utf8').replace(/\/\*[\s\S]*?\*\//g,''));return result;
+}
+test('service gallery selectors own appended class lists at 800, 500 and 320 pixels',()=>{
+ let oldGrids=0;
+ for(const route of Object.keys(expected)){
+  const $=page(route);
+  for(const grid of $('.service-case-list .aligned-photo-grid,.service-case-list .project-case-grid').toArray()){
+   const legacy=($(grid).attr('class')||'').split(/\s+/).some(c=>c.endsWith('-evidence-grid'));if(legacy)oldGrids++;
+   const count=$(grid).children().length;
+   for(const [width,columns] of [[800,count===1?1:count===2||count===4?2:3],[500,count===1?1:2],[320,1]]){
+    const style=routeStyle($,grid,width);assert.equal(style.display,'grid',route+' canonical grid '+width);
+    assert.equal(style['grid-template-columns'],columns===1?'minmax(0,1fr)':`repeat(${columns},minmax(0,1fr))`,route+' columns '+width);
+    assert.equal(style.gap,'1rem',route+' shared spacing '+width);
+   }
+  }
+ }
+ assert.equal(oldGrids,10,'all ten original evidence grids checked');
+ const strata=page('strata-roof-repairs'),portrait=strata('#perth-strata-skylight-project img')[0];
+ assert.equal(routeStyle(strata,portrait,320)['aspect-ratio'],'3/4','portrait skylight remains complete');
+ const tile=page('tile-roof-repairs'),composite=tile('.two-storey-project-photo img')[0];
+ assert.equal(routeStyle(tile,composite,320)['object-fit'],'contain','composite remains complete');
+ const nonservice=page('projects/metal-roof-fastener-repair-sequence');
+ assert.deepEqual(routeStyle(nonservice,nonservice('.project-case-grid')[0],500),{},'route rules cannot own nonservice galleries');
+});

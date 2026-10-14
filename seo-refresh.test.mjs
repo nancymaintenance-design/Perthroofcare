@@ -26,7 +26,12 @@ test('revised guide feed modification dates agree with visible updates',()=>{
 test('revised guides have matching feed summaries and reciprocal service paths',()=>{
  const feed=JSON.parse(readFileSync(join(root,'news/feed.json'),'utf8'));
  const services=['roof-leak-repairs','tile-roof-repairs','metal-roof-repairs','ridge-capping-repointing','flashing-repairs','roof-inspection'];
- guides.forEach((slug,i)=>{const d=pages.get('/news/'+slug+'/');const item=feed.items.find(i=>i.url.endsWith('/news/'+slug+'/'));assert.equal(item.summary,d('meta[name="description"]').attr('content'),slug);assert.ok(pages.get('/'+services[i]+'/')('main a[href="/news/'+slug+'/"]').length,slug);});
+ guides.forEach((slug,i)=>{
+  const d=pages.get('/news/'+slug+'/'),item=feed.items.find(i=>i.url.endsWith('/news/'+slug+'/'));assert.equal(item.summary,d('meta[name="description"]').attr('content'),slug);
+  const owner=pages.get('/'+services[i]+'/'),links=owner('main a[href]').map((_,e)=>new URL(owner(e).attr('href'),'https://www.perthroofcare.com.au')).get().filter(url=>url.pathname==='/news/'+slug+'/');
+  assert.ok(links.length,slug+' discoverable from its owner');
+  for(const link of links)if(link.hash)assert.equal(d(link.hash).length,1,slug+' valid contextual target');
+ });
  assert.ok(pages.get('/news/roof-inspection-perth-guide/')('main a[href="/roof-maintenance/"]').length);
 });
 test('service hub includes urgent repairs and does not publish internal SEO planning',()=>{
