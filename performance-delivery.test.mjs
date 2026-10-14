@@ -51,18 +51,27 @@ test('home project thumbnails describe their two-column mobile layout and have i
   }
 });
 
-test('published pages deliver one minified fingerprinted stylesheet without a blocking request chain',()=>{
+test('published pages deliver fingerprinted stylesheets with only About receiving its small layout bundle',()=>{
   const routes=[...readFileSync(`${root}/public/sitemap.xml`,'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname);
   for(const route of routes){
     const dom=load(readFileSync(`${root}/public${route}index.html`,'utf8'));
     const styles=dom('link[rel="stylesheet"]');
-    assert.equal(styles.length,1,`${route}: consolidate stylesheet requests`);
-    const href=styles.attr('href'),css=readFileSync(`${root}/public${href}`);
+    assert.equal(styles.length,route==='/about/'?2:1,`${route}: consolidate shared styles and isolate About layout`);
+    for(const style of styles.toArray()){
+    const href=dom(style).attr('href'),css=readFileSync(`${root}/public${href}`);
     const digest=createHash('sha256').update(css).digest('hex').slice(0,16);
     assert.equal(href,`/assets/css/site-${digest}.css`,'cache key must change when delivered styles change');
     assert.ok(css.length<85_000,`${route}: stylesheet byte budget`);
-    assert.ok(css.toString().includes('prefers-reduced-motion'),'retain accessibility rules');
-    assert.ok(css.toString().includes('services-submenu'),'retain interactive menu styles');
+    assert.ok(!css.toString().includes('@import'),'no blocking request chain');
+    }
+    const sharedCss=readFileSync(`${root}/public${styles.first().attr('href')}`,'utf8');
+    assert.ok(sharedCss.includes('prefers-reduced-motion'),'retain accessibility rules');
+    assert.ok(sharedCss.includes('services-submenu'),'retain interactive menu styles');
+    if(route==='/about/'){
+      const layoutCss=readFileSync(`${root}/public${styles.last().attr('href')}`);
+      assert.ok(layoutCss.length<4000,'About layout stays small');
+      assert.ok(Buffer.byteLength(sharedCss)+layoutCss.length<90000,'About total CSS remains below 90KB');
+    }
   }
 });
 

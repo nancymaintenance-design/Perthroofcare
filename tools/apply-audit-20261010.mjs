@@ -7,6 +7,7 @@ import {applyContentIntent,syncContentKnowledge} from '../content/content-intent
 import {keywordGapRoutes} from '../content/keyword-gap-content.mjs';
 import {keywordMapRoutes} from '../content/keyword-map-content.mjs';
 import {refineLocalServiceGraph,localEditorialRoutes,localEditorialDate} from '../content/audit-local-schema.mjs';
+import {applyAboutCompany} from '../content/about-company.mjs';
 
 const contentUpdateRoutes=new Set([...keywordGapRoutes,...keywordMapRoutes,'gutters-downpipes']);
 const articleImages={
@@ -128,6 +129,7 @@ export function applyAudit20261010({root,site}){
       const item=newsFeed.items.find(i=>new URL(i.url).pathname===new URL(canonical).pathname);
       if(item){item.title=article.headline;item.summary=article.description;item.date_modified=`${updated}T00:00:00+08:00`;item.image=article.image;item.content_text=renderedArticle('main p,main li,main td,main th').not('.eyebrow,.article-byline').map((_,e)=>renderedArticle(e).text()).get().join('\n\n');}
     }
+    if(route==='about')applyAboutCompany($,graph,canonical);
     syncContentKnowledge($,graph,site,canonical);
     refineLocalServiceGraph($,graph,route,canonical);
     $('script[type="application/ld+json"]').text(JSON.stringify({'@context':'https://schema.org','@graph':graph}).replaceAll('<','\\u003c'));

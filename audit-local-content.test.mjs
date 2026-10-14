@@ -44,7 +44,7 @@ test('six service scopes explain distinct component decisions without unconfirme
 
 test('metadata is concise and cost guide promises quote factors, retaining original brand relationship',()=>{
  const about=page('about');
- assert.equal(about('title').text(),'About Perth Roof Care | Ellis Services Group');
+ assert.equal(about('title').text(),'Roof Repair Company Perth | Ellis Services Group');
  assert.match(about('main').text(),/Perth Roof Care is operated by Ellis Services Group Pty Ltd/);
  const cost=page('news/roof-repair-cost-perth');
  assert.match(cost('title').text(),/Roof Repair Cost Factors Perth/);
@@ -109,10 +109,10 @@ test('reapplying the local refinement preserves disclosure, sections and seriali
 });
 
 test('About introduction consolidates the repeated defect list while retaining company and service information',()=>{
- const $=page('about'),intro=$('main > article').first();
+ const $=page('about'),intro=$('.about-company-intro');
  assert.doesNotMatch(intro.text(),/ceiling stains and rainwater entry/i,'intro must not repeat the detailed defect list');
  assert.match(intro.text(),/Perth Roof Care is operated by Ellis Services Group Pty Ltd/);
- assert.match(intro.text(),/roof repairs, leak investigation, tile and metal roof repairs, ridge capping, flashing, gutter and downpipe repairs, maintenance and inspections/i);
+ assert.match(intro.text(),/roof leaks, damaged tiles, metal sheets and fixings, ridge capping, flashing, gutters and downpipes/i);
  assert.match($('main').text(),/140 St Georges Terrace, Perth WA 6000/);
  assert.ok($('main a[href^="https://abr.business.gov.au/"]').length,'company record retained');
  for(const route of ['roof-repairs','roof-leak-repairs','flashing-repairs','gutters-downpipes']){

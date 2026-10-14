@@ -75,7 +75,7 @@ const scopes={
 };
 
 const titles={
- about:'About Perth Roof Care',
+ about:'Roof Repair Company Perth',
  'news/drainage-after-rain':'Roof Drainage Perth: Outlets & Downpipes',
  'news/metal-roofing-perth':'Metal Roofing Perth: Materials & Repairs',
  'news/metal-roof-repairs-perth-guide':'Metal Roof Screws & Washer Repairs Perth',

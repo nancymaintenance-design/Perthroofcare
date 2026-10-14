@@ -8,6 +8,7 @@ import {transform} from 'lightningcss';
 // Only publication copies change; editable source styles remain intact.
 export function bundleStylesheets(publicDirectory,routes){
   const bundles=new Map();
+  const routeBundles=new Set();
   const publishedClasses=new Set();
   for(const route of routes){
     const $=load(readFileSync(join(publicDirectory,route,'index.html'),'utf8'));
@@ -17,7 +18,18 @@ export function bundleStylesheets(publicDirectory,routes){
     const file=join(publicDirectory,route,'index.html');
     const $=load(readFileSync(file,'utf8'));
     const links=$('link[rel="stylesheet"]');
-    const cascade=$('link[rel="stylesheet"],style');
+    // About adds a small route-owned layer without enlarging the shared bundle.
+    // Both files are linked directly; no @import request chain is introduced.
+    const aboutLayout=route==='about'?$('link[href="/assets/css/about-company.css"]'):null;
+    let aboutHref;
+    if(aboutLayout?.length){
+      const {code}=transform({filename:'about-company.css',code:readFileSync(join(publicDirectory,'assets/css/about-company.css')),minify:true});
+      const digest=createHash('sha256').update(code).digest('hex').slice(0,16);
+      aboutHref=`/assets/css/site-${digest}.css`;
+      routeBundles.add(aboutHref);
+      writeFileSync(join(publicDirectory,aboutHref),code);
+    }
+    const cascade=$('link[rel="stylesheet"],style').filter((_,el)=>!aboutHref||el!==aboutLayout[0]);
     if(!links.length)throw new Error(`No stylesheet for ${route||'/'}`);
     const inputs=cascade.toArray().map(el=>{
       if(el.tagName==='style')return $(el).html();
@@ -43,8 +55,9 @@ export function bundleStylesheets(publicDirectory,routes){
     }
     links.first().attr('href',href).removeAttr('media');
     links.slice(1).remove();
+    if(aboutHref)links.first().after(`<link rel="stylesheet" href="${aboutHref}">`);
     $('style').remove();
     writeFileSync(file,$.html());
   }
-  console.log(`Stylesheets: ${routes.length} pages, ${bundles.size} fingerprinted bundles; cascade preserved.`);
+  console.log(`Stylesheets: ${routes.length} pages, ${new Set([...bundles.values(),...routeBundles]).size} fingerprinted bundles; cascade preserved.`);
 }
