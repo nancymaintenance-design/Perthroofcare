@@ -192,7 +192,7 @@ export function enhanceSite({ root, site }) {
   setMetadata(home,'Perth Roof Care — Roof Repairs & Leak Repair','Perth Roof Care, operated by Ellis Services Group Pty Ltd. Tile and metal roof repairs, leak investigation, flashing and drainage services across Perth.');
   home('.home-hero-copy p:not(.eyebrow)').first().text('Roof leaks, damaged tiles, metal roof defects and drainage problems — inspected and repaired by Ellis Services Group. Tell us about your Perth property and we will arrange the next step.');
   home('.home-hero-copy h1').after('<p class="hero-service-line">INSPECT. REPAIR. MAINTAIN.</p>');
-  home('.home-hero-copy').append('<a class="hero-phone" href="tel:+611300838722">Call 0405 878 406</a>');
+  home('.home-hero-copy').append('<a class="hero-phone" href="tel:+61405878406">Call 0405 878 406</a>');
   const images=['roof-repairs-case-05-roof-overview.jpg','roof-leak-case-03-junction-detail.png','tile-roof-case-06-completed.png','metal-roof-case-06-overview-after.png','ridge-case-06-overview-after.png','valley-flashing-case-03-chimney-flashing.png','gutter-case-04-downpipe-detail.png','wa6121-tile-valley-gutter-01.jpg','metal-roof-case-01-overview-before.png'];
   home('.home-service-map article').each((i,el)=>{
     const card=home(el), href=card.find('a').attr('href'), route=href?.replace(/^\/|\/$/g,'');

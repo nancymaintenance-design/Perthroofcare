@@ -55,8 +55,7 @@ test('consolidated services leave unrelated prose and existing guide bodies inta
   paragraphs:prose($,'main p:not(.eyebrow)'),
   answers:prose($,'main details'),
   images:$('main img').map((_,e)=>$(e).attr('src')).get(),
-  // The approved routing update changes only the business telephone destination.
-  links:$('main a').map((_,e)=>$(e).attr('href')?.replace('tel:+61405878406','tel:+611300838722')).get(),
+  links:$('main a').map((_,e)=>$(e).attr('href')).get(),
   anchors:$('main [id]').map((_,e)=>$(e).attr('id')).get(),
   topics:$('main [data-topic]').map((_,e)=>$(e).attr('data-topic')).get()
  });

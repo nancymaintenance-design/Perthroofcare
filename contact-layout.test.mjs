@@ -10,7 +10,7 @@ test('Contact puts all direct contact information above a standalone centred enq
  assert.equal(band.length,1,'direct information has one top band');
  assert.equal(form.length,1,'form has one separate bounded container');
  assert.equal(main.find('.contact-layout').length,0,'no short left rail beside the form');
- assert.equal(band.find('a[href="tel:+611300838722"]').length,1);
+ assert.equal(band.find('a[href="tel:+61405878406"]').length,1);
  assert.equal(band.find('a[href="mailto:ellisservicesgroup3@outlook.com"]').length,1);
  assert.match(band.text(),/140 St Georges Terrace, Perth WA 6000/);
  assert.match(band.find('.business-hours').text(),/Monday–Sunday, 9am–9pm.*Perth local time/);
