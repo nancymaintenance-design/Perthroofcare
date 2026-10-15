@@ -54,6 +54,32 @@ test('News presents thirteen unique guides in one grouped directory',()=>{
  for(const a of links.toArray())assert.ok($(a).closest('article').find('p').text().length>40,'task-specific summary');
 });
 
+test('Gallery opens directly into project images with dates and every project record preserved',()=>{
+ const $=page('gallery'),hero=$('main > section').first(),library=$('.case-library > .container');
+ assert.equal(hero.find('h1').text(),'Roof repair projects');
+ assert.equal(hero.find('p:not(.eyebrow)').length,1,'one concise introduction includes the existing project period');
+ assert.match(hero.find('.project-period').text(),/Most of the projects in this collection were completed during 2025 and early 2026\./);
+ assert.equal(library.children().first().hasClass('case-library-grid'),true,'no repeated title and introduction before the photographs');
+ assert.match(library.find('.case-library-intro').text(),/not a price guide.*guarantee.*material, condition and access/);
+ const old=load(execFileSync('git',['show','a33fb0c:gallery/index.html'],{encoding:'utf8',maxBuffer:4*1024*1024}));
+ for(const selector of ['.case-library-card','title','meta[name="description"]','main [id]']){
+  const collect=d=>d(selector).map((_,e)=>selector==='main [id]'?d(e).attr('id'):d.html(e)).get();
+  assert.deepEqual(collect($),collect(old),selector+' facts, dates, images, URLs and identifiers stay intact');
+ }
+ for(const detail of ['tile and metal','ridge and hip capping','chimney flashing','fastener work','drainage maintenance'])assert.ok(hero.text().includes(detail),detail);
+});
+
+test('News reuses the compact index opening without changing guide records or metadata',()=>{
+ const $=page('news'),hero=$('main > section').first();
+ assert.equal(hero.hasClass('index-hero'),true);assert.equal(hero.find('h1').text(),'Roof repair guides');
+ const old=load(execFileSync('git',['show','a33fb0c:news/index.html'],{encoding:'utf8',maxBuffer:4*1024*1024}));
+ for(const selector of ['.guide-index article','title','meta[name="description"]','main [id]']){
+  const collect=d=>d(selector).map((_,e)=>selector==='main [id]'?d(e).attr('id'):d.html(e)).get();
+  assert.deepEqual(collect($),collect(old),selector+' preserved');
+ }
+ assert.equal(hero.find('p:not(.eyebrow)').text(),old('main > section').first().find('p:not(.eyebrow)').text(),'existing guide scope preserved');
+});
+
 test('service work sections and nested sequence headings have distinct labels',()=>{
  const normalize=text=>text.trim().toLowerCase().replace(/[.!?]+$/,'');
  for(const route of Object.keys(serviceLabels)){

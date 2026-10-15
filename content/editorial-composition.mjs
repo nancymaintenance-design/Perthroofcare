@@ -36,6 +36,8 @@ const guideSummaries={
  'roof-repair-cost-perth':'Compare inspection fees, repair materials, access, waste removal, exclusions and written terms without assuming a universal price.'
 };
 function composeNews($){
+ const hero=$('main > section').first().addClass('index-hero');
+ hero.find('h1').text('Roof repair guides');hero.find('.breadcrumbs [aria-current="page"]').text('Roof repair guides');
  const cards=new Map();$('.guide-index article').each((_,e)=>{const card=$(e).clone(),href=card.find('a[href^="/news/"]').first().attr('href');if(href)cards.set(href.split('/')[2],card);});
  const directory=$('.guide-index > .container').empty();
  for(const [title,slugs] of guideGroups){
@@ -58,8 +60,14 @@ function composeNews($){
  directory.append($('.rss-resource .container').contents());$('.rss-resource').remove();
 }
 function composeGallery($){
- const library=$('.case-library > .container');library.children('h2').text('Photographed roof repair projects');
- library.children('p:not(.eyebrow)').first().text('These supplied photographs record work at individual properties. They are not a price guide or a guarantee of the same outcome at another property. Repair scope depends on the roof material, condition and access.');
+ const hero=$('main > section').first();
+ hero.find('h1').text('Roof repair projects');hero.find('.breadcrumbs [aria-current="page"]').text('Roof repair projects');
+ const period=hero.find('.project-period').remove(),periodText=period.text().trim(),dateEnd=periodText.indexOf('.')+1;
+ const lead=hero.find('p:not(.eyebrow)').first().text('Project photographs show tile and metal roof details, ridge and hip capping, chimney flashing, fastener work and drainage maintenance. ');
+ lead.append(`<span class="project-period">${esc(periodText.slice(0,dateEnd))}</span>`);
+ const library=$('.case-library > .container');library.children('.eyebrow,h2').remove();
+ const intro=library.children('p:not(.eyebrow)').first().text('These supplied photographs record work at individual properties. They are not a price guide or a guarantee of the same outcome at another property. Repair scope depends on the roof material, condition and access. '+periodText.slice(dateEnd).trim()+' Each project links to the matching repair services.');
+ library.find('.case-library-grid').after(intro);
  const actions=$('main > .texture a,main > .content-intent a').toArray().map(a=>$.html(a));
  library.append(`<p>${inspectionChargeNotice}</p><p>${actions.join(' · ')}</p>`);
  $('main > .texture,main > .content-intent').remove();
