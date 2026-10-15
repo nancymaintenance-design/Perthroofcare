@@ -5,6 +5,7 @@ import test from 'node:test';
 import { spawn } from 'node:child_process';
 import { load } from 'cheerio';
 import { fileURLToPath } from 'node:url';
+import { runInNewContext } from 'node:vm';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
 const fileFor = (route) => join(root, route || '.', 'index.html');
@@ -58,10 +59,68 @@ test('services navigation is viewport-contained, concise and has no projects hub
   assert.match(home, /id="services-submenu"[^>]*role="region"[^>]*aria-label="Services"/i);
   assert.match(load(home)('.services-panel-intro').text(),/Our team arranges the roof assessment/i);
   assert.doesNotMatch(load(home)('.services-panel-intro').text(),/\?/);
-  for (const label of ['Core roof repairs', 'Roofline details', 'Roof repairs', 'Roof valleys & flashing repairs', 'Gutter repairs', 'Roof maintenance']) assert.ok(load(home)('#services-submenu').text().includes(label),label);
+  for (const label of ['Core roof repairs', 'Roofline and drainage', 'Roof repairs', 'Roof valleys & flashing repairs', 'Gutter repairs', 'Roof maintenance']) assert.ok(load(home)('#services-submenu').text().includes(label),label);
   assert.match(css, /\.services-submenu\{[^}]*overflow:auto[^}]*max-height:calc\(100vh - 7rem\)/i);
   assert.match(script, /const menuWidth = Math\.min\(896, Math\.max\(280, window\.innerWidth - sideGap \* 2\)\)/);
   assert.match(script, /window\.innerWidth - menuWidth - sideGap/);
+});
+
+test('service navigation groups expose all 22 repair and service destinations once',()=>{
+ const $=load(readFileSync(fileFor(''),'utf8'));
+ const expected=['roof-repairs','roof-leak-repairs','tile-roof-repairs','metal-roof-repairs','commercial-roof-repairs','gutter-repairs','gutters-downpipes','roof-cleaning-painting','ridge-capping-repointing','flashing-repairs','downpipe-repairs','roof-inspection','roof-maintenance','storm-damage-roof-repairs','roof-restoration','repair-options','roof-cleaning','roof-painting','box-gutter-repairs','roof-replacement','flat-roof-repairs','strata-roof-repairs'];
+ const groups=$('#services-submenu .services-menu-groups section');
+ assert.ok(groups.length>=3,'named service families are scannable');
+ groups.each((_,group)=>{assert.ok($(group).find('h2').text().trim());assert.ok($(group).find('a').length<=8);});
+ const links=groups.find('a').map((_,a)=>$(a).attr('href')).get();
+ assert.deepEqual(links.sort(),expected.map(route=>`/${route}/`).sort());
+});
+
+function navigationFixture(width=1280){
+ const makeNode=()=>{
+  const handlers={},attributes={},classes=new Set();
+  return {handlers,attributes,hidden:true,style:{width:'',left:'',right:'',top:'',maxHeight:'',removeProperty(name){this[name.replace(/-([a-z])/g,(_,c)=>c.toUpperCase())]='';}},
+   addEventListener(name,fn){handlers[name]=fn;},setAttribute(name,value){attributes[name]=value;},focus(){this.focused=true;},
+   classList:{toggle(name){if(classes.has(name)){classes.delete(name);return false;}classes.add(name);return true;},contains:name=>classes.has(name),remove:name=>classes.delete(name)},
+   getBoundingClientRect:()=>({left:800,bottom:96})};
+ };
+ const toggle=makeNode(),nav=makeNode(),trigger=makeNode(),submenu=makeNode(),documentEvents={},windowEvents={};
+ const document={querySelector:selector=>({'.menu':toggle,'header nav':nav,'.services-toggle':trigger,'#services-submenu':submenu}[selector]??null),addEventListener:(name,fn)=>documentEvents[name]=fn};
+ const window={innerWidth:width,innerHeight:800,addEventListener:(name,fn)=>windowEvents[name]=fn};
+ runInNewContext(readFileSync(join(root,'site.js'),'utf8'),{document,window});
+ return {toggle,nav,trigger,submenu,documentEvents,windowEvents,window};
+}
+
+test('service disclosure clears desktop positioning on phone resize and restores desktop containment',()=>{
+ const f=navigationFixture();f.trigger.handlers.click();
+ assert.equal(f.submenu.hidden,false);assert.equal(f.trigger.attributes['aria-expanded'],'true');
+ assert.equal(f.submenu.style.left,'368px');assert.equal(f.submenu.style.width,'896px');
+ f.window.innerWidth=390;f.windowEvents.resize();
+ for(const key of ['width','left','right','top','maxHeight'])assert.equal(f.submenu.style[key],'',`${key} must yield to mobile document flow`);
+ f.window.innerWidth=1280;f.windowEvents.resize();assert.equal(f.submenu.style.width,'896px');
+ f.documentEvents.keydown({key:'Escape'});
+ assert.equal(f.submenu.hidden,true);assert.equal(f.trigger.attributes['aria-expanded'],'false');assert.equal(f.trigger.focused,true);
+});
+
+test('phone navigation preserves disclosure, outside click, Escape and parent menu close behavior',()=>{
+ const f=navigationFixture(390);f.toggle.handlers.click();assert.equal(f.nav.classList.contains('open'),true);
+ f.trigger.handlers.click();assert.equal(f.submenu.hidden,false);
+ f.documentEvents.click({target:{closest:()=>null}});assert.equal(f.submenu.hidden,true);
+ f.trigger.handlers.click();f.toggle.handlers.click();assert.equal(f.submenu.hidden,true);assert.equal(f.toggle.attributes['aria-expanded'],'false');
+ f.toggle.handlers.click();f.documentEvents.keydown({key:'Escape'});assert.equal(f.nav.classList.contains('open'),false);assert.equal(f.toggle.focused,true);
+});
+
+test('home and service opening screens expose assessment links and the inspection fee',()=>{
+ const $=load(readFileSync(fileFor(''),'utf8')),hero=$('.home-hero-copy');
+ assert.equal(hero.find('a[href="/contact/"]').length,1);
+ assert.ok(hero.find('a[href^="tel:"]').length);
+ assert.match(hero.text(),/Roof inspections are chargeable\. Confirm the fee and scope before booking\./);
+ assert.equal(hero.find('a[href="/about/#business-registration"]').length,1);
+ for(const route of [...coreRoutes,'roof-cleaning','repair-options','strata-roof-repairs']){
+  const service=load(readFileSync(fileFor(route),'utf8')),opening=service('.service-hero');
+  assert.equal(opening.find('a[href="/contact/"]').length,1,route);
+  assert.match(opening.text(),/Roof inspections are chargeable\. Confirm the fee and scope before booking\./,route);
+ }
+ assert.equal(load(readFileSync(fileFor('faq'),'utf8'))('main h1').text(),'Roof repair FAQs');
 });
 
 test('every service-menu destination uses the full standard service-page structure', () => {

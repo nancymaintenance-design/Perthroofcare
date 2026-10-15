@@ -41,7 +41,7 @@ test('service hub includes urgent repairs and does not publish internal SEO plan
  assert.doesNotMatch(pages.get('/roof-repairs/')('main').text(),/page compete|broad search term/i);
 });
 test('FAQ provides service-linked answers rather than an unlinked reading directory',()=>{
- const d=pages.get('/faq/');assert.match(d('h1').text(),/Roof Repairs Perth/i);
+ const d=pages.get('/faq/');assert.equal(d('h1').text(),'Roof repair FAQs');assert.match(d('title').text(),/Perth/i);
  for(const r of ['/roof-leak-repairs/','/tile-roof-repairs/','/metal-roof-repairs/','/storm-damage-roof-repairs/','/roof-inspection/','/roof-maintenance/'])assert.ok(d('details a[href="'+r+'"]').length,r);
  assert.doesNotMatch(d('main').text(),/general reading resource|not to diagnose|clearer reading/i);
 });

@@ -113,9 +113,7 @@ test('About introduction consolidates the repeated defect list while retaining c
  assert.doesNotMatch(intro.text(),/ceiling stains and rainwater entry/i,'intro must not repeat the detailed defect list');
  assert.match(intro.text(),/Perth Roof Care is operated by Ellis Services Group Pty Ltd/);
  assert.match(intro.text(),/roof leaks, damaged tiles, metal sheets and fixings, ridge capping, flashing, gutters and downpipes/i);
- assert.match($('main').text(),/140 St Georges Terrace, Perth WA 6000/);
+ assert.match($('footer').text(),/140 St Georges Terrace, Perth WA 6000/,'shared footer retains the confirmed office');
  assert.ok($('main a[href^="https://abr.business.gov.au/"]').length,'company record retained');
- for(const route of ['roof-repairs','roof-leak-repairs','flashing-repairs','gutters-downpipes']){
-  assert.ok($(`main a[href="/${route}/"]`).length,route+' essential service retained');
- }
+ assert.equal($('main [data-about-section="services"] a[href="/services/"]').length,1,'brief company capability overview links to the services directory');
 });

@@ -63,7 +63,7 @@ test('consolidated services leave unrelated prose and existing guide bodies inta
   const before=load(execFileSync('git',['show','ab6ea8f:'+(r==='/'?'':r.slice(1))+'index.html'],{encoding:'utf8',maxBuffer:4*1024*1024}));
   const current=page(r);current('.guide-education').remove();
   assert.deepEqual(extract(current),extract(before),r);
-  if(!serviceLabels[r.slice(1,-1)])assert.equal(page(r)('main h1').text(),before('main h1').text(),r+' unchanged identity');
+  if(!serviceLabels[r.slice(1,-1)])assert.equal(page(r)('main h1').text(),r==='/faq/'?'Roof repair FAQs':before('main h1').text(),r+' identity or approved compact FAQ heading');
  }
 });
 

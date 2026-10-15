@@ -65,6 +65,14 @@ function simplifyHub($,route){
   $('.home-proof .container').append('<p><a href="/gallery/">All photographed project records</a></p>');
  }
  $('main a[href="/contact/"]').each((_,e)=>{const a=$(e);if(a.parent('p').length&&a.parent().text().trim()===a.text().trim())a.parent().remove();else a.remove();});
+ if(route===''){
+  const hero=$('.home-hero-copy'),phone=hero.find('.hero-phone');
+  hero.find('.hero-service-line').remove();
+  const actions=$('<div class="hero-actions"><a class="button" href="/contact/">Request a roof assessment</a></div>');
+  actions.append(phone);
+  hero.find('.hero-evidence-links').before(actions);
+  if(!hero.find('.inspection-charge-notice').length)actions.after(`<p class="inspection-charge-notice">${inspectionChargeNotice}</p>`);
+ }
  $('main').append('<div class="container hub-enquiry content-intent"><p>For a leak, damaged component or planned maintenance, our team can arrange an assessment and explain the written repair scope. <a href="/roof-leak-repairs/">Roof leak repairs</a> · <a href="/repair-options/">Repair options</a></p>'+paragraph(inspectionChargeNotice)+'<p><a class="button" href="/contact/">Request a roof assessment</a></p></div>');
  return true;
 }
@@ -83,6 +91,7 @@ export function applyServiceStructure($,route){
  hero.find('a[href="/contact/"]').remove();
  hero.find('h1').attr('id','service-overview');
  if(!hero.find('.inspection-charge-notice').length)hero.find('h1').parent().append(`<p class="inspection-charge-notice">${inspectionChargeNotice}</p>`);
+ hero.find('.inspection-charge-notice').after('<p class="hero-actions"><a class="button" href="/contact/">Request a roof assessment</a></p>');
 
  const evidence=main.children().filter((_,e)=>$(e).find('img').length).toArray().map((e,index)=>{
   const record=$(e).clone();record[0].tagName='div';record.removeClass('section').addClass('service-case');

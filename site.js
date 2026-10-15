@@ -5,6 +5,10 @@ const servicesSubmenu = document.querySelector('#services-submenu');
 const closeServices = ({ returnFocus = false } = {}) => { if (!servicesToggle || !servicesSubmenu) return; servicesSubmenu.hidden = true; servicesToggle.setAttribute('aria-expanded', 'false'); if (returnFocus) servicesToggle.focus(); };
 const positionServicesMenu = () => {
   if (!servicesToggle || !servicesSubmenu) return;
+  if (window.innerWidth <= 900) {
+    for (const property of ['width', 'left', 'right', 'top', 'max-height']) servicesSubmenu.style.removeProperty(property);
+    return;
+  }
   const bounds = servicesToggle.getBoundingClientRect();
   const sideGap = 16;
   const menuWidth = Math.min(896, Math.max(280, window.innerWidth - sideGap * 2));

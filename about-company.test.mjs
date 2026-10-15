@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {join} from 'node:path';
 import {load} from 'cheerio';
-import {applyAboutCompany} from './content/about-company.mjs';
+import {applyAboutCompany,renderAboutCompany} from './content/about-company.mjs';
 
 const root=fileURLToPath(new URL('./public/',import.meta.url));
 const page=()=>load(readFileSync(join(root,'about/index.html'),'utf8'));
@@ -18,18 +18,17 @@ test('About has one company identity heading with consistent company-intent meta
  assert.equal($('link[rel="canonical"]').attr('href'),'https://www.perthroofcare.com.au/about/');
 });
 
-test('About presents company positioning, capabilities, working approach and business facts',()=>{
+test('About presents company introduction, registration, working process and a brief capability overview',()=>{
  const $=page(),main=$('main');
  assert.equal(main.find('details,summary').length,0);
  main.find('h1,h2,h3').each((_,e)=>assert.doesNotMatch($(e).text(),/\?|^(?:how|what|why|where|can|does)\b/i));
  assert.equal((main.text().match(/Perth Roof Care is operated by Ellis Services Group Pty Ltd/g)||[]).length,1);
  assert.match(main.find('.local-team-identity').text(),/Perth-based team/);
  const sections=main.find('[data-about-section]').map((_,e)=>$(e).attr('data-about-section')).get();
- assert.deepEqual(sections,['company','services','approach','business']);
+ assert.deepEqual(sections,['company','business','approach','services']);
  assert.match(main.find('[data-about-section="approach"]').text(),/assess.*findings.*written quote/s);
- for(const route of ['roof-repairs','roof-leak-repairs','tile-roof-repairs','metal-roof-repairs','ridge-capping-repointing','flashing-repairs','gutters-downpipes','roof-inspection']){
-  assert.ok(main.find(`[data-about-section="services"] a[href="/${route}/"]`).length,route);
- }
+ assert.equal(main.find('[data-about-section="services"] a').length,1);
+ assert.equal(main.find('[data-about-section="services"] a').attr('href'),'/services/');
  assert.doesNotMatch(main.text(),/Questions people often ask|HOW AN ENQUIRY IS ARRANGED|Registration and project-specific credentials/);
 });
 
@@ -40,7 +39,7 @@ test('About is a company introduction without project photographs, captions or s
  assert.doesNotMatch($('meta[name="description"]').attr('content'),/photographed|project/i);
 });
 
-test('About ends with registration facts and retains only the hero assessment with its fee notice',()=>{
+test('About registration facts retain only the hero assessment with its fee notice',()=>{
  const $=page(),facts=$('[data-about-section="business"]');
  for(const fact of ['Ellis Services Group Pty Ltd','96 645 821 745','645 821 745'])assert.ok(facts.text().includes(fact),fact);
  assert.equal(facts.find('a[href="https://abr.business.gov.au/ABN/View?id=645821745"]').length,1);
@@ -50,6 +49,16 @@ test('About ends with registration facts and retains only the hero assessment wi
  assert.equal($('.about-company-hero a.button[href="/contact/"]').length,1);
  assert.match($('.about-company-hero .inspection-charge-notice').text(),/Roof inspections are chargeable\. Confirm the fee and scope before booking\./);
  assert.doesNotMatch(facts.text(),/registered (?:office|address)/i);
+});
+
+test('About renderer exposes the registration fragment immediately after the company introduction',()=>{
+ const $=load(renderAboutCompany());
+ const registration=$('#business-registration');
+ assert.equal(registration.length,1,'company links have one stable destination');
+ assert.equal(registration.prev().attr('data-about-section'),'company');
+ assert.equal(registration.find('h2').text(),'Company registration');
+ assert.match(registration.text(),/96 645 821 745/);
+ assert.match(registration.text(),/does not establish a trade licence or insurance/);
 });
 
 test('About omits the pre-footer contact band while preserving the actual shared footer',()=>{

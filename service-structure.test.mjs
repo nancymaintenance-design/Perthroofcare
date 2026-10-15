@@ -15,7 +15,8 @@ test('22 service routes expose one compact flow with evidence only where it exis
   assert.equal($('main .service-brief-enquiry,main .audit-quote-scope,main .service-path').length,0,route+' repeated bands retired');
   assert.equal($('[data-service-section="work"] img').length,count,route+' unique matching evidence');
   assert.equal($('main .service-enquiry a[href="/contact/"]').length,1,route+' final action');
-  assert.equal($('main a[href="/contact/"]').length,1,route+' no repeated booking bands');
+  assert.equal($('main a[href="/contact/"]').length,2,route+' opening shortcut and final enquiry only');
+  assert.equal($('main .service-hero a[href="/contact/"]').length,1,route+' opening assessment shortcut');
   assert.equal($('main h2').length,count?3:2,route+' no nested giant sections');
   for(const h of $('main h1,main h2,main h3').toArray())assert.doesNotMatch($(h).text(),/Perth/i,route);
   assert.ok(words($)<words(baseline(route))*.85,route+' actual prose consolidation');
