@@ -40,7 +40,7 @@ test('all 18 published forms provide an explicit no-JavaScript alternative and h
   assert.equal(fallback.length,1,route);
   assert.equal(fallback.closest('form').length,0,'fallback cannot disappear with hidden form controls');
   assert.match(fallback.text(),/JavaScript/i);
-  assert.equal(fallback.find('a[href="tel:+61405878406"]').length,1);
+  assert.equal(fallback.find('a[href="tel:+611300838722"]').length,1);
   assert.equal(fallback.find('a[href="mailto:ellisservicesgroup3@outlook.com"]').length,1);
   assert.equal(fallback.find('.inspection-charge-notice').text(),fee);
   assert.match($('main noscript style').text(),/\.enquiry-form\s*\{\s*display:\s*none\s*!important\s*;?\s*\}/);
@@ -52,6 +52,6 @@ test('Contact and About omit their pre-footer contact band while other routes re
   const $=load(html(route));
   assert.equal($('.contact-band').length,['contact','about'].includes(route)?0:1,route);
   assert.equal($('footer').length,1);
-  for(const href of ['tel:+61405878406','mailto:ellisservicesgroup3@outlook.com','/contact/','/privacy/'])assert.ok($(`footer a[href="${href}"]`).length,`${route}: intact footer ${href}`);
+  for(const href of ['tel:+611300838722','mailto:ellisservicesgroup3@outlook.com','/contact/','/privacy/'])assert.ok($(`footer a[href="${href}"]`).length,`${route}: intact footer ${href}`);
  }
 });

@@ -19,6 +19,6 @@ test('generated commercial pages keep the enquiry with Ellis and explain assessm
 test('roof access safety and company contact identity survive the cleanup', () => {
   const html = readFileSync('public/news/drainage-after-rain/index.html', 'utf8');
   assert.match(visible(html), /Do not climb ladders, access roofs/);
-  assert.match(html, /tel:\+61405878406/);
+  assert.match(html, /tel:\+611300838722/);
   assert.match(html, /ellisservicesgroup3@outlook\.com/);
 });

@@ -20,7 +20,7 @@ export function applyContactLayout($){
   <p class="inspection-charge-notice">${inspectionChargeNotice}</p>
  </div></section>
  <section class="contact-information" aria-label="Direct contact details"><div class="container"><div class="contact-details-band">
-  <div><h2>Phone</h2><a href="tel:+61405878406">0405 878 406</a></div>
+  <div><h2>Phone</h2><a href="tel:+611300838722">0405 878 406</a></div>
   <div><h2>Email</h2><a href="mailto:ellisservicesgroup3@outlook.com">ellisservicesgroup3@outlook.com</a></div>
   <div><h2>Perth office</h2><p>140 St Georges Terrace, Perth WA 6000</p></div>
   <p class="business-hours">${businessHoursText}</p>
