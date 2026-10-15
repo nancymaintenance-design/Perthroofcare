@@ -1,4 +1,6 @@
+import {load} from 'cheerio';
 import { projectStories } from '../content/project-stories.mjs';
+const titleText=($,selector)=>load($.html())(selector).first().text();
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 export function applyProjectStories(documents){
@@ -8,7 +10,7 @@ export function applyProjectStories(documents){
   const sections=$('main section');
   $('main').addClass('project-page');
   const hero=$('main .hero,main .service-hero').first(),photo=$('main img').first();
-  const heading=hero.find('h1').text().replace(/ROYLEYSTONE/g,'ROLEYSTONE'),label=hero.find('.eyebrow').first().text().replace(/ROYLEYSTONE/g,'ROLEYSTONE');
+  const heading=titleText($,'main h1'),label=hero.find('.eyebrow').first().text().replace(/ROYLEYSTONE/g,'ROLEYSTONE');
   hero.attr('class','section project-hero').removeAttr('style').html(`<div class="container project-hero-layout"><div class="project-hero-copy"><p class="eyebrow">${escape(label)}</p><h1>${escape(heading)}</h1><p>${escape(story.lead)}</p><a class="button" href="/contact/">Discuss your roof repair</a></div><figure class="project-hero-photo"><img src="${escape(photo.attr('src'))}" alt="${escape(photo.attr('alt'))}" width="${photo.attr('width')||1000}" height="${photo.attr('height')||750}" loading="eager" decoding="async"></figure></div>`);
   $('main .project-case-grid').each((i,e)=>{
    $(e).closest('section').addClass('project-photos');
@@ -34,15 +36,15 @@ export function applyProjectStories(documents){
    const route=href?.replace(/^\/|\/$/g,'');
    if(!documents.has(route))return;
    card.find('p').text(documents.get(route)('.service-hero > .container > p:not(.eyebrow)').first().text());
-   card.find('a').text(`Explore ${documents.get(route)('h1').text().replace(/\.$/,'')} →`);
+   card.find('a').text(`Explore ${titleText(documents.get(route),'h1').replace(/\.$/,'')} →`);
   });
   const serviceRoutes=new Set(story.services);
   related.find('nav a').each((i,e)=>{const route=$(e).attr('href')?.replace(/^\/|\/$/g,'');if(route!=='contact'&&documents.has(route))serviceRoutes.add(route);});
   related.find('nav').remove();
   if(!related.find('.cards').length){
-   related.find('.container').append(`<div class="cards">${[...serviceRoutes].map(route=>`<article class="card"><h3>${escape(documents.get(route)('h1').text().replace(/\.$/,''))}</h3><p>${escape(documents.get(route)('.service-hero > .container > p:not(.eyebrow)').first().text())}</p><a href="/${route}/">Explore this service →</a></article>`).join('')}</div>`);
+   related.find('.container').append(`<div class="cards">${[...serviceRoutes].map(route=>`<article class="card"><h3>${escape(titleText(documents.get(route),'h1').replace(/\.$/,''))}</h3><p>${escape(documents.get(route)('.service-hero > .container > p:not(.eyebrow)').first().text())}</p><a href="/${route}/">Explore this service →</a></article>`).join('')}</div>`);
   }
-  related.find('.container').append(`<nav class="project-story-services" aria-label="Services for this project">${[...serviceRoutes].map(route=>`<a href="/${route}/">${escape(documents.get(route)('h1').text().replace(/\.$/,''))} →</a>`).join('')}<a href="/contact/">Arrange your roof repair →</a></nav>`);
+  related.find('.container').append(`<nav class="project-story-services" aria-label="Services for this project">${[...serviceRoutes].map(route=>`<a href="/${route}/">${escape(titleText(documents.get(route),'h1').replace(/\.$/,''))} →</a>`).join('')}<a href="/contact/">Arrange your roof repair →</a></nav>`);
  }
  const gallery=documents.get('gallery');
  gallery('main > section:first-child > .container').append('<p class="project-period">Most of the projects in this collection were completed during 2025 and early 2026. Explore the individual stories for the roof components and work recorded.</p>');

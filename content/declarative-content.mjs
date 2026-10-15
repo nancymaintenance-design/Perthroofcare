@@ -331,7 +331,7 @@ export function applyDeclarativeContent($,route,graph){
  const subject=routeSubjects[route];
  if(subject===undefined)throw new Error(`Missing reviewed content subject: ${route}`);
  $('.contact-band h2').text('Perth roof repair enquiries');
- $('.services-panel-intro p').text('Our team arranges the roof assessment for your repair needs.');
+ $('.services-panel-intro p').text('Roof repairs, drainage and maintenance.');
  $('.services-panel-intro small').text('Tile, metal, leak and roofline repair services.');
  if(route==='about')return false;
  const before=$('main').html()+$('title').text();

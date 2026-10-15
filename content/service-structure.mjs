@@ -2,10 +2,18 @@ import {serviceLabels} from './service-labels.mjs';
 import {serviceCopy,serviceRelated,serviceProjectReferences,topicGuide,topicPlacement} from './service-structure-data.mjs';
 import {educationalTopics} from './keyword-map-content.mjs';
 import {inspectionChargeNotice} from './audit-local-content.mjs';
+import {serviceSectionTitles} from './service-section-titles.mjs';
 
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const paragraph=s=>`<p>${esc(s)}</p>`;
 const topicHref=t=>`/news/${topicGuide[t.route]}/#education-${t.id.toLowerCase()}`;
+const readingSubject={
+ 'roof-repairs':'roof repair','roof-leak-repairs':'roof leak','tile-roof-repairs':'tile roof',
+ 'metal-roof-repairs':'metal roof','ridge-capping-repointing':'ridge repair','flashing-repairs':'flashing repair',
+ 'gutter-repairs':'gutter repair','gutters-downpipes':'roof drainage','downpipe-repairs':'downpipe repair',
+ 'roof-maintenance':'roof maintenance','roof-inspection':'roof inspection','repair-options':'repair comparison',
+ 'roof-painting':'roof painting','box-gutter-repairs':'box gutter','roof-replacement':'roof replacement'
+};
 const section=(purpose,title,body)=>`<section class="section service-section" data-service-section="${purpose}"><div class="container"><h2>${title}</h2>${body}</div></section>`;
 
 function relatedLink(entry){
@@ -108,14 +116,19 @@ export function applyServiceStructure($,route){
 
  const guidance=main.find('.focus-faq details,#service-questions details').clone();
  const topics=educationalTopics.filter(t=>t.route===route);
- const reading=topics.length?`<div class="service-reading" id="roof-questions-explained"><h3>Further reading</h3><ul>${topics.map(t=>`<li data-topic="${t.id}"><a href="${topicHref(t)}">${esc(topicPlacement[t.id][1])}</a></li>`).join('')}</ul></div>`:'';
- const related=`<nav class="service-related keyword-gap-content" aria-label="Related services and guides"${originalIds.includes('related-work-options')?' id="related-work-options"':''}><ul>${serviceRelated[route].map(relatedLink).join('')}</ul></nav>`;
- const guidanceMarkup=guidance.length?`<div class="focus-faq service-guidance"><h3>Scope details</h3>${guidance.toArray().map(e=>$.html(e)).join('')}</div>`:'';
+ const titles=serviceSectionTitles[route];
+ const articleLinks=serviceRelated[route].filter(e=>Array.isArray(e)&&e[0].startsWith('/news/'));
+ const guide=topicGuide[route];
+ const extraGuides=articleLinks.filter(e=>e[0]!==`/news/${guide}/`);
+ const selections=(topics.length>6?[topics[0],topics[2],topics[6],topics[4]]:topics).slice(0,4-extraGuides.length);
+ const reading=topics.length||articleLinks.length?`<div class="service-reading"${topics.length?' id="roof-questions-explained"':''}><h3>Related ${esc(readingSubject[route])} guides</h3><ul>${selections.map(t=>`<li data-topic="${t.id}"><a href="${topicHref(t)}">${esc(topicPlacement[t.id][1])}</a></li>`).join('')}${guide?`<li><a href="/news/${guide}/">Full ${esc(readingSubject[route])} guide</a></li>`:''}${extraGuides.map(relatedLink).join('')}</ul></div>`:'';
+ const related=`<nav class="service-related keyword-gap-content" aria-label="Related services"${originalIds.includes('related-work-options')?' id="related-work-options"':''}><h3>Related services</h3><ul>${serviceRelated[route].filter(e=>!articleLinks.includes(e)).map(relatedLink).join('')}</ul></nav>`;
+ const guidanceMarkup=guidance.length?`<div class="focus-faq service-guidance"><h3>${esc(titles.guidance)}</h3>${guidance.toArray().map(e=>$.html(e)).join('')}</div>`:'';
  main.empty().addClass('service-layout').append(hero);
- main.append(section('content','Service content',`<div class="service-description"><h3>${esc(copy.heading)}</h3>${paragraph(copy.content)}</div>`));
- main.append(section('solution','Our solution',`<div class="service-solution-body content-intent"><ol class="service-steps repair-delivery">${copy.steps.map(step=>`<li>${esc(step)}</li>`).join('')}</ol><p class="service-boundary">${esc(copy.boundary)}</p>${guidanceMarkup}${reading}${related}</div>`));
+ main.append(section('content',esc(titles.content),`<div class="service-description">${paragraph(copy.content)}</div>`));
+ main.append(section('solution',esc(titles.solution),`<div class="service-solution-body content-intent"><ol class="service-steps repair-delivery">${copy.steps.map(step=>`<li>${esc(step)}</li>`).join('')}</ol><p class="service-boundary">${esc(copy.boundary)}</p>${guidanceMarkup}${reading}${related}</div>`));
  if(evidence.length){
-  main.append(section('work','Our work','<div class="service-case-list"></div>'));
+  main.append(section('work',esc(titles.work),'<div class="service-case-list"></div>'));
   const target=main.find('.service-case-list');for(const record of evidence)target.append(record);
   if(route==='metal-roof-repairs')target.append(fastenerCase());
  }

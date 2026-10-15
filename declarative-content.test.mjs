@@ -28,12 +28,12 @@ test('all 69 routes publish declarative topic headings except the actual FAQ',()
  }
 });
 
-test('FAQ related repair heading is descriptive while all questions, answers and publication dates survive',()=>{
+test('FAQ has canonical answers with schema agreement and preserves publication dates',()=>{
  const $=page('/faq/'),before=load(execFileSync('git',['show','ab6ea8f:faq/index.html'],{encoding:'utf8',maxBuffer:4*1024*1024}));
  assert.ok($('main h2').toArray().some(e=>$(e).text()==='Roof repairs and inspections'));
  const disclosures=p=>p('main details').map((_,e)=>({question:p(e).find('summary').text(),answer:p(e).find('p').text()})).get();
- assert.equal(disclosures($).length,58);assert.deepEqual(disclosures($),disclosures(before));
- assert.deepEqual(nodes($).find(n=>n['@type']==='FAQPage'),nodes(before).find(n=>n['@type']==='FAQPage'));
+ assert.equal(disclosures($).length,43);
+ assert.deepEqual(nodes($).find(n=>n['@type']==='FAQPage').mainEntity.map(n=>({question:n.name,answer:n.acceptedAnswer.text})),disclosures($));
  const current=nodes($).find(n=>n['@type']==='WebPage'),original=nodes(before).find(n=>n['@type']==='WebPage');
  assert.equal(current.dateModified,'2026-10-14');assert.equal(current.datePublished,original.datePublished);
 });
@@ -43,7 +43,7 @@ test('all routes use concise component headings without assembled topic suffixes
  for(const r of routes){const $=page(r);for(const e of $('main h1,main h2,main h3,main summary').toArray())assert.doesNotMatch($(e).text(),filler,r+' '+$(e).text());}
  // Independent, paragraph-reviewed examples catch replacement by empty labels.
  for(const [route,headings] of [
-  ['/roof-leak-repairs/',['Rain patterns and indoor water marks','Our solution','Tiled-roof leak repair sequence']],
+  ['/roof-leak-repairs/',['Rain patterns and signs of roof leaks','Investigating recurring roof leaks','Tiled-roof leak repair sequence']],
   ['/areas/hillarys-roof-repairs/',['Roof material and visible damage','Fixings, capping and rainwater drainage','Arrange a roof assessment']],
   ['/news/roof-inspection-perth-guide/',['Inspection findings and maintenance priorities','Roof inspection and drainage repair records','Inspection fees and agreed access']]
  ]){const $=page(route),actual=$('main h2,main h3').map((_,e)=>$(e).text()).get();for(const heading of headings)assert.ok(actual.includes(heading),route+' missing '+heading);}
@@ -52,18 +52,21 @@ test('all routes use concise component headings without assembled topic suffixes
 test('consolidated services leave unrelated prose and existing guide bodies intact',()=>{
  const prose=($,selector)=>$(selector).map((_,e)=>{const copy=$(e).clone();copy.find('a').text('[link]');return copy.text();}).get();
  const extract=$=>({
-  paragraphs:prose($,'main p:not(.topic-rail .eyebrow,.services-directory .eyebrow)'),
+  paragraphs:prose($,'main p:not(.eyebrow)'),
   answers:prose($,'main details'),
   images:$('main img').map((_,e)=>$(e).attr('src')).get(),
   links:$('main a').map((_,e)=>$(e).attr('href')).get(),
   anchors:$('main [id]').map((_,e)=>$(e).attr('id')).get(),
   topics:$('main [data-topic]').map((_,e)=>$(e).attr('data-topic')).get()
  });
- for(const r of routes){if(r==='/about/'||r==='/'||r==='/services/'||serviceLabels[r.slice(1,-1)])continue; // Approved compositions have independent evidence/anchor checks.
+ for(const r of routes){if(['/about/','/','/services/','/faq/','/news/','/gallery/'].includes(r)||serviceLabels[r.slice(1,-1)])continue; // Directory and FAQ facts are independently checked in editorial-composition.test.
   const before=load(execFileSync('git',['show','ab6ea8f:'+(r==='/'?'':r.slice(1))+'index.html'],{encoding:'utf8',maxBuffer:4*1024*1024}));
   const current=page(r);current('.guide-education').remove();
-  assert.deepEqual(extract(current),extract(before),r);
-  if(!serviceLabels[r.slice(1,-1)])assert.equal(page(r)('main h1').text(),r==='/faq/'?'Roof repair FAQs':before('main h1').text(),r+' identity or approved compact FAQ heading');
+  const actual=extract(current),original=extract(before);
+  // Approved merges change section/order only: preserve every paragraph,
+  // disclosure body, original image, link destination and meaningful anchor.
+  for(const field of Object.keys(original))assert.deepEqual(actual[field].sort(),original[field].sort(),r+' '+field);
+  if(!serviceLabels[r.slice(1,-1)])assert.equal(page(r)('main h1').text().toLowerCase().replace(/\.$/,''),before('main h1').text().toLowerCase().replace(/\.$/,''),r+' unchanged subject identity');
  }
 });
 
@@ -74,7 +77,7 @@ test('leak, tile, ridge, area and project guidance retains its particular decisi
  assert.match(leak('#education-q007 p').text(),/earlier scope.*weather pattern/);
  assert.match(page('/tile-roof-repairs/')('[data-topic="Q010"] a').text(),/individual.*tile|local.*tile/i);
  assert.match(page('/ridge-capping-repointing/')('[data-topic="Q011"] a').text(),/repointing.*rebedding/i);
- assert.match(page('/areas/hillarys-roof-repairs/')('.content-intent h3').text(),/wind.driven.*rain/i);
+ assert.match(page('/areas/hillarys-roof-repairs/')('.local-repair-detail h3').text(),/wind.driven.*rain/i);
  assert.match(page('/projects/metal-roof-ridge-capping-repair-perth/')('.content-intent h2').text(),/metal.*ridge.*capping/i);
 });
 
@@ -90,14 +93,15 @@ test('generated leak navigation uses both concise ampersand service names',()=>{
  }
 });
 
-test('all 30 educational answers survive the declarative pass with their FAQ originals',async()=>{
+test('all 30 full educational answers and meaningful FAQ aliases survive the editorial pass',async()=>{
  const {educationalTopics}=await import('./content/keyword-map-content.mjs');assert.equal(educationalTopics.length,30);
+ const {topicGuide}=await import('./content/service-structure-data.mjs');
  const faq=page('/faq/'),schema=nodes(faq).find(n=>n['@type']==='FAQPage');
  for(const t of educationalTopics){const $=page('/'+t.route+'/');
-  const target=new URL($(`[data-topic="${t.id}"] a`).attr('href'),'https://www.perthroofcare.com.au');
+  const target=new URL($(`.service-reading a[href="/news/${topicGuide[t.route]}/"]`).attr('href')+'#education-'+t.id.toLowerCase(),'https://www.perthroofcare.com.au');
   assert.equal(page(target.pathname)(target.hash).find('p').first().text(),t.body,t.id+' full explanation at linked guide');
-  assert.equal(faq(`#topic-${t.id.toLowerCase()} summary`).text(),t.q,t.id+' FAQ retained');
-  assert.ok(schema.mainEntity.some(n=>n.name===t.q&&n.acceptedAnswer.text.includes(t.a)),t.id+' schema parity');
+  const answer=faq(`#topic-${t.id.toLowerCase()}`).closest('details');assert.equal(answer.length,1,t.id+' meaningful answer');
+  assert.ok(schema.mainEntity.some(n=>n.name===answer.find('summary').text()&&n.acceptedAnswer.text===answer.find('p').text()),t.id+' schema parity');
  }
 });
 

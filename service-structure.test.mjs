@@ -7,10 +7,30 @@ const expected={ 'roof-repairs':6,'roof-leak-repairs':6,'tile-roof-repairs':7,'m
 const page=r=>load(readFileSync(`public/${r?`${r}/`:''}index.html`,'utf8'));
 const baseline=r=>load(execFileSync('git',['show',`3b9fbbb:${r?`${r}/`:''}index.html`],{encoding:'utf8',maxBuffer:4*1024*1024}));
 const words=$=>$('main').text().trim().split(/\s+/).length;
+const approvedCaptions={
+  "Recorded fastener work": "Fastener repair work",
+  "Opened tile-area record": "Opened tile area",
+  "Ridge-detail record": "Ridge repair detail",
+  "Completed roof record": "Completed roof view",
+  "Two-storey repair project: the supplied composite shows the home and a close-up of work at the ridge tile joint. These are context and work-in-progress views, not a before-and-after comparison.": "Two-storey home and ridge-joint repair: context and work-in-progress views, not a before-and-after comparison.",
+  "Overall metal-roof record after work": "Overall metal roof after work",
+  "Fastener work in progress in the same recorded project.": "Metal roof fastener work in progress.",
+  "Completed roof view from the recorded fastener repair project.": "Completed roof after fastener repairs.",
+  "Work-sequence record": "Valley and flashing work",
+  "After-work record": "Valley and flashing after work",
+  "Wider roof view from the supplied eaves tile repair records.": "Wider roof view of the eaves tile repair.",
+  "Local repair record": "Local tile-junction repair",
+  "Roof-void interior record": "Roof-void interior",
+  "Overall roof record after maintenance": "Overall roof after maintenance",
+  "Completed roof surface after the recorded work": "Completed roof surface after fastener work",
+  "Work around metal roof fastener points during the recorded repair. Explore the project photographs.": "Metal roof fastener work in progress. Explore the project photographs.",
+  "Flashing connection recorded during a roof inspection. Explore the project photographs.": "Flashing connection during roof inspection. Explore the project photographs."
+};
 test('22 service routes expose one compact flow with evidence only where it exists',()=>{
  for(const [route,count] of Object.entries(expected)){
   const $=page(route);
-  assert.deepEqual($('main > section > .container > h2').map((_,e)=>$(e).text()).get(),['Service content','Our solution',...(count?['Our work']:[])],route);
+  assert.deepEqual($('main > section[data-service-section]').map((_,e)=>$(e).attr('data-service-section')).get(),['content','solution',...(count?['work']:[])],route);
+  for(const h of $('main > section > .container > h2').toArray())assert.ok($(h).text().length>12,route+' substantive section name');
   assert.equal($('main > section').length,count?4:3,route+' compact hero plus approved sections');
   assert.equal($('main .service-brief-enquiry,main .audit-quote-scope,main .service-path').length,0,route+' repeated bands retired');
   assert.equal($('[data-service-section="work"] img').length,count,route+' unique matching evidence');
@@ -33,15 +53,17 @@ test('every original service anchor resolves to meaningful content and original 
   for(const img of before('main img').toArray()){
    const src=before(img).attr('src'),after=$(`main img[src="${src}"]`);
    assert.equal(after.length,1,route+' '+src);
-   assert.equal(after.closest('figure').find('figcaption').text(),before(img).closest('figure').find('figcaption').text(),route+' caption '+src);
+   const original=before(img).closest('figure').find('figcaption').text();
+   assert.equal(after.closest('figure').find('figcaption').text(),approvedCaptions[original]||original,route+' stage-preserving caption '+src);
   }
  }
 });
-test('full education remains at linked public targets and owners retain exactly one topic link',async()=>{
+test('full education remains at linked guide targets and owners keep the full guide reachable',async()=>{
  const {educationalTopics}=await import('./content/keyword-map-content.mjs');
+ const {topicGuide}=await import('./content/service-structure-data.mjs');
  for(const t of educationalTopics){
-  const owner=page(t.route),link=owner(`[data-topic="${t.id}"] a`);assert.equal(link.length,1,t.id);
-  const url=new URL(link.attr('href'),'https://www.perthroofcare.com.au');assert.ok(url.pathname.startsWith('/news/'),t.id+' existing guide');
+  const owner=page(t.route),guide=topicGuide[t.route],link=owner(`.service-reading a[href="/news/${guide}/"]`);assert.equal(link.length,1,t.id+' full guide');
+  const url=new URL(link.attr('href')+'#education-'+t.id.toLowerCase(),'https://www.perthroofcare.com.au');assert.ok(url.pathname.startsWith('/news/'),t.id+' existing guide');
   const target=page(url.pathname.slice(1,-1))(url.hash);assert.equal(target.length,1,t.id+' target');
   assert.equal(target.find('p').first().text(),t.body,t.id+' original full authoritative text');
   assert.equal(target.closest('details').length,0,t.id+' visible explanation');
@@ -90,7 +112,8 @@ test('solution navigation is curated, scannable and distinct from education and 
   for(const a of links.toArray())assert.doesNotMatch($(a).text(),/→|Explore|Compare|Perth/i,route+' short labels');
  }
  const roof=page('roof-repairs');
- assert.deepEqual(roof('.service-related a').map((_,e)=>roof(e).attr('href')).get(),['/roof-leak-repairs/','/metal-roof-repairs/','/repair-options/#compare-repair-options','/roof-inspection/','/news/roof-repair-cost-perth/']);
+ assert.deepEqual(roof('.service-related a').map((_,e)=>roof(e).attr('href')).get(),['/roof-leak-repairs/','/metal-roof-repairs/','/repair-options/#compare-repair-options','/roof-inspection/']);
+ assert.equal(roof('.service-reading a[href="/news/roof-repair-cost-perth/"]').length,1,'quote guide in reading group');
  const downpipe=page('downpipe-repairs');
  assert.equal(downpipe('.service-related a[href="/gutter-repairs/#gutter-repair-or-replace"]').length,1,'useful decision fragment retained');
  assert.equal(page('metal-roof-repairs')('#metal-fastener-project a[href="/projects/metal-roof-fastener-repair-sequence/"]').length,1);

@@ -7,7 +7,7 @@ const routes=[...readFileSync('public/sitemap.xml','utf8').matchAll(/<loc>(.*?)<
 const pages=new Map(routes.map(r=>[r,load(readFileSync(`public${r}index.html`,'utf8'))]));
 test('content revision provides contextual next steps on every published page',()=>{
  assert.equal(pages.size,69);
- for(const [r,$] of pages){assert.ok($('main .content-intent').length,r);assert.ok($('main .content-intent a[href^="/"]').length,r);}
+ for(const [r,$] of pages){const links=$('main a[href^="/"]').filter((_,a)=>$(a).attr('href')!=='/'&&!/\/feed\.(?:xml|json)$/.test($(a).attr('href')));assert.ok(links.length,r+' contextual destination');for(const a of links.toArray())assert.ok(pages.has($(a).attr('href').split('#')[0]),r+' published next step');}
 });
 test('FAQ questions and declarative guidance match their final visible answers',()=>{
  for(const [r,$] of pages){const questions=$('main details').map((_,e)=>({question:$(e).find('summary').text(),answer:$(e).find('p').text()})).get();

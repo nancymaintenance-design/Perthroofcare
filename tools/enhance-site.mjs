@@ -65,7 +65,7 @@ export function enhanceSite({ root, site }) {
   const sitemap = readFileSync(join(root,'sitemap.xml'),'utf8');
   const routes = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname.replace(/^\/|\/$/g,''));
   const documents = new Map(routes.map(route=>[route,load(readFileSync(join(root,route,'index.html'),'utf8'), { xml: { xmlMode:false, decodeEntities:false } })]));
-  const titleFor = route => documents.get(route)('h1').text().replace(/\.$/,'').replace(/&amp;/g,'&');
+  const titleFor = route => load(documents.get(route).html())('h1').text().replace(/\.$/,'');
   const business = {'@type':'LocalBusiness','@id':`${site}/#business`,name:'Ellis Services Group',alternateName:'Perth Roof Care',legalName:'Ellis Services Group Pty Ltd',url:site,telephone:'0405878406',email:'ellisservicesgroup3@outlook.com',address:{'@type':'PostalAddress',streetAddress:'140 St Georges Terrace',addressLocality:'Perth',addressRegion:'WA',postalCode:'6000',addressCountry:'AU'},sameAs:['https://www.instagram.com/elliservices_group/','https://share.google/FPWKvdrPRx3yeK9gp','https://share.google/Z4tImXHToPi9H4LmH']};
 
   for (const [route,$] of documents) {

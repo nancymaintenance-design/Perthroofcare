@@ -34,7 +34,7 @@ const popularAreaRoutes = {
 
 test('focused information architecture publishes one primary roof-repair destination per confirmed intent', () => {
   const headings = {
-    '': 'PERTH ROOF CARE — ROOF REPAIRS PERTH.', services: 'Roof repair services', 'roof-repairs': 'Roof repairs',
+    '': 'Roof repairs in Perth', services: 'Roof repair services', 'roof-repairs': 'Roof repairs',
     'roof-leak-repairs': 'Roof leak repairs', 'tile-roof-repairs': 'Tile roof repairs',
     'metal-roof-repairs': 'Metal roof repairs', 'ridge-capping-repointing': 'Ridge capping & repointing',
     'flashing-repairs': 'Roof valleys & flashing repairs', 'roof-inspection': 'Roof inspection',
@@ -57,7 +57,7 @@ test('services navigation is viewport-contained, concise and has no projects hub
   assert.doesNotMatch(home, /<a href="\/projects\/">Projects<\/a>/i);
   assert.doesNotMatch(serviceMenu, /href="\/projects\//i, 'service navigation must only point to standard service pages');
   assert.match(home, /id="services-submenu"[^>]*role="region"[^>]*aria-label="Services"/i);
-  assert.match(load(home)('.services-panel-intro').text(),/Our team arranges the roof assessment/i);
+  assert.match(load(home)('.services-panel-intro').text(),/Roof repairs, drainage and maintenance/i);
   assert.doesNotMatch(load(home)('.services-panel-intro').text(),/\?/);
   for (const label of ['Core roof repairs', 'Roofline and drainage', 'Roof repairs', 'Roof valleys & flashing repairs', 'Gutter repairs', 'Roof maintenance']) assert.ok(load(home)('#services-submenu').text().includes(label),label);
   assert.match(css, /\.services-submenu\{[^}]*overflow:auto[^}]*max-height:calc\(100vh - 7rem\)/i);
@@ -141,7 +141,7 @@ test('every service-menu destination uses the full standard service-page structu
 
 test('homepage carries the Roof Repairs Perth theme, focused paths and real work evidence', () => {
   const home = readFileSync(fileFor(''), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
-  assert.match(home, /<h1>PERTH ROOF CARE — ROOF REPAIRS PERTH\.<\/h1>/);
+  assert.match(home, /<h1>Roof repairs in Perth<\/h1>/);
   assert.ok(load(home)('.home-service-map h2').text().length > 10);
   assert.equal(load(home)('.home-service-map article').length,9,'nine service cards remain');
   assert.equal(load(home)('.home-enquiry').length,0,'repeated enquiry cards are consolidated');
@@ -219,11 +219,11 @@ test('new service routes, shared social links and JSON Feed are discoverable', (
 
 test('priority owner pages use distinct service roles with crawlable supporting links', () => {
   const expected = {
-    'roof-repairs': ['Roof repairs', 'Local defects and connected roof components', ['/roof-leak-repairs/', '/metal-roof-repairs/', '/repair-options/']],
-    'roof-leak-repairs': ['Roof leak repairs', 'Rain patterns and indoor water marks', ['/flashing-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/']],
-    'flashing-repairs': ['Roof valleys & flashing repairs', 'Valleys and roof junctions', ['/roof-leak-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/']],
-    'gutters-downpipes': ['Gutters & downpipes', 'The route from roof edge to discharge', ['/gutter-repairs/', '/downpipe-repairs/', '/roof-maintenance/']],
-    'downpipe-repairs': ['Downpipe repairs', 'Pipe sections, joints and supports', ['/gutters-downpipes/', '/gutter-repairs/']]
+    'roof-repairs': ['Roof repairs', 'Roof defects and connected components', ['/roof-leak-repairs/', '/metal-roof-repairs/', '/repair-options/']],
+    'roof-leak-repairs': ['Roof leak repairs', 'Rain patterns and signs of roof leaks', ['/flashing-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/']],
+    'flashing-repairs': ['Roof valleys & flashing repairs', 'Valley and roof junction defects', ['/roof-leak-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/']],
+    'gutters-downpipes': ['Gutters & downpipes', 'Roof drainage from gutter to downpipe', ['/gutter-repairs/', '/downpipe-repairs/', '/roof-maintenance/']],
+    'downpipe-repairs': ['Downpipe repairs', 'Downpipe joints, sections and supports', ['/gutters-downpipes/', '/gutter-repairs/']]
   };
   for (const [route, [h1, section, links]] of Object.entries(expected)) {
     const html = readFileSync(fileFor(route), 'utf8');
@@ -466,7 +466,7 @@ test('documented case records appear directly in their relevant services rather 
 test('roof leak repairs presents the supplied six-image case record in a complete grid', () => {
   const html = readFileSync(fileFor('roof-leak-repairs'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
   const images = ['roof-leak-case-01-overall.png', 'roof-leak-case-02-roof-context.png', 'roof-leak-case-03-junction-detail.png', 'roof-leak-case-04-interior-mark.png', 'roof-leak-case-05-work-in-progress.png', 'roof-leak-case-06-completed.png'];
-  assert.match(html, new RegExp('REAL CASE RECORD / LOCATION NOT PUBLISHED', 'i'));
+  assert.match(html, new RegExp('Roof repair photographs', 'i'));
   assert.equal((html.match(/class="roof-leak-evidence-item"/g) ?? []).length, 6, 'six supplied photos must form one complete gallery');
   for (const image of images) assert.match(html, new RegExp(`/assets/images/${image}`));
   assert.match(css, /\.roof-leak-evidence-grid\{[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/i);
@@ -475,7 +475,7 @@ test('roof leak repairs presents the supplied six-image case record in a complet
 test('tile roof repairs presents the supplied six-image case record in a complete grid', () => {
   const html = readFileSync(fileFor('tile-roof-repairs'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
   const images = ['tile-roof-case-01-overall.png', 'tile-roof-case-02-damaged-tiles.png', 'tile-roof-case-03-valley-gutter.png', 'tile-roof-case-04-ridge-detail.png', 'tile-roof-case-05-work-in-progress.png', 'tile-roof-case-06-completed.png'];
-  assert.match(html, new RegExp('REAL CASE RECORD / LOCATION NOT PUBLISHED', 'i'));
+  assert.match(html, new RegExp('Roof repair photographs', 'i'));
   assert.equal((html.match(/class="tile-roof-evidence-item"/g) ?? []).length, 6, 'six supplied photos must form one complete gallery');
   for (const image of images) assert.match(html, new RegExp(`/assets/images/${image}`));
   assert.match(css, /\.tile-roof-evidence-grid\{[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/i);
@@ -484,7 +484,7 @@ test('tile roof repairs presents the supplied six-image case record in a complet
 test('ridge capping repairs presents the supplied six-image case record in title order', () => {
   const html = readFileSync(fileFor('ridge-capping-repointing'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
   const images = ['ridge-case-01-overview-before.png', 'ridge-case-02-damaged-closeup.png', 'ridge-case-03-bedding-detail.png', 'ridge-case-04-interior-water-stain.png', 'ridge-case-05-repair-in-progress.png', 'ridge-case-06-overview-after.png'];
-  assert.match(html, new RegExp('REAL CASE RECORD / LOCATION NOT PUBLISHED', 'i'));
+  assert.match(html, new RegExp('Roof repair photographs', 'i'));
   assert.equal((html.match(/class="ridge-evidence-item"/g) ?? []).length, 6, 'six supplied photos must form one complete gallery');
   for (const image of images) assert.match(html, new RegExp(`/assets/images/${image}`));
   assert.match(css, /\.ridge-evidence-grid\{[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/i);
@@ -493,7 +493,7 @@ test('ridge capping repairs presents the supplied six-image case record in title
 test('roof valleys and flashing repairs presents the supplied six-image case record in title order', () => {
   const html = readFileSync(fileFor('flashing-repairs'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
   const images = ['valley-flashing-case-01-overall.png', 'valley-flashing-case-02-valley-closeup.png', 'valley-flashing-case-03-chimney-flashing.png', 'valley-flashing-case-04-roofline-detail.png', 'valley-flashing-case-05-work-record.png', 'valley-flashing-case-06-after-record.png'];
-  assert.match(html, new RegExp('REAL CASE RECORD / LOCATION NOT PUBLISHED', 'i'));
+  assert.match(html, new RegExp('Roof repair photographs', 'i'));
   assert.equal((html.match(/class="valley-flashing-evidence-item"/g) ?? []).length, 6, 'six supplied photos must form one complete gallery');
   for (const image of images) assert.match(html, new RegExp(`/assets/images/${image}`));
   assert.match(css, /\.valley-flashing-evidence-grid\{[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/i);
@@ -502,7 +502,7 @@ test('roof valleys and flashing repairs presents the supplied six-image case rec
 test('gutter repairs presents the supplied six-image case record in title order', () => {
   const html = readFileSync(fileFor('gutter-repairs'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
   const images = ['gutter-case-01-overall.png', 'gutter-case-02-problem-closeup.png', 'gutter-case-03-connection-detail.png', 'gutter-case-04-downpipe-detail.png', 'gutter-case-05-work-in-progress.png', 'gutter-case-06-completed.png'];
-  assert.match(html, new RegExp('REAL CASE RECORD / LOCATION NOT PUBLISHED', 'i'));
+  assert.match(html, new RegExp('Roof repair photographs', 'i'));
   assert.equal((html.match(/class="gutter-evidence-item"/g) ?? []).length, 6, 'six supplied photos must form one complete gallery');
   for (const image of images) assert.match(html, new RegExp(`/assets/images/${image}`));
   assert.match(css, /\.gutter-evidence-grid\{[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/i);
@@ -511,7 +511,7 @@ test('gutter repairs presents the supplied six-image case record in title order'
 test('metal roof repairs presents the supplied six-image case record in title order', () => {
   const html = readFileSync(fileFor('metal-roof-repairs'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
   const images = ['metal-roof-case-01-overview-before.png', 'metal-roof-case-02-fastener-sheet-detail.png', 'metal-roof-case-03-penetration-detail.png', 'metal-roof-case-04-roof-edge-detail.png', 'metal-roof-case-05-repair-in-progress.png', 'metal-roof-case-06-overview-after.png'];
-  assert.match(html, new RegExp('REAL CASE RECORD / LOCATION NOT PUBLISHED', 'i'));
+  assert.match(html, new RegExp('Roof repair photographs', 'i'));
   assert.equal((html.match(/class="metal-roof-evidence-item"/g) ?? []).length, 6, 'six supplied photos must form one complete gallery');
   for (const image of images) assert.match(html, new RegExp(`/assets/images/${image}`));
   assert.match(css, /\.metal-roof-evidence-grid\{[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/i);
@@ -520,7 +520,7 @@ test('metal roof repairs presents the supplied six-image case record in title or
 test('roof inspection presents the supplied six-image maintenance record in title order', () => {
   const html = readFileSync(fileFor('roof-inspection'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
   const images = ['roof-inspection-case-01-overview.png', 'roof-inspection-case-02-ridge-detail.png', 'roof-inspection-case-03-flashing-detail.png', 'roof-inspection-case-04-maintenance-point.png', 'roof-inspection-case-05-maintenance-in-progress.png', 'roof-inspection-case-06-overview-after.png'];
-  assert.match(html, new RegExp('REAL CASE RECORD / LOCATION NOT PUBLISHED', 'i'));
+  assert.match(html, new RegExp('Roof repair photographs', 'i'));
   assert.equal((html.match(/class="roof-inspection-evidence-item"/g) ?? []).length, 6, 'six supplied photos must form one complete gallery');
   for (const image of images) assert.match(html, new RegExp(`/assets/images/${image}`));
   assert.match(css, /\.roof-inspection-evidence-grid\{[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/i);
@@ -529,7 +529,7 @@ test('roof inspection presents the supplied six-image maintenance record in titl
 test('roof maintenance presents the supplied six-image tile-detail record in title order', () => {
   const html = readFileSync(fileFor('roof-maintenance'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
   const images = ['roof-maintenance-case-01-tile-edge.jpg', 'roof-maintenance-case-02-cracked-tile.jpg', 'roof-maintenance-case-03-broken-tile-detail.jpg', 'roof-maintenance-case-04-ridge-junction.jpg', 'roof-maintenance-case-05-valley-edge.jpg', 'roof-maintenance-case-06-local-seal-record.jpg'];
-  assert.match(html, new RegExp('REAL CASE RECORD / LOCATION NOT PUBLISHED', 'i'));
+  assert.match(html, new RegExp('Roof repair photographs', 'i'));
   assert.equal((html.match(/class="roof-maintenance-evidence-item"/g) ?? []).length, 6, 'six supplied photos must form one complete gallery');
   for (const image of images) assert.match(html, new RegExp(`/assets/images/${image}`));
   assert.match(css, /\.roof-maintenance-evidence-grid\{[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/i);
@@ -538,7 +538,7 @@ test('roof maintenance presents the supplied six-image tile-detail record in tit
 test('roof repairs presents the supplied six-image tile-repair record in title order', () => {
   const html = readFileSync(fileFor('roof-repairs'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
   const images = ['roof-repairs-case-01-opened-tile-area.jpg', 'roof-repairs-case-02-ridge-repair-detail.jpg', 'roof-repairs-case-03-under-tile-detail.jpg', 'roof-repairs-case-04-flashing-detail.jpg', 'roof-repairs-case-05-roof-overview.jpg', 'roof-repairs-case-06-ridge-detail.jpg'];
-  assert.match(html, new RegExp('REAL CASE RECORD / LOCATION NOT PUBLISHED', 'i'));
+  assert.match(html, new RegExp('Roof repair photographs', 'i'));
   assert.equal((html.match(/class="roof-repairs-evidence-item"/g) ?? []).length, 6, 'six supplied photos must form one complete gallery');
   for (const image of images) assert.match(html, new RegExp(`/assets/images/${image}`));
   assert.match(css, /\.roof-repairs-evidence-grid\{[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/i);
@@ -588,7 +588,7 @@ test('the local server and Vercel build publish the focused routes and assets', 
 
 test('documented project pages preserve privacy and supplied evidence', () => {
   const roleystone = readFileSync(fileFor('projects/roleystone-metal-roof-fastener-leak-repair'), 'utf8'); const sequence = readFileSync(fileFor('projects/metal-roof-fastener-repair-sequence'), 'utf8'); const wa6121 = readFileSync(fileFor('projects/wa-6121-tile-roof-valley-gutter-cleaning'), 'utf8');
-  assert.doesNotMatch(roleystone, /Heath Road|160-154/i); assert.match(roleystone, /structural adhesive/i); assert.match(sequence, /DOCUMENTED PROJECT/); assert.doesNotMatch(sequence, /LOCATION NOT PUBLISHED/); assert.match(sequence, /metal-fastener-sequence-05-completed\.png/); assert.match(wa6121, /Western Australia 6121, Australia/); assert.match(wa6121, /valley gutter cleaning/i);
+  assert.doesNotMatch(roleystone, /Heath Road|160-154/i); assert.match(roleystone, /structural adhesive/i); assert.match(sequence, /Roof repair project/); assert.doesNotMatch(sequence, /LOCATION NOT PUBLISHED/); assert.match(sequence, /metal-fastener-sequence-05-completed\.png/); assert.match(wa6121, /Western Australia 6121, Australia/); assert.match(wa6121, /valley gutter cleaning/i);
 });
 
 test('keyword-led news articles publish useful English guidance, schema and an RSS feed', () => {
@@ -672,7 +672,7 @@ test('storm damage repairs presents the supplied six-image urgent-response recor
   const html = readFileSync(fileFor('storm-damage-roof-repairs'), 'utf8'); const css = readFileSync(join(root, 'site.css'), 'utf8');
   assert.ok(html.includes(`<section class="topic-rail service-hero" style="--service-hero-image:url('/assets/images/storm-damage-case-06-roof-void-inspection.jpg')">`), 'storm damage needs its own documented-case title image');
   const images = ['storm-damage-case-01-roof-void-overview.jpg', 'storm-damage-case-02-roof-void-opening.jpg', 'storm-damage-case-03-under-tile-detail.jpg', 'storm-damage-case-04-roof-void-junction.jpg', 'storm-damage-case-05-roof-void-work-record.jpg', 'storm-damage-case-06-roof-void-inspection.jpg'];
-  assert.match(html, /URGENT ROOF-RESPONSE RECORD \/ LOCATION NOT PUBLISHED/i);
+  assert.match(html, /Roof-void observations/i);
   assert.match(html, /Urgent storm-related roof repair enquiries are prioritised/i);
   assert.match(html, /weather, site access and safety conditions allow/i);
   assert.equal(load(html)('[data-service-section="content"]').length,1,'storm damage compact service description');

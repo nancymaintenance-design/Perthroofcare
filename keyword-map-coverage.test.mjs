@@ -5,15 +5,16 @@ import {load} from 'cheerio';
 const page=r=>load(readFileSync(`public/${r}/index.html`,'utf8'));
 test('all 30 educational topics have a service owner, full linked explanation and visible FAQ answer',async()=>{
  const {educationalTopics}=await import('./content/keyword-map-content.mjs');
+ const {topicGuide}=await import('./content/service-structure-data.mjs');
  assert.equal(educationalTopics.length,30);
  const faq=page('faq');
  for(const t of educationalTopics){
-  const $=page(t.route),prose=$(`[data-topic="${t.id}"]`);
-  assert.equal(prose.length,1,t.id+' service prose');
+  const $=page(t.route),prose=$(`.service-reading a[href="/news/${topicGuide[t.route]}/"]`);
+  assert.equal(prose.length,1,t.id+' complete guide from service');
   assert.equal(prose.closest('details').length,0,t.id+' must not be FAQ-only');
-  const target=new URL(prose.find('a').attr('href'),'https://www.perthroofcare.com.au');
+  const target=new URL(prose.attr('href')+'#education-'+t.id.toLowerCase(),'https://www.perthroofcare.com.au');
   assert.equal(page(target.pathname.slice(1,-1))(target.hash).find('p').first().text(),t.body,t.id+' substantive explanation');
-  assert.equal(faq(`#topic-${t.id.toLowerCase()} summary`).text(),t.q,t.id);
+  assert.equal(faq(`#topic-${t.id.toLowerCase()}`).closest('details').length,1,t.id+' related surviving answer');
   assert.ok(faq(`#topic-${t.id.toLowerCase()} p`).text().length>60,t.id);
  }
 });
@@ -28,7 +29,7 @@ test('cost guide is a separate, discoverable information page, not a price promi
  for(const owner of ['roof-repairs','roof-leak-repairs','repair-options','news'])assert.ok(page(owner)(`main a[href="/${r}/"]`).length,owner);
 });
 test('content navigation is distinct from the collapsible mobile header menu',()=>{
- assert.equal(page('faq')('main nav.faq-topic-nav a').length,6);
+ assert.equal(page('faq')('main nav.faq-topic-nav a').length,7);
  assert.match(readFileSync('refinement.css','utf8'),/main nav\.content-toc,main nav\.faq-topic-nav\{display:block\}/);
 });
 test('two-storey tile repair uses one complete composite rather than fabricated before and after',()=>{

@@ -91,11 +91,13 @@ test('project counts and factual construction-stage labels survive content refin
 
 test('all thirty educational questions retain final visible-answer schema parity',async()=>{
  const {educationalTopics}=await import('./content/keyword-map-content.mjs');
+ const {topicGuide}=await import('./content/service-structure-data.mjs');
  const $=page('faq'),graph=JSON.parse($('script[type="application/ld+json"]').text())['@graph'];
  const schema=graph.find(n=>n['@type']==='FAQPage');assert.equal(educationalTopics.length,30);
  for(const topic of educationalTopics){
-  assert.equal(page(topic.route)(`[data-topic="${topic.id}"]`).length,1);
-  const detail=$(`#topic-${topic.id.toLowerCase()}`),entry=schema.mainEntity.find(q=>q.name===topic.q);
+  assert.equal(page(topic.route)(`.service-reading a[href="/news/${topicGuide[topic.route]}/"]`).length,1);
+  assert.equal(page('news/'+topicGuide[topic.route])(`#education-${topic.id.toLowerCase()} p`).first().text(),topic.body);
+  const detail=$(`#topic-${topic.id.toLowerCase()}`).closest('details'),entry=schema.mainEntity.find(q=>q.name===detail.find('summary').text());
   assert.ok(entry,topic.id);assert.equal(entry.acceptedAnswer.text,detail.find('p').text());
  }
 });
