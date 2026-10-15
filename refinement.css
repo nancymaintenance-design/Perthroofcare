@@ -28,7 +28,7 @@ nav#site-nav{gap:1rem}header nav>a{font-size:.9rem}.utility{background:var(--san
 .hero.index-hero{grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);gap:2rem;padding:2rem var(--page-gutter);align-items:center}
 .hero.index-hero .hero-copy{order:0;padding:0;margin:0;width:100%;max-width:48rem}
 .hero.index-hero .media-frame{order:1;min-height:0;margin:0}
-.hero.index-hero .media-frame img{display:block;width:100%;height:auto;max-height:240px;object-fit:contain}
+.hero.index-hero .media-frame img{display:block;width:100%;height:auto;min-height:0;max-height:240px;object-fit:contain}
 .index-hero .breadcrumbs{margin-bottom:1rem}
 .index-hero p:not(.eyebrow){font-size:1.05rem;max-width:66ch}
 .index-hero+.section{padding-top:2rem}

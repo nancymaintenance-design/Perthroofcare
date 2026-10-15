@@ -11,13 +11,17 @@
 .about-company .about-company-statement{font-size:clamp(1.1rem,1.8vw,1.35rem);line-height:1.5;max-width:36ch}
 .about-company-position .local-team-identity{margin-top:0}
 .about-company .section>.container>.eyebrow::before{display:none}
-.about-company-services{background:var(--sand)}
+.about-company .about-company-services{background:var(--sand);padding-block:2rem}
+.about-company-services>.container{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:2rem;align-items:start}
+.about-company-services h2{font-size:clamp(1.5rem,2.5vw,2rem);margin:0;max-width:22ch}
+.about-company-services p:first-child{margin-top:0}.about-company-services p:last-child{margin-bottom:0}
 .about-company a:not(.button){text-underline-offset:.2em}
-.about-company-approach-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:start;gap:clamp(2rem,5vw,5rem)}
+.about-company .about-company-approach{padding-block:clamp(2rem,4vw,3rem)}
+.about-company-approach-grid{display:block}
+.about-company-approach h2{max-width:none}
 .about-company-approach-grid>div{min-width:0}
-.about-company-process{margin:0;padding-left:1.5rem}
-.about-company-process li{padding:0 0 1.3rem .4rem;margin-bottom:1.3rem;border-bottom:1px solid var(--sand-line)}
-.about-company-process li:last-child{padding-bottom:0;margin-bottom:0;border-bottom:0}
+.about-company-process{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.5rem;margin:0;padding-left:1.5rem}
+.about-company-process li{min-width:0;padding:1rem 0 0 .4rem;border-top:1px solid var(--sand-line)}
 .about-company-process li::marker{font-weight:700;color:var(--clay)}
 .about-company-process p{margin:0}
 .about-company .about-company-business{background:var(--paper);padding-block:0}
@@ -31,4 +35,4 @@
 .about-company-business p{margin:.75rem 0 0}
 .about-company-business .about-company-registration-note{font-size:.85rem}
 .about-company .inspection-charge-notice{font-size:.9rem;line-height:1.6}
-@media(max-width:720px){.about-company-hero-grid,.about-company-registration-panel,.about-company-approach-grid{grid-template-columns:1fr}.about-company h1{max-width:22ch}}
+@media(max-width:720px){.about-company-hero-grid,.about-company-registration-panel,.about-company-process,.about-company-services>.container{grid-template-columns:1fr}.about-company-process{gap:1.5rem}.about-company h1{max-width:22ch}}

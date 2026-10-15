@@ -9,6 +9,42 @@ import {applyAboutCompany,renderAboutCompany} from './content/about-company.mjs'
 const root=fileURLToPath(new URL('./public/',import.meta.url));
 const page=()=>load(readFileSync(join(root,'about/index.html'),'utf8'));
 
+// Match the actual route CSS against rendered elements. This checks ownership
+// and responsive declarations; browser geometry remains controller-owned QA.
+function ownedStyle($,element,css,width){
+ const result={};
+ function visit(source){
+  let offset=0;
+  while(offset<source.length){
+   const open=source.indexOf('{',offset);if(open<0)break;
+   let end=open+1,depth=1;for(;depth&&end<source.length;end++){if(source[end]==='{')depth++;if(source[end]==='}')depth--;}
+   const selector=source.slice(offset,open).trim(),body=source.slice(open+1,end-1);offset=end;
+   if(selector.startsWith('@media')){const max=selector.match(/max-width:\s*(\d+)px/),min=selector.match(/min-width:\s*(\d+)px/);if((!max||width<=Number(max[1]))&&(!min||width>=Number(min[1])))visit(body);continue;}
+   if(selector.startsWith('@')||selector.includes('::')||selector.includes(':focus-visible'))continue;
+   if($(element).is(selector))for(const declaration of body.split(';')){const colon=declaration.indexOf(':');if(colon>0)result[declaration.slice(0,colon).trim()]=declaration.slice(colon+1).trim();}
+  }
+ }
+ visit(css.replace(/\/\*[\s\S]*?\*\//g,''));return result;
+}
+
+test('About process uses a full-width heading and three balanced desktop steps that stack on phones',()=>{
+ const $=load(renderAboutCompany()),css=readFileSync(new URL('./about-company.css',import.meta.url),'utf8');
+ const section=$('[data-about-section="approach"]'),layout=section.children('.container'),steps=section.find('ol');
+ assert.equal(ownedStyle($,layout,css,1280).display,'block','heading must not occupy an empty left column');
+ assert.equal(ownedStyle($,steps,css,1280)['grid-template-columns'],'repeat(3,minmax(0,1fr))');
+ assert.equal(ownedStyle($,steps,css,390)['grid-template-columns'],'1fr');
+ assert.deepEqual(steps.find('h3').map((_,e)=>$(e).text()).get(),['Property and access details','Inspection scope and fee','Written repair quote']);
+ const capabilities=$('[data-about-section="services"]>.container');
+ assert.equal(capabilities.children('h2 + div').find('a[href="/services/"]').length,1,'capability copy and its action share the heading row');
+});
+
+test('compact FAQ image releases the legacy minimum height within its phone maximum',()=>{
+ const $=load('<section class="hero inner index-hero"><div class="media-frame"><img alt="Roof inspection"></div></section>');
+ const css='.hero.inner .media-frame img{min-height:230px}'+readFileSync(new URL('./refinement.css',import.meta.url),'utf8');
+ const style=ownedStyle($,$('img'),css,390);
+ assert.equal(style['min-height'],'0');assert.equal(style['max-height'],'180px');assert.equal(style['object-fit'],'contain');
+});
+
 test('About has one company identity heading with consistent company-intent metadata',()=>{
  const $=page();
  assert.equal($('main h1').length,1);
