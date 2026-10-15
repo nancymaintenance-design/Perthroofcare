@@ -23,7 +23,7 @@ nav#site-nav{gap:1rem}header nav>a{font-size:.9rem}.utility{background:var(--san
 .hero-phone{display:inline-flex;padding-block:.75rem;font-weight:700;color:#fff;text-underline-offset:5px}
 .home-topic-rail.home-hero-backdrop .inspection-charge-notice{font-size:.9rem;line-height:1.5;margin-block:.75rem}
 .index-hero{min-height:0}
-.topic-rail.index-hero>.container{padding-block:clamp(1.5rem,3vw,2.5rem)}
+.topic-rail.index-hero>.container{padding-block:clamp(1rem,2vw,1.25rem)}
 .index-hero h1{font-size:clamp(2rem,3.5vw,3.2rem);line-height:1.1;text-transform:none;max-width:28ch;margin:.4rem 0 1rem}
 .hero.index-hero{grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);gap:2rem;padding:2rem var(--page-gutter);align-items:center}
 .hero.index-hero .hero-copy{order:0;padding:0;margin:0;width:100%;max-width:48rem}
@@ -31,7 +31,7 @@ nav#site-nav{gap:1rem}header nav>a{font-size:.9rem}.utility{background:var(--san
 .hero.index-hero .media-frame img{display:block;width:100%;height:auto;min-height:0;max-height:240px;object-fit:contain}
 .index-hero .breadcrumbs{margin-bottom:1rem}
 .index-hero p:not(.eyebrow){font-size:1.05rem;max-width:66ch}
-.index-hero+.section{padding-top:2rem}
+.index-hero+.section{padding-top:.5rem}
 .services-menu-groups section{border-bottom:1px solid var(--sand-line)}
 .services-menu-groups section:nth-child(even){border-right:0}
 .services-menu-groups a{padding:.5rem 0;line-height:1.4}

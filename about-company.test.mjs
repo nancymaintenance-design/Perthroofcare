@@ -45,6 +45,21 @@ test('compact FAQ image releases the legacy minimum height within its phone maxi
  assert.equal(style['min-height'],'0');assert.equal(style['max-height'],'180px');assert.equal(style['object-fit'],'contain');
 });
 
+test('Gallery index opening reserves at most 48 pixels for vertical hero padding and the grid gap',()=>{
+ const $=load(readFileSync(join(root,'gallery/index.html'),'utf8')),css=readFileSync(new URL('./refinement.css',import.meta.url),'utf8');
+ const pixels=(value,width)=>{
+  const unit=s=>s.endsWith('rem')?parseFloat(s)*16:s.endsWith('vw')?parseFloat(s)*width/100:parseFloat(s);
+  if(value.startsWith('clamp(')){const [min,preferred,max]=value.slice(6,-1).split(',').map(unit);return Math.max(min,Math.min(preferred,max));}
+  return unit(value);
+ };
+ for(const width of [1280,390]){
+  const hero=$('main > .index-hero > .container'),collection=$('.case-library');
+  const padding=pixels(ownedStyle($,hero,css,width)['padding-block'],width),gap=pixels(ownedStyle($,collection,css,width)['padding-top'],width);
+  assert.ok(padding>=16,'retain comfortable opening padding');
+  assert.ok(padding*2+gap<=48,`${width}px opening adds ${padding*2+gap}px before project imagery`);
+ }
+});
+
 test('About has one company identity heading with consistent company-intent metadata',()=>{
  const $=page();
  assert.equal($('main h1').length,1);

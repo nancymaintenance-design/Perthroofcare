@@ -92,6 +92,8 @@ Services, Gallery and FAQ use the shared `.index-hero` refinement rules: natural
 
 Gallery's opening uses Roof repair projects and one concise introduction with the original project period inline. The project grid follows immediately, with the scope disclaimer below the collection; do not reintroduce a repeated collection heading or a separate date band. News also reuses `.index-hero` with Roof repair guides as its human heading. Both preserve SEO metadata, all record summaries, photographs, dates, URLs and IDs. These final directory refinements are owned by content/editorial-composition.mjs and require no additional shared CSS.
 
+Final first-screen spacing: the existing topic-rail index hero uses 16–20px vertical padding and the following section starts with an 8px gap. At 1280px this removes 60.8px from Gallery's opening/grid spacing, allowing the first full project title into a 720px desktop viewport. These values remain in the existing refinement.css owners; cards, photographs and content stay unchanged.
+
 All 22 service routes use the concise core names in content/service-labels.mjs for navigation, service cards, H1, hero eyebrow, breadcrumbs and Service schema names. SEO titles retain one useful Perth; real geographic facts, branded Perth Roof Care and geographic project, guide and area titles retain their place names. The final label pass follows declarative rewriting and precedes knowledge/schema synchronisation.
 
 ## Contact enquiry flow — 2026-10-14
