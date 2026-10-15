@@ -103,7 +103,7 @@ test('About omits the pre-footer contact band while preserving the actual shared
  assert.equal($('footer').length,1);
  for(const route of ['','contact','tile-roof-repairs']){
   const sibling=load(readFileSync(join(root,route,'index.html'),'utf8'));
-  assert.equal(sibling('.contact-band').length,1,route||'Home');
+  assert.equal(sibling('.contact-band').length,route==='contact'?0:1,route||'Home');
   assert.equal(sibling('footer').length,1,route||'Home');
   assert.equal($('footer').toString(),sibling('footer').toString(),route||'Home');
  }

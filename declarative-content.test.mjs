@@ -59,9 +59,12 @@ test('consolidated services leave unrelated prose and existing guide bodies inta
   anchors:$('main [id]').map((_,e)=>$(e).attr('id')).get(),
   topics:$('main [data-topic]').map((_,e)=>$(e).attr('data-topic')).get()
  });
- for(const r of routes){if(['/about/','/','/services/','/faq/','/news/','/gallery/'].includes(r)||serviceLabels[r.slice(1,-1)])continue; // Directory and FAQ facts are independently checked in editorial-composition.test.
+ for(const r of routes){if(['/about/','/','/services/','/faq/','/news/','/gallery/','/service-areas/'].includes(r)||serviceLabels[r.slice(1,-1)])continue; // Directory and FAQ facts are independently checked in editorial-composition/enquiry-consistency tests.
   const before=load(execFileSync('git',['show','ab6ea8f:'+(r==='/'?'':r.slice(1))+'index.html'],{encoding:'utf8',maxBuffer:4*1024*1024}));
   const current=page(r);current('.guide-education').remove();
+  // Task 3 adds the shared inspection disclosure to area forms. Preserve every
+  // original local body, link and fragment while checking that addition separately.
+  if(r.startsWith('/areas/'))current('form .inspection-charge-notice').remove();
   const actual=extract(current),original=extract(before);
   // Approved merges change section/order only: preserve every paragraph,
   // disclosure body, original image, link destination and meaningful anchor.
@@ -107,7 +110,7 @@ test('all 30 full educational answers and meaningful FAQ aliases survive the edi
 
 test('shared contact heading and menu present the roof repair service directly',()=>{
  for(const r of routes){const $=page(r);
-  if(r==='/about/')assert.equal($('.contact-band').length,0,'About keeps registration above the actual footer');
+  if(['/about/','/contact/'].includes(r))assert.equal($('.contact-band').length,0,'Company and Contact pages omit the repeated pre-footer action');
   else assert.match($('.footer-cta h2,.contact-band h2,.cta-band h2').text()||$('h2').last().text(),/Perth roof repair enquir/i,r);
   assert.doesNotMatch($('.services-panel-intro').text(),/Need help choosing\?/);
  }

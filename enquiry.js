@@ -36,7 +36,7 @@ export default async function enquiry(request, response) {
   const phone = cleanText(data.phone, 40);
   const email = cleanText(data.email, 254);
   const enquiryText = cleanText(data.enquiry, 4_000);
-  if (!name || !phone || !enquiryText || !data.privacy || !isValidEmail(email)) {
+  if (!name || !phone || !enquiryText || data.privacy !== true || !isValidEmail(email)) {
     return json(response, 400, { error: 'Please complete the required fields with a valid email address and accept the privacy information.' });
   }
 

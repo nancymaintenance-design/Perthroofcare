@@ -1,5 +1,6 @@
 import {localTeamIdentity,businessHoursText} from './business-links.mjs';
 import {inspectionChargeNotice} from './audit-local-content.mjs';
+import {renderEnquiryFallback} from './enquiry-fallback.mjs';
 
 // Preserve the existing form node and its API/client-validation hooks. Only its
 // surrounding flow and grid spans belong to this final, Contact-only pass.
@@ -28,8 +29,9 @@ export function applyContactLayout($){
   <p class="eyebrow">ENQUIRY</p><h2>Arrange a roof assessment</h2>
   <p>Our team reviews your suburb, roof material if known, the affected area, timing and previous repairs to plan the assessment. Include the authorised access contact and any restrictions.</p>
   <p class="contact-photo-note">Existing ground-level photographs are optional and can be emailed to our team. There is no need to access the roof.</p>
-  <div class="contact-form-slot"></div><p class="contact-scope-link"><a href="/roof-inspection/">Roof inspection scope and charges</a></p>
+  ${renderEnquiryFallback()}<div class="contact-form-slot"></div><p class="contact-scope-link"><a href="/roof-inspection/">Roof inspection scope and charges</a></p>
  </div></div></section>`);
  $('.contact-form-slot').replaceWith(form);
+ $('.contact-band').remove();
  if(!$('link[href="/assets/css/contact-layout.css"]').length)$('head').append('<link rel="stylesheet" href="/assets/css/contact-layout.css">');
 }
