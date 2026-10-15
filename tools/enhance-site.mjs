@@ -166,7 +166,7 @@ export function enhanceSite({ root, site }) {
   }
   news('.guide-index > .container > p:not(.eyebrow)').text('Read practical guidance from Ellis Services Group on roof materials, leak paths, repair methods and maintenance. Each article connects to the relevant service so you can arrange the work your roof needs.');
   news('.guide-index > .container > h2').text('Practical answers from our roofing team.');
-  news('.guide-index article').each((_,el)=>{const card=news(el),href=card.find('a[href^="/news/"]').attr('href'),doc=documents.get(href?.replace(/^\/|\/$/g,''));if(doc){card.find('h2,h3').first().text(doc('h1').text());card.find('p').first().text(doc('main .article-lead,main .article-reading > p:not(.eyebrow,.article-byline)').first().text());}});
+  news('.guide-index article').each((_,el)=>{const card=news(el),href=card.find('a[href^="/news/"]').attr('href'),doc=documents.get(href?.replace(/^\/|\/$/g,''));if(doc){card.find('h2,h3').first().text(doc('h1').text());card.find('p:not(.eyebrow)').first().text(doc('main .article-lead,main .article-reading > p:not(.eyebrow,.article-byline)').first().text());}});
 
   const gallery=documents.get('gallery');
   for(const slug of ['roleystone-metal-roof-fastener-leak-repair','metal-roof-fastener-repair-sequence','wa-6121-tile-roof-valley-gutter-cleaning']){

@@ -42,7 +42,10 @@ function composeNews($){
   const group=$(`<section class="faq-category"${slugs.includes('roof-repair-cost-perth')?' id="related-work-options"':''}><h2>${esc(title)}</h2><div class="cards"></div></section>`);
   for(const slug of slugs){const card=cards.get(slug);if(!card)throw new Error(`Missing guide card ${slug}`);
    const heading=card.find('h2,h3').first();heading[0].tagName='h3';
-   card.find('p').not('.eyebrow').first().text(guideSummaries[slug]);
+   // The group and title supply the topic; retain only the reviewed task summary.
+   card.find('.eyebrow').remove();
+   card.find('p').slice(1).remove();
+   card.find('p').first().text(guideSummaries[slug]);
    // One complete title link per guide; headings remain the reading hierarchy.
    card.find('a').text('Read the guide');group.find('.cards').append(card);
   }directory.append(group);

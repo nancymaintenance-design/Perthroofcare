@@ -74,7 +74,7 @@ export const serviceSectionTitles={
     "content": "Storm damage and active water entry",
     "solution": "Storm damage assessment and repair scope",
     "guidance": "Storm timing, photographs and affected rooms",
-    "work": "Roof-void observations from an urgent enquiry"
+    "work": "Roof-void inspection photographs"
   },
   "roof-restoration": {
     "content": "Roof repairs and surface condition",
@@ -85,7 +85,7 @@ export const serviceSectionTitles={
     "content": "Roof condition, access and repair priorities",
     "solution": "Roof inspection and repair recommendations",
     "guidance": "Inspection components, fees and records",
-    "work": "Roof inspection and maintenance records"
+    "work": "Roof condition and maintenance photographs"
   },
   "repair-options": {
     "content": "Repair, restoration and replacement options",

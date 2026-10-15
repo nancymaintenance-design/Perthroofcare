@@ -53,6 +53,31 @@ test('News presents thirteen unique guides in one grouped directory',()=>{
  assert.equal($('.guide-index').length,1);assert.ok($('.guide-index h2').length>=3);assert.equal($('main > .content-intent,main > #related-work-options').length,0);
  for(const a of links.toArray())assert.ok($(a).closest('article').find('p').text().length>40,'task-specific summary');
 });
+
+test('service work sections and nested sequence headings have distinct labels',()=>{
+ const normalize=text=>text.trim().toLowerCase().replace(/[.!?]+$/,'');
+ for(const route of Object.keys(serviceLabels)){
+  const $=page(route);
+  $('main section').each((_,section)=>{
+   const heading=$(section).find('h2').first();if(!heading.length)return;
+   $(section).find('h3').each((_,child)=>assert.notEqual(normalize($(child).text()),normalize(heading.text()),route+' section and sequence: '+heading.text()));
+  });
+ }
+});
+
+test('final News cards contain one task summary and no service lead in an eyebrow',()=>{
+ const $=page('news'),cards=$('.guide-index article');assert.equal(cards.length,13);
+ cards.each((_,element)=>{
+  const card=$(element),route=card.find('a').attr('href');
+  assert.equal(card.find('p:not(.eyebrow)').length,1,route+' one summary');
+  card.find('.eyebrow').each((_,label)=>{
+   assert.ok($(label).text().trim().split(/\s+/).length<=6,route+' concise topic label');
+   assert.ok($(label).text().length<=60,route+' short eyebrow');
+  });
+  assert.doesNotMatch(card.text(),/We trace roof leaks|completes (?:the )?required roof repairs|We inspect roof/i,route+' no duplicated service introduction');
+ });
+ assert.equal(new Set(cards.map((_,e)=>$(e).find('a').attr('href')).get()).size,13);
+});
 test('all routes have factual reviewed headings and decoded case names',()=>{
  assert.equal(routes.length,69);
  for(const route of routes){const $=page(route);for(const h of $('main h1,main h2,main h3,main summary').toArray()){
