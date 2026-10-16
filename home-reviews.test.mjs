@@ -19,10 +19,10 @@ function runtime({mobile=false,reduced=false}={}){
  const element=()=>({hidden:false,textContent:'',events:{},attrs:{},addEventListener(type,fn){this.events[type]=fn;},setAttribute(name,value){this.attrs[name]=value;},contains(node){return node===this;}});
  const cards=Array.from({length:10},element),prev=element(),next=element(),pause=element(),controls=element(),track=element(),carousel=element();
  carousel.querySelectorAll=()=>cards;carousel.querySelector=selector=>({'[data-review-prev]':prev,'[data-review-next]':next,'[data-review-pause]':pause,'.review-controls':controls,'.review-track':track}[selector]);
- const callbacks=new Map();let timerId=0;const win={addEventListener(){},matchMedia(query){return {matches:query.includes('reduced')?reduced:mobile,addEventListener(){}};}};
+ const callbacks=new Map();let timerId=0;const narrow={matches:mobile,addEventListener(type,fn){this.change=fn;}};const win={addEventListener(){},matchMedia(query){return query.includes('reduced')?{matches:reduced,addEventListener(){}}:narrow;}};
  const doc={hidden:false,documentElement:{lang:'en-AU'},querySelector(selector){return selector==='[data-review-carousel]'?carousel:null;},querySelectorAll(){return[];},addEventListener(){}};
  runInNewContext(readFileSync('site.js','utf8'),{document:doc,window:win,setInterval(fn){callbacks.set(++timerId,fn);return timerId;},clearInterval(id){callbacks.delete(id);}});
- return {cards,prev,next,pause,carousel,callbacks,visible:()=>cards.map((card,i)=>!card.hidden?i:null).filter(i=>i!==null)};
+ return {cards,prev,next,pause,carousel,callbacks,document:doc,resize(mobile){narrow.matches=mobile;narrow.change();},visible:()=>cards.map((card,i)=>!card.hidden?i:null).filter(i=>i!==null)};
 }
 test('carousel advances and pauses without hiding focused reviews',()=>{
  const r=runtime();assert.deepEqual(r.visible(),[0,1,2]);
@@ -43,6 +43,15 @@ test('phone shows one review and reduced-motion disables automatic rotation',()=
 test('desktop wraps to the last complete ordered group without reordering the reading sequence',()=>{
  const r=runtime();r.prev.events.click();assert.deepEqual(r.visible(),[7,8,9]);
  r.next.events.click();assert.deepEqual(r.visible(),[0,1,2]);
+});
+test('shrinking to one review preserves the focused original-quote disclosure',()=>{
+ for(const index of [1,2]){
+  const r=runtime(),summary={tagName:'SUMMARY'};
+  r.cards[index].contains=node=>node===summary;
+  r.document.activeElement=summary;r.carousel.events.focusin();
+  r.resize(true);assert.deepEqual(r.visible(),[index]);assert.equal(r.document.activeElement,summary);assert.equal(r.callbacks.size,0);
+  r.resize(false);assert.ok(r.visible().includes(index));assert.equal(r.document.activeElement,summary);
+ }
 });
 test('Chinese reviews mark translations and retain each original quote',()=>{
  const $=load(readFileSync('public/zh/index.html','utf8'));

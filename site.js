@@ -13,6 +13,8 @@ if (reviewCarousel) {
   const render = () => {
     const count = narrow.matches ? 1 : 3;
     first = Math.min(first,cards.length-count);
+    const activeReview = cards.findIndex(card => card.contains(document.activeElement));
+    if (activeReview >= 0 && (activeReview < first || activeReview >= first + count)) first = Math.min(activeReview,cards.length-count);
     cards.forEach((card,index) => { card.hidden = index < first || index >= first + count; });
   };
   const schedule = () => {
