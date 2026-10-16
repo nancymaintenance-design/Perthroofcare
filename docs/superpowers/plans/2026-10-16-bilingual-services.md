@@ -51,7 +51,7 @@
 
 ### Task 3: Build integration, interaction and verification
 
-**Files:** Modify vercel-build.mjs, tools/bundle-stylesheets.mjs, site.js, refinement.css, DESIGN.md, package.json and exact affected legacy test helpers; create tools/build-locales.mjs and bilingual-site.test.mjs. Update generated publish artifacts normally. Refine foundation only if integration reveals a concrete need.
+**Files:** Modify vercel-build.mjs, tools/bundle-stylesheets.mjs, tools/optimize-images.mjs, site.js, analytics.js, refinement.css, DESIGN.md, package.json and exact affected legacy test helpers; create tools/build-locales.mjs and bilingual-site.test.mjs. Update generated publish artifacts normally. Refine foundation only if integration reveals a concrete need.
 
 **Interfaces:** buildLocales(root) consumes final English page files + base sitemap and the Task2 dictionary. It writes Chinese counterpart files, decorates English counterparts with language links/hreflang, generates locale feeds and extends canonical sitemap to138; invoked after English build, before image optimization and copying. Base English route tests derive English-only pages; bilingual-site tests inspect all138.
 
