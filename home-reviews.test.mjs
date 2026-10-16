@@ -10,7 +10,7 @@ test('home contains ten attributed reviews instead of duplicated company and pro
  assert.equal($('.home-proof,.home-company-relationship,.contact-band').length,0);
  assert.equal($('footer').length,1);
  assert.deepEqual($('.review-author').map((_,el)=>$(el).text()).get(),['Huan Yang','chan yuenkit','Matt','Ray Sun','うちむ','Management Team','Cristobal Severino','Benjamin Hanley','Aneuk Kreh','So Yeong Ha']);
- assert.match($('.home-reviews').text(),/company-wide/i);
+ assert.match($('.home-reviews').text(),/property maintenance services in different locations/i);
  assert.match($('.google-review-card').eq(7).text(),/Living in Sydney/);
  assert.equal($('.home-reviews [data-review-prev],.home-reviews [data-review-next],.home-reviews [data-review-pause]').length,3);
  assert.equal($('.home-reviews script[type="application/ld+json"]').length,0);
