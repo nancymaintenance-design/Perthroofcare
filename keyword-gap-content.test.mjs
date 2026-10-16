@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {load} from 'cheerio';
 
-const paths=[...readFileSync('public/sitemap.xml','utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname);
+const paths=[...readFileSync('public/sitemap.xml','utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname).filter(r=>!r.startsWith('/zh/'));
 const pages=new Map(paths.map(path=>[path,load(readFileSync(`public${path}index.html`,'utf8'))]));
 
 // Catch a missing content-pass call or a section attached outside the published main.

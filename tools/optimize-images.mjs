@@ -59,7 +59,7 @@ export async function optimizeImages(root) {
       bgRules.push(`${selector}{--service-hero-image:url('/assets/images/${largest.file}')!important}@media(max-width:600px){${selector}{--service-hero-image:url('/assets/images/${small.file}')!important}}`);
       $('head').append(`<link rel="preload" as="image" fetchpriority="high" href="/assets/images/${largest.file}" media="(min-width:601px)"><link rel="preload" as="image" fetchpriority="high" href="/assets/images/${small.file}" media="(max-width:600px)">`);
     });
-    if(route===''){
+    if(route===''||route==='zh'){
       $('link[rel="preload"][as="image"][href="/assets/images/hero-australian-roofer-v2.png"]').remove();
       const rec=manifest['hero-australian-roofer-v2.png'];
       const mobile=rec.variants.find(v=>v.width>=640)||rec.variants.at(-1);

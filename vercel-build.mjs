@@ -4,6 +4,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { optimizeImages } from './tools/optimize-images.mjs';
 import { bundleStylesheets } from './tools/bundle-stylesheets.mjs';
+import { buildLocales } from './tools/build-locales.mjs';
 import sharp from 'sharp';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
@@ -13,6 +14,7 @@ const build = spawnSync(process.execPath, ['build.mjs'], { cwd: root, stdio: 'in
 if (build.status !== 0) process.exit(build.status ?? 1);
 const annotateImages = spawnSync(process.execPath, ['tools/annotate-image-dimensions.mjs'], { cwd: root, stdio: 'inherit' });
 if (annotateImages.status !== 0) process.exit(annotateImages.status ?? 1);
+buildLocales(root);
 await optimizeImages(root);
 
 // Publish one brand-owned PNG icon path for browsers and search crawlers.
@@ -40,7 +42,8 @@ for (const route of publishedRoutes.filter(Boolean)) {
   mkdirSync(dirname(destination), { recursive: true });
   cpSync(join(root, route, 'index.html'), destination);
 }
-for (const file of ['news/feed.xml', 'news/feed.json']) {
+for (const file of ['news/feed.xml', 'news/feed.json', 'zh/news/feed.xml', 'zh/news/feed.json', 'zh/case-studies.json', '404.html', 'zh/404.html']) {
+  mkdirSync(dirname(join(publicDirectory, file)), { recursive: true });
   cpSync(join(root, file), join(publicDirectory, file));
 }
 
@@ -219,5 +222,8 @@ writeFileSync(join(functionDirectory, '.vc-config.json'), JSON.stringify({
   shouldAddHelpers: true
 }));
 writeFileSync(join(outputDirectory, 'config.json'), JSON.stringify({ version: 3, routes: [
-  { src: '^/index\\.html$', headers: { Location: '/' }, status: 308 }
+  { src: '^/index\\.html$', headers: { Location: '/' }, status: 308 },
+  { handle: 'filesystem' },
+  { src: '^/zh(?:/.*)?$', dest: '/zh/404.html', status: 404 },
+  { src: '/.*', dest: '/404.html', status: 404 }
 ] }));

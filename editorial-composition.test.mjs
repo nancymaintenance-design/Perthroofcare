@@ -6,7 +6,7 @@ import {load} from 'cheerio';
 import {serviceLabels} from './content/service-labels.mjs';
 const page=r=>load(readFileSync(`public/${r?r+'/':''}index.html`,'utf8'));
 const baseline=r=>load(execFileSync('git',['show',`c832b94:${r?r+'/':''}index.html`],{encoding:'utf8',maxBuffer:4*1024*1024}));
-const routes=[...readFileSync('sitemap.xml','utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname.slice(1,-1));
+const routes=[...readFileSync('sitemap.xml','utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname).filter(r=>!r.startsWith('/zh/')).map(r=>r.slice(1,-1));
 test('service sections name their work and guide choices are limited without losing education',async()=>{
  const {educationalTopics}=await import('./content/keyword-map-content.mjs');
  const {topicGuide}=await import('./content/service-structure-data.mjs');

@@ -7,3 +7,5 @@ node_modules/
 public/
 responsive-images.css
 .seo-cache/
+/zh/
+/404.html

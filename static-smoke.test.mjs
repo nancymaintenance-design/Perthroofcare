@@ -420,7 +420,7 @@ test('service metadata mirrors visible service content and publishes RSS discove
     const service = entries.find((entry) => entry['@type'] === 'Service');
     const breadcrumb = entries.find((entry) => entry['@type'] === 'BreadcrumbList');
     const faq = entries.find((entry) => entry['@type'] === 'FAQPage');
-    const h1 = html.match(/<h1(?: [^>]*)?>([^<]+)<\/h1>/)?.[1];
+    const h1 = load(html)('h1').first().text();
     assert.ok(webPage && service && breadcrumb, `${route} needs WebPage, Service and BreadcrumbList metadata`);
     assert.equal(faq,undefined,`${route} service guidance must not claim FAQPage`);
     assert.equal(service.name, h1?.replace(/\.$/, ''), `${route} service metadata must use the visible H1`);

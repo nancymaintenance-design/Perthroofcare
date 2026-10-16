@@ -2,8 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {runInNewContext} from 'node:vm';
-function setup(hostname='www.perthroofcare.com.au'){
-  const events=[],handlers={},window={location:{hostname,pathname:'/roof-leak-repairs/'},gtag:(...args)=>events.push(args)};
+function setup(hostname='www.perthroofcare.com.au',pathname='/roof-leak-repairs/'){
+  const events=[],handlers={},window={location:{hostname,pathname},gtag:(...args)=>events.push(args)};
   runInNewContext(readFileSync(new URL('./analytics.js',import.meta.url),'utf8'),{window,document:{addEventListener:(name,fn)=>handlers[name]=fn}});
   return {events,handlers,window};
 }
@@ -16,6 +16,10 @@ test('lead is measured only for confirmed API success, never failed or malformed
   window.ellisAnalytics.leadConfirmed({ok:true},{ok:true,name:'Secret',email:'private@example.com'});
   assert.equal(events.length,1);assert.equal(events[0][1],'generate_lead');
   assert.deepEqual(JSON.parse(JSON.stringify(events[0][2])),{page_type:'service',method:'website_form'});
+});
+
+test('Chinese paths retain their actual location and classify the same page types',()=>{
+ for(const [path,type] of [['/zh/','home'],['/zh/contact/','contact'],['/zh/areas/perth-roof-repairs/','area'],['/zh/news/roof-leak-detection-perth/','guide'],['/zh/projects/metal-roof-fastener-repair-sequence/','project']]){const {window,events}=setup('www.perthroofcare.com.au',path);window.ellisAnalytics.leadConfirmed({ok:true},{ok:true});assert.equal(events[0][2].page_type,type);assert.equal(window.location.pathname,path);}
 });
 test('contact click events contain categories only and never phone or email values',()=>{
   const {handlers,events}=setup();

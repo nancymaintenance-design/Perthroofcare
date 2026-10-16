@@ -21,7 +21,6 @@ nav#site-nav{gap:1rem}header nav>a{font-size:.9rem}.utility{background:var(--san
 .home-topic-rail.home-hero-backdrop .home-hero-copy>p:not(.eyebrow){max-width:39rem;font-size:clamp(1rem,1.5vw,1.2rem)}
 .hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.5rem;margin-block:1rem}
 .hero-phone{display:inline-flex;padding-block:.75rem;font-weight:700;color:#fff;text-underline-offset:5px}
-.home-topic-rail.home-hero-backdrop .inspection-charge-notice{font-size:.9rem;line-height:1.5;margin-block:.75rem}
 .index-hero{min-height:0}
 .topic-rail.index-hero>.container{padding-block:clamp(1rem,2vw,1.25rem)}
 .index-hero h1{font-size:clamp(2rem,3.5vw,3.2rem);line-height:1.1;text-transform:none;max-width:28ch;margin:.4rem 0 1rem}
@@ -217,3 +216,5 @@ main nav.faq-topic-nav li{margin:.6rem 0;line-height:1.5}
 .two-storey-project-photo img{width:100%;height:auto}
 @media(min-width:721px){.keyword-map-content .project-case-grid:has(>figure:nth-child(3):last-child){grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:720px){.keyword-map-content .project-case-grid{grid-template-columns:1fr}}
+html[lang="zh-Hans"] body{font-family:Arial,"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;line-height:1.7}
+html[lang="zh-Hans"] :is(h1,h2,h3,.eyebrow,header nav){letter-spacing:normal}

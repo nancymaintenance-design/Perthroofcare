@@ -42,6 +42,7 @@ function transformJson(value,opts,key='') {
   if(value&&typeof value==='object') return Object.fromEntries(Object.entries(value).map(([childKey,child])=>[childKey,transformJson(child,opts,childKey)]));
   if(typeof value!=='string') return value;
   if(key==='inLanguage') return opts.language;
+  if(opts.language==='en-AU') return value;
   if(key==='@context'||(key==='@id'&&/#(?:business|ellis-services-group)$/.test(value))) return value;
   if(/^(?:https?:\/\/|\/)/i.test(value)) return rewrite(value,opts);
   return value;

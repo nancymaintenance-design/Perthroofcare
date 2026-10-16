@@ -11,7 +11,7 @@ const labels={
  'storm-damage-roof-repairs':'Storm damage roof repairs','roof-restoration':'Roof restoration','roof-inspection':'Roof inspection','repair-options':'Repair options',
  'roof-cleaning':'Roof cleaning','roof-painting':'Roof painting','box-gutter-repairs':'Box gutter repairs','roof-replacement':'Roof replacement','flat-roof-repairs':'Flat roof repairs','strata-roof-repairs':'Strata roof repairs'
 };
-const routes=[...readFileSync('public/sitemap.xml','utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname);
+const routes=[...readFileSync('public/sitemap.xml','utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname).filter(r=>!r.startsWith('/zh/'));
 const page=route=>load(readFileSync('public'+route+'index.html','utf8'));
 
 test('all 22 service headings, breadcrumbs, schema and knowledge use the core service name',()=>{

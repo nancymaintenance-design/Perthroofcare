@@ -52,3 +52,9 @@ Each linked case has four supplied completion photographs and page-visible proje
 - [Roof restoration](https://www.perthroofcare.com.au/roof-restoration/)
 - [Roof repair options](https://www.perthroofcare.com.au/repair-options/)
 - [All roof repair guides](https://www.perthroofcare.com.au/news/)
+
+## Languages
+
+- English: https://www.perthroofcare.com.au/
+- 简体中文服务：https://www.perthroofcare.com.au/zh/
+- Each Chinese page has the same English route prefixed with /zh. Chinese guides: https://www.perthroofcare.com.au/zh/news/; case records: https://www.perthroofcare.com.au/zh/gallery/.

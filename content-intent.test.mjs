@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {load} from 'cheerio';
 import {syncContentKnowledge} from './content/content-intent.mjs';
-const routes=[...readFileSync('public/sitemap.xml','utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname);
+const routes=[...readFileSync('public/sitemap.xml','utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname).filter(r=>!r.startsWith('/zh/'));
 const pages=new Map(routes.map(r=>[r,load(readFileSync(`public${r}index.html`,'utf8'))]));
 test('content revision provides contextual next steps on every published page',()=>{
  assert.equal(pages.size,69);

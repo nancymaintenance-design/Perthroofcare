@@ -10,7 +10,7 @@ export function generateTranslationCatalog({root=projectRoot,batchSize=180,outpu
   if(!Number.isInteger(batchSize)||batchSize<150||batchSize>250) throw new RangeError('batchSize must be an integer between 150 and 250');
   const allowed=resolve(root,workspace),output=resolve(outputDirectory),within=relative(allowed,output);
   if(within.startsWith('..')||isAbsolute(within)) throw new Error(`Catalog output must stay inside ${allowed}`);
-  const routes=[...readFileSync(join(root,'sitemap.xml'),'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(match=>new URL(match[1]).pathname);
+  const routes=[...readFileSync(join(root,'sitemap.xml'),'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(match=>new URL(match[1]).pathname).filter(route=>!route.startsWith('/zh/'));
   const strings=new Map(),records=new Map(),exclusions=new Map();
   for(const route of routes) {
     const {entries,exclusions:neutral}=collectPageEntries(readFileSync(join(root,route.replace(/^\//,''),'index.html'),'utf8'));

@@ -1,6 +1,6 @@
 (() => {
   const local = /^(localhost|127\.0\.0\.1|\[?::1\]?)$/.test(window.location.hostname) || window.location.hostname.endsWith('.localhost');
-  const path = window.location.pathname;
+  const path = window.location.pathname.replace(/^\/zh(?=\/|$)/, '') || '/';
   const pageType = path === '/' ? 'home' : path.startsWith('/areas/') ? 'area' : path.startsWith('/news/') ? 'guide' : path.startsWith('/projects/') ? 'project' : path === '/contact/' ? 'contact' : 'service';
   const track = (name, fields = {}) => {
     if (local || typeof window.gtag !== 'function') return;

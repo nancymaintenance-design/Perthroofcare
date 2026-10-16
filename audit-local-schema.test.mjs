@@ -12,7 +12,7 @@ const services={
  'flat-roof-repairs':'Flat roof repair', 'strata-roof-repairs':'Strata roof repair'
 };
 const sitemap=load(readFileSync('public/sitemap.xml','utf8'),{xmlMode:true});
-const routes=sitemap('loc').map((_,e)=>new URL(sitemap(e).text()).pathname.replace(/^\/|\/$/g,'')).get();
+const routes=sitemap('loc').map((_,e)=>new URL(sitemap(e).text()).pathname).get().filter(r=>!r.startsWith('/zh/')).map(r=>r.replace(/^\/|\/$/g,''));
 
 // Missing Service, stale canonical, wrong provider or a disconnected mainEntity
 // would make these consumer-visible graph contracts fail.

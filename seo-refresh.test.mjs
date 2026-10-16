@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 import { load } from 'cheerio';
 const root=fileURLToPath(new URL('./public/',import.meta.url));
-const routes=[...readFileSync(join(root,'sitemap.xml'),'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname);
+const routes=[...readFileSync(join(root,'sitemap.xml'),'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname).filter(r=>!r.startsWith('/zh/'));
 const pages=new Map(routes.map(r=>[r,load(readFileSync(join(root,r,'index.html'),'utf8'))]));
 const guides=['roof-leak-detection-perth','tile-roof-repairs-perth-guide','metal-roof-repairs-perth-guide','ridge-capping-repairs-perth-guide','roof-valleys-flashing-repairs-perth','roof-inspection-perth-guide'];
 test('project service links sit in a full-width section instead of a nested split grid',()=>{

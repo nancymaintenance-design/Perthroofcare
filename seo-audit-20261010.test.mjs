@@ -5,7 +5,7 @@ import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {load} from 'cheerio';
 const root=fileURLToPath(new URL('./public/',import.meta.url));
-const paths=[...readFileSync(join(root,'sitemap.xml'),'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname);
+const paths=[...readFileSync(join(root,'sitemap.xml'),'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname).filter(r=>!r.startsWith('/zh/'));
 const page=p=>load(readFileSync(join(root,p,'index.html'),'utf8'));
 const graph=$=>JSON.parse($('script[type="application/ld+json"]').text())['@graph'];
 
@@ -125,8 +125,8 @@ test('sitemap dates identify actual editorial changes instead of dating every bu
     const entry=$('url').filter((_,e)=>$(e).find('loc').text()===`https://www.perthroofcare.com.au${path}`);
     assert.equal(entry.find('lastmod').text(),'2026-10-14');
   }
-  assert.equal($('url').filter((_,e)=>$(e).find('loc').text().endsWith('/privacy/')).find('lastmod').text(),'2026-10-14');
-  assert.equal($('url').filter((_,e)=>$(e).find('loc').text().endsWith('/faq/')).find('lastmod').text(),'2026-10-14','FAQ related-service heading has an actual editorial update');
+  assert.equal($('url').filter((_,e)=>$(e).find('loc').text()==='https://www.perthroofcare.com.au/privacy/').find('lastmod').text(),'2026-10-14');
+  assert.equal($('url').filter((_,e)=>$(e).find('loc').text()==='https://www.perthroofcare.com.au/faq/').find('lastmod').text(),'2026-10-14','FAQ related-service heading has an actual editorial update');
 });
 test('all articles identify visible image, author, publisher and truthful modification date',()=>{
   const feed=JSON.parse(readFileSync(join(root,'news/feed.json'),'utf8'));

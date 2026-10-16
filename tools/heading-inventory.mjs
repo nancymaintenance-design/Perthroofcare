@@ -7,7 +7,7 @@ import {load} from 'cheerio';
 const baselineCommit='4b3e765';
 const root=resolve(import.meta.dirname,'..');
 const destination=resolve(root,'../reports/2026-10-14-content-ui-refresh');
-const routes=[...readFileSync(join(root,'sitemap.xml'),'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname);
+const routes=[...readFileSync(join(root,'sitemap.xml'),'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname).filter(r=>!r.startsWith('/zh/'));
 const question=text=>/\?|^(?:what|why|how|can|does|do|is|are|when|which|who|should)\b/i.test(text);
 const extract=html=>{
  const $=load(html);
