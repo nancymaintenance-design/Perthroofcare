@@ -158,7 +158,7 @@ const phrases={
  'Can restoration replace a structural assessment?':'Structural assessment outside surface restoration',
  'Does an older roof always need replacement?':'Roof condition and repair suitability beyond age',
  'Can I request cleaning without painting?':'Roof cleaning as a separate service',
- 'Is roof cleaning an inspection?':'Separate chargeable inspection and cleaning scopes',
+ 'Is roof cleaning an inspection?':'Separate inspection and cleaning scopes',
  'Do you clean the roof before spray painting?':'Cleaning before roof spray painting',
  'Which paint system will be used?':'Coating compatibility with the existing roof surface',
  'Do you undertake box gutter repairs?':'Perth box gutter repair scope',

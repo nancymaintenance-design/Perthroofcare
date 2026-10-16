@@ -4,23 +4,14 @@ import {readFileSync} from 'node:fs';
 import {load} from 'cheerio';
 
 const page=r=>load(readFileSync(`public/${r}/index.html`,'utf8'));
-const notice='Roof inspections are chargeable. Confirm the fee and scope before booking.';
 const services=['roof-cleaning','roof-painting','box-gutter-repairs','roof-replacement','flat-roof-repairs','strata-roof-repairs'];
 
-// Catch a generation pass dropping the fee disclosure or putting it after commitment.
-for(const route of [...services,'roof-inspection','contact']) test(`${route}: inspection fee is visible before the first booking action`,()=>{
- const $=page(route),hero=$('main > section').first();
- const container=$('main');
- const action=container.find('a[href="/contact/"],a[href="#enquiry"],a[href^="tel:"]').first();
- assert.ok(hero.find('.inspection-charge-notice').length,route+' hero disclosure');
- assert.equal(hero.find('.inspection-charge-notice').text(),notice);
- assert.ok(action.length,route+' booking action');
- assert.ok(container.html().indexOf(notice)<container.html().indexOf($.html(action)),route+' disclosure order');
- if(route==='contact'){
-  const form=$('main form').first();
-  assert.equal(form.find('.inspection-charge-notice').text(),notice);
-  assert.ok(form.html().indexOf(notice)<form.html().indexOf('<button'),route+' submit disclosure');
- }
+// Booking links remain available without shared inspection billing boilerplate.
+for(const route of [...services,'roof-inspection','contact']) test(`${route}: booking remains available without repeated inspection billing`,()=>{
+ const $=page(route),container=$('main');
+ assert.equal(container.find('.inspection-charge-notice').length,0,route);
+ assert.ok(container.find('a[href="/contact/"],a[href="#enquiry"],a[href^="tel:"]').length,route+' booking action');
+ if(route==='contact')assert.equal(container.find('form button[type="submit"]').length,1);
 });
 
 test('six service scopes explain distinct component decisions without unconfirmed company methods',()=>{

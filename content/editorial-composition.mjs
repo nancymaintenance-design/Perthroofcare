@@ -1,7 +1,6 @@
 import {faqRecords} from './faq-records.mjs';
 import {projectStageLabels} from './project-stage-labels.mjs';
 import {editorialHeadingMap} from './editorial-heading-map.mjs';
-import {inspectionChargeNotice} from './audit-local-content.mjs';
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const key=s=>s.toLowerCase().replace(/\.$/,'').trim();
 const faqGroups=[['leak-patterns','Leaks, stains and previous repairs'],['tiles-ridges','Tiles and ridge capping'],['junctions-metal','Valleys, flashings and metal roofs'],['drainage-moisture','Drainage and other moisture sources'],['repair-decisions','Repair, restoration and replacement'],['inspection-enquiry','Inspection, quotes and winter preparation'],['company-records','Company details, projects and privacy']];
@@ -12,7 +11,7 @@ function composeFaq($){
   for(const alias of r.aliases.slice(1).reverse())answer=`<div id="${alias}">${answer}</div>`;
   return `<details${r.aliases.length?` id="${r.aliases[0]}"`:''}><summary>${esc(r.question)}</summary>${answer}</details>`;
  }).join('')}</div></section>`).join('');
- $('main').empty().append(hero).append(`<section class="section" id="educational-questions"><div class="container"><nav class="faq-topic-nav" aria-label="Roof question topics"><ul>${faqGroups.map(([id,title])=>`<li><a href="#${id}">${esc(title)}</a></li>`).join('')}</ul></nav>${questions}<nav id="related-work-options" aria-label="Related roof services"><h2>Roof repairs and inspections</h2><p><a href="/box-gutter-repairs/">Box gutter repairs</a> · <a href="/flat-roof-repairs/">Flat roof repairs</a> · <a href="/news/">Roof repair guides</a></p></nav><div class="content-intent"><h2>Send a roof repair question</h2><p>These answers explain general repair decisions. Include the roof material, suburb, timing of water entry and previous repairs when contacting the team. Leave roof access and close-up investigation to the inspection.</p><p>${inspectionChargeNotice}</p><p><a class="button" href="/contact/">Send your roof question</a></p></div></div></section>`);
+ $('main').empty().append(hero).append(`<section class="section" id="educational-questions"><div class="container"><nav class="faq-topic-nav" aria-label="Roof question topics"><ul>${faqGroups.map(([id,title])=>`<li><a href="#${id}">${esc(title)}</a></li>`).join('')}</ul></nav>${questions}<nav id="related-work-options" aria-label="Related roof services"><h2>Roof repairs and inspections</h2><p><a href="/box-gutter-repairs/">Box gutter repairs</a> · <a href="/flat-roof-repairs/">Flat roof repairs</a> · <a href="/news/">Roof repair guides</a></p></nav><div class="content-intent"><h2>Send a roof repair question</h2><p>These answers explain general repair decisions. Include the roof material, suburb, timing of water entry and previous repairs when contacting the team. Leave roof access and close-up investigation to the inspection.</p><p><a class="button" href="/contact/">Send your roof question</a></p></div></div></section>`);
 }
 const guideGroups=[
  ['Leaks and inspection',['roof-leak-detection-perth','roof-leak-inspection','roof-inspection-perth-guide']],
@@ -55,7 +54,6 @@ function composeNews($){
  $('main > #related-work-options,main > .content-intent').remove();
  const enquiry=$('.home-enquiry');enquiry.find('h2').text('Send a roof assessment enquiry');
  enquiry.find('.container').children('p:not(.eyebrow)').first().text('General guidance cannot diagnose a property. Send the suburb, affected roof or drainage area, timing and previous repair details. Existing safe photographs are optional.');
- const fee=enquiry.find('.inspection-charge-notice');if(!fee.length)enquiry.find('a[href="/contact/"]').closest('p').before(`<p class="inspection-charge-notice">${inspectionChargeNotice}</p>`);
  directory.append(enquiry.find('.container').contents());enquiry.remove();
  directory.append($('.rss-resource .container').contents());$('.rss-resource').remove();
 }
@@ -69,7 +67,7 @@ function composeGallery($){
  const intro=library.children('p:not(.eyebrow)').first().text('These supplied photographs record work at individual properties. They are not a price guide or a guarantee of the same outcome at another property. Repair scope depends on the roof material, condition and access. '+periodText.slice(dateEnd).trim()+' Each project links to the matching repair services.');
  library.find('.case-library-grid').after(intro);
  const actions=$('main > .texture a,main > .content-intent a').toArray().map(a=>$.html(a));
- library.append(`<p>${inspectionChargeNotice}</p><p>${actions.join(' · ')}</p>`);
+ library.append(`<p>${actions.join(' · ')}</p>`);
  $('main > .texture,main > .content-intent').remove();
 }
 // Final reviewed composition, after historical content passes and before schema.

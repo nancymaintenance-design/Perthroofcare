@@ -109,16 +109,16 @@ test('phone navigation preserves disclosure, outside click, Escape and parent me
  f.toggle.handlers.click();f.documentEvents.keydown({key:'Escape'});assert.equal(f.nav.classList.contains('open'),false);assert.equal(f.toggle.focused,true);
 });
 
-test('home and service opening screens expose assessment links and the inspection fee',()=>{
+test('home and service opening screens expose assessment links without repeated inspection billing',()=>{
  const $=load(readFileSync(fileFor(''),'utf8')),hero=$('.home-hero-copy');
  assert.equal(hero.find('a[href="/contact/"]').length,1);
  assert.ok(hero.find('a[href^="tel:"]').length);
- assert.match(hero.text(),/Roof inspections are chargeable\. Confirm the fee and scope before booking\./);
+ assert.equal(hero.find('.inspection-charge-notice').length,0);
  assert.equal(hero.find('a[href="/about/#business-registration"]').length,1);
  for(const route of [...coreRoutes,'roof-cleaning','repair-options','strata-roof-repairs']){
   const service=load(readFileSync(fileFor(route),'utf8')),opening=service('.service-hero');
   assert.equal(opening.find('a[href="/contact/"]').length,1,route);
-  assert.match(opening.text(),/Roof inspections are chargeable\. Confirm the fee and scope before booking\./,route);
+  assert.equal(opening.find('.inspection-charge-notice').length,0,route);
  }
  assert.equal(load(readFileSync(fileFor('faq'),'utf8'))('main h1').text(),'Roof repair FAQs');
 });

@@ -1,5 +1,4 @@
 import {localTeamIdentity,businessHoursText} from './business-links.mjs';
-import {inspectionChargeNotice} from './audit-local-content.mjs';
 import {renderEnquiryFallback} from './enquiry-fallback.mjs';
 
 // Preserve the existing form node and its API/client-validation hooks. Only its
@@ -17,7 +16,6 @@ export function applyContactLayout($){
   <p class="eyebrow">PERTH ROOF CARE / CONTACT</p><h1>Perth roof repair enquiries</h1>
   <p class="contact-intro">Our Perth team arranges an on-site assessment of your roof or drainage problem, explains the repair plan and provides a written quote.</p>
   <p class="local-team-identity">${localTeamIdentity}</p>
-  <p class="inspection-charge-notice">${inspectionChargeNotice}</p>
  </div></section>
  <section class="contact-information" aria-label="Direct contact details"><div class="container"><div class="contact-details-band">
   <div><h2>Phone</h2><a href="tel:+61405878406">0405 878 406</a></div>

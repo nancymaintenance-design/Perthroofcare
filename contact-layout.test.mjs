@@ -24,7 +24,7 @@ test('Contact puts all direct contact information above a standalone centred enq
  main.find('h1,h2,h3').each((_,e)=>assert.doesNotMatch($(e).text(),/\?|^(?:what|how|why|can|does)\b/i));
 });
 
-test('Contact retains the enquiry contract and full-width message, privacy, fee and action rows',()=>{
+test('Contact retains the enquiry contract and full-width message, privacy and action rows',()=>{
  const $=page('contact'),form=$('.contact-enquiry-box form');
  assert.equal(form.attr('action'),'/api/enquiry');
  assert.equal(form.attr('method'),'post');
@@ -43,12 +43,12 @@ test('Contact retains the enquiry contract and full-width message, privacy, fee 
  assert.equal(form.find('.privacy-check a[href="/privacy/"]').length,1);
  assert.equal(form.find('.form-status[aria-live="polite"][aria-atomic="true"][role="status"]').length,1);
  assert.equal(form.find('button.form-submit[type="submit"]').length,1);
- assert.equal(form.find('button.form-submit').prev().text(),'Roof inspections are chargeable. Confirm the fee and scope before booking.');
+ assert.equal(form.find('.inspection-charge-notice').length,0);
 });
 
-test('Contact keeps concise safe photo guidance, chargeable assessment terms and coherent knowledge',()=>{
+test('Contact keeps concise safe photo guidance and coherent knowledge without repeated billing',()=>{
  const $=page('contact'),main=$('main'),graph=JSON.parse($('script[type="application/ld+json"]').text())['@graph'],knowledge=JSON.parse($('#page-knowledge').text());
- assert.equal(main.find('.inspection-charge-notice').length,2,'one fee disclosure before direct booking and one at submit');
+ assert.equal(main.find('.inspection-charge-notice').length,0,'no repeated billing notice');
  assert.match(main.text(),/on-site assessment/);assert.match(main.text(),/written quote/);assert.match(main.text(),/photographs are optional/);assert.match(main.text(),/ground-level/);
  assert.doesNotMatch(main.text(),/upload|attach|What happens next|Before you send/i);
  assert.equal(knowledge.summary,main.find('.contact-intro').text());

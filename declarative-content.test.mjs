@@ -62,9 +62,9 @@ test('consolidated services leave unrelated prose and existing guide bodies inta
  for(const r of routes){if(['/about/','/','/services/','/faq/','/news/','/gallery/','/service-areas/'].includes(r)||serviceLabels[r.slice(1,-1)])continue; // Directory and FAQ facts are independently checked in editorial-composition/enquiry-consistency tests.
   const before=load(execFileSync('git',['show','ab6ea8f:'+(r==='/'?'':r.slice(1))+'index.html'],{encoding:'utf8',maxBuffer:4*1024*1024}));
   const current=page(r);current('.guide-education').remove();
-  // Task 3 adds the shared inspection disclosure to area forms. Preserve every
-  // original local body, link and fragment while checking that addition separately.
-  if(r.startsWith('/areas/'))current('form .inspection-charge-notice').remove();
+  // The approved copy cleanup removes shared billing notices only; compare all other content.
+  before('main .inspection-charge-notice').remove();
+  current('main .inspection-charge-notice').remove();
   const actual=extract(current),original=extract(before);
   // Approved merges change section/order only: preserve every paragraph,
   // disclosure body, original image, link destination and meaningful anchor.

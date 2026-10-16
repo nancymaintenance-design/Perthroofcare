@@ -44,7 +44,7 @@ export const serviceCopy={
   heading:'Local defects and connected roof components',
   content:'We repair damaged tiles, metal sheets, ridges, valleys, flashings and roof-edge drainage. An isolated defect can suit a local repair where surrounding material remains serviceable; several connected defects can be coordinated in one scope. Cleaning or painting is a separate surface decision.',
   steps:['Inspect the affected roof area and adjoining water path, including earlier repairs and concealed areas accessible within the agreed scope.','Specify the components to retain, repair or replace, compatible materials, preparation, access and waste removal in a written quote.','Complete the agreed repairs and review the repaired connections and relevant drainage details. Explain any exclusions or further work before it proceeds.'],
-  boundary:'For a rental, identify who can approve the work and arrange access. Any warranty terms must be confirmed in writing for the particular scope. Confirm the inspection fee and any credit against repair work before booking; a universal online price cannot describe every roof.',
+  boundary:'For a rental, identify who can approve the work and arrange access. Any warranty terms must be confirmed in writing for the particular scope. A universal online price cannot describe every roof.',
   anchors:{'repair-quote-factors':'steps'},caseTitles:['Tile, ridge and junction records']
  },
  'roof-leak-repairs':{

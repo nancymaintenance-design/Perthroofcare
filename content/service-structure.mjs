@@ -1,7 +1,6 @@
 import {serviceLabels} from './service-labels.mjs';
 import {serviceCopy,serviceRelated,serviceProjectReferences,topicGuide,topicPlacement} from './service-structure-data.mjs';
 import {educationalTopics} from './keyword-map-content.mjs';
-import {inspectionChargeNotice} from './audit-local-content.mjs';
 import {serviceSectionTitles} from './service-section-titles.mjs';
 
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -79,9 +78,8 @@ function simplifyHub($,route){
   const actions=$('<div class="hero-actions"><a class="button" href="/contact/">Request a roof assessment</a></div>');
   actions.append(phone);
   hero.find('.hero-evidence-links').before(actions);
-  if(!hero.find('.inspection-charge-notice').length)actions.after(`<p class="inspection-charge-notice">${inspectionChargeNotice}</p>`);
  }
- $('main').append('<div class="container hub-enquiry content-intent"><p>For a leak, damaged component or planned maintenance, our team can arrange an assessment and explain the written repair scope. <a href="/roof-leak-repairs/">Roof leak repairs</a> · <a href="/repair-options/">Repair options</a></p>'+paragraph(inspectionChargeNotice)+'<p><a class="button" href="/contact/">Request a roof assessment</a></p></div>');
+ $('main').append('<div class="container hub-enquiry content-intent"><p>For a leak, damaged component or planned maintenance, our team can arrange an assessment and explain the written repair scope. <a href="/roof-leak-repairs/">Roof leak repairs</a> · <a href="/repair-options/">Repair options</a></p><p><a class="button" href="/contact/">Request a roof assessment</a></p></div>');
  return true;
 }
 
@@ -98,8 +96,8 @@ export function applyServiceStructure($,route){
  hero.find('a[href="/contact/"]').parent('p').remove();
  hero.find('a[href="/contact/"]').remove();
  hero.find('h1').attr('id','service-overview');
- if(!hero.find('.inspection-charge-notice').length)hero.find('h1').parent().append(`<p class="inspection-charge-notice">${inspectionChargeNotice}</p>`);
- hero.find('.inspection-charge-notice').after('<p class="hero-actions"><a class="button" href="/contact/">Request a roof assessment</a></p>');
+ hero.find('.inspection-charge-notice').remove();
+ hero.find('h1').parent().append('<p class="hero-actions"><a class="button" href="/contact/">Request a roof assessment</a></p>');
 
  const evidence=main.children().filter((_,e)=>$(e).find('img').length).toArray().map((e,index)=>{
   const record=$(e).clone();record[0].tagName='div';record.removeClass('section').addClass('service-case');
@@ -133,7 +131,7 @@ export function applyServiceStructure($,route){
   if(route==='metal-roof-repairs')target.append(fastenerCase());
  }
  const target=main.children('section').last().children('.container');
- target.append(`<div class="service-enquiry"><p>We assess the roof on site and explain the written repair quote before work. ${inspectionChargeNotice} Existing safe photos are optional; do not climb onto the roof or enter an unsafe roof space.</p><a class="button" href="/contact/">Request a roof assessment</a></div>`);
+ target.append(`<div class="service-enquiry"><p>We assess the roof on site and explain the written repair quote before work. Existing safe photos are optional; do not climb onto the roof or enter an unsafe roof space.</p><a class="button" href="/contact/">Request a roof assessment</a></div>`);
  const targets={content:'.service-description',steps:'.service-steps',boundary:'.service-boundary',guidance:'.service-guidance'};
  for(const [id,targetName] of Object.entries(copy.anchors)){
   const target=main.find(targets[targetName]);if(target.length!==1)throw new Error(`Missing anchor content ${route} / ${id}`);

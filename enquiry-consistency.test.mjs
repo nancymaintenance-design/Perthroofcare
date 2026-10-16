@@ -3,9 +3,26 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {load} from 'cheerio';
 
+test('published pages do not repeat inspection billing notices in heroes forms or enquiry actions',()=>{
+ const sitemap=load(readFileSync('public/sitemap.xml','utf8'),{xmlMode:true});
+ const paths=sitemap('loc').map((_,e)=>new URL(sitemap(e).text()).pathname).get();
+ for(const path of paths){
+  const $=load(readFileSync(`public/${path==='/'?'':path.slice(1)}index.html`,'utf8'),{scriptingEnabled:false});
+  assert.equal($('main .inspection-charge-notice').length,0,path+' repeated billing notice');
+  assert.doesNotMatch($('main').text(),/Roof inspections are chargeable\. Confirm the fee and scope before booking\./i,path);
+  if(!path.startsWith('/news/')&&!['/roof-inspection/','/faq/'].includes(path)){
+   assert.doesNotMatch($('main').text(),/inspections? (?:are|is) chargeable|confirm (?:the )?inspection fee|inspection scope and fee|confirm the fee and scope/i,path+' general service copy');
+  }
+  assert.ok($('a[href="tel:+61405878406"]').length,path+' original telephone');
+  assert.ok($('a[href="mailto:ellisservicesgroup3@outlook.com"]').length,path+' original email');
+ }
+ const inspection=load(readFileSync('public/roof-inspection/index.html','utf8'));
+ assert.match(inspection('[data-service-section="solution"]').text(),/scope|records|limitations/i);
+ assert.ok(inspection('a[href="/contact/"]').length,'standalone inspection remains bookable');
+});
+
 const localities=['cottesloe','mosman-park','city-beach','scarborough','claremont','nedlands','subiaco','perth','leederville','joondalup','hillarys','fremantle','rockingham','kalamunda','victoria-park','bayswater'];
 const formRoutes=['contact','service-areas',...localities.map(name=>`areas/${name}-roof-repairs`)];
-const fee='Roof inspections are chargeable. Confirm the fee and scope before booking.';
 const html=route=>readFileSync(`public/${route}/index.html`,'utf8');
 
 test('service areas offers every locality once in one complete regional directory',()=>{
@@ -22,12 +39,12 @@ test('service areas offers every locality once in one complete regional director
  }
 });
 
-test('all 18 forms disclose chargeable inspection terms immediately before submit and retain field hooks',()=>{
+test('all 18 forms retain field hooks without repeated inspection billing',()=>{
  for(const route of formRoutes){
   const $=load(html(route)),form=$('main form.enquiry-form');
   assert.equal(form.length,1,route);
-  assert.equal(form.find('button[type="submit"]').prev('.inspection-charge-notice').text(),fee,route);
-  assert.equal(form.find('.inspection-charge-notice').length,1,route);
+  assert.equal(form.find('button[type="submit"]').length,1,route);
+  assert.equal(form.find('.inspection-charge-notice').length,0,route);
   assert.equal(form.attr('action'),'/api/enquiry');assert.equal(form.attr('method'),'post');assert.ok(form.is('[novalidate]'));
   for(const name of ['name','phone','email','enquiry','privacy'])assert.equal(form.find(`[name="${name}"][required]`).length,1,`${route}: ${name}`);
   assert.equal(form.find('.form-status[aria-live="polite"][aria-atomic="true"][role="status"]').length,1);
@@ -42,7 +59,7 @@ test('all 18 published forms provide an explicit no-JavaScript alternative and h
   assert.match(fallback.text(),/JavaScript/i);
   assert.equal(fallback.find('a[href="tel:+61405878406"]').length,1);
   assert.equal(fallback.find('a[href="mailto:ellisservicesgroup3@outlook.com"]').length,1);
-  assert.equal(fallback.find('.inspection-charge-notice').text(),fee);
+  assert.equal(fallback.find('.inspection-charge-notice').length,0);
   assert.match($('main noscript style').text(),/\.enquiry-form\s*\{\s*display:\s*none\s*!important\s*;?\s*\}/);
  }
 });

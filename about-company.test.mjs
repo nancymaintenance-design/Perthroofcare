@@ -33,7 +33,7 @@ test('About process uses a full-width heading and three balanced desktop steps t
  assert.equal(ownedStyle($,layout,css,1280).display,'block','heading must not occupy an empty left column');
  assert.equal(ownedStyle($,steps,css,1280)['grid-template-columns'],'repeat(3,minmax(0,1fr))');
  assert.equal(ownedStyle($,steps,css,390)['grid-template-columns'],'1fr');
- assert.deepEqual(steps.find('h3').map((_,e)=>$(e).text()).get(),['Property and access details','Inspection scope and fee','Written repair quote']);
+ assert.deepEqual(steps.find('h3').map((_,e)=>$(e).text()).get(),['Property and access details','Roof assessment','Written repair quote']);
  const capabilities=$('[data-about-section="services"]>.container');
  assert.equal(capabilities.children('h2 + div').find('a[href="/services/"]').length,1,'capability copy and its action share the heading row');
 });
@@ -90,7 +90,7 @@ test('About is a company introduction without project photographs, captions or s
  assert.doesNotMatch($('meta[name="description"]').attr('content'),/photographed|project/i);
 });
 
-test('About registration facts retain only the hero assessment with its fee notice',()=>{
+test('About registration facts retain the hero assessment without repeated billing',()=>{
  const $=page(),facts=$('[data-about-section="business"]');
  for(const fact of ['Ellis Services Group Pty Ltd','96 645 821 745','645 821 745'])assert.ok(facts.text().includes(fact),fact);
  assert.equal(facts.find('a[href="https://abr.business.gov.au/ABN/View?id=645821745"]').length,1);
@@ -98,7 +98,7 @@ test('About registration facts retain only the hero assessment with its fee noti
  assert.doesNotMatch(facts.text(),/Perth office|Contact our team|140 St Georges Terrace|Monday–Sunday|Arrange an assessment/);
  assert.equal($('main a.button[href="/contact/"]').length,1);
  assert.equal($('.about-company-hero a.button[href="/contact/"]').length,1);
- assert.match($('.about-company-hero .inspection-charge-notice').text(),/Roof inspections are chargeable\. Confirm the fee and scope before booking\./);
+ assert.equal($('.about-company-hero .inspection-charge-notice').length,0);
  assert.doesNotMatch(facts.text(),/registered (?:office|address)/i);
 });
 

@@ -95,10 +95,11 @@ test('the terminal consolidation is idempotent with the production parser',async
  }
 });
 
-test('inspection credit remains a booking question rather than an invented business policy',()=>{
+test('ordinary repair boundaries omit inspection billing without inventing a credit policy',()=>{
  const text=page('roof-repairs')('.service-boundary').text();
  assert.doesNotMatch(text,/no[^.]*inspection credit is offered/i);
- assert.match(text,/credit.*confirm|confirm.*credit/i);
+ assert.doesNotMatch(text,/inspection fee|inspection credit|confirm.*credit/i);
+ assert.match(text,/warranty terms must be confirmed in writing/i);
 });
 
 test('solution navigation is curated, scannable and distinct from education and project records',()=>{

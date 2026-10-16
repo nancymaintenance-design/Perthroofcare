@@ -120,6 +120,6 @@ test('project labels describe the material and stage without repeated provenance
  for(const route of routes){const $=page(route);for(const e of $('main .eyebrow,main figcaption').toArray())assert.doesNotMatch($(e).text(),/supplied composite|location not published|documented|record(?:ed|s)?\b/i,route+' '+$(e).text());}
  const tile=page('tile-roof-repairs')('#two-storey-access figcaption').text();assert.match(tile,/home.*ridge.*work-in-progress/i);assert.match(tile,/not a before-and-after comparison/);
 });
-test('directory assessment actions follow the inspection fee explanation',()=>{
- for(const route of ['services','news','gallery']){const main=page(route)('main').html();assert.ok(main.indexOf('Roof inspections are chargeable.')<main.indexOf('href="/contact/"'),route);}
+test('directory assessment actions remain available without repeated billing',()=>{
+ for(const route of ['services','news','gallery']){const main=page(route)('main');assert.ok(main.find('a[href="/contact/"]').length,route);assert.doesNotMatch(main.text(),/Roof inspections are chargeable\./,route);}
 });

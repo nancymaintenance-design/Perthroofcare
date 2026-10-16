@@ -2,8 +2,6 @@
 // property assessment, written repair quote and supplied photographs are company facts.
 // The scope guidance below is general selection education, not an Ellis work method.
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-export const inspectionChargeNotice='Roof inspections are chargeable. Confirm the fee and scope before booking.';
-const notice=()=>`<p class="inspection-charge-notice">${inspectionChargeNotice}</p>`;
 
 const scopes={
  'roof-cleaning':[
@@ -126,16 +124,8 @@ export function refineLocalContent($,route){
   // One appointment explanation replaces the repeated fee and generic scope paragraph.
   $('main > section.content-intent > .narrow > p').first().text('Send your suburb, roof material if known, affected area and previous work details. Existing safe photographs are optional. Our Perth team assesses the property and provides a written repair quote. We are open Monday–Sunday, 9am–9pm Perth local time.');
  }
- if([...Object.keys(scopes),'roof-inspection','contact','about'].includes(route)){
-  $('main > section').first().find('.inspection-charge-notice').remove();
-  const hero=$('main > section').first(),action=hero.find('a.button').first();
-  if(action.length){const holder=action.parent('p');(holder.length?holder:action).before(notice());}
-  else hero.find('h1').next('p').after(notice());
-  if(route==='contact'){
-   $('main form .inspection-charge-notice').remove();
-   $('main form button[type="submit"]').before(notice());
-  }
- }
+ // Inspection billing belongs to the dedicated inspection service, not shared booking prompts.
+ $('main .inspection-charge-notice').remove();
  if(route==='roof-inspection'){
   $('#inspection-fee').remove();
   $('.service-brief > .container > p').filter((_,e)=>$(e).text().startsWith('Contact Ellis to arrange')).remove();
