@@ -76,6 +76,8 @@ export function visitPageStrings($, visitor) {
     }
     if(!node.name) { for(const child of node.children??[]) walk(child); return; }
     if(node.attribs?.['data-language-switch']!==undefined) return;
+    // Proper reviewer names and verbatim English quotations are not translations.
+    if(node.attribs?.translate==='no') return;
     const tag=node.name.toLowerCase();
     if(tag==='script'&&(node.attribs?.type==='application/ld+json'||(node.attribs?.id==='page-knowledge'&&node.attribs?.type==='application/json'))) {
       let data;

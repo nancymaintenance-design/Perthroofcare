@@ -145,8 +145,8 @@ test('homepage carries the Roof Repairs Perth theme, focused paths and real work
   assert.ok(load(home)('.home-service-map h2').text().length > 10);
   assert.equal(load(home)('.home-service-map article').length,9,'nine service cards remain');
   assert.equal(load(home)('.home-enquiry').length,0,'repeated enquiry cards are consolidated');
-  for (const href of ['/roof-leak-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/', '/ridge-capping-repointing/', '/flashing-repairs/', '/gutters-downpipes/', '/roof-inspection/', '/roof-cleaning-painting/', '/commercial-roof-repairs/', '/projects/metal-roof-fastener-repair-sequence/', '/service-areas/', '/contact/']) assert.match(home, new RegExp(`href="${href}"`));
-  assert.ok(load(home)('.home-proof a[href="/projects/metal-roof-fastener-repair-sequence/"]').length);
+  for (const href of ['/roof-leak-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/', '/ridge-capping-repointing/', '/flashing-repairs/', '/gutters-downpipes/', '/roof-inspection/', '/roof-cleaning-painting/', '/commercial-roof-repairs/', '/gallery/', '/service-areas/', '/contact/']) assert.match(home, new RegExp(`href="${href}"`));
+  assert.equal(load(home)('.google-review-card').length,10);
   assert.doesNotMatch(home, /hero-carousel|fixed-roofline-story|atlas-index|office-location/i);
   assert.match(home, /class="home-topic-rail home-hero-backdrop"/);
   assert.match(css, /\.home-topic-rail\.home-hero-backdrop\{[^}]*hero-australian-roofer-v2\.png[^}]*fixed/i);

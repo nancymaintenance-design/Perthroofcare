@@ -56,7 +56,7 @@ test('published pages deliver fingerprinted shared styles with small route-owned
   for(const route of routes){
     const dom=load(readFileSync(`${root}/public${route}index.html`,'utf8'));
     const styles=dom('link[rel="stylesheet"]');
-    const routeLayout=['/about/','/contact/'].includes(route.replace(/^\/zh(?=\/)/,''))||dom('main.service-layout').length;
+    const routeLayout=['/','/about/','/contact/'].includes(route.replace(/^\/zh(?=\/)/,''))||dom('main.service-layout').length;
     assert.equal(styles.length,routeLayout?2:1,`${route}: consolidate shared styles and isolate route layout`);
     for(const style of styles.toArray()){
     const href=dom(style).attr('href'),css=readFileSync(`${root}/public${href}`);

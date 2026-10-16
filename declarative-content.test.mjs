@@ -110,7 +110,7 @@ test('all 30 full educational answers and meaningful FAQ aliases survive the edi
 
 test('shared contact heading and menu present the roof repair service directly',()=>{
  for(const r of routes){const $=page(r);
-  if(['/about/','/contact/'].includes(r))assert.equal($('.contact-band').length,0,'Company and Contact pages omit the repeated pre-footer action');
+  if(['/','/about/','/contact/'].includes(r))assert.equal($('.contact-band').length,0,'Company and Contact pages omit the repeated pre-footer action');
   else assert.match($('.footer-cta h2,.contact-band h2,.cta-band h2').text()||$('h2').last().text(),/Perth roof repair enquir/i,r);
   assert.doesNotMatch($('.services-panel-intro').text(),/Need help choosing\?/);
  }

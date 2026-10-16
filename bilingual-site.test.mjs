@@ -109,7 +109,7 @@ test('locale build fails before writing on missing translation, and repeat local
 
 test('Chinese pages retain structure and all 18 working form contracts and no-JavaScript alternatives',()=>{
  let forms=0;
- for(const route of english){const en=page(route),zh=page('/zh'+route);for(const selector of ['main h1','main h2','main h3','main section','main details','main figure','main img'])assert.equal(zh(selector).length,en(selector).length,route+' '+selector);
+ for(const route of english){const en=page(route),zh=page('/zh'+route);for(const selector of ['main h1','main h2','main h3','main section','main details','main figure','main img'])assert.equal(zh(selector).not('.review-original').length,en(selector).not('.review-original').length,route+' '+selector);
   const form=zh('.enquiry-form');if(!form.length)continue;forms++;assert.equal(form.attr('action'),'/api/enquiry');assert.equal(form.attr('method'),'post');assert.ok(form.is('[novalidate]'));for(const name of ['name','phone','email','enquiry','privacy'])assert.equal(form.find(`[name="${name}"][required]`).length,1,route);
   assert.equal(form.find('.form-status[role="status"][aria-live="polite"][aria-atomic="true"]').length,1);assert.match(zh('noscript .enquiry-no-js').text(),/\p{Script=Han}/u);
  }assert.equal(forms,18);

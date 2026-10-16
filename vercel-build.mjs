@@ -51,6 +51,7 @@ const stagedFiles = [
   ['about-company.css', 'assets/css/about-company.css'],
   ['contact-layout.css', 'assets/css/contact-layout.css'],
   ['service-layout.css', 'assets/css/service-layout.css'],
+  ['home-reviews.css', 'assets/css/home-reviews.css'],
   ['favicon.ico', 'favicon.ico'],
   ['favicon.png', 'favicon.png'],
   ['site.webmanifest', 'site.webmanifest'],

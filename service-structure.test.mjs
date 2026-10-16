@@ -81,7 +81,7 @@ test('fastener About handoff is a separate honest metal case and absent from Abo
 test('homepage and services index keep core navigation, real evidence and one short contact action',()=>{
  for(const route of ['','services']){
   const $=page(route);assert.equal($('main .home-enquiry').length,0);
-  assert.equal($('main .home-service-map').length,1);assert.ok($('main .home-proof img').length);
+  assert.equal($('main .home-service-map').length,1);assert.ok($(route===''?'main .google-review-card':'main .home-proof img').length);
   assert.equal($('main .hub-enquiry a[href="/contact/"]').length,1);
   assert.equal($('main .additional-service-paths').length,0);
  }

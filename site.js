@@ -1,5 +1,41 @@
 const chinese = document.documentElement?.lang === 'zh-Hans';
 const message = (english, translation) => chinese ? translation : english;
+const reviewCarousel = document.querySelector('[data-review-carousel]');
+if (reviewCarousel) {
+  const cards = [...reviewCarousel.querySelectorAll('.google-review-card')];
+  const controls = reviewCarousel.querySelector('.review-controls');
+  const previous = reviewCarousel.querySelector('[data-review-prev]');
+  const next = reviewCarousel.querySelector('[data-review-next]');
+  const pause = reviewCarousel.querySelector('[data-review-pause]');
+  const narrow = window.matchMedia('(max-width: 700px)');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let first = 0, timer, paused = false, hovered = false, focused = false;
+  const render = () => {
+    const count = narrow.matches ? 1 : 3;
+    first = Math.min(first,cards.length-count);
+    cards.forEach((card,index) => { card.hidden = index < first || index >= first + count; });
+  };
+  const schedule = () => {
+    clearInterval(timer);
+    if (!paused && !hovered && !focused && !reduced.matches && !document.hidden) timer = setInterval(() => move(1), 7000);
+  };
+  const move = direction => { const groups = cards.length - (narrow.matches ? 1 : 3) + 1; first = (first + direction + groups) % groups; render(); schedule(); };
+  previous.addEventListener('click', () => move(-1));
+  next.addEventListener('click', () => move(1));
+  pause.textContent = message('Pause','暂停');
+  pause.setAttribute('aria-pressed','false');
+  pause.addEventListener('click', () => { paused = !paused; pause.textContent = paused ? message('Play','播放') : message('Pause','暂停'); pause.setAttribute('aria-pressed',String(paused)); schedule(); });
+  reviewCarousel.addEventListener('mouseenter', () => { hovered = true; schedule(); });
+  reviewCarousel.addEventListener('mouseleave', () => { hovered = false; schedule(); });
+  reviewCarousel.addEventListener('focusin', () => { focused = true; schedule(); });
+  reviewCarousel.addEventListener('focusout', event => { focused = reviewCarousel.contains(event.relatedTarget); schedule(); });
+  narrow.addEventListener('change', () => { render(); schedule(); });
+  reduced.addEventListener('change', schedule);
+  document.addEventListener('visibilitychange',schedule);
+  controls.hidden = false;
+  reviewCarousel.setAttribute('data-enhanced','');
+  render(); schedule();
+}
 const languageSwitch = document.querySelector('[data-language-switch]');
 if (languageSwitch && window.location) {
   const counterpart = languageSwitch.getAttribute('href').split(/[?#]/)[0];

@@ -21,7 +21,7 @@ test('Perth local business belongs to the registered group without inventing a s
     assert.equal(nodes.filter(n=>n['@type']==='LocalBusiness').length,1);
     assert.equal(parent.address,undefined,'do not invent a group street address from a postcode');
   }
-  for(const path of ['/','/about/','/contact/']){
+  for(const path of ['/about/','/contact/']){
     const $=page(path);
     assert.match($('main .local-team-identity').text(),/Perth-based team/);
     assert.match($('main .local-team-identity').text(),/operated by Ellis Services Group Pty Ltd/);

@@ -118,7 +118,7 @@ test('About omits the pre-footer contact band while preserving the actual shared
  assert.equal($('footer').length,1);
  for(const route of ['','contact','tile-roof-repairs']){
   const sibling=load(readFileSync(join(root,route,'index.html'),'utf8'));
-  assert.equal(sibling('.contact-band').length,route==='contact'?0:1,route||'Home');
+  assert.equal(sibling('.contact-band').length,['','contact'].includes(route)?0:1,route||'Home');
   assert.equal(sibling('footer').length,1,route||'Home');
   assert.equal($('footer').toString(),sibling('footer').toString(),route||'Home');
  }
@@ -157,7 +157,7 @@ test('About layout styles are delivered only with their page and preserve the sh
  for(const route of ['about','']){
   const $=load(readFileSync(join(root,route,'index.html'),'utf8'));
   const styles=$('link[rel="stylesheet"]');
-  assert.equal(styles.length,route==='about'?2:1,'About has a small additional fingerprinted layout bundle');
+  assert.equal(styles.length,2,'About has a small additional fingerprinted layout bundle');
   const parts=styles.map((_,e)=>readFileSync(join(root,$(e).attr('href')),'utf8')).get();
   const css=parts.join('\n');
   if(route==='about')assert.ok(Buffer.byteLength(css)<90000,'About shared and route CSS total stays below 90KB');

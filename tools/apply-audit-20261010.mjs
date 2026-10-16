@@ -13,6 +13,7 @@ import {applyContactLayout} from '../content/contact-layout.mjs';
 import {applyServiceLabels} from '../content/service-labels.mjs';
 import {applyServiceStructure} from '../content/service-structure.mjs';
 import {applyEditorialComposition} from '../content/editorial-composition.mjs';
+import {applyHomeReviews} from '../content/home-reviews.mjs';
 
 const contentUpdateRoutes=new Set([...keywordGapRoutes,...keywordMapRoutes,'gutters-downpipes']);
 const articleImages={
@@ -141,6 +142,7 @@ export function applyAudit20261010({root,site}){
     if(applyServiceStructure($,route))declarativeRoutes.add(route);
     if(applyServiceLabels($,route,graph))declarativeRoutes.add(route);
     if(applyEditorialComposition($,route))declarativeRoutes.add(route);
+    applyHomeReviews($,route);
     syncContentKnowledge($,graph,site,canonical);
     refineLocalServiceGraph($,graph,route,canonical);
     if(declarativeRoutes.has(route)){

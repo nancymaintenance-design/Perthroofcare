@@ -3,6 +3,7 @@ import {join,dirname} from 'node:path';
 import {load} from 'cheerio';
 import {localizePage,MissingTranslationError} from '../content/i18n/localize.mjs';
 import {normalizeSource,sourceId} from '../content/i18n/catalog.mjs';
+import {localizeHomeReviews} from '../content/home-reviews.mjs';
 
 const site='https://www.perthroofcare.com.au';
 const serialize=value=>JSON.stringify(value).replace(/</g,'\\u003c');
@@ -12,6 +13,7 @@ const localeFeed=value=>feedPaths.reduce((result,path)=>result===path||result===
 
 function synchronizeChinese(html,route){
  const $=load(html,{scriptingEnabled:false});
+ if(route==='/')localizeHomeReviews($);
  const disclosures=$('main details').map((_,el)=>{const node=$(el).clone(),question=text(node.find('summary'));node.find('summary').remove();return {question,answer:text(node)};}).get();
  const paragraphs=$('main p').filter((_,el)=>!$(el).is('.eyebrow,.article-byline,.utility')&&!$(el).closest('nav,aside,footer,form,details,figure,.utility').length);
  const lead=paragraphs.filter('.article-lead').first();
