@@ -1,8 +1,8 @@
 import {readFileSync,writeFileSync,readdirSync,mkdirSync} from 'node:fs';
 import {join,dirname} from 'node:path';
 import {load} from 'cheerio';
-import {localizePage} from '../content/i18n/localize.mjs';
-import {normalizeSource} from '../content/i18n/catalog.mjs';
+import {localizePage,MissingTranslationError} from '../content/i18n/localize.mjs';
+import {normalizeSource,sourceId} from '../content/i18n/catalog.mjs';
 
 const site='https://www.perthroofcare.com.au';
 const serialize=value=>JSON.stringify(value).replace(/</g,'\\u003c');
@@ -33,14 +33,20 @@ function synchronizeChinese(html,route){
  return $.html();
 }
 
-function chineseFeed(root,path,pages){
+function chineseFeed(root,path,pages,dictionary){
  const english=JSON.parse(readFileSync(join(root,path),'utf8'));
  const news=path.startsWith('news/');
- return {...english,title:news?'屋面维修指南 | Ellis Services Group':'Perth Roof Care 屋面维修案例记录',description:news?'Ellis Services Group 屋面维修与保养指南。':'Ellis Services Group 屋面维修项目的现场照片与施工记录。',home_page_url:english.home_page_url.replace(site,site+'/zh'),feed_url:english.feed_url.replace(site,site+'/zh'),language:'zh-Hans',items:english.items.map(item=>{
+ return {...english,title:news?'屋面维修指南 | Ellis Services Group':'Perth Roof Care 屋面维修案例记录',description:news?'Ellis Services Group 屋面维修与保养指南。':'Ellis Services Group 屋面维修项目的现场照片与施工记录。',home_page_url:english.home_page_url.replace(site,site+'/zh'),feed_url:english.feed_url.replace(site,site+'/zh'),language:'zh-Hans',items:english.items.map((item,index)=>{
   const route=new URL(item.url).pathname,$=load(pages.get(route),{scriptingEnabled:false});
   const title=text($('h1').first());
   const body=$('main p,main h2,main h3,main li,main figcaption').filter((_,el)=>!$(el).closest('form,nav,aside').length).map((_,el)=>text($(el))).get().filter(Boolean).join('\n\n');
-  return {...item,id:item.id===item.url?item.id.replace(site,site+'/zh'):item.id,url:item.url.replace(site,site+'/zh'),title,summary:$('meta[name="description"]').attr('content'),content_text:body,...(item.tags?{tags:[title]}:{})};
+  const attachments=item.attachments?.map((attachment,attachmentIndex)=>{
+   if(!Object.hasOwn(attachment,'title'))return attachment;
+   const source=normalizeSource(attachment.title),id=sourceId(source),translated=Object.hasOwn(dictionary,id)?dictionary[id]:undefined;
+   if(typeof translated!=='string'||!translated.trim()||normalizeSource(translated)===source||!/\p{Script=Han}/u.test(translated))throw new MissingTranslationError(source,{route,location:`${path}.items[${index}].attachments[${attachmentIndex}].title`});
+   return {...attachment,title:translated.trim()};
+  });
+  return {...item,id:item.id===item.url?item.id.replace(site,site+'/zh'):item.id,url:item.url.replace(site,site+'/zh'),title,summary:$('meta[name="description"]').attr('content'),content_text:body,...(item.tags?{tags:[title]}:{}),...(attachments?{attachments}:{})};
  })};
 }
 
@@ -58,9 +64,10 @@ export function buildLocales(root){
  // Validate every source before publishing any locale page. Missing copy fails the build.
  const chinese=new Map(),english=new Map();
  for(const route of routes){const html=readFileSync(join(root,route,'index.html'),'utf8'),options={route,englishRoutes:routes,siteBase:site,translations:dictionary};chinese.set(route,synchronizeChinese(localizePage(html,{...options,language:'zh-Hans'}),route));english.set(route,localizePage(html,{...options,language:'en-AU'}));}
+ const news=chineseFeed(root,'news/feed.json',chinese,dictionary),cases=chineseFeed(root,'case-studies.json',chinese,dictionary);
  const write=(path,body)=>{const file=join(root,path);mkdirSync(dirname(file),{recursive:true});writeFileSync(file,body);};
  for(const route of routes){write(join(route,'index.html'),english.get(route));write(join('zh',route,'index.html'),chinese.get(route));}
- const news=chineseFeed(root,'news/feed.json',chinese);write('zh/news/feed.json',JSON.stringify(news,null,2)+'\n');write('zh/news/feed.xml',rss(news));write('zh/case-studies.json',JSON.stringify(chineseFeed(root,'case-studies.json',chinese),null,2)+'\n');
+ write('zh/news/feed.json',JSON.stringify(news,null,2)+'\n');write('zh/news/feed.xml',rss(news));write('zh/case-studies.json',JSON.stringify(cases,null,2)+'\n');
  sitemap('url').remove();for(const entry of entries)sitemap('urlset').append(entry);for(const entry of entries){const localized=sitemap(entry).clone();localized.find('loc').text(site+'/zh'+new URL(localized.find('loc').text()).pathname);sitemap('urlset').append(localized);}writeFileSync(sitemapFile,sitemap.xml());
  const llmsFile=join(root,'llms.txt');const marker='## Languages';writeFileSync(llmsFile,readFileSync(llmsFile,'utf8').split(marker)[0].trimEnd()+`\n\n${marker}\n\n- English: ${site}/\n- 简体中文服务：${site}/zh/\n- Each Chinese page has the same English route prefixed with /zh. Chinese guides: ${site}/zh/news/; case records: ${site}/zh/gallery/.\n`);
  for(const [path,lang,title,body,home,label] of [['404.html','en-AU','Page not found','The page could not be found. Return to the homepage to find a roof repair service.','/','Return home'],['zh/404.html','zh-Hans','找不到此页面','此页面不存在。请返回首页查找屋面维修服务。','/zh/','返回首页']])write(path,`<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${title} | Perth Roof Care</title></head><body><main><h1>${title}</h1><p>${body}</p><a href="${home}">${label}</a></main></body></html>`);

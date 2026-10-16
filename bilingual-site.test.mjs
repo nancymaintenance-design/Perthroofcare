@@ -54,6 +54,44 @@ test('Chinese feeds use real counterpart URLs and translated text with unchanged
  const $=load(readFileSync('public/zh/news/feed.xml','utf8'),{xmlMode:true});assert.equal($('channel > language').text(),'zh-Hans');assert.equal($('item').length,JSON.parse(readFileSync('public/zh/news/feed.json','utf8')).items.length);
 });
 
+test('Chinese feed attachment titles are translated and every other media property is preserved',()=>{
+ const dictionary=Object.assign({},...readdirSync('content/i18n/zh').filter(file=>/^batch-\d+\.json$/.test(file)).map(file=>JSON.parse(readFileSync(join('content/i18n/zh',file),'utf8'))));
+ let attachments=0;
+ for(const file of ['news/feed.json','case-studies.json']){
+  const en=JSON.parse(readFileSync(join('public',file),'utf8')),zh=JSON.parse(readFileSync(join('public/zh',file),'utf8'));
+  en.items.forEach((item,i)=>{
+   assert.equal(zh.items[i].attachments?.length,item.attachments?.length,`${file} item ${i}`);
+   (item.attachments||[]).forEach((attachment,j)=>{
+    attachments++;const actual=zh.items[i].attachments[j],{title,...media}=attachment,{title:translated,...actualMedia}=actual;
+    assert.deepEqual(actualMedia,media,`${file} item ${i} attachment ${j}`);
+    if(Object.hasOwn(attachment,'title')){assert.equal(translated,dictionary[sourceId(title)],title);assert.notEqual(translated,title);assert.match(translated,/\p{Script=Han}/u);}
+    else assert.equal(Object.hasOwn(actual,'title'),false);
+   });
+  });
+ }
+ assert.equal(attachments,20);
+});
+
+test('Chinese feed attachment translation rejects missing or invalid copy before any locale output',async t=>{
+ const {buildLocales}=await import('./tools/build-locales.mjs'),root=mkdtempSync(join(tmpdir(),'roof-feed-locales-'));t.after(()=>rmSync(root,{recursive:true,force:true}));
+ mkdirSync(join(root,'content/i18n/zh'),{recursive:true});mkdirSync(join(root,'news'));
+ writeFileSync(join(root,'sitemap.xml'),`<urlset><url><loc>${site}/</loc></url></urlset>`);
+ writeFileSync(join(root,'index.html'),'<html><head><title>Roof repairs</title></head><body><main><h1>Roof repairs</h1></main></body></html>');
+ writeFileSync(join(root,'llms.txt'),'# Company');
+ writeFileSync(join(root,'news/feed.json'),JSON.stringify({home_page_url:site+'/',feed_url:site+'/news/feed.json',items:[]}));
+ const caption='Completed metal roof beside the gutter.',media={url:site+'/assets/case.png',mime_type:'image/png',size_in_bytes:4321,duration_in_seconds:2,_credit:{name:'Ellis Services Group'}};
+ writeFileSync(join(root,'case-studies.json'),JSON.stringify({home_page_url:site+'/',feed_url:site+'/case-studies.json',items:[{url:site+'/',id:site+'/',attachments:[{...media,title:caption},media]}]}));
+ const dictionary=join(root,'content/i18n/zh/batch-001.json'),original=readFileSync(join(root,'index.html'),'utf8');
+ for(const translation of [undefined,'',caption,'Untranslated caption']){
+  writeFileSync(dictionary,JSON.stringify({[sourceId('Roof repairs')]:'屋面维修',...(translation===undefined?{}:{[sourceId(caption)]:translation})}));
+  assert.throws(()=>buildLocales(root),error=>error.name==='MissingTranslationError'&&error.source===caption&&error.location==='case-studies.json.items[0].attachments[0].title');
+  assert.equal(existsSync(join(root,'zh')),false);assert.equal(readFileSync(join(root,'index.html'),'utf8'),original);
+ }
+ writeFileSync(dictionary,JSON.stringify({[sourceId('Roof repairs')]:'屋面维修',[sourceId(caption)]:'檐沟旁的完工金属屋面。'}));buildLocales(root);
+ const zh=JSON.parse(readFileSync(join(root,'zh/case-studies.json'),'utf8'));
+ assert.deepEqual(zh.items[0].attachments,[{...media,title:'檐沟旁的完工金属屋面。'},media]);
+});
+
 test('locale builder is an explicit strict build module',async()=>{assert.ok(existsSync('tools/build-locales.mjs'));const {buildLocales}=await import('./tools/build-locales.mjs');assert.equal(typeof buildLocales,'function');});
 
 test('locale build fails before writing on missing translation, and repeat locale passes are idempotent',async t=>{
