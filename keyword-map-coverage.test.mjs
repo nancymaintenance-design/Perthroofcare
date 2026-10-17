@@ -56,14 +56,14 @@ test('Perth drainage photographs are allocated by visible components without com
   }
  }
  assert.equal(new Set(used).size,8);
- assert.match(page('flat-roof-repairs')('#perth-roof-drainage-work').text(),/do not show.*entire flat roof covering/);
- assert.match(page('strata-roof-repairs')('#perth-strata-drainage-work').text(),/do not establish common-property boundaries/);
+ assert.match(page('flat-roof-repairs')('#perth-roof-drainage-work').text(),/Drainage condition/);
+ assert.match(page('strata-roof-repairs')('#perth-strata-drainage-work').text(),/Confirm the authorised contact, access and scope/);
 });
 test('Perth strata gallery describes skylight addition and preserves original-photo display',()=>{
  const $=page('strata-roof-repairs'),section=$('#perth-strata-skylight-project');
  assert.equal(section.find('img').length,2);
  assert.match(section.text(),/adding a skylight.*existing metal roof/);
- assert.match(section.text(),/not a record of leak investigation or whole-roof replacement/);
+ assert.match(section.text(),/authorised contact, access and agreed work scope/);
  for(const img of section.find('img').toArray()){
   assert.match($(img).attr('srcset'),/\.webp/);
   assert.ok($(img).attr('alt').length>20);
@@ -76,7 +76,7 @@ test('Perth whole-roof replacement gallery distinguishes construction from compl
  assert.equal(section.find('img').length,3);
  assert.equal(new Set(section.find('img').map((_,e)=>$(e).attr('src')).get()).size,3);
  assert.match(section.find('h3').text(),/whole-roof replacement.*construction/i);
- assert.match(section.text(),/not views of the completed replacement roof/);
+ assert.match(section.text(),/construction-stage records/);
  for(const img of section.find('img').toArray()){
   assert.ok($(img).attr('alt').length>20);
   assert.match($(img).attr('srcset'),/\.webp/);

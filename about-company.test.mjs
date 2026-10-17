@@ -109,7 +109,8 @@ test('About renderer exposes the registration fragment immediately after the com
  assert.equal(registration.prev().attr('data-about-section'),'company');
  assert.equal(registration.find('h2').text(),'Company registration');
  assert.match(registration.text(),/96 645 821 745/);
- assert.match(registration.text(),/does not establish a trade licence or insurance/);
+ assert.equal(registration.find('.about-company-registration-note').length,0);
+ assert.equal(registration.find('a[href="https://abr.business.gov.au/ABN/View?id=645821745"]').length,1);
 });
 
 test('About omits the pre-footer contact band while preserving the actual shared footer',()=>{

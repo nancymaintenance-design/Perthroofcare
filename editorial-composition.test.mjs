@@ -4,6 +4,7 @@ import {readFileSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {load} from 'cheerio';
 import {serviceLabels} from './content/service-labels.mjs';
+import {approvedCopy} from './test-copy-expectations.mjs';
 const page=r=>load(readFileSync(`public/${r?r+'/':''}index.html`,'utf8'));
 const baseline=r=>load(execFileSync('git',['show',`c832b94:${r?r+'/':''}index.html`],{encoding:'utf8',maxBuffer:4*1024*1024}));
 const routes=[...readFileSync('sitemap.xml','utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname).filter(r=>!r.startsWith('/zh/')).map(r=>r.slice(1,-1));
@@ -39,10 +40,10 @@ test('FAQ has one topic directory, merged questions, all meaningful aliases and 
   [[23,51],'topic-q024',[/covering a ceiling stain does not identify or correct/,/Investigate and repair/,/cleaning, preparation and spray-painting/]],
   [[28,39],'topic-q029',[/Record previous leaks/,/before winter/,/drainage clearing.*tiles, fixings, ridges and flashings/,/property condition determines/,/ground level/]],
   [[41,43],null,[/Photographs are optional/,/do not replace an on-site assessment/,/nearby section/,/do not climb/,/actual material and connections/]],
-  [[44,45],null,[/supplied site photographs.*metal fasteners, ridge capping, chimney flashing.*drainage/,/completed work or project sequences/,/General guide imagery/,/not evidence of a job at your property/]]
+  [[44,45],null,[/supplied site photographs.*metal fasteners, ridge capping, chimney flashing.*drainage/,/completed work or project sequences/]]
  ];
  const mergedIndexes=new Set(merged.flatMap(([indexes])=>indexes));
- old('main details').each((i,e)=>{if(mergedIndexes.has(i))return;const q=old(e).find('summary').text(),answer=$('main details').filter((_,n)=>$(n).find('summary').text()===q);assert.equal(answer.length,1,q);old(e).find('p').each((_,p)=>{const copy=old(p).clone();copy.find('a').remove();assert.ok(answer.text().includes(copy.text().trim()),q+' original fact');});});
+ old('main details').each((i,e)=>{if(mergedIndexes.has(i))return;const q=old(e).find('summary').text(),answer=$('main details').filter((_,n)=>$(n).find('summary').text()===q);assert.equal(answer.length,1,q);old(e).find('p').each((_,p)=>{const copy=old(p).clone();copy.find('a').remove();assert.ok(answer.text().includes(approvedCopy(copy.text())),q+' original fact');});});
  for(const [indexes,id,facts] of merged){const answer=id?$(`[id="${id}"]`).closest('details'):$('main details').filter((_,n)=>facts[0].test($(n).text()));assert.equal(answer.length,1,'merged '+indexes);for(const fact of facts)assert.match(answer.text(),fact,'retained fact '+indexes);}
  const graph=JSON.parse($('script[type="application/ld+json"]').first().text())['@graph'];
  assert.deepEqual(graph.find(n=>n['@type']==='FAQPage').mainEntity.map(n=>({q:n.name,a:n.acceptedAnswer.text})),$('main details').map((_,e)=>({q:$(e).find('summary').text(),a:$(e).find('p').text()})).get());
@@ -60,7 +61,7 @@ test('Gallery opens directly into project images with dates and every project re
  assert.equal(hero.find('p:not(.eyebrow)').length,1,'one concise introduction includes the existing project period');
  assert.match(hero.find('.project-period').text(),/Most of the projects in this collection were completed during 2025 and early 2026\./);
  assert.equal(library.children().first().hasClass('case-library-grid'),true,'no repeated title and introduction before the photographs');
- assert.match(library.find('.case-library-intro').text(),/not a price guide.*guarantee.*material, condition and access/);
+ assert.match(library.find('.case-library-intro').text(),/record work at individual properties.*material, condition and access/);
  const old=load(execFileSync('git',['show','a33fb0c:gallery/index.html'],{encoding:'utf8',maxBuffer:4*1024*1024}));
  for(const selector of ['.case-library-card','title','meta[name="description"]','main [id]']){
   const collect=d=>d(selector).map((_,e)=>selector==='main [id]'?d(e).attr('id'):d.html(e)).get();

@@ -14,6 +14,7 @@ import {applyServiceLabels} from '../content/service-labels.mjs';
 import {applyServiceStructure} from '../content/service-structure.mjs';
 import {applyEditorialComposition} from '../content/editorial-composition.mjs';
 import {applyHomeReviews} from '../content/home-reviews.mjs';
+import {applyCopyCleanup} from '../content/copy-cleanup.mjs';
 
 const contentUpdateRoutes=new Set([...keywordGapRoutes,...keywordMapRoutes,'gutters-downpipes']);
 const articleImages={
@@ -143,6 +144,7 @@ export function applyAudit20261010({root,site}){
     if(applyServiceLabels($,route,graph))declarativeRoutes.add(route);
     if(applyEditorialComposition($,route))declarativeRoutes.add(route);
     applyHomeReviews($,route);
+    if(applyCopyCleanup($,route))declarativeRoutes.add(route);
     syncContentKnowledge($,graph,site,canonical);
     refineLocalServiceGraph($,graph,route,canonical);
     if(declarativeRoutes.has(route)){

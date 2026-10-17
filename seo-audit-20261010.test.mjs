@@ -44,8 +44,9 @@ test('owner-confirmed seven-day Perth opening hours agree in visible copy and ev
 test('company registration remains directly verifiable without being represented as a trade licence',()=>{
   const $=page('/about/');
   assert.equal($('main a[href="https://abr.business.gov.au/ABN/View?id=645821745"]').length,1);
-  assert.match($('main').text(),/company-registration/);
-  assert.match($('main').text(),/insurance/);
+  assert.match($('main').text(),/Company registration/);
+  assert.match($('main').text(),/ABN96 645 821 745/);
+  assert.doesNotMatch($('main').text(),/does not establish a trade licence or insurance/);
 });
 
 test('every footer and business entity use the supplied platform destinations',()=>{
@@ -104,7 +105,7 @@ test('priority area pages identify relevant examples without claiming they are l
     const $=page(`/areas/${slug}-roof-repairs/`);
     assert.ok($('.audit-area-preparation li').length>=3,slug);
     assert.ok($('.audit-area-preparation a[href^="/projects/"]').length,slug);
-    assert.match($('.audit-area-preparation').text(),/not evidence of a completed job in/);
+    assert.doesNotMatch($('.audit-area-preparation').text(),/not evidence of a completed job in/);
   }
 });
 

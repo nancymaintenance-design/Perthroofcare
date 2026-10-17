@@ -21,7 +21,7 @@ test('six service scopes explain distinct component decisions without unconfirme
   'box-gutter-repairs':[/outlet/i,/joint/i,/overflow route/i],
   'roof-replacement':[/local repair/i,/retained/i,/concealed/i],
   'flat-roof-repairs':[/covering/i,/drainage/i,/penetrations/i],
-  'strata-roof-repairs':[/permission/i,/authorised contact/i,/skylight/i]
+  'strata-roof-repairs':[/permission/i,/authorised contact/i,/approval arrangements/i]
  };
  const scopes=[];
  for(const [route,patterns] of Object.entries(expectations)){
@@ -64,9 +64,9 @@ test('refined service copy names work and photo stages directly while retaining 
  }
  assert.match(page('roof-cleaning')('#scope-1').text(),/we clean.*before spray painting/i);
  assert.match(page('roof-painting')('#scope-2').text(),/we clean.*before spray painting/i);
- assert.match(page('roof-painting')('#scope-3').text(),/after spray painting.*do not (?:include|show) spray application in progress/i);
- assert.match(page('roof-replacement')('#scope-3').text(),/construction.stage.*does not show the completed replacement roof/i);
- assert.match(page('strata-roof-repairs')('#scope-3').text(),/skylight.*does not document a leak investigation or whole.roof replacement/i);
+ assert.match(page('roof-painting')('#scope-3').text(),/after spray painting/i);
+ assert.match(page('roof-replacement')('#scope-3').text(),/construction.stage/i);
+ assert.match(page('strata-roof-repairs')('#perth-strata-skylight-project').text(),/adding a skylight.*existing metal roof/i);
 });
 
 test('project counts and factual construction-stage labels survive content refinement',()=>{

@@ -4,6 +4,7 @@ import {readFileSync,existsSync} from 'node:fs';
 import {load} from 'cheerio';
 import {spawnSync,execFileSync} from 'node:child_process';
 import {serviceLabels} from './content/service-labels.mjs';
+import {approvedCopy} from './test-copy-expectations.mjs';
 const routes=[...readFileSync('public/sitemap.xml','utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname).filter(r=>!r.startsWith('/zh/'));
 const page=r=>load(readFileSync(`public${r}index.html`,'utf8'));
 const nodes=$=>$('script[type="application/ld+json"]').toArray().flatMap(e=>{const n=JSON.parse($(e).text());return n['@graph']||[n];});
@@ -50,7 +51,7 @@ test('all routes use concise component headings without assembled topic suffixes
 });
 
 test('consolidated services leave unrelated prose and existing guide bodies intact',()=>{
- const prose=($,selector)=>$(selector).map((_,e)=>{const copy=$(e).clone();copy.find('a').text('[link]');return copy.text();}).get();
+ const prose=($,selector)=>$(selector).map((_,e)=>{const copy=$(e).clone();copy.find('a').text('[link]');return approvedCopy(copy.text());}).get().filter(Boolean);
  const extract=$=>({
   paragraphs:prose($,'main p:not(.eyebrow)'),
   answers:prose($,'main details'),

@@ -14,7 +14,7 @@ export function renderAboutCompany(){
  <div><p class="eyebrow">Ellis Services Group Pty Ltd</p><h2 id="company-registration-heading">Company registration</h2><p>Australian Private Company</p></div>
  <div><dl class="about-company-facts"><div><dt>ABN</dt><dd>96 645 821 745</dd></div><div><dt>ACN</dt><dd>645 821 745</dd></div></dl>
  <p>ABN active and GST registered from 11 November 2020. <a href="https://abr.business.gov.au/ABN/View?id=645821745" target="_blank" rel="noopener noreferrer">Official ABN Lookup record</a></p>
- <p class="about-company-registration-note">The ABR company-registration record does not establish a trade licence or insurance.</p></div>
+ </div>
  </div></section>
  <section class="section about-company-approach" data-about-section="approach"><div class="container about-company-approach-grid">
   <div><p class="eyebrow">OUR WORKING PROCESS</p><h2>Roof assessment and written quotes</h2></div>
