@@ -1,0 +1,21 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {load} from 'cheerio';
+test('approved Chinese drafts and English counterparts reach only their three intended pages',()=>{
+ const en=load(readFileSync('public/index.html','utf8')),zh=load(readFileSync('public/zh/index.html','utf8'));
+ assert.equal(en('.hero-evidence-links a[href="/gallery/"]').text(),'Project gallery');
+ assert.equal(zh('.hero-evidence-links a[href="/zh/gallery/"]').text(),'施工案例');
+ assert.match(en('main').text(),/Tell us about your roof and we will arrange the next step/);
+ assert.ok(en('main h3').toArray().some(e=>en(e).text()==='Roof cleaning services'));
+ assert.ok(zh('main h3').toArray().some(e=>zh(e).text()==='屋面清洗服务'));
+ assert.equal(en('.google-review-card').length,10);
+ const services=load(readFileSync('public/services/index.html','utf8'));
+ assert.match(services('main').text(),/We inspect and repair tile and metal roofs, tracing leaks/);
+ assert.doesNotMatch(services('main').text(),/We inspect and repair Perth tile and metal roofs/);
+ const repair=load(readFileSync('public/roof-repairs/index.html','utf8'));
+ assert.doesNotMatch(repair('main').text(),/For a rental, identify who can approve the work and arrange access/);
+ assert.match(repair('main').text(),/Any warranty terms must be confirmed in writing for the particular scope/);
+ const untouched=load(readFileSync('public/tile-roof-repairs/index.html','utf8'));
+ assert.match(untouched('h1').text(),/Tile roof repairs/i);
+});

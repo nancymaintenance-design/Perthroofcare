@@ -77,7 +77,8 @@ test('home and directory service cards use core headings without place-stacked s
  for(const route of ['/','/services/']){const $=page(route);
   $('.home-service-map article').each((_,e)=>{const card=$(e),href=card.find('a[href]').first().attr('href'),label=labels[href?.replace(/^\/|\/$/g,'')];
    if(!label)return;
-   assert.equal(card.find('h3').text(),label,route+' '+href);
+   const homeOverrides={'/ridge-capping-repointing/':'Ridge capping repairs','/gutters-downpipes/':'Gutter and downpipe repairs','/roof-cleaning-painting/':'Roof cleaning services'};
+   assert.equal(card.find('h3').text(),route==='/'?homeOverrides[href]??label:label,route+' '+href);
    assert.doesNotMatch(card.find('.eyebrow').text(),/Perth/i,route+' '+href+' eyebrow');
   });
  }

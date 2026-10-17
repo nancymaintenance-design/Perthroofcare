@@ -40,3 +40,19 @@ test('an interrupted history write does not permanently block the next save',asy
  const next=await saveDraft(root,{pageId:'about.html',expectedRevision:1,baseHash:'test',changes:{field:'恢复后的修订'}});
  assert.equal(next.changes.field,'恢复后的修订');assert.ok(next.revision>2);assert.equal((await readDraft(root,'about.html')).revision,next.revision);
 });
+test('approved source sync can rebase the exact draft revision without losing history or accepting stale writes',async t=>{
+ const {startEditor}=await import('./tools/editor/server.mjs');
+ const {saveDraft,readDraft}=await import('./tools/editor/store.mjs');
+ const {editorContent}=await import('./tools/editor/content.mjs');
+ const root=await mkdtemp(join(tmpdir(),'perth-editor-rebase-'));
+ await saveDraft(root,{pageId:'about.html',expectedRevision:0,baseHash:'previous-approved-build',changes:{'field-0':'此前保存的中文'}});
+ const server=await startEditor({port:0,draftRoot:root});t.after(()=>server.close());
+ const token=(await (await fetch(server.url+'api/session')).json()).token;
+ const put=async(baseHash,revision)=>fetch(server.url+'api/draft/about.html',{method:'PUT',headers:{origin:new URL(server.url).origin,'x-editor-token':token,'content-type':'application/json'},body:JSON.stringify({baseHash,expectedRevision:revision,changes:{}})});
+ const current=editorContent('about.html').baseHash;
+ assert.equal((await put('previous-approved-build',1)).status,409);
+ assert.equal((await put(current,0)).status,409);
+ assert.equal((await put(current,1)).status,200);
+ assert.deepEqual((await readDraft(root,'about.html')).changes,{});
+ assert.equal(JSON.parse(await readFile(join(root,'history','about.html','1.json'),'utf8')).changes['field-0'],'此前保存的中文');
+});

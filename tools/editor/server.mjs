@@ -24,12 +24,18 @@ export async function startEditor({host='127.0.0.1',port=4206,draftRoot=join(sou
     if(!authorized(req,origin,token,req.method!=='GET'))throw new EditorError(403,'会话失效，请刷新后台');
     if(path==='/__editor/api/pages'&&req.method==='GET')return json(res,200,pages.map(p=>({pageId:p.pageId,title:editorContent(p.pageId).fields.find(f=>f.kind==='seoTitle').publishedValue,kind:'page'})));
     const m=path.match(/^\/__editor\/api\/(draft|preview|history|restore|workflow)\/([^/]+)$/);if(!m)throw new EditorError(404,'页面不存在');
-    const pageId=decodeURIComponent(m[2]),model=editorContent(pageId),draft=await readDraft(draftRoot,pageId),changes=checkedChanges(model,draft);
+    const pageId=decodeURIComponent(m[2]),model=editorContent(pageId),draft=await readDraft(draftRoot,pageId);
+    if(m[1]==='draft'&&req.method==='PUT'){
+     const input=await body(req);if(input?.baseHash!==model.baseHash)throw new EditorError(409,'页面基线已更新，请重新载入');
+     const next=normalizeDraftChanges(model,input.changes);
+     if(draft&&draft.baseHash!==model.baseHash&&Object.keys(next).length)throw new EditorError(409,'旧草稿需由助手核对同步，不能直接套到新页面');
+     return json(res,200,await saveDraft(draftRoot,{pageId,baseHash:model.baseHash,expectedRevision:input.expectedRevision,changes:next}));
+    }
+    const changes=checkedChanges(model,draft);
     if(m[1]==='draft'&&req.method==='GET')return json(res,200,{pageId,baseHash:model.baseHash,fields:model.fields,draft,legacyDraft:false,legacyReview:[]});
     if(m[1]==='history'&&req.method==='GET')return json(res,200,await listHistory(draftRoot,pageId));
     if(m[1]==='workflow'&&req.method==='GET')return json(res,200,{state:Object.keys(changes).length?'needs-translation':'published',draft,proposalHash:null,chineseHash:hash(JSON.stringify(changes)),changes:model.fields.filter(f=>changes[f.id]!==undefined).map(f=>({fieldId:f.id,sourcePath:f.sourcePath,chineseBefore:f.publishedValue,chineseAfter:changes[f.id],englishBefore:f.value,englishAfter:null}))});
     if(m[1]==='preview'&&req.method==='GET'){res.setHeader('content-type','text/html; charset=utf-8');return res.end(renderPreview(model,draft,url.searchParams.get('locale')!=='en-AU',origin));}
-    if(m[1]==='draft'&&req.method==='PUT'){const input=await body(req);if(input?.baseHash!==model.baseHash)throw new EditorError(409,'页面基线已更新，请重新载入');return json(res,200,await saveDraft(draftRoot,{pageId,baseHash:model.baseHash,expectedRevision:input.expectedRevision,changes:normalizeDraftChanges(model,input.changes)}));}
     if(m[1]==='restore'&&req.method==='POST'){const input=await body(req);return json(res,200,await restoreRevision(draftRoot,pageId,input.historyRevision,input.expectedRevision,model.baseHash));}
     throw new EditorError(405,'方法不支持');
    }

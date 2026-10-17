@@ -1,0 +1,119 @@
+[
+  {
+    "route": "",
+    "pageId": "index.html",
+    "revision": 6,
+    "fieldId": "field-2",
+    "before": "Roof leaks, damaged tiles, metal roof defects and drainage problems — inspected and repaired by Ellis Services Group. Tell us about your Perth property and we will arrange the next step.",
+    "after": "Roof leaks, damaged tiles, metal roof defects and drainage problems — inspected and repaired by Ellis Services Group. Tell us about your roof and we will arrange the next step.",
+    "chinese": "屋面漏水、瓦片损坏、金属屋面缺陷及排水问题——由 Ellis Services Group 检查和维修。请告知您的屋面情况，我们会安排下一步。"
+  },
+  {
+    "route": "",
+    "pageId": "index.html",
+    "revision": 6,
+    "fieldId": "field-6",
+    "before": "Photographed projects",
+    "after": "Project gallery",
+    "chinese": "施工案例"
+  },
+  {
+    "route": "",
+    "pageId": "index.html",
+    "revision": 6,
+    "fieldId": "field-31",
+    "before": "Ridge capping & repointing",
+    "after": "Ridge capping repairs",
+    "chinese": "屋脊盖瓦维修"
+  },
+  {
+    "route": "",
+    "pageId": "index.html",
+    "revision": 6,
+    "fieldId": "field-41",
+    "before": "Gutters & downpipes",
+    "after": "Gutter and downpipe repairs",
+    "chinese": "檐沟与落水管维修"
+  },
+  {
+    "route": "",
+    "pageId": "index.html",
+    "revision": 6,
+    "fieldId": "field-46",
+    "before": "Roof cleaning & painting",
+    "after": "Roof cleaning services",
+    "chinese": "屋面清洗服务"
+  },
+  {
+    "route": "",
+    "pageId": "index.html",
+    "revision": 6,
+    "fieldId": "field-56",
+    "before": "Customer reviews of Ellis Services Group’s property maintenance services in different locations.",
+    "after": "Customer reviews of Ellis Services Group’s repair and maintenance services in different locations.",
+    "chinese": "Ellis Services Group 的客户评价，涉及不同地区的维修维护服务。"
+  },
+  {
+    "route": "services",
+    "pageId": "services.html",
+    "revision": 4,
+    "fieldId": "field-4",
+    "before": "Roof repairs, leak investigation, tile and metal work, drainage, inspections and maintenance — choose the service that matches your property.",
+    "after": "Roof repairs, leak investigation, tile and metal work, drainage, inspections and maintenance — choose the service that suits your needs.",
+    "chinese": "屋面维修、漏水排查、瓦片及金属施工、排水、检查与维护——选择适合您的服务。"
+  },
+  {
+    "route": "services",
+    "pageId": "services.html",
+    "revision": 4,
+    "fieldId": "field-9",
+    "before": "We inspect and repair Perth tile and metal roofs, tracing leaks and restoring damaged tiles, ridges, valleys, flashings and roof-edge drainage.",
+    "after": "We inspect and repair tile and metal roofs, tracing leaks and restoring damaged tiles, ridges, valleys, flashings and roof-edge drainage.",
+    "chinese": "我们检查并维修瓦屋面和金属屋面，追查漏水，修复受损瓦片、屋脊、天沟、泛水板及屋面边缘排水构件。"
+  },
+  {
+    "route": "services",
+    "pageId": "services.html",
+    "revision": 4,
+    "fieldId": "field-21",
+    "before": "We repair Perth metal roofs, including corrugated sheets, fasteners, washers, ridge and hip capping, flashings and penetrations.",
+    "after": "We repair metal roofs, including corrugated sheets, fasteners, washers, ridge and hip capping, flashings and penetrations.",
+    "chinese": "我们维修的金属屋面，包括波纹板、紧固件、密封垫圈、正脊和斜脊盖板、泛水板及屋面穿透部位。"
+  },
+  {
+    "route": "services",
+    "pageId": "services.html",
+    "revision": 4,
+    "fieldId": "field-25",
+    "before": "We repair ridge capping and carry out repointing and rebedding for Perth tiled roofs.",
+    "after": "We repair ridge capping and carry out repointing and rebedding for tiled roofs.",
+    "chinese": "我们为瓦屋面维修屋脊盖瓦，进行重新勾缝及重新铺设座浆。"
+  },
+  {
+    "route": "services",
+    "pageId": "services.html",
+    "revision": 4,
+    "fieldId": "field-41",
+    "before": "We inspect Perth roofs for leaks, damaged coverings, ridge and flashing defects and drainage problems.",
+    "after": "We inspect roofs for leaks, damaged coverings, ridge and flashing defects and drainage problems.",
+    "chinese": "我们检查屋面的漏水、覆盖材料损坏、屋脊及泛水板缺陷和排水问题。"
+  },
+  {
+    "route": "roof-repairs",
+    "pageId": "roof-repairs.html",
+    "revision": 2,
+    "fieldId": "field-5",
+    "before": "We inspect and repair Perth tile and metal roofs, tracing leaks and restoring damaged tiles, ridges, valleys, flashings and roof-edge drainage. Our team defines the work required and coordinates the repairs for your property.",
+    "after": "We inspect and repair tile and metal roofs, tracing leaks and restoring damaged tiles, ridges, valleys, flashings and roof-edge drainage. Our team defines the work required and coordinates the repairs for your property.",
+    "chinese": "我们检查及维修瓦屋面和金属屋面，追踪渗漏，修复受损瓦片、屋脊、天沟、泛水板及屋面边缘排水构造。我们的团队明确所需工程，并协调您物业的维修。"
+  },
+  {
+    "route": "roof-repairs",
+    "pageId": "roof-repairs.html",
+    "revision": 2,
+    "fieldId": "field-13",
+    "before": "For a rental, identify who can approve the work and arrange access. Any warranty terms must be confirmed in writing for the particular scope.",
+    "after": "Any warranty terms must be confirmed in writing for the particular scope.",
+    "chinese": "具体工程范围的保修条款须以书面形式确认。"
+  }
+]

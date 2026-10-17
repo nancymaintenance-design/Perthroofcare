@@ -70,7 +70,7 @@ async function refreshWorkflow(current) {
     if (current !== generation) return;
     workflow = result;
     const names = {
-        published: '已上线中文，无本地修改',
+        published: '本地中英文基线，无待同步修改',
         'needs-translation': '待通知助手同步英文',
         'needs-review': '待你确认英文与中文候选',
         approved: '本地候选已确认，尚未部署'
@@ -165,7 +165,7 @@ async function load(pageId) {
         u.searchParams.set('page', pageId);
         window.history.replaceState(null, '', u);
         revision();
-        message(result.legacyDraft ? `已载入旧版中文草稿；${result.legacyReview.length} 项共用标签保留在下方备查，不覆盖现有导航。保存时完整备份旧草稿。英文未修改。` : result.draft ? '已载入本地草稿。英文仅在助手同步后提供候选。' : '已载入已上线中文。编辑并保存后，在聊天通知助手同步英文。');
+        message(result.legacyDraft ? `已载入旧版中文草稿；${result.legacyReview.length} 项共用标签保留在下方备查，不覆盖现有导航。保存时完整备份旧草稿。英文未修改。` : Object.keys(result.draft?.changes??{}).length ? '已载入本地草稿。请在聊天通知助手同步英文。' : '已载入本地中英文基线，可继续编辑；不代表已上线。');
     } catch (error) {
         if (current === generation && page) pages.value = page.pageId;
         message(error.message + (page ? '；当前编辑页为 ' + page.pageId + '。预览已清空，输入保留，请重新载入。' : ''), true);
