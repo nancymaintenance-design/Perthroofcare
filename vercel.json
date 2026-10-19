@@ -5,6 +5,18 @@
   "outputDirectory": "public",
   "headers": [
     {
+      "source": "/:path*/feed.xml",
+      "headers": [{ "key": "Content-Type", "value": "application/rss+xml; charset=utf-8" }]
+    },
+    {
+      "source": "/:path*/feed.json",
+      "headers": [{ "key": "Content-Type", "value": "application/feed+json; charset=utf-8" }]
+    },
+    {
+      "source": "/:path*/case-studies.json",
+      "headers": [{ "key": "Content-Type", "value": "application/feed+json; charset=utf-8" }]
+    },
+    {
       "source": "/(.*)\\.(png|jpg|jpeg|webp|gif|svg|ico|woff|woff2)",
       "headers": [
         {

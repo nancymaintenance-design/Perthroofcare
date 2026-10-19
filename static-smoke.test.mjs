@@ -434,7 +434,7 @@ test('service metadata mirrors visible service content and publishes RSS discove
   const feed = readFileSync(join(root, 'news', 'feed.xml'), 'utf8');
   assert.match(news, /rel="alternate" type="application\/rss\+xml" href="https:\/\/www\.perthroofcare\.com\.au\/news\/feed\.xml"/i);
   assert.match(news, /Roof repair guides RSS/i);
-  assert.match(feed, /<rss version="2\.0">/);
+  assert.equal(load(feed,{xmlMode:true})('rss').attr('version'),'2.0');
 });
 
 test('homepage identity graph and llms guide contain only visible, supportable facts', () => {
@@ -597,7 +597,7 @@ test('keyword-led news articles publish useful English guidance, schema and an R
     'ridge-capping-repairs-perth-guide', 'roof-valleys-flashing-repairs-perth', 'roof-inspection-perth-guide'
   ];
   const feed = readFileSync(join(root, 'news', 'feed.xml'), 'utf8');
-  assert.match(feed, /<rss version="2\.0">/); assert.match(feed, /Roof Repairs Perth News/i);
+  assert.equal(load(feed,{xmlMode:true})('rss').attr('version'),'2.0'); assert.match(feed, /Roof Repair Guides Perth/i);
   for (const slug of articles) {
     const html = readFileSync(fileFor(`news/${slug}`), 'utf8');
     assert.equal((html.match(/<h1[\s>]/gi) ?? []).length, 1, `${slug} needs one H1`);

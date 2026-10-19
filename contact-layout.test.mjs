@@ -19,7 +19,7 @@ test('Contact puts all direct contact information above a standalone centred enq
  assert.equal($('title').text(),'Perth Roof Repair Enquiries | Ellis Services Group');
  for(const name of ['og:title','twitter:title'])assert.equal($(`meta[property="${name}"],meta[name="${name}"]`).attr('content'),$('title').text());
  const graph=JSON.parse($('script[type="application/ld+json"]').text())['@graph'];
- assert.equal(graph.find(n=>n['@type']==='WebPage').name,$('title').text());
+ assert.equal(graph.find(n=>[n['@type']].flat().includes('WebPage')).name,$('title').text());
  assert.equal($('link[rel="canonical"]').attr('href'),'https://www.perthroofcare.com.au/contact/');
  main.find('h1,h2,h3').each((_,e)=>assert.doesNotMatch($(e).text(),/\?|^(?:what|how|why|can|does)\b/i));
 });

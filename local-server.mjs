@@ -68,6 +68,7 @@ createServer(async (req, res) => {
       .replace(/<script\b[^>]*src="https:\/\/www\.googletagmanager\.com[^>]*><\/script>/g, '')
       .replace(/<script>window\.dataLayer=[\s\S]*?<\/script>/g, '')
       .replace(/<script\b[^>]*src="\/_vercel\/(?:speed-)?insights\/script\.js"[^>]*><\/script>/g, ''));
-    res.writeHead(200, { 'content-type': types[extname(file)] || 'application/octet-stream' }); res.end(data);
+    const contentType=/\/news\/feed\.xml$/.test(pathname)?'application/rss+xml; charset=utf-8':types[extname(file)] || 'application/octet-stream';
+    res.writeHead(200, { 'content-type': contentType }); res.end(data);
   } catch { res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' }); res.end('Not found'); }
 }).listen(port, '127.0.0.1', () => console.log(`Static site: http://127.0.0.1:${port}${previewOnly ? ' (local preview, no email or analytics)' : ''}`));

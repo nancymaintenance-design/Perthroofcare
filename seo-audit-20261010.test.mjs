@@ -148,7 +148,9 @@ test('RSS and JSON guide feeds reproduce the same current article content',()=>{
   const $=load(readFileSync(join(root,'news/feed.xml'),'utf8'),{xmlMode:true});
   assert.equal($('item').length,feed.items.length);
   for(const item of feed.items){const entry=$('item').filter((_,el)=>$(el).find('link').text()===item.url);
-    assert.equal(entry.find('description').text(),item.content_text,item.url);
+    assert.equal(entry.find('description').text(),item.summary,item.url);
+    assert.equal(entry.find('content\\:encoded').text(),item.content_html,item.url);
+    assert.ok(item.content_html.includes('article'),item.url);
     assert.equal(entry.find('title').text(),item.title,item.url);
   }
 });
