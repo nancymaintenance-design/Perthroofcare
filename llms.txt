@@ -1,60 +1,63 @@
-# Ellis Services Group
+# Perth Roof Care | Ellis Services Group
 
-> Machine-readable guide to roof repairs, inspections and drainage services provided by Ellis Services Group in Perth, Western Australia.
+> Perth Roof Care is operated by Ellis Services Group Pty Ltd. Roof repairs and drainage services in Perth. Available in English and 简体中文.
 
-## Identity
+## English services
 
-- Public business name: Ellis Services Group
-- Perth Roof Care is operated by Ellis Services Group Pty Ltd.
-- Website: https://www.perthroofcare.com.au/
-- Contact: 0405 878 406 | ellisservicesgroup3@outlook.com
-- Perth office address: 140 St Georges Terrace, Perth WA 6000
+- [Roof repairs](https://www.perthroofcare.com.au/roof-repairs/): We inspect and repair tile and metal roofs, tracing leaks and restoring damaged tiles, ridges, valleys, flashings and roof-edge drainage.
+- [Roof leak repairs](https://www.perthroofcare.com.au/roof-leak-repairs/): We trace roof leaks to their source and repair damaged tiles, metal sheets, fasteners, valleys and flashings.
+- [Tile roof repairs](https://www.perthroofcare.com.au/tile-roof-repairs/): We repair concrete and terracotta tile roofs across Perth, replacing damaged tiles and restoring adjoining ridge, valley and flashing details.
+- [Metal roof repairs](https://www.perthroofcare.com.au/metal-roof-repairs/): We repair Perth metal roofs, including corrugated sheets, fasteners, washers, ridge and hip capping, flashings and penetrations.
+- [Ridge capping & repointing](https://www.perthroofcare.com.au/ridge-capping-repointing/): We repair ridge capping and carry out repointing and rebedding for Perth tiled roofs.
+- [Roof valleys & flashing repairs](https://www.perthroofcare.com.au/flashing-repairs/): We repair and replace roof valleys and flashings at walls, chimneys, skylights and penetrations.
+- [Gutters & downpipes](https://www.perthroofcare.com.au/gutters-downpipes/): We inspect, clean and repair connected gutters and downpipes across Perth.
+- [Roof inspection](https://www.perthroofcare.com.au/roof-inspection/): We inspect Perth roofs for leaks, damaged coverings, ridge and flashing defects and drainage problems.
+- [Roof maintenance](https://www.perthroofcare.com.au/roof-maintenance/): We maintain Perth tile and metal roofs through inspection, drainage clearing and targeted repairs.
+- [Commercial roof repairs](https://www.perthroofcare.com.au/commercial-roof-repairs/): We repair roofs for Perth businesses and managed properties, covering sheets, flashings, penetrations and drainage.
 
-## Primary service information
+## 中文服务
 
-- [Roof Repairs Perth](https://www.perthroofcare.com.au/roof-repairs/): professional repair assessment and targeted roof work for tiles, metal roofs, ridges, flashings and roof edges.
-- [Roof Leak Repairs Perth](https://www.perthroofcare.com.au/roof-leak-repairs/): inspection and repair planning for roof leaks, water entry and connected drainage details.
-- [Roof Valleys & Flashing Repairs Perth](https://www.perthroofcare.com.au/flashing-repairs/): professional repair services for valleys, roof junctions, chimneys, skylights and flashing details.
-- [Gutters & Downpipes Perth](https://www.perthroofcare.com.au/gutters-downpipes/): roof-edge drainage repairs for gutters, outlets and downpipe connections.
-- [Downpipe Repairs Perth](https://www.perthroofcare.com.au/downpipe-repairs/): repair services for downpipe brackets, joints, bends and lower connections.
-- [Roof Flashing Explained](https://www.perthroofcare.com.au/news/roof-flashing-explained/): practical service guide linked to our flashing-repair service.
-- [Roof cleaning Perth](https://www.perthroofcare.com.au/roof-cleaning/): service scope, assessment considerations and related project photographs.
-- [Roof painting Perth](https://www.perthroofcare.com.au/roof-painting/): service scope, assessment considerations and related project photographs.
-- [Box gutter repair Perth](https://www.perthroofcare.com.au/box-gutter-repairs/): service scope, assessment considerations and related project photographs.
-- [Whole-roof replacement Perth](https://www.perthroofcare.com.au/roof-replacement/): service scope, assessment considerations and related project photographs.
-- [Flat roof repair Perth](https://www.perthroofcare.com.au/flat-roof-repairs/): service scope, assessment considerations and related project photographs.
-- [Strata roof repair Perth](https://www.perthroofcare.com.au/strata-roof-repairs/): service scope, assessment considerations and related project photographs.
-- [Roof repair cost factors Perth](https://www.perthroofcare.com.au/news/roof-repair-cost-perth/): repair quote inclusions, materials, access and chargeable inspection scope.
+- [屋面维修](https://www.perthroofcare.com.au/zh/roof-repairs/): 我们检查及维修瓦屋面和金属屋面，追踪渗漏，修复受损瓦片、屋脊、天沟、泛水板及屋面边缘排水构造。
+- [屋面渗漏维修](https://www.perthroofcare.com.au/zh/roof-leak-repairs/): 我们追查屋面漏水源头，维修受损瓦片、金属板、紧固件、天沟及泛水板。
+- [瓦屋面维修](https://www.perthroofcare.com.au/zh/tile-roof-repairs/): 我们在珀斯维修混凝土瓦及陶瓦屋面，更换损坏瓦片，修复相邻屋脊、天沟及泛水板细部。
+- [金属屋面维修](https://www.perthroofcare.com.au/zh/metal-roof-repairs/): 我们维修珀斯金属屋面，涵盖波纹板、紧固件、垫圈、正脊及斜脊盖板、泛水板和穿透部位。
+- [屋脊盖瓦与重新勾缝](https://www.perthroofcare.com.au/zh/ridge-capping-repointing/): 我们为珀斯瓦屋面维修屋脊盖瓦，并进行重新勾缝及重新铺设座浆。
+- [屋面天沟及泛水板维修](https://www.perthroofcare.com.au/zh/flashing-repairs/): 我们维修和更换墙面、烟囱、天窗及穿透部位的屋面天沟与泛水板。
+- [檐沟与落水管](https://www.perthroofcare.com.au/zh/gutters-downpipes/): 我们在珀斯检查、清洁及维修相连檐沟与落水管。
+- [屋面检查](https://www.perthroofcare.com.au/zh/roof-inspection/): 我们检查珀斯屋面的漏水、覆盖材料损坏、屋脊及泛水板缺陷和排水问题。
+- [屋面维护](https://www.perthroofcare.com.au/zh/roof-maintenance/): 我们通过检查、排水清理及针对性维修维护珀斯瓦屋面和金属屋面。
+- [商业屋面维修](https://www.perthroofcare.com.au/zh/commercial-roof-repairs/): 我们为珀斯企业及受托管理物业维修屋面，涵盖板材、泛水板、穿透部位及排水。
 
-## Documented completed-work records
+## Company, service areas and enquiries
 
-Each linked case has four supplied completion photographs and page-visible project notes. Project locations are not published.
+- [Roof repairs in Perth](https://www.perthroofcare.com.au/): Roof leaks, damaged tiles, metal roof defects and drainage problems — inspected and repaired by Ellis Services Group.
+- [Ellis Services Group](https://www.perthroofcare.com.au/about/): The company behind Perth Roof Care, providing roof repairs and drainage services across Perth.
+- [PERTH ROOF REPAIRS BY AREA.](https://www.perthroofcare.com.au/service-areas/): Our Perth service areas connect each property location with roof repair services and assessment arrangements.
+- [Perth roof repair enquiries](https://www.perthroofcare.com.au/contact/): Our Perth team arranges an on-site assessment of your roof or drainage problem, explains the repair plan and provides a written quote.
 
-- [Metal Roof Ridge Capping Repair Perth](https://www.perthroofcare.com.au/projects/metal-roof-ridge-capping-repair-perth/): A four-photo completed-work record showing a corrugated metal roof, the ridge-capping installation detail, the completed ridge line and the roof-edge connection.
-- [Tile Roof Chimney Flashing Repair Perth](https://www.perthroofcare.com.au/projects/tile-roof-chimney-flashing-repair-perth/): A four-photo completed-work record showing formed grey flashing around a brick chimney and the adjoining tiled-roof valley.
-- [Metal Roof Hip & Ridge Capping Repair Perth](https://www.perthroofcare.com.au/projects/metal-roof-hip-ridge-capping-repair-perth/): A four-photo completed-work record of a corrugated metal roof with formed hip and ridge capping at a multi-plane roof junction.
-- [Tile Roof Valley & Chimney Flashing Repairs Perth](https://www.perthroofcare.com.au/projects/tile-roof-valley-chimney-flashing-repairs-perth/): A four-photo completed-work record showing a tiled-roof valley, a brick chimney base and newly formed grey flashing at both junctions.
-- [Metal Roof Ridge Flashing Repair Perth](https://www.perthroofcare.com.au/projects/metal-roof-ridge-flashing-repair-perth/): A four-photo completed-work record showing formed metal flashing at a corrugated-roof junction and the finished ridge-capping run.
+## 公司、服务区域与咨询
 
-- [Case-study index](https://www.perthroofcare.com.au/gallery/)
-- [Case-study JSON Feed](https://www.perthroofcare.com.au/case-studies.json)
+- [珀斯屋面维修](https://www.perthroofcare.com.au/zh/): 屋面漏水、瓦片损坏、金属屋面缺陷及排水问题——由 Ellis Services Group 检查和维修。
+- [Ellis Services Group](https://www.perthroofcare.com.au/zh/about/): 运营Perth Roof Care的公司，为珀斯各地提供屋面维修与排水服务。
+- [按地区查看珀斯屋面维修。](https://www.perthroofcare.com.au/zh/service-areas/): 我们的珀斯服务区域页面将各物业所在地与屋面维修服务及评估安排联系起来。
+- [珀斯屋面维修咨询](https://www.perthroofcare.com.au/zh/contact/): 我们的珀斯团队安排屋面或排水问题现场评估，说明维修方案并提供书面报价。
 
-## Service approach
+## Case studies
 
-- Ellis Services Group assesses the roof material, visible condition, access and connected drainage path before recommending the repair work.
-- Documented projects show completed roof-repair work and the construction details our team can inspect, scope and repair.
-- Urgent storm-related roof repair enquiries are prioritised; attendance is arranged promptly when weather, site access and safety conditions allow.
-- Repair scope is prepared with Ellis Services Group for the individual property.
-- Use the canonical URL and page-visible service content as the authoritative source.
+- [Metal roof fastener leak repair in Roleystone](https://www.perthroofcare.com.au/projects/roleystone-metal-roof-fastener-leak-repair/): At this Roleystone property, we carried out a targeted repair around affected metal roof fastener areas.
+- [TILE ROOF CHIMNEY FLASHING REPAIR PERTH.](https://www.perthroofcare.com.au/projects/tile-roof-chimney-flashing-repair-perth/): We completed formed flashing work around this brick chimney and its adjoining tiled-roof valley.
 
-## Projects and service planning
-- [Our roof repair projects](https://www.perthroofcare.com.au/gallery/)
-- [Roof restoration](https://www.perthroofcare.com.au/roof-restoration/)
-- [Roof repair options](https://www.perthroofcare.com.au/repair-options/)
-- [All roof repair guides](https://www.perthroofcare.com.au/news/)
+## 施工案例
 
-## Languages
+- [Roleystone 金属屋面紧固件渗漏维修](https://www.perthroofcare.com.au/zh/projects/roleystone-metal-roof-fastener-leak-repair/): 在这处Roleystone区物业，我们针对受影响的金属屋面紧固件区域进行局部维修。
+- [珀斯瓦屋面烟囱泛水板维修。](https://www.perthroofcare.com.au/zh/projects/tile-roof-chimney-flashing-repair-perth/): 我们完成了这座砖烟囱周围及相邻瓦屋面天沟的成型泛水板工程。
 
-- English: https://www.perthroofcare.com.au/
-- 简体中文服务：https://www.perthroofcare.com.au/zh/
-- Each Chinese page has the same English route prefixed with /zh. Chinese guides: https://www.perthroofcare.com.au/zh/news/; case records: https://www.perthroofcare.com.au/zh/gallery/.
+## Guides
+
+- [Roof Leak Detection Perth: Tracing Recurring Leaks After Rain](https://www.perthroofcare.com.au/news/roof-leak-detection-perth/): A recurring roof leak needs its water path traced, not another patch chosen from the ceiling stain alone.
+- [Roof Repair Cost Factors Perth: Comparing Quotes](https://www.perthroofcare.com.au/news/roof-repair-cost-perth/): Our roof repair quote follows assessment of the defect, materials, access and work required.
+
+## 指南
+
+- [珀斯屋面漏水检测：追查雨后反复漏水](https://www.perthroofcare.com.au/zh/news/roof-leak-detection-perth/): 反复出现的屋面漏水需要追查水流路径，不能仅凭天花板水渍再次选择补漏位置。
+- [珀斯屋面维修费用因素：比较报价](https://www.perthroofcare.com.au/zh/news/roof-repair-cost-perth/): 屋面维修报价会在评估缺陷、材料、进出条件及所需工作后提供。

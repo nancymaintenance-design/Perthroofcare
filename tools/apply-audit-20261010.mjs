@@ -183,6 +183,4 @@ export function applyAudit20261010({root,site}){
     if(declarativeRoutes.has(route)||localEditorialRoutes.has(route)||substantiveRoutes.has(route)||articleImages[route.replace(/^news\//,'')]||(!route.startsWith('projects/')&&!['privacy','legal'].includes(route))){sitemap(el).find('lastmod').remove();sitemap(el).append(`<lastmod>${updated}</lastmod>`);}
   });
   writeFileSync(join(root,'sitemap.xml'),sitemap.xml());
-  const llmsFile=join(root,'llms.txt');
-  writeFileSync(llmsFile,readFileSync(llmsFile,'utf8').replace('questions for comparing written repair quotes and inspection scope.','repair quote inclusions, materials, access and chargeable inspection scope.'));
 }

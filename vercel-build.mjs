@@ -6,6 +6,7 @@ import { optimizeImages } from './tools/optimize-images.mjs';
 import { bundleStylesheets } from './tools/bundle-stylesheets.mjs';
 import { buildLocales } from './tools/build-locales.mjs';
 import { enhanceMachineData } from './tools/enhance-machine-data.mjs';
+import { buildLlmsGuide } from './tools/build-llms-guide.mjs';
 import sharp from 'sharp';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
@@ -17,6 +18,7 @@ const annotateImages = spawnSync(process.execPath, ['tools/annotate-image-dimens
 if (annotateImages.status !== 0) process.exit(annotateImages.status ?? 1);
 buildLocales(root);
 enhanceMachineData(root);
+buildLlmsGuide(root);
 await optimizeImages(root);
 
 // Publish one brand-owned PNG icon path for browsers and search crawlers.

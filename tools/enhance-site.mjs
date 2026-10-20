@@ -252,8 +252,6 @@ export function enhanceSite({ root, site }) {
     final('head').append('<link rel="stylesheet" href="/assets/css/refinement.css"><link rel="stylesheet" href="/assets/css/responsive-images.css">');
     writeFileSync(join(root,route,'index.html'),final.html());
   }
-  const llms=readFileSync(join(root,'llms.txt'),'utf8').replace(/^- No price,.*$/gm,'- Repair scope is prepared with Ellis Services Group for the individual property.');
-  writeFileSync(join(root,'llms.txt'),llms+`\n## Projects and service planning\n- [Our roof repair projects](${site}/gallery/)\n- [Roof restoration](${site}/roof-restoration/)\n- [Roof repair options](${site}/repair-options/)\n- [All roof repair guides](${site}/news/)\n`);
   for(const [file,prefix] of [['news/feed.json','news/'],['case-studies.json','projects/']]){
     const feed=JSON.parse(readFileSync(join(root,file),'utf8'));
     feed.description=prefix==='news/'?'Roof repair guides from Ellis Services Group.':'Photographed roof repair projects from Ellis Services Group.';

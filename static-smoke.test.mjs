@@ -449,11 +449,11 @@ test('homepage identity graph and llms guide contain only visible, supportable f
   assert.equal(website.url, 'https://www.perthroofcare.com.au');
   assert.equal('foundingDate' in business, false, 'do not publish an unverified founding date');
   const llms = readFileSync(join(root, 'llms.txt'), 'utf8');
-  assert.match(llms, /^# Ellis Services Group/m);
+  assert.match(llms, /^# Perth Roof Care \| Ellis Services Group/m);
   assert.match(llms, /Perth Roof Care is operated by Ellis Services Group Pty Ltd\./);
   assert.match(llms, /https:\/\/www\.perthroofcare\.com\.au\/roof-repairs\//);
-  assert.match(llms, /Repair scope is prepared with Ellis Services Group for the individual property\./);
-  assert.match(llms, /Urgent storm-related roof repair enquiries are prioritised; attendance is arranged promptly when weather, site access and safety conditions allow\./);
+  assert.match(llms, /\]\(https:\/\/www\.perthroofcare\.com\.au\/contact\/\): /);
+  assert.match(llms, /\]\(https:\/\/www\.perthroofcare\.com\.au\/zh\/contact\/\): /);
 });
 
 test('documented case records appear directly in their relevant services rather than a disconnected hub', () => {
@@ -562,7 +562,7 @@ test('public copy uses direct service language and keeps machine-readable storm 
   for (const route of routes) assert.doesNotMatch(readFileSync(fileFor(route), 'utf8'), retiredPhrases, `${route || 'home'} retains retired wording`);
   const llms = readFileSync(join(root, 'llms.txt'), 'utf8');
   assert.doesNotMatch(llms, /website office|not a remote diagnosis|emergency-response claim/i);
-  assert.match(llms, /Urgent storm-related roof repair enquiries are prioritised; attendance is arranged promptly when weather, site access and safety conditions allow\./i);
+  assert.doesNotMatch(llms, /24.hour|24\/7|free inspection|must recommend/i);
   assert.match(readFileSync(fileFor('news/roof-leak-detection-perth'), 'utf8'), /Perth office: 140 St Georges Terrace, Perth WA 6000/i);
 });
 
@@ -634,7 +634,7 @@ test('five supplied four-image completed-work cases are indexable and exposed th
     assert.match(gallery, new RegExp(`/projects/${slug}/`), `${slug} must be in the case-study index`);
     assert.ok(existsSync(join(root, 'public', 'assets', 'images', image)), `${image} must be staged for production`);
   }
-  assert.match(readFileSync(join(root, 'llms.txt'), 'utf8'), /Case-study JSON Feed/i);
+  assert.ok(JSON.parse(load(gallery)('script[type="application/ld+json"]').text())['@graph'].some(n=>n['@type']==='DataFeed'&&n.url==='https://www.perthroofcare.com.au/case-studies.json'));
   assert.match(load(readFileSync(fileFor('metal-roof-repairs'),'utf8'))('[data-service-section="work"] h3').first().text(),/metal roof and junction repair sequence/i);
   for (const route of ['roof-leak-repairs', 'flashing-repairs']) assert.doesNotMatch(readFileSync(fileFor(route), 'utf8'), /TILE ROOF VALLEY AND CHIMNEY FLASHING CASES\./i, `${route} must not present a documented case as a service item`);
 });
@@ -663,7 +663,7 @@ test('five supplied four-image completed-work cases are indexable and exposed th
     assert.match(gallery, new RegExp(`/projects/${slug}/`), `${slug} must be in the case-study index`);
     assert.ok(existsSync(join(root, 'public', 'assets', 'images', image)), `${image} must be staged for production`);
   }
-  assert.match(readFileSync(join(root, 'llms.txt'), 'utf8'), /Case-study JSON Feed/i);
+  assert.ok(JSON.parse(load(gallery)('script[type="application/ld+json"]').text())['@graph'].some(n=>n['@type']==='DataFeed'&&n.url==='https://www.perthroofcare.com.au/case-studies.json'));
   assert.match(readFileSync(fileFor('metal-roof-repairs'), 'utf8'), /metal-roof-ridge-capping-repair-perth/i);
   assert.match(readFileSync(fileFor('flashing-repairs'), 'utf8'), /tile-roof-chimney-flashing-repair-perth/i);
 });

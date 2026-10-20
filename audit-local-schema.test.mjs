@@ -86,11 +86,12 @@ test('article dates agree across the visible byline, graph and feed while public
  }
 });
 
-test('machine-readable navigation links all six service scopes and the quote-comparison guide once',()=>{
+test('curated machine navigation retains core Owner routes and the quote-comparison guide',()=>{
  const text=readFileSync('public/llms.txt','utf8');
- for(const route of [...Object.keys(services),'news/roof-repair-cost-perth']){
+ for(const route of ['roof-repairs','roof-leak-repairs','tile-roof-repairs','metal-roof-repairs','ridge-capping-repointing','flashing-repairs','gutters-downpipes','roof-inspection','roof-maintenance','commercial-roof-repairs','news/roof-repair-cost-perth']){
   assert.equal(text.split(`](${site}/${route}/)`).length-1,1,route);
   assert.ok(routes.includes(route),route+' canonical target exists');
  }
+ for(const route of Object.keys(services))assert.ok(routes.includes(route),route+' remains published even if omitted from the shortlist');
  assert.doesNotMatch(text,/guarantee.*(?:rank|citation)|boost.*(?:rank|citation)/i);
 });

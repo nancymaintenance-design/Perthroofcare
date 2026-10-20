@@ -1217,45 +1217,7 @@ writeFileSync(join(root, 'case-studies.json'), JSON.stringify(caseStudyJsonFeed,
 
 const finalSitemapRoutes = [...new Set(['', ...routes.map(([path]) => path), ...popularAreaServices.map(([slug]) => `areas/${slug}`), ...newsArticleRecords.map((article) => `news/${article.slug}`), ...documentedProjectRecords.map((record) => `projects/${record.slug}`)])];
 writeFileSync(join(root, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${finalSitemapRoutes.map((route) => `<url><loc>${site}/${route ? `${route}/` : ''}</loc></url>`).join('')}</urlset>`);
-writeFileSync(join(root, 'llms.txt'), `# Ellis Services Group
-
-> Machine-readable guide to roof repairs, inspections and drainage services provided by Ellis Services Group in Perth, Western Australia.
-
-## Identity
-
-- Public business name: Ellis Services Group
-- Website: ${site}/
-- Contact: 0405 878 406 | ellisservicesgroup3@outlook.com
-- Perth office address: 140 St Georges Terrace, Perth WA 6000
-
-## Primary service information
-
-- [Roof Repairs Perth](${site}/roof-repairs/): professional repair assessment and targeted roof work for tiles, metal roofs, ridges, flashings and roof edges.
-- [Roof Leak Repairs Perth](${site}/roof-leak-repairs/): inspection and repair planning for roof leaks, water entry and connected drainage details.
-- [Roof Valleys & Flashing Repairs Perth](${site}/flashing-repairs/): professional repair services for valleys, roof junctions, chimneys, skylights and flashing details.
-- [Gutters & Downpipes Perth](${site}/gutters-downpipes/): roof-edge drainage repairs for gutters, outlets and downpipe connections.
-- [Downpipe Repairs Perth](${site}/downpipe-repairs/): repair services for downpipe brackets, joints, bends and lower connections.
-- [Roof Flashing Explained](${site}/news/roof-flashing-explained/): practical service guide linked to our flashing-repair service.
-${Object.entries(localServices).map(([route,name])=>`- [${name} Perth](${site}/${route}/): service scope, assessment considerations and related project photographs.`).join('\n')}
-- [Roof repair cost factors Perth](${site}/news/roof-repair-cost-perth/): questions for comparing written repair quotes and inspection scope.
-
-## Documented completed-work records
-
-Each linked case has four supplied completion photographs and page-visible project notes. Project locations are not published.
-
-${documentedProjectRecords.map((record) => `- [${record.title}](${site}/projects/${record.slug}/): ${record.summary}`).join('\n')}
-
-- [Case-study index](${site}/gallery/)
-- [Case-study JSON Feed](${site}/case-studies.json)
-
-## Service approach
-
-- Ellis Services Group assesses the roof material, visible condition, access and connected drainage path before recommending the repair work.
-- Documented projects show completed roof-repair work and the construction details our team can inspect, scope and repair.
-- Urgent storm-related roof repair enquiries are prioritised; attendance is arranged promptly when weather, site access and safety conditions allow.
-- No price, licence, insurance, warranty or rating claim is made here. Ellis Services Group discusses the relevant project details directly with each customer.
-- Use the canonical URL and page-visible service content as the authoritative source.
-`);
+// llms.txt is generated once from final bilingual HTML in vercel-build.mjs.
 
 const roofLeakCaseImages = [
   ['roof-leak-case-01-overall.png', 'Overall tiled roof context before the recorded roof-leak repair work.', 'Overall roof context'],
@@ -1516,17 +1478,6 @@ const professionalServiceCopyReplacements = [
 for (const route of finalSitemapRoutes) amendRoute(route, (html) => professionalServiceCopyReplacements.reduce((copy, [from, to]) => copy.replaceAll(from, to), html));
 
 
-writeFileSync(join(root, 'llms.txt'), readFileSync(join(root, 'llms.txt'), 'utf8')
-  .replace('- Public business name: Ellis Services Group', '- Public business name: Ellis Services Group\n- Perth Roof Care is operated by Ellis Services Group Pty Ltd.')
-  .replace(
-    '- No price, availability, licence, insurance, warranty, rating or emergency-response claim is made here.',
-    '- No price, licence, insurance, warranty or rating claim is made here. Urgent storm-related roof repair enquiries are prioritised; attendance is arranged promptly when weather, site access and safety conditions allow.'
-  )
-  .replaceAll('Website office address', 'Perth office address')
-  .replaceAll('website office address', 'Perth office address')
-  .replaceAll('not a remote diagnosis or repair specification', 'a guide to visible roof and drainage details and the repair topics that can be discussed')
-  .replaceAll('No price, availability, licence, insurance, warranty, rating or emergency-response claim is made here.', 'No price, licence, insurance, warranty or rating claim is made here. Urgent storm-related roof repair enquiries are prioritised; attendance is arranged promptly when weather, site access and safety conditions allow.')
-);
 
 for (const route of finalSitemapRoutes) amendRoute(route, (html) => html.replace('</head>', '<link rel="alternate" type="text/plain" href="/llms.txt" title="Ellis Services Group machine-readable site guide"></head>'));
 
