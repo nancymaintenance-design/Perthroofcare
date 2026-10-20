@@ -12,7 +12,7 @@ test('published pages retain the reviewed 138-page content baseline',()=>{
   // The other 124 pages were checked against the pre-UI baseline unchanged.
   const snapshot=uiContentSnapshot();
   assert.equal(snapshot.pageCount,138);
-  assert.equal(snapshot.hash,'c7e7535417e12c37b1bcd85259c2ad9b797d4ec75965947b62f52db8aed2f68f');
+  assert.equal(snapshot.hash,'b3db291e1961a213147bdff178e6ee5991163d9b6d2e6988be3abca4bb30f3a4');
 });
 
 test('visual layer joins the existing route request after original styles',t=>{

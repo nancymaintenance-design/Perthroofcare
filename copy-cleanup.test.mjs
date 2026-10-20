@@ -46,6 +46,7 @@ test('cleanup retains registration facts, technical cautions, safety and origina
 });
 test('removed reference blocks become useful internal routes without empty citations',()=>{
  const $=load('<main><section class="article-references"><h2 id="guide-section-7">Safety and weather resources</h2><p>Consult these resources.</p><ul><li><a href="https://www.bom.gov.au/wa/warnings/">Weather warnings</a></li></ul></section><section class="audit-technical-sources"><h2 id="materials">Manufacturer guidance</h2><p>Lysaght explains the roof.</p><ul><li><a href="https://lysaght.com/support-technical/support/maintenance">Maintenance</a></li></ul><p><a href="/flashing-repairs/">Flashing repairs</a></p></section><div id="education-q022"><p>Condensation and leaks require investigation.</p><p>For background, see <a href="https://www.yourhome.gov.au/passive-design/condensation">Your Home</a>.</p><p><a href="/roof-leak-repairs/">Roof leak repairs</a></p></div></main>');
+ $('main').prepend('<nav class="content-toc"><a href="#materials">Manufacturer guidance</a></nav>');
  applyCopyCleanup($,'news/roof-leak-detection-perth');
  assert.equal($('a[href^="https:"]').length,0);
  assert.ok($('.article-references a[href="/roof-leak-repairs/"]').length);
@@ -53,6 +54,7 @@ test('removed reference blocks become useful internal routes without empty citat
  assert.ok($('.audit-technical-sources a[href="/flashing-repairs/"]').length);
  assert.equal($('#guide-section-7').length,1);
  assert.equal($('#materials').length,1);
+ assert.equal($('.content-toc a[href="#materials"]').text(),'Flashing materials and adjoining roof components');
  assert.doesNotMatch($('main').text(),/Lysaght|Your Home|Consult these resources|For background/);
  assert.match($('#education-q022').text(),/Condensation and leaks require investigation/);
  assert.equal($('p,ul,li').filter((_,e)=>!$(e).text().trim()).length,0);

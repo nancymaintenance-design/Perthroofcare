@@ -65,6 +65,12 @@ export function applyCopyCleanup($,route){
    changed=true;
   });
   $('main a[href*="yourhome.gov.au/passive-design/condensation"]').each((_,el)=>{$(el).closest('p').remove();changed=true;});
+  $('.article-references h2[id],.audit-technical-sources h2[id]').each((_,el)=>{
+   const heading=$(el),href='#'+heading.attr('id');
+   $('.content-toc a').filter((_,a)=>$(a).attr('href')===href).each((_,a)=>{
+    if($(a).text()!==heading.text()){$(a).text(heading.text());changed=true;}
+   });
+  });
  }
  $('.about-company-registration-note,.review-source-note').each((_,el)=>{$(el).remove();changed=true;});
  $('main p,main li,main figcaption,main img[alt]').each((_,el)=>{
