@@ -7,6 +7,7 @@ import { bundleStylesheets } from './tools/bundle-stylesheets.mjs';
 import { buildLocales } from './tools/build-locales.mjs';
 import { enhanceMachineData } from './tools/enhance-machine-data.mjs';
 import { buildLlmsGuide } from './tools/build-llms-guide.mjs';
+import { buildServiceNavigation } from './tools/build-service-navigation.mjs';
 import sharp from 'sharp';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
@@ -17,6 +18,7 @@ if (build.status !== 0) process.exit(build.status ?? 1);
 const annotateImages = spawnSync(process.execPath, ['tools/annotate-image-dimensions.mjs'], { cwd: root, stdio: 'inherit' });
 if (annotateImages.status !== 0) process.exit(annotateImages.status ?? 1);
 buildLocales(root);
+buildServiceNavigation(root);
 enhanceMachineData(root);
 buildLlmsGuide(root);
 await optimizeImages(root);

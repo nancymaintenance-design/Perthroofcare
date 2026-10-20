@@ -3,11 +3,12 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { load } from 'cheerio';
 const html=readFileSync('public/news/gutter-warning-signs/index.html','utf8');
-test('renamed gutter guide synchronizes visible breadcrumb and machine breadcrumb with its heading',()=>{
+test('gutter guide uses a concise consistent breadcrumb while its article retains the full heading',()=>{
   const $=load(html),heading=$('main h1').text();
   const graph=JSON.parse($('script[type="application/ld+json"]').text())['@graph'];
-  assert.equal($('[aria-current="page"]').text(),heading);
-  assert.equal(graph.find(n=>n['@type']==='BreadcrumbList').itemListElement.at(-1).name,heading);
+  const label=$('[aria-current="page"]').text();
+  assert.equal(label,'Gutter overflow and warning signs');
+  assert.equal(graph.find(n=>n['@type']==='BreadcrumbList').itemListElement.at(-1).name,label);
   assert.equal(graph.find(n=>n['@type']==='Article').headline,heading);
 });
 // Removing the decision module from the rendered page must fail this contract.

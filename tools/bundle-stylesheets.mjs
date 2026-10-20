@@ -23,15 +23,17 @@ export function bundleStylesheets(publicDirectory,routes){
     const baseRoute=route.replace(/^zh(?:\/|$)/,'');
     const routeStyle=baseRoute===''?'home-reviews.css':baseRoute==='about'?'about-company.css':baseRoute==='contact'?'contact-layout.css':$('main.service-layout').length?'service-layout.css':null;
     const routeLayout=routeStyle?$(`link[href="/assets/css/${routeStyle}"]`):null;
+    const navigationStyles=$('style[data-service-navigation]');
     let routeHref;
-    if(routeLayout?.length){
-      const {code}=transform({filename:routeStyle,code:readFileSync(join(publicDirectory,'assets/css',routeStyle)),minify:true});
+    if(routeLayout?.length||navigationStyles.length){
+      const source=(routeLayout?.length?readFileSync(join(publicDirectory,'assets/css',routeStyle),'utf8'):'')+navigationStyles.map((_,el)=>$(el).html()).get().join('\n');
+      const {code}=transform({filename:routeStyle||'service-navigation.css',code:Buffer.from(source),minify:true});
       const digest=createHash('sha256').update(code).digest('hex').slice(0,16);
       routeHref=`/assets/css/site-${digest}.css`;
       routeBundles.add(routeHref);
       writeFileSync(join(publicDirectory,routeHref),code);
     }
-    const cascade=$('link[rel="stylesheet"],style').filter((_,el)=>!routeHref||el!==routeLayout[0]);
+    const cascade=$('link[rel="stylesheet"],style').filter((_,el)=>!$(el).is('style[data-service-navigation]')&&(!routeHref||el!==routeLayout?.[0]));
     if(!links.length)throw new Error(`No stylesheet for ${route||'/'}`);
     const inputs=cascade.toArray().map(el=>{
       if(el.tagName==='style')return $(el).html();

@@ -56,6 +56,12 @@ Cards use 18px rounded rectangles and buttons use 12px corners. Text-based work 
 
 The service dropdown contains all 22 existing service and repair-option routes in four named groups: core roof repairs, roofline and drainage, inspection and maintenance, and larger scopes and repair options. On desktop it aligns to the trigger, stays inside both viewport edges and scrolls within its maximum height. At 900px and below, the primary navigation and service disclosure use full-width document flow; script clears all desktop positioning values. Hidden/expanded state, outside-click closure and Escape focus return remain shared behavior.
 
+### Service navigation — 2026-10-20
+
+The existing white/charcoal/amber field-brief identity stays unchanged. A single ordered breadcrumb sits beside the content opening, uses short localized labels and underlined real ancestor links, and wraps naturally on phones. Single-service guides and cases return directly to that service; combined cases retain the project collection. A compact linked sentence after the opening paragraph provides the service and enquiry next step. Service pages group their actual child services, projects and guides in open columns before the existing enquiry action, without another full-height section or promotional heading. Existing body and utility typography, colours, page gutters and focus treatment are reused; no new palette, font or motion.
+
+Runtime ownership: content/service-navigation.mjs defines explicit bilingual relationships; tools/build-service-navigation.mjs applies them after locale generation and before machine-data/feed synchronization. service-navigation.css is merged into the existing page-owned fingerprinted style layer (or supplies that small layer for guides/directories), never inflating the shared stylesheet. Keep at most two stylesheet requests, each shared bundle below 85KB, total below 90KB; service layout plus navigation may use up to 5KB, other page layers remain below 4KB. Analytics uses the existing single click listener; breadcrumb clicks are navigation, not leads.
+
 ## Do's and Don'ts
 
 Do use one primary keyword cluster per route, visible factual scope, and links that lead to the next relevant service. Do not promise emergency response, insurance outcomes, a warranty, or a specific repair result without confirmed business evidence. Do not treat a symptom as a diagnosis. Do not make a legal or privacy page carry a marketing-sized hero.

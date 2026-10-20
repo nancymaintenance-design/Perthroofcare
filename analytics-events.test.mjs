@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {runInNewContext} from 'node:vm';
 function setup(hostname='www.perthroofcare.com.au',pathname='/roof-leak-repairs/'){
   const events=[],handlers={},window={location:{hostname,pathname},gtag:(...args)=>events.push(args)};
-  runInNewContext(readFileSync(new URL('./analytics.js',import.meta.url),'utf8'),{window,document:{addEventListener:(name,fn)=>handlers[name]=fn}});
+  runInNewContext(readFileSync(new URL('./analytics.js',import.meta.url),'utf8'),{window,URL,document:{addEventListener:(name,fn)=>handlers[name]=fn}});
   return {events,handlers,window};
 }
 test('lead is measured only for confirmed API success, never failed or malformed responses',()=>{
@@ -33,4 +33,14 @@ test('localhost never emits analytics even if a gtag function exists',()=>{
     handlers.click?.({target:{closest:()=>({getAttribute:()=> 'tel:+61405878406'})}});
     assert.equal(events.length,0);
   }
+});
+
+test('breadcrumb clicks use one non-conversion event with safe route and locale fields',()=>{
+ const {handlers,events}=setup('www.perthroofcare.com.au','/zh/news/roof-leak-detection-perth/');
+ const nav={getAttribute:key=>({'data-owner-id':'roof-leak-repairs','data-locale':'zh-Hans'}[key])};
+ const link={getAttribute:key=>({'href':'https://www.perthroofcare.com.au/zh/roof-leak-repairs/?email=private@example.com#x','data-breadcrumb-position':'2'}[key]),closest:selector=>selector==='.breadcrumbs'?nav:null};
+ handlers.click({target:{closest:()=>link}});
+ assert.equal(events.length,1);assert.equal(events[0][1],'breadcrumb_click');
+ assert.deepEqual(JSON.parse(JSON.stringify(events[0][2])),{page_type:'guide',source_path:'/zh/news/roof-leak-detection-perth/',target_path:'/zh/roof-leak-repairs/',locale:'zh-Hans',position:2,owner_id:'roof-leak-repairs'});
+ assert.doesNotMatch(JSON.stringify(events),/private@|generate_lead/);
 });

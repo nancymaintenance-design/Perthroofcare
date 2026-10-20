@@ -56,7 +56,7 @@ test('published pages deliver fingerprinted shared styles with small route-owned
   for(const route of routes){
     const dom=load(readFileSync(`${root}/public${route}index.html`,'utf8'));
     const styles=dom('link[rel="stylesheet"]');
-    const routeLayout=['/','/about/','/contact/'].includes(route.replace(/^\/zh(?=\/)/,''))||dom('main.service-layout').length;
+    const routeLayout=['/','/about/','/contact/'].includes(route.replace(/^\/zh(?=\/)/,''))||dom('main.service-layout').length||dom('.breadcrumbs').length;
     assert.equal(styles.length,routeLayout?2:1,`${route}: consolidate shared styles and isolate route layout`);
     for(const style of styles.toArray()){
     const href=dom(style).attr('href'),css=readFileSync(`${root}/public${href}`);
@@ -70,7 +70,7 @@ test('published pages deliver fingerprinted shared styles with small route-owned
     assert.ok(sharedCss.includes('services-submenu'),'retain interactive menu styles');
     if(routeLayout){
       const layoutCss=readFileSync(`${root}/public${styles.last().attr('href')}`);
-      assert.ok(layoutCss.length<4000,`${route} layout stays small`);
+      assert.ok(layoutCss.length<(dom('main.service-layout').length?5000:4000),`${route} layout plus navigation stays small`);
       assert.ok(Buffer.byteLength(sharedCss)+layoutCss.length<90000,`${route} total CSS remains below 90KB`);
     }
   }

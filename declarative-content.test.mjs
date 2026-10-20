@@ -66,6 +66,10 @@ test('consolidated services leave unrelated prose and existing guide bodies inta
   // The approved copy cleanup removes shared billing notices only; compare all other content.
   before('main .inspection-charge-notice').remove();
   current('main .inspection-charge-notice').remove();
+  // Navigation is now rebuilt from the explicit bilingual hierarchy. Compare
+  // the original narrative and evidence independently of that approved layer.
+  before('main .breadcrumbs').remove();
+  current('main .breadcrumbs,main [data-service-handoff],main [data-service-resources]').remove();
   const actual=extract(current),original=extract(before);
   // Approved merges change section/order only: preserve every paragraph,
   // disclosure body, original image, link destination and meaningful anchor.

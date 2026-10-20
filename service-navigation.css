@@ -1,0 +1,9 @@
+.breadcrumbs ol{display:flex;flex-wrap:wrap;gap:.3rem .6rem;list-style:none;margin:0;padding:0}
+.breadcrumbs li{display:flex;gap:.6rem;min-width:0;max-width:100%;overflow-wrap:anywhere}
+.breadcrumbs a{padding-block:.4rem}
+.breadcrumbs a:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.service-handoff{margin-block:1rem;overflow-wrap:anywhere}
+.service-resources{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:1rem 2rem;border-top:1px solid var(--sand-line);padding-top:1rem;margin-top:1rem}
+.service-resources h3{font-size:1.15rem;margin:0 0 .5rem}
+.service-resources ul{margin:0;padding-left:1.1rem}
+.service-resources li{padding-block:.3rem;overflow-wrap:anywhere}
