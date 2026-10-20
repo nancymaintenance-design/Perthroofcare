@@ -3,13 +3,16 @@
 .service-layout .service-hero .container{max-width:1120px}
 .service-layout .service-hero h1{font-size:clamp(2rem,4.5vw,3.6rem);max-width:24ch}
 .service-layout .service-hero p:not(.eyebrow){max-width:76ch}
-.service-layout .service-hero .inspection-charge-notice{font-size:.875rem;margin-top:1rem}
-.service-layout .service-section{padding-block:clamp(2rem,4vw,3.5rem)}
+.service-layout .service-section{padding-block:clamp(1.5rem,2.5vw,2rem)}
 .service-layout .service-section + .service-section{border-top:1px solid var(--sand-line)}
 .service-layout .service-section > .container{max-width:1120px}
 .service-layout .service-section h2{font-size:clamp(1.75rem,3vw,2.4rem);margin:0 0 1.4rem}
 .service-layout h3{font-size:1.2rem;line-height:1.35;margin:0 0 .8rem}
-.service-layout .service-description,.service-layout .service-solution-body{max-width:82ch}
+.service-layout .service-description,.service-layout .service-solution-body{max-width:none}
+.service-layout .service-solution-body:has(.service-guidance){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:2.5rem;align-items:start}
+.service-layout .service-solution-body .service-guidance{grid-area:1/2/3;padding-top:0}
+.service-layout .service-solution-body :is(.service-reading,.service-related){grid-column:1/-1}
+.service-layout .service-solution-body>p{margin-top:0}
 .service-layout p,.service-layout li{line-height:1.65}
 .service-layout .service-steps{padding:0 0 0 1.4rem;margin:0 0 1.5rem;display:block;background:none;border:0}
 .service-layout .service-steps li{padding-left:.35rem;margin-bottom:.75rem}
@@ -38,5 +41,6 @@
 .service-layout .service-enquiry p{font-size:.9rem}
 .service-layout [id]{scroll-margin-top:7rem}
 .service-layout a:focus-visible{outline:3px solid var(--clay);outline-offset:4px}
+@media(max-width:980px){.service-layout .service-solution-body:has(.service-guidance){display:block}.service-layout .service-solution-body .service-guidance{padding-top:1.5rem}}
 @media(max-width:720px){.service-layout .service-reading ul{columns:1}.service-layout .service-case-list :is(.aligned-photo-grid,.project-case-grid){grid-template-columns:repeat(2,minmax(0,1fr))}.service-layout .service-case-list .project-case-grid:has(> :only-child){grid-template-columns:minmax(0,1fr)}}
 @media(max-width:480px){.service-layout .service-case-list :is(.aligned-photo-grid,.project-case-grid,.project-case-grid:has(> :is(:nth-child(2),:nth-child(4)):last-child)){grid-template-columns:minmax(0,1fr)}}

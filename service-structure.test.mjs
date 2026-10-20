@@ -168,6 +168,20 @@ function routeStyle($,element,width){
  }
  visit(readFileSync('service-layout.css','utf8').replace(/\/\*[\s\S]*?\*\//g,''));return result;
 }
+
+test('service solution uses available desktop width without a stranded right column',()=>{
+ for(const route of Object.keys(expected)){
+  const $=page(route),body=$('.service-solution-body')[0];
+  assert.equal(routeStyle($,body,1920)['max-width'],'none',route+' full narrative container');
+  if($(body).find('.service-guidance').length){
+   assert.equal(routeStyle($,body,1920).display,'grid',route+' steps and guidance side by side');
+   assert.equal(routeStyle($,body,768).display,'block',route+' natural tablet/phone flow');
+   const guidance=$(body).find('.service-guidance')[0];
+   assert.equal(routeStyle($,guidance,1920)['grid-area'],'1/2/3',route+' guidance beside steps and note');
+  }
+  assert.equal(routeStyle($,$('.service-section')[0],1920)['padding-block'],'clamp(1.5rem,2.5vw,2rem)',route+' compact section rhythm');
+ }
+});
 test('service gallery selectors own appended class lists at 800, 500 and 320 pixels',()=>{
  let oldGrids=0;
  for(const route of Object.keys(expected)){

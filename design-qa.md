@@ -46,3 +46,17 @@ Read-only reviewer: no Critical/Important findings; minor request to include the
 Local only, branch codex/ui-polish-20261020, base d6ae315. No push, merge or production deployment. Preview remains available for owner review. Production, Safari/Firefox, real mobile hardware, full screen-reader/200% zoom matrix and live lead delivery were not newly tested; no claims about SEO performance or business uplift.
 
 P3 follow-up: optional native-device font/photographic grading review. No blocker remains for the approved local visual handoff.
+
+## Service-page whitespace follow-up — 20 October 2026
+
+User-reported defect: the storm solution occupied only729.7px of its1120px container, stranded on the left, with56px section padding at each edge. This was an inherited service-layout rule, not missing business content.
+
+Fix: use the available width; above980px put existing steps/scope beside existing disclosures. Below that breakpoint retain natural single-column DOM order. Section padding now24–32px. Content, gallery geometry, scripts and URLs unchanged. The obsolete removed inspection notice style was retired.
+
+Evidence: reports/2026-10-20-ui-design/service-before.jpg (full-page original), service-after-desktop.jpg (1920×1000 CSS viewport, scrolled solution), service-after-mobile.jpg; browser transport may rescale raster dimensions. Storm solution width1120px, content height376.2px versus510.1px before; padding32px versus56px. No new spacer panels or fixed text height. The desktop screenshot was visually inspected; disclosure expansion and phone keyboard Enter work without overlap. No console errors.
+
+All44 EN/ZH service pages checked at390/768/1440/1920px:176 browser checks, zero horizontal overflow, zero steps/disclosure overlap, zero stranded narrow bodies and zero incorrect responsive modes. Exact records: service-spacing-browser.json. Non-style snapshot across all138 pages remains unchanged. Updated regression test first failed on82ch, then passed after the correction.
+
+Production build and315/315 tests pass. Route styles plus navigation are5272bytes; the service-only cap is intentionally5500bytes, retaining the90KB combined ceiling,85KB shared ceiling and two-request limit. Scoped changed-style static audit has zero findings. No dedicated lint/typecheck exists; git diff --check passes. Other previously documented limitations remain.
+
+Follow-up final result: passed. Local only; no production publication.
