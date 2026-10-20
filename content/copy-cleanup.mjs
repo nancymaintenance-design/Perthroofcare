@@ -1,3 +1,6 @@
+import {navigationDefinitions} from './service-navigation.mjs';
+import {serviceLabels} from './service-labels.mjs';
+
 // Final English copy sweep. Exact, reviewed sentences only: technical and safety
 // qualifications are deliberately not matched by broad negative-word filters.
 export const removedMetaSentences=[
@@ -44,6 +47,25 @@ const stageEdits=[
 export function applyCopyCleanup($,route){
  if(route==='privacy')return false;
  let changed=false;
+ if(route.startsWith('news/')){
+  // Replace removed citations with the existing, explicitly mapped service path.
+  // Keep heading IDs so existing article fragments remain usable.
+  const owner=navigationDefinitions.find(entry=>entry.route===route)?.owner;
+  $('.article-references').filter((_,el)=>$(el).find('a[href*="safeworkaustralia.gov.au"],a[href*="bom.gov.au"]').length).each((_,el)=>{
+   if(!owner)throw new Error(`Reference replacement needs a confirmed service: ${route}`);
+   const block=$(el),heading=block.children('h2').first().clone().text('Roof repairs and inspections');
+   block.empty().append(heading,'<p>Tell us your suburb, the affected roof or drainage area and when the problem occurs. We will arrange an assessment and explain the repair scope.</p>',`<p><a href="/${owner}/">${serviceLabels[owner]}</a> · <a href="/contact/">Arrange an assessment</a></p>`);
+   changed=true;
+  });
+  $('.audit-technical-sources').filter((_,el)=>$(el).find('a[href*="lysaght.com"]').length).each((_,el)=>{
+   const block=$(el);
+   block.children('h2').first().text('Flashing materials and adjoining roof components');
+   block.children('p').first().text('We assess the flashing shape, adjoining roof materials and connected drainage before specifying repairs. The written quote identifies the affected components and suitable materials.');
+   block.children('ul').remove();
+   changed=true;
+  });
+  $('main a[href*="yourhome.gov.au/passive-design/condensation"]').each((_,el)=>{$(el).closest('p').remove();changed=true;});
+ }
  $('.about-company-registration-note,.review-source-note').each((_,el)=>{$(el).remove();changed=true;});
  $('main p,main li,main figcaption,main img[alt]').each((_,el)=>{
   const node=$(el);

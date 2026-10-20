@@ -7,11 +7,12 @@ import {load} from 'cheerio';
 import {bundleStylesheets} from './tools/bundle-stylesheets.mjs';
 import {uiContentSnapshot} from './tools/ui-content-snapshot.mjs';
 
-test('UI polish preserves all 138 pages outside styles',()=>{
-  // Frozen pre-UI baseline at d6ae315. Update only after intentional content edits.
+test('published pages retain the reviewed 138-page content baseline',()=>{
+  // Owner-approved removal of five external references affects exactly 14 guides.
+  // The other 124 pages were checked against the pre-UI baseline unchanged.
   const snapshot=uiContentSnapshot();
   assert.equal(snapshot.pageCount,138);
-  assert.equal(snapshot.hash,'08371404c8f9ad389676ee26fce8fa0c42822b894b1e7c3e71ff25ad62936e19');
+  assert.equal(snapshot.hash,'c7e7535417e12c37b1bcd85259c2ad9b797d4ec75965947b62f52db8aed2f68f');
 });
 
 test('visual layer joins the existing route request after original styles',t=>{

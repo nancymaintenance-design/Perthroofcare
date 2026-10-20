@@ -66,6 +66,11 @@ test('consolidated services leave unrelated prose and existing guide bodies inta
   // The approved copy cleanup removes shared billing notices only; compare all other content.
   before('main .inspection-charge-notice').remove();
   current('main .inspection-charge-notice').remove();
+  // The owner approved replacement of these citation modules with internal
+  // service paths. Their links/copy/anchor retention are checked separately
+  // in copy-cleanup.test.mjs; retain the full comparison for other content.
+  before('main .article-references,main .audit-technical-sources').remove();
+  current('main .article-references,main .audit-technical-sources').remove();
   // Navigation is now rebuilt from the explicit bilingual hierarchy. Compare
   // the original narrative and evidence independently of that approved layer.
   before('main .breadcrumbs').remove();

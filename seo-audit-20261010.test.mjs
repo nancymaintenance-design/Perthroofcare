@@ -109,10 +109,12 @@ test('priority area pages identify relevant examples without claiming they are l
   }
 });
 
-test('key guides offer practical checklists, decision comparisons and manufacturer context',()=>{
+test('key guides offer practical checklists, decision comparisons and direct repair context',()=>{
   for(const path of ['/news/roof-flashing-explained/','/news/roof-leak-detection-perth/']){
     const $=page(path);assert.ok($('.audit-observation-checklist li').length>=4,path);
-    assert.ok($('.audit-technical-sources a[href^="https://lysaght.com/"]').length,path);
+    assert.equal($('.audit-technical-sources a[href^="https://"]').length,0,path);
+    assert.ok($('.audit-technical-sources a[href="/flashing-repairs/"]').length,path);
+    assert.match($('.audit-technical-sources').text(),/We assess the flashing shape/);
   }
   assert.ok(page('/news/ridge-capping-repairs-perth-guide/')('.audit-decision-comparison tbody tr').length>=3);
   const restoration=page('/roof-restoration/');
