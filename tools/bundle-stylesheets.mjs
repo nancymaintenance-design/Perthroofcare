@@ -6,7 +6,7 @@ import {transform} from 'lightningcss';
 
 // Keep the original cascade, including media and interactive-state rules.
 // Only publication copies change; editable source styles remain intact.
-export function bundleStylesheets(publicDirectory,routes){
+export function bundleStylesheets(publicDirectory,routes,visualLayer=()=> ''){
   const bundles=new Map();
   const routeBundles=new Set();
   const publishedClasses=new Set();
@@ -25,8 +25,9 @@ export function bundleStylesheets(publicDirectory,routes){
     const routeLayout=routeStyle?$(`link[href="/assets/css/${routeStyle}"]`):null;
     const navigationStyles=$('style[data-service-navigation]');
     let routeHref;
-    if(routeLayout?.length||navigationStyles.length){
-      const source=(routeLayout?.length?readFileSync(join(publicDirectory,'assets/css',routeStyle),'utf8'):'')+navigationStyles.map((_,el)=>$(el).html()).get().join('\n');
+    const polish=visualLayer(baseRoute);
+    if(routeLayout?.length||navigationStyles.length||polish){
+      const source=(routeLayout?.length?readFileSync(join(publicDirectory,'assets/css',routeStyle),'utf8'):'')+navigationStyles.map((_,el)=>$(el).html()).get().join('\n')+'\n'+polish;
       const {code}=transform({filename:routeStyle||'service-navigation.css',code:Buffer.from(source),minify:true});
       const digest=createHash('sha256').update(code).digest('hex').slice(0,16);
       routeHref=`/assets/css/site-${digest}.css`;

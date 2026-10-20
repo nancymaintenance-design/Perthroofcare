@@ -1,0 +1,25 @@
+/* Third selected concept. Keep every original section, image and word. */
+.home-topic-rail.home-hero-backdrop {
+  margin:12px clamp(12px,2.5vw,36px) 0;
+  border-radius:16px;
+  overflow:hidden;
+  padding:60px 0 68px;
+}
+.home-topic-rail.home-hero-backdrop .container { width:calc(100% - 88px); }
+.home-topic-rail.home-hero-backdrop h1 { font-size:clamp(2.4rem,4vw,3.25rem); }
+.home-topic-rail.home-hero-backdrop .home-hero-copy>p:not(.eyebrow) { max-width:43rem; font-size:1.3rem; line-height:1.65; }
+.home-service-map.section { padding-top:28px; }
+.home-service-map.section h2 { max-width:none; font-size:clamp(1.65rem,3.4vw,3rem); margin-bottom:16px; }
+.home-service-map .cards { gap:28px 24px; }
+.home-service-map article.card { border:0; border-bottom:1px solid var(--line); border-radius:0; background:transparent; padding-bottom:20px; }
+.home-service-map article.card>*:not(img) { margin-inline:0; }
+.home-service-map article.card h3 { margin:0 0 8px; font-size:1.8rem; }
+.home-service-map article.card p:not(.eyebrow) { font-size:1.125rem; line-height:1.6; margin-top:0; }
+:root main .home-service-map .aligned-photo-grid img.aligned-photo { aspect-ratio:2.24; border-radius:0; }
+.home-service-map article.card>.eyebrow { margin-top:12px; }
+@media(max-width:600px) {
+  .home-topic-rail.home-hero-backdrop { padding:32px 0; border-radius:12px; background-position:60% center; }
+  .home-topic-rail.home-hero-backdrop .container { width:calc(100% - 32px); }
+  .home-topic-rail.home-hero-backdrop .home-hero-copy>p:not(.eyebrow) { font-size:1rem; }
+  .home-service-map article.card h3 { font-size:1.5rem; }
+}

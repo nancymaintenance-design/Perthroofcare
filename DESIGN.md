@@ -18,7 +18,7 @@ rounded:
   DEFAULT: "18px"
 spacing:
   pageGutter: "clamp(20px, 4vw, 64px)"
-  section: "clamp(2.5rem, 5vw, 5rem)"
+  section: "clamp(2.5rem, 4vw, 3.75rem)"
 components:
   serviceMenu:
     width: "min(56rem, calc(100vw - 32px))"
@@ -43,6 +43,12 @@ Display type is compact and forceful for one service keyword-led heading per rou
 ## Layout
 
 Desktop content has deliberate side gutters and a maximum readable width. The primary content pattern is: concise topic rail, answer-first service summary, a limited number of useful modules, related services, and a direct enquiry path. Pages should not include consecutive generic panels simply to make them longer.
+
+### Selected third visual concept — 2026-10-20
+
+The approved homepage has an inset photographic hero with 16px corners, original roofer artwork, existing charcoal overlay and original actions. Its nine services use open three-column rows, no enclosing card surface, wide 2.24:1 image frames and a quiet bottom divider. Tablet uses two columns and phone one, retaining every original heading, photograph, paragraph, link and review. This overrides the earlier 18px card/4:3 frame directions for homepage service teasers only, not project evidence galleries. No content, schema, URL, contact or behavior changes accompany this visual revision.
+
+Runtime ownership: ui-common.css supplies the compact section rhythm, default secondary heading scale and explicit standards-based scrollbar width; ui-home.css owns the selected homepage composition. vercel-build.mjs appends these to the existing page-owned layer through bundleStylesheets; the shared stylesheet stays unchanged. At most two style requests, shared below 85KB, combined below 90KB, service route layer below 5KB and other layers below 4KB remain enforced. Existing refinement.css tokens, font fallbacks, focus and reduced-motion policies remain canonical. tools/ui-content-snapshot.mjs and ui-polish.test.mjs freeze non-style HTML across all 138 routes; intentionally editing business content later requires reviewing and updating that baseline, not bypassing it.
 
 ## Elevation & Depth
 

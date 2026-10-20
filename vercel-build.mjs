@@ -207,7 +207,9 @@ for (const entry of readdirSync(join(root, '.image-cache')).filter(name => name.
   cpSync(join(root, '.image-cache', entry), join(publicDirectory, 'assets', 'images', entry));
 }
 
-bundleStylesheets(publicDirectory,publishedRoutes);
+const commonVisualLayer=readFileSync(join(root,'ui-common.css'),'utf8');
+const homeVisualLayer=readFileSync(join(root,'ui-home.css'),'utf8');
+bundleStylesheets(publicDirectory,publishedRoutes,route=>commonVisualLayer+(route===''?homeVisualLayer:''));
 // Preserve the 512px PNG artwork and transparency, but avoid oversized encoding.
 writeFileSync(join(publicDirectory,'favicon.png'),await sharp(join(root,'favicon.png')).png({compressionLevel:9,effort:10,palette:false}).toBuffer());
 

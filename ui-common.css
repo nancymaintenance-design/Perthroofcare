@@ -1,0 +1,4 @@
+/* Selected direction: quieter headings and a tighter shared section rhythm. */
+html { scrollbar-width:auto; }
+main h2 { font-size:clamp(1.65rem,3vw,2.65rem); line-height:1.2; }
+.section { padding-block:clamp(2.5rem,4vw,3.75rem); }
