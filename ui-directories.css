@@ -1,0 +1,12 @@
+.guide-index article.card{padding:1.25rem;box-shadow:none}
+.guide-index .card h3{margin:0 0 .75rem;font-size:1.25rem;line-height:1.35}
+.guide-index .card p{margin:0 0 1rem}
+.guide-index .faq-category{margin:0 0 2rem}
+.guide-index .cards:has(>article:only-child){grid-template-columns:minmax(0,1fr)}
+.guide-index-topics{display:flex;flex-direction:row;flex-wrap:wrap;gap:.5rem 1rem;margin:0 0 1.5rem;white-space:normal}
+.guide-index-topics a{display:inline-flex;align-items:center;min-height:44px;padding:.35rem 0;color:var(--clay);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.guide-index h2[id]{scroll-margin-top:7rem}
+.area-directory .area-region-card{min-height:0;padding:1.25rem;gap:.75rem}
+.area-directory .area-region-card h2{font-size:1.4rem;line-height:1.35}
+.area-directory .area-locality-links a{padding:.6rem .75rem}
+@media(max-width:600px){.guide-index article.card{padding:1rem}.guide-index .cards{gap:.75rem}.guide-index .card h3{font-size:1.2rem}.guide-index-topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 1rem}.area-directory .cards{margin-top:1rem;gap:.75rem}}

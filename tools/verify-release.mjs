@@ -13,6 +13,8 @@ const remoteMap=await sitemap.text();
 const remoteRoutes=[...remoteMap.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname);
 assert.deepEqual(remoteRoutes.sort(),[...routes].sort(),'published sitemap must cover the tested routes');
 const results=[];
+const stylesheetUrls=new Set();
+const styles=$=>$('link[rel="stylesheet"]').map((_,node)=>$(node).attr('href')).get();
 for(let i=0;i<routes.length;i+=4){
   results.push(...await Promise.all(routes.slice(i,i+4).map(async path=>{
     const response=await fetch(origin+path),html=await response.text(),$=load(html);
@@ -25,14 +27,27 @@ for(let i=0;i<routes.length;i+=4){
     assert.ok(graph.find(n=>n['@id']===business.parentOrganization?.['@id']),path);
     assert.equal(business.openingHoursSpecification[0].closes,'21:00',path);
     assert.equal($('footer .business-hours').length,1,path);
-    assert.equal($('link[rel="stylesheet"]').length,1,path);
+    const local=load(readFileSync(new URL(`../public${path}index.html`,import.meta.url),'utf8'));
+    const expectedStyles=styles(local);
+    assert.ok(expectedStyles.length>=1&&expectedStyles.length<=2,`${path}: local stylesheet budget`);
+    assert.deepEqual(styles($),expectedStyles,`${path}: stylesheet order must match local build`);
+    for(const href of expectedStyles){
+      assert.match(href,/^\/assets\/css\/[\w.-]+\.css$/,`${path}: stylesheet path`);
+      stylesheetUrls.add(href);
+    }
     assert.equal($('script[src*="googletagmanager.com/gtag/js"]').length,1,path);
     return {path,status:response.status};
   })));
 }
-const home=load(await (await fetch(origin+'/')).text());
-const css=await fetch(new URL(home('link[rel="stylesheet"]').attr('href'),origin));
-assert.equal(css.status,200);
+const stylesheets=[];
+for(const href of [...stylesheetUrls].sort()){
+  const css=await fetch(new URL(href,origin));
+  assert.equal(css.status,200,`${href}: stylesheet status`);
+  assert.match(css.headers.get('content-type')||'',/^text\/css(?:\s*;|$)/i,`${href}: stylesheet content type`);
+  const expected=readFileSync(new URL(`../public${href}`,import.meta.url));
+  assert.deepEqual(Buffer.from(await css.arrayBuffer()),expected,`${href}: stylesheet content must match local build`);
+  stylesheets.push({href,status:css.status,matchesLocal:true,cacheControl:css.headers.get('cache-control')});
+}
 const index=await fetch(origin+'/index.html?release_check=1',{redirect:'manual'});
 assert.equal(index.status,308);
 assert.equal(new URL(index.headers.get('location'),origin).searchParams.get('release_check'),'1','index redirect preserves query');
@@ -43,4 +58,4 @@ assert.equal(api.status,405,'GET must not send an enquiry');
 const robots=await (await fetch(origin+'/robots.txt')).text();
 assert.match(robots,/Allow: \//);
 assert.doesNotMatch(robots,/Disallow: \/\s*$/m);
-console.log(JSON.stringify({origin,pages:results.length,allPages200:true,noindex:false,groupAndHours:true,ga4TagPresent:true,indexRedirect:index.status,queryPreserved:true,notFound:invalid.status,enquiryGET:api.status,cssCache:css.headers.get('cache-control'),verifiedAt:new Date().toISOString()},null,2));
+console.log(JSON.stringify({origin,pages:results.length,allPages200:true,noindex:false,groupAndHours:true,ga4TagPresent:true,indexRedirect:index.status,queryPreserved:true,notFound:invalid.status,enquiryGET:api.status,stylesheets,verifiedAt:new Date().toISOString()},null,2));

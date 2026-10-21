@@ -65,7 +65,7 @@ test('reapplying the graph refinement preserves identifiers and emits one servic
 test('declarative route edits and the FAQ heading update advance modification dates',()=>{
  assert.equal(routes.length,69);
  for(const route of routes){
-  const expected='2026-10-14';
+  const expected=['faq','news','news/roof-leak-inspection','news/drainage-after-rain','news/roof-maintenance-basics'].includes(route)||['roof-repairs','roof-leak-repairs','tile-roof-repairs','metal-roof-repairs','ridge-capping-repointing','flashing-repairs','gutter-repairs','gutters-downpipes','downpipe-repairs','roof-maintenance','roof-cleaning-painting','commercial-roof-repairs','storm-damage-roof-repairs','roof-restoration','roof-inspection','repair-options','roof-cleaning','roof-painting','box-gutter-repairs','roof-replacement','flat-roof-repairs','strata-roof-repairs'].includes(route)?'2026-10-21':'2026-10-14';
   const entry=sitemap('url').filter((_,e)=>sitemap(e).find('loc').text()===`${site}/${route?route+'/':''}`);
   assert.equal(entry.find('lastmod').text(),expected,route);
  }
@@ -74,7 +74,7 @@ test('declarative route edits and the FAQ heading update advance modification da
 test('article dates agree across the visible byline, graph and feed while publication dates stay intact',()=>{
  const feed=JSON.parse(readFileSync('public/news/feed.json','utf8'));
  for(const item of feed.items){const route=new URL(item.url).pathname.replace(/^\/|\/$/g,''),$=page(route);
-  const expected='2026-10-14';
+  const expected=['news/roof-leak-inspection','news/drainage-after-rain','news/roof-maintenance-basics'].includes(route)?'2026-10-21':'2026-10-14';
   assert.equal(graph($).find(n=>n['@type']==='Article').dateModified,expected,route);
   assert.ok($('.article-byline').text().includes('Updated '+expected),route);
   assert.equal(item.date_modified,expected+'T00:00:00+08:00',route);

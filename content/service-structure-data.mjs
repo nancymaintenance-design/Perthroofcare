@@ -49,7 +49,7 @@ export const serviceCopy={
  },
  'roof-leak-repairs':{
   heading:'Rain patterns and indoor water marks',
-  content:'A ceiling stain marks where moisture becomes visible, which can be away from the entry point. We relate heavy or wind-driven rain, dry-weather dampness and recurring leaks to tiles or sheets, ridges, valleys, flashings and drainage. Plumbing, condensation or equipment faults may require another trade.',
+  content:'A ceiling stain marks where moisture becomes visible, which can be away from the entry point. We relate heavy or wind-driven rain, dry-weather dampness and recurring leaks to tiles or sheets, ridges, valleys, flashings and drainage. Plumbing, condensation or equipment faults may require another trade. You do not need to wait for another downpour to contact us; tell us whether the leak occurs in steady rain, wind-driven rain or after rain has stopped.',
   steps:['Trace the reported water path and review previous sealing or repairs; a visible stain or fresh patch does not establish the source.','Repair the identified tile, fixing, sheet, flashing or drainage defect with materials suited to the adjoining roof. Agree the access, scope and written quote first.','Review the repaired connections and water route, explaining access limits or further investigation appropriate to the leak.'],
   boundary:'For a leak noticed after solar installation, share the installation and leak dates. Timing alone does not establish the cause. Electrical equipment must be handled by the appropriate specialist.',
   anchors:{'leak-symptom-next-step':'content'},caseTitles:['Tiled-roof leak repair sequence']
@@ -84,28 +84,28 @@ export const serviceCopy={
  },
  'gutter-repairs':{
   heading:'Leaking joints, sagging runs and overflow',
-  content:'Overflow can come from debris, poor fall, restricted outlets or deteriorated gutter material. We assess the gutter with its supports, roof-edge discharge and connected downpipe. Clearing a blockage is different from repairing a joint or replacing a corroded length; recurring overflow needs the connected route checked.',
+  content:'Overflow can come from debris, poor fall, restricted outlets or deteriorated gutter material. We assess the gutter with its supports, roof-edge discharge and connected downpipe. Clearing a blockage is different from repairing a joint or replacing a corroded length; recurring overflow needs the connected route checked. Tell us whether the spill is over the front edge, behind the gutter or through a join, and whether recent cleaning changed it.',
   steps:['Locate water escape and inspect fall, brackets, seams, outlets and nearby eaves or valley discharge.','Agree clearing, joint or support repairs, local replacement and any connected roof-edge tile work, using compatible components.','Review the repaired run and outlet connections, identifying any remaining drainage restriction or separate downstream work.'],
   boundary:'Photographs are optional and can be emailed to ellisservicesgroup3@outlook.com. No photos are needed to request an assessment. Use existing ground-level views; do not access an elevated gutter.',
   anchors:{'gutter-repair-or-replace':'steps'},caseTitles:['Gutter, outlet and connection sequence','Gutter clearing and roof-edge tile work']
  },
  'gutters-downpipes':{
   heading:'The route from roof edge to discharge',
-  content:'A full gutter and a leaking pipe can be parts of the same drainage problem. We inspect the run, outlet, downpipe joints and supports together so clearing or local repairs address the affected connection. Overflow is not automatically caused by leaves, and roof drainage work does not automatically include underground drains.',
+  content:'A full gutter and a leaking pipe can be parts of the same drainage problem. We inspect the run, outlet, downpipe joints and supports together so clearing or local repairs address the affected connection. Overflow is not automatically caused by leaves, and roof drainage work does not automatically include underground drains. If a gutter was cleaned but still overflows, tell us which outlet serves that run and whether water also escapes at a downpipe joint.',
   steps:['Check where overflow or leakage appears, the rainfall pattern and the visible route from roof edge through the outlet and pipe.','Clear deposits where required and repair or replace the affected gutter, connection, pipe section or support within the agreed scope.','Review the connected roofline drainage details and explain restrictions or downstream work outside the repair boundary.'],
   boundary:'Building height, restricted access and adjoining roof-edge damage can change the work. Ground-level observations and existing photographs are enough to start an enquiry.',
   anchors:{},caseTitles:['Gutter clearing and roof-edge tile work']
  },
  'downpipe-repairs':{
   heading:'Pipe sections, joints and supports',
-  content:'Loose brackets can let a downpipe move and strain joints or the gutter outlet. We distinguish a local joint or support repair from replacement of a deteriorated pipe section, checking surrounding material and the visible discharge route. Overflow at the gutter and leakage from a pipe seam need connected assessment.',
+  content:'Loose brackets can let a downpipe move and strain joints or the gutter outlet. We distinguish a local joint or support repair from replacement of a deteriorated pipe section, checking surrounding material and the visible discharge route. Overflow at the gutter and leakage from a pipe seam need connected assessment. If a ground-level drain stays full while water backs up, describe that separately; an above-ground pipe repair does not include underground stormwater diagnosis.',
   steps:['Inspect pipe condition, wall fixings, supports, joints and the gutter outlet, including any visible restriction.','Agree compatible fittings, affected lengths and access. Secure or replace supports and repair the connected damaged components.','Review the repaired joints and supports with the outlet connection; identify any separate underground drainage or wider gutter issue.'],
   boundary:'Photographs are optional and can be emailed to ellisservicesgroup3@outlook.com. No photos are needed to request an assessment. Keep observations at ground level.',
   anchors:{'downpipe-repair-or-replace':'steps'},caseTitles:[]
  },
  'roof-maintenance':{
   heading:'Condition-led upkeep before seasonal rain',
-  content:'Planned maintenance combines clearing deposits with checks of tiles or metal sheets, ridges, valleys, flashings and outlets. Broken tiles, loose capping, failed fixings or leaking junctions require defined repair work. Previous leaks, nearby trees and changes since earlier maintenance help establish priorities.',
+  content:'Planned maintenance combines clearing deposits with checks of tiles or metal sheets, ridges, valleys, flashings and outlets. Broken tiles, loose capping, failed fixings or leaking junctions require defined repair work. Previous leaks, nearby trees and changes since earlier maintenance help establish priorities. After rain, report any new overflow or indoor marks alongside the previous maintenance date so we can prioritise the affected route.',
   steps:['Inspect the covering and connected drainage against the repair history and accessible condition.','Prioritise debris clearing and necessary component repairs, separating optional cleaning or finishing from defects needing attention.','Review the maintained connections and outlets and identify follow-up items suited to the property.'],
   boundary:'Maintenance does not guarantee that a roof will never leak. Observations and photographs should be made from ground level, with roof and elevated gutter access left to controlled work arrangements.',
   anchors:{'maintenance-and-repair':'content'},caseTitles:['Tile and junction maintenance records']
@@ -126,7 +126,7 @@ export const serviceCopy={
  },
  'storm-damage-roof-repairs':{
   heading:'Urgent assessment and permanent repairs',
-  content:'Displaced tiles, loose capping, damaged sheets and affected drainage need assessment of the connected roof. Urgent enquiries are prioritised; attendance is arranged promptly when weather, site access and safety conditions allow. Temporary protection and permanent repairs are separate work items.',
+  content:'Displaced tiles, loose capping, damaged sheets and affected drainage need assessment of the connected roof. Urgent enquiries are prioritised; attendance is arranged promptly when weather, site access and safety conditions allow. Temporary protection and permanent repairs are separate work items. When reporting new water entry, distinguish visible storm damage from a recurring leak and include any earlier repair history.',
   steps:['Report active water entry, affected rooms, displaced materials and the event timing from a safe place so we can plan assessment.','Inspect accessible damage and agree appropriate protection, component repairs and the access needed for the work.','Carry out the agreed repairs when conditions permit and review the repaired roof connections, with further investigation explained.'],
   boundary:'Opening hours are Monday–Sunday, 9am–9pm Perth local time, not a promise of immediate attendance or a 24-hour callout. Keep clear of electrical hazards, sagging ceilings and fallen materials; call emergency services for immediate life or electrical danger. An enquiry does not guarantee an insurance outcome.',
   anchors:{'urgent-assessment':'boundary'},caseTitles:['Roof-void observations from an urgent enquiry']
@@ -168,7 +168,7 @@ export const serviceCopy={
  },
  'box-gutter-repairs':{
   heading:'Channels, joints and overflow routes',
-  content:'A box gutter collects water within connected roof details. Its channel, joints, outlet and overflow route need assessment together. Indoor staining alone cannot distinguish a leaking joint, retained water or overflow. Clearing debris and repairing deteriorated gutter material are different jobs.',
+  content:'A box gutter collects water within connected roof details. Its channel, joints, outlet and overflow route need assessment together. Indoor staining alone cannot distinguish a leaking joint, retained water or overflow. Clearing debris and repairing deteriorated gutter material are different jobs. Repeated overflow after clearing needs the outlet and overflow route reviewed, rather than assuming another clean or surface coating will resolve it.',
   steps:['Relate rain conditions and earlier clearing to the channel, adjoining junctions and outlet condition.','Define local joint work, affected lengths or drainage changes, checking compatibility with retained materials rather than assuming a coating suits every gutter.','Review the repaired connections and explain remaining drainage limitations and any further work needed.'],
   boundary:'Include building height, affected level and authorised access contact. The photographs record original conditions and work in progress, not a completed drainage performance test.',
   anchors:{'scope-1':'content','scope-2':'steps','scope-3':'boundary','service-questions':'guidance'},caseTitles:['Box gutter condition and local work']
@@ -182,7 +182,7 @@ export const serviceCopy={
  },
  'flat-roof-repairs':{
   heading:'Covering, drainage and connected junctions',
-  content:'Flat roof describes a form, not a single covering or repair system. Sheets, membranes and existing treatments need different compatibility checks. Standing water can be relevant to drainage but does not identify a leak source by itself; penetrations, roof edges and wall junctions also matter.',
+  content:'Flat roof describes a form, not a single covering or repair system. Sheets, membranes and existing treatments need different compatibility checks. Standing water can be relevant to drainage but does not identify a leak source by itself; penetrations, roof edges and wall junctions also matter. Note whether ponding remains after rain has stopped; that observation helps us relate the low area, outlets and reported leak without diagnosing from a photograph.',
   steps:['Identify the covering, previous treatments and water-entry pattern with the outlets and adjoining roof details.','Agree a repair boundary and compatible materials, separating outlet clearing or drainage alterations from damaged-covering repairs.','Review the agreed repaired components and explain retained areas, exclusions or wider deterioration requiring another scope.'],
   boundary:'The photographs support discussion of internal drainage and wall connections. They do not show repair of an entire flat roof covering or establish a universal membrane or coating specification.',
   anchors:{'scope-1':'content','scope-2':'steps','scope-3':'boundary','service-questions':'guidance'},caseTitles:['Internal drainage and wall-junction work']

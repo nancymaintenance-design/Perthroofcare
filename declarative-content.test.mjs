@@ -33,10 +33,10 @@ test('FAQ has canonical answers with schema agreement and preserves publication 
  const $=page('/faq/'),before=load(execFileSync('git',['show','ab6ea8f:faq/index.html'],{encoding:'utf8',maxBuffer:4*1024*1024}));
  assert.ok($('main h2').toArray().some(e=>$(e).text()==='Roof repairs and inspections'));
  const disclosures=p=>p('main details').map((_,e)=>({question:p(e).find('summary').text(),answer:p(e).find('p').text()})).get();
- assert.equal(disclosures($).length,43);
+ assert.equal(disclosures($).length,49);
  assert.deepEqual(nodes($).find(n=>n['@type']==='FAQPage').mainEntity.map(n=>({question:n.name,answer:n.acceptedAnswer.text})),disclosures($));
  const current=nodes($).find(n=>n['@type']==='WebPage'),original=nodes(before).find(n=>n['@type']==='WebPage');
- assert.equal(current.dateModified,'2026-10-14');assert.equal(current.datePublished,original.datePublished);
+ assert.equal(current.dateModified,'2026-10-21');assert.equal(current.datePublished,original.datePublished);
 });
 
 test('all routes use concise component headings without assembled topic suffixes',()=>{
@@ -44,7 +44,7 @@ test('all routes use concise component headings without assembled topic suffixes
  for(const r of routes){const $=page(r);for(const e of $('main h1,main h2,main h3,main summary').toArray())assert.doesNotMatch($(e).text(),filler,r+' '+$(e).text());}
  // Independent, paragraph-reviewed examples catch replacement by empty labels.
  for(const [route,headings] of [
-  ['/roof-leak-repairs/',['Rain patterns and signs of roof leaks','Investigating recurring roof leaks','Tiled-roof leak repair sequence']],
+  ['/roof-leak-repairs/',['A leak in heavy rain or wind-driven rain','Tracing the entry point before choosing a repair','Tiled-roof leak repair sequence']],
   ['/areas/hillarys-roof-repairs/',['Roof material and visible damage','Fixings, capping and rainwater drainage','Arrange a roof assessment']],
   ['/news/roof-inspection-perth-guide/',['Inspection findings and maintenance priorities','Roof inspection and drainage repair records','Inspection fees and agreed access']]
  ]){const $=page(route),actual=$('main h2,main h3').map((_,e)=>$(e).text()).get();for(const heading of headings)assert.ok(actual.includes(heading),route+' missing '+heading);}
@@ -75,6 +75,15 @@ test('consolidated services leave unrelated prose and existing guide bodies inta
   // the original narrative and evidence independently of that approved layer.
   before('main .breadcrumbs').remove();
   current('main .breadcrumbs,main [data-service-handoff],main [data-service-resources]').remove();
+  // Preserve the original guide body while checking this task's appended sections separately.
+  if(['/news/roof-leak-inspection/','/news/drainage-after-rain/','/news/roof-maintenance-basics/'].includes(r)){
+   before('.article-byline').each((_,node)=>before(node).html(before(node).html().replace('Updated 2026-10-14','Updated 2026-10-21')));
+   current('h2[data-guide-anchor]').each((_,heading)=>{
+    const id=current(heading).attr('id');
+    current(heading).closest('section').remove();
+    current(`main a[href="#${id}"]`).closest('li').remove();
+   });
+  }
   const actual=extract(current),original=extract(before);
   // Approved merges change section/order only: preserve every paragraph,
   // disclosure body, original image, link destination and meaningful anchor.
@@ -136,9 +145,9 @@ test('service hubs and regional copy explain our work without generic reader ins
 });
 
 test('heading inventory covers the approved baseline and every route with separated summaries',()=>{
- const generated=spawnSync(process.execPath,['tools/heading-inventory.mjs'],{encoding:'utf8'});
+ const generated=spawnSync(process.execPath,['tools/heading-inventory.mjs','../reports/2026-10-21-post-rain-content','2026-10-21'],{encoding:'utf8'});
  assert.equal(generated.status,0,generated.stderr);
- const file='../reports/2026-10-14-content-ui-refresh/heading-changes.json';
+ const file='../reports/2026-10-21-post-rain-content/heading-changes.json';
  assert.ok(existsSync(file),'durable heading inventory missing');
  const inventory=JSON.parse(readFileSync(file,'utf8'));
  assert.equal(inventory.baselineCommit,'4b3e765');assert.equal(inventory.routes.length,69);

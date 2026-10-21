@@ -94,6 +94,16 @@ if (carousel && fixedReadingHero) {
   reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) paused = true; render(); }); render();
 }
 
+// Let guide contents reach the actual sticky header before following the reader.
+const guideWorkspace = document.querySelector('.guide-workspace');
+const guideHeader = guideWorkspace && document.querySelector('header');
+if (guideHeader) {
+  const measureGuideHeader = () => guideWorkspace.style.setProperty('--guide-header-height', `${guideHeader.getBoundingClientRect().height}px`);
+  measureGuideHeader();
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(measureGuideHeader).observe(guideHeader);
+  else window.addEventListener('resize', measureGuideHeader);
+}
+
 const enquiryForm = document.querySelector('.enquiry-form');
 if (enquiryForm) {
   const submit = enquiryForm.querySelector('.form-submit');

@@ -8,6 +8,7 @@ import { buildLocales } from './tools/build-locales.mjs';
 import { enhanceMachineData } from './tools/enhance-machine-data.mjs';
 import { buildLlmsGuide } from './tools/build-llms-guide.mjs';
 import { buildServiceNavigation } from './tools/build-service-navigation.mjs';
+import { buildGuideLayouts } from './tools/build-ui-layout.mjs';
 import sharp from 'sharp';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
@@ -19,6 +20,7 @@ const annotateImages = spawnSync(process.execPath, ['tools/annotate-image-dimens
 if (annotateImages.status !== 0) process.exit(annotateImages.status ?? 1);
 buildLocales(root);
 buildServiceNavigation(root);
+buildGuideLayouts(root);
 enhanceMachineData(root);
 buildLlmsGuide(root);
 await optimizeImages(root);
@@ -74,6 +76,8 @@ const stagedFiles = [
   ['contact-form.css', 'assets/css/contact-form.css'],
   ['price-guide.css', 'assets/css/price-guide.css'],
   ['site.js', 'assets/js/site.js'],
+  ['faq.js', 'assets/js/faq.js'],
+  ...['plus','minus','chevron','search'].map(name=>[`faq-${name}.svg`,`assets/images/faq-${name}.svg`]),
   ['analytics.js', 'assets/js/analytics.js'],
   ['ellis-logo.png', 'assets/images/ellis-logo.png'],
   ['gutter.png', 'assets/images/gutter.png'],
@@ -209,7 +213,10 @@ for (const entry of readdirSync(join(root, '.image-cache')).filter(name => name.
 
 const commonVisualLayer=readFileSync(join(root,'ui-common.css'),'utf8');
 const homeVisualLayer=readFileSync(join(root,'ui-home.css'),'utf8');
-bundleStylesheets(publicDirectory,publishedRoutes,route=>commonVisualLayer+(route===''?homeVisualLayer:''));
+const faqVisualLayer=readFileSync(join(root,'faq-navigation.css'),'utf8');
+const guideVisualLayer=readFileSync(join(root,'ui-guides.css'),'utf8');
+const directoryVisualLayer=readFileSync(join(root,'ui-directories.css'),'utf8');
+bundleStylesheets(publicDirectory,publishedRoutes,route=>commonVisualLayer+(route===''?homeVisualLayer:route==='faq'?faqVisualLayer:route==='news'||route==='service-areas'?directoryVisualLayer:route.startsWith('news/')?guideVisualLayer:''));
 // Preserve the 512px PNG artwork and transparency, but avoid oversized encoding.
 writeFileSync(join(publicDirectory,'favicon.png'),await sharp(join(root,'favicon.png')).png({compressionLevel:9,effort:10,palette:false}).toBuffer());
 

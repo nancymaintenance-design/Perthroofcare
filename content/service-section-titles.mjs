@@ -1,131 +1,131 @@
-// Each title is reviewed against the material, repair steps and retained evidence.
+// Section labels distinguish symptoms, work choices and enquiry details. H1s are owned elsewhere.
 export const serviceSectionTitles={
   "roof-repairs": {
-    "content": "Roof defects and connected components",
-    "solution": "Leak, tile and metal repair options",
-    "guidance": "Repair findings, materials and access",
+    "content": "Roof components that need repair",
+    "solution": "From roof findings to a written repair scope",
+    "guidance": "Compare the work included in your quote",
     "work": "Roof repair project photographs"
   },
   "roof-leak-repairs": {
-    "content": "Rain patterns and signs of roof leaks",
-    "solution": "Investigating recurring roof leaks",
-    "guidance": "Valleys, flashings and penetration checks",
+    "content": "A leak in heavy rain or wind-driven rain",
+    "solution": "Tracing the entry point before choosing a repair",
+    "guidance": "Rain timing, earlier patches and connected defects",
     "work": "Tiled-roof leak repair photographs"
   },
   "tile-roof-repairs": {
-    "content": "Damaged tiles and adjoining roof junctions",
-    "solution": "Tile replacement and junction repairs",
-    "guidance": "Tile compatibility, damage location and access",
+    "content": "Cracked, slipped or missing roof tiles",
+    "solution": "Matching tiles and repairing adjoining junctions",
+    "guidance": "Tile replacement, roof access and hidden damage",
     "work": "Tile, ridge and valley repair photographs"
   },
   "metal-roof-repairs": {
-    "content": "Metal roof fixings, sheets and junctions",
-    "solution": "Local fastener and metal roof repairs",
-    "guidance": "Sheet condition and connected flashings",
+    "content": "Leaking fixings, sheet laps and corroded metal",
+    "solution": "Fastener repairs or replacement of affected sheets",
+    "guidance": "Screw seals, capping and surrounding sheet condition",
     "work": "Metal roof and fastener repair photographs"
   },
   "ridge-capping-repointing": {
-    "content": "Ridge bedding and pointing condition",
-    "solution": "Repointing and rebedding options",
-    "guidance": "Ridge repair runs, methods and materials",
+    "content": "Cracked pointing or loose ridge caps",
+    "solution": "Choosing repointing, rebedding or cap replacement",
+    "guidance": "Ridge runs and methods in your repair quote",
     "work": "Ridge bedding and pointing photographs"
   },
   "flashing-repairs": {
-    "content": "Valley and roof junction defects",
-    "solution": "Valley clearing and flashing repair options",
-    "guidance": "Wall, skylight and chimney junctions",
+    "content": "Water entry at valleys, walls and roof openings",
+    "solution": "Clearing the channel or repairing the flashing",
+    "guidance": "Chimney, skylight and uphill water paths",
     "work": "Valley and chimney flashing photographs"
   },
   "gutter-repairs": {
-    "content": "Gutter leaks, sagging and overflow",
-    "solution": "Gutter joint, support and outlet repairs",
-    "guidance": "Connected valleys and downpipe outlets",
+    "content": "Water spilling over an edge or leaking through a joint",
+    "solution": "Clearing obstructions and repairing gutter defects",
+    "guidance": "Where the water escapes and what was cleaned",
     "work": "Gutter and roof-edge work photographs"
   },
   "gutters-downpipes": {
-    "content": "Roof drainage from gutter to downpipe",
-    "solution": "Gutter and downpipe assessment",
-    "guidance": "Overflow locations and drainage photographs",
+    "content": "Gutter overflow after recent cleaning",
+    "solution": "Checking the gutter, outlet and downpipe together",
+    "guidance": "Leaves, fall, joints and downstream restrictions",
     "work": "Gutter and roof-edge work photographs"
   },
   "downpipe-repairs": {
-    "content": "Downpipe joints, sections and supports",
-    "solution": "Downpipe connection and support repairs",
-    "guidance": "Gutter overflow and connected pipe defects"
+    "content": "Water escaping from downpipe joints and supports",
+    "solution": "Repairing a connection or replacing a pipe section",
+    "guidance": "Gutter overflow versus a leaking downpipe"
   },
   "roof-maintenance": {
-    "content": "Roof condition and seasonal maintenance",
-    "solution": "Drainage clearing and roof defect repairs",
-    "guidance": "Roof material, repair history and priorities",
+    "content": "Known leaks and drainage problems before more rain",
+    "solution": "Prioritising clearing and repairs by roof condition",
+    "guidance": "Repair history, seasonal deposits and new defects",
     "work": "Tile and roof junction maintenance photographs"
   },
   "roof-cleaning-painting": {
-    "content": "Roof repairs, preparation and surface finish",
-    "solution": "Cleaning and painting options by roof material",
-    "guidance": "Existing coating, damage and preparation",
+    "content": "Roof defects to address before a surface finish",
+    "solution": "Agreeing cleaning, preparation and painting separately",
+    "guidance": "Roof material, existing finish and preparation limits",
     "work": "Roof cleaning and painting photographs"
   },
   "commercial-roof-repairs": {
-    "content": "Commercial roof defects and site operations",
-    "solution": "Commercial flashing and drainage repairs",
-    "guidance": "Site access, records and authorised contacts"
+    "content": "Roof leaks around operating premises",
+    "solution": "Planning repairs around access and site operations",
+    "guidance": "Roof materials, drainage and the authorised site contact"
   },
   "storm-damage-roof-repairs": {
-    "content": "Storm damage and active water entry",
-    "solution": "Storm damage assessment and repair scope",
-    "guidance": "Storm timing, photographs and affected rooms",
+    "content": "New roof damage and water entry after a storm",
+    "solution": "Assessing storm-related defects before permanent repairs",
+    "guidance": "Storm timing, affected rooms and access hazards",
     "work": "Roof-void inspection photographs"
   },
   "roof-restoration": {
-    "content": "Roof repairs and surface condition",
-    "solution": "Restoration repairs and finishing options",
-    "guidance": "Roof material and restoration scope"
+    "content": "A local defect or wider roof deterioration",
+    "solution": "Separating repairs from cleaning and finishing",
+    "guidance": "Repairs and finishing in the restoration proposal"
   },
   "roof-inspection": {
-    "content": "Roof condition, access and repair priorities",
-    "solution": "Roof inspection and repair recommendations",
-    "guidance": "Inspection components, fees and records",
+    "content": "An active leak, condition review or maintenance plan",
+    "solution": "Agreeing inspection access, records and repair priorities",
+    "guidance": "Inspection purpose, fees and written repair proposals",
     "work": "Roof condition and maintenance photographs"
   },
   "repair-options": {
-    "content": "Repair, restoration and replacement options",
-    "solution": "Repair choices based on roof condition",
-    "guidance": "Property details and previous repair records"
+    "content": "Differences between repair, restoration and replacement",
+    "solution": "Choosing the extent of work from the roof condition",
+    "guidance": "Compare local repairs with wider roof work"
   },
   "roof-cleaning": {
-    "content": "Roof deposits, surface condition and drainage",
-    "solution": "Roof cleaning scope",
-    "guidance": "Chargeable inspection and separate cleaning scope",
+    "content": "Deposits on the roof and debris in drainage paths",
+    "solution": "Defining the surfaces and deposits to be cleaned",
+    "guidance": "Cleaning work and a separate condition assessment",
     "work": "Roof cleaning photographs"
   },
   "roof-painting": {
-    "content": "Existing roof coatings and surface condition",
-    "solution": "Roof cleaning and painting preparation",
-    "guidance": "Coating compatibility with the roof surface",
+    "content": "Existing coatings, surface wear and repair needs",
+    "solution": "Preparing a sound roof for the agreed coating",
+    "guidance": "Cleaning, spray painting and coating compatibility",
     "work": "Finished roof painting photographs"
   },
   "box-gutter-repairs": {
-    "content": "Box gutter channels, joints and overflow",
-    "solution": "Box gutter clearing and repair options",
-    "guidance": "Restrictions and defects beyond clearing",
+    "content": "Retained water, leaking joints and box gutter overflow",
+    "solution": "Checking outlets before specifying local gutter repairs",
+    "guidance": "Limits of clearing and surface coatings",
     "work": "Box gutter condition and repair photographs"
   },
   "roof-replacement": {
-    "content": "Whole-roof condition and retained components",
-    "solution": "Local sheet replacement or whole-roof replacement",
-    "guidance": "Roof replacement assessment and scope",
+    "content": "Widespread deterioration or isolated damaged sheets",
+    "solution": "Defining replacement areas and retained roof components",
+    "guidance": "Replacement areas, materials and exclusions",
     "work": "Roof replacement construction photographs"
   },
   "flat-roof-repairs": {
-    "content": "Flat roof coverings, drainage and junctions",
-    "solution": "Repairs matched to the flat roof system",
-    "guidance": "Standing water and leak-source investigation",
+    "content": "Standing water and leaks at low-slope roof junctions",
+    "solution": "Matching repairs to the covering and drainage system",
+    "guidance": "Ponding, junction defects and the reported leak",
     "work": "Internal drainage and wall-junction photographs"
   },
   "strata-roof-repairs": {
-    "content": "Strata roof defects, authority and access",
-    "solution": "Strata roof assessment and repair scope",
-    "guidance": "Approval and payment responsibility",
+    "content": "Shared-roof leaks and the affected property",
+    "solution": "Defining roof work for the authorised decision-maker",
+    "guidance": "Access, approval and responsibility for payment",
     "work": "Strata roof and gutter work photographs"
   }
 };

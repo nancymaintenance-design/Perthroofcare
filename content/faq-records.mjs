@@ -575,5 +575,79 @@ export const faqRecords=[
     ],
     "aliases": [],
     "group": "inspection-enquiry"
+  },
+  {
+    "question": "Should I book leak detection or roof repairs first?",
+    "paragraphs": [
+      "Start with an enquiry describing when and where the leak appears. We discuss the assessment needed to trace the water-entry path before a repair scope is agreed. An intermittent leak may require further investigation; you do not need to wait for more rain or diagnose the cause yourself.",
+      "<a href=\"/news/roof-leak-inspection/\">Leak investigation and repair decisions</a> · <a href=\"/roof-leak-repairs/\">Roof leak repairs</a>"
+    ],
+    "sourceIndexes": [],
+    "aliases": [
+      "post-rain-leak-booking"
+    ],
+    "group": "leak-patterns"
+  },
+  {
+    "question": "Why do gutters still overflow after cleaning?",
+    "paragraphs": [
+      "Removing leaves does not establish that the outlet and connected downpipe are clear or that the gutter fall, joints and supports are sound. Tell us where water escapes and what was cleaned. We check the connected route before quoting for more clearing, local repairs or replacement of damaged components.",
+      "<a href=\"/news/drainage-after-rain/\">Overflow after cleaning</a> · <a href=\"/gutters-downpipes/\">Gutters and downpipes</a>"
+    ],
+    "sourceIndexes": [],
+    "aliases": [
+      "post-rain-cleaned-gutters"
+    ],
+    "group": "drainage-moisture"
+  },
+  {
+    "question": "Is a full ground-level drain part of a downpipe repair?",
+    "paragraphs": [
+      "A full ground-level drain is a separate observation from a leaking above-ground joint or loose downpipe bracket. It does not establish the cause of a downstream restriction. Our quoted roof-edge and above-ground downpipe work does not include underground stormwater, sewer or yard drainage; arrange the appropriate drainage assessment for those concerns.",
+      "<a href=\"/downpipe-repairs/\">Downpipe repair scope</a>"
+    ],
+    "sourceIndexes": [],
+    "aliases": [
+      "post-rain-ground-drain"
+    ],
+    "group": "drainage-moisture"
+  },
+  {
+    "question": "When can ceiling repairs follow a roof leak repair?",
+    "paragraphs": [
+      "First review the water-entry source and any fresh dripping or spreading stain after roof work. Arrange the relevant moisture and material assessment before plasterboard repairs or decoration. A remaining stain alone does not confirm an active roof leak, and painting over it does not verify that the source has been resolved.",
+      "Drying, ceiling repairs and mould treatment are separate from our roof repair scope. Keep clear of a sagging ceiling or wet electrical fittings and seek appropriate professional help; do not enter the roof space to investigate.",
+      "<a href=\"/news/roof-leak-inspection/\">Roof repair and indoor repair sequence</a>"
+    ],
+    "sourceIndexes": [],
+    "aliases": [
+      "post-rain-ceiling"
+    ],
+    "group": "repair-decisions"
+  },
+  {
+    "question": "Why can roof leak repair quotes differ?",
+    "paragraphs": [
+      "Check that each quote addresses the same roof area and defect. Compare investigation included, repair method, materials, access, preparation, waste removal and completion checks. Ask about excluded concealed damage, further investigation and indoor repairs. A lower total may cover fewer components rather than the same work at a lower price.",
+      "<a href=\"/news/roof-repair-cost-perth/\">Roof repair quote factors</a> · <a href=\"/repair-options/\">Compare repair options</a>"
+    ],
+    "sourceIndexes": [],
+    "aliases": [
+      "post-rain-quote-comparison"
+    ],
+    "group": "inspection-enquiry"
+  },
+  {
+    "question": "What records should I keep before asking my insurer about a roof leak?",
+    "paragraphs": [
+      "Keep dated photos taken safely, notes about the rain and affected rooms, earlier maintenance or repair records, the agreed work scope and invoices. Ask your insurer what evidence it needs. Do not access a wet roof or unsafe roof space to collect it.",
+      "Our roof repair work does not decide insurance cover or automatically include an insurance report. Ask about any specific records you need before agreeing the scope.",
+      "<a href=\"/news/roof-leak-inspection/\">Preparing leak observations and repair records</a>"
+    ],
+    "sourceIndexes": [],
+    "aliases": [
+      "post-rain-records"
+    ],
+    "group": "inspection-enquiry"
   }
 ];

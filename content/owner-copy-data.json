@@ -664,17 +664,6 @@
     "reason": "No under a descriptive heading leaves an unexplained denial."
   },
   {
-    "id": "G12",
-    "routes": [
-      "news/drainage-after-rain"
-    ],
-    "before": "No. Overflow can also result from poor fall, restricted outlets, damaged joints or a blocked downpipe. Ellis checks the full drainage route and quotes for cleaning, repairs or replacement sections as required.",
-    "after": "Overflow can also result from poor fall, restricted outlets, damaged joints or a blocked downpipe. We check the connected drainage route and quote for the cleaning, repairs or replacement sections required.",
-    "zh": "坡降不足、出水口受阻、接缝损坏或落水管堵塞也可能导致溢水。我们会检查相连的排水路径，并为所需的清理、维修或区段更换报价。",
-    "category": "F",
-    "reason": "Dangling No and third-person answer obscure what we assess and quote."
-  },
-  {
     "id": "G13",
     "routes": [
       "news/roof-leak-detection-perth"

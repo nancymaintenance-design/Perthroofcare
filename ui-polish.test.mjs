@@ -8,11 +8,11 @@ import {bundleStylesheets} from './tools/bundle-stylesheets.mjs';
 import {uiContentSnapshot} from './tools/ui-content-snapshot.mjs';
 
 test('published pages retain the reviewed 138-page content baseline',()=>{
-  // Owner-approved bilingual copy review, 2026-10-21. All 138 routes were
+  // Post-rain content review, 2026-10-21. All 138 routes were
   // rechecked; H1s, destinations, forms, reviews and protected legal copy remain.
   const snapshot=uiContentSnapshot();
   assert.equal(snapshot.pageCount,138);
-  assert.equal(snapshot.hash,'3afb75381d76fa5f9bec0911bfc2c80b56da3dd18fc3931d18dba45f1f20aacc');
+  assert.equal(snapshot.hash,'2f8379806b0ff9da36c60d22ab6fe940579a51adb8bc11a5e510fb54001d0b42');
 });
 
 test('visual layer joins the existing route request after original styles',t=>{

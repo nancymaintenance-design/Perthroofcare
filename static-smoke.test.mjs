@@ -219,11 +219,11 @@ test('new service routes, shared social links and JSON Feed are discoverable', (
 
 test('priority owner pages use distinct service roles with crawlable supporting links', () => {
   const expected = {
-    'roof-repairs': ['Roof repairs', 'Roof defects and connected components', ['/roof-leak-repairs/', '/metal-roof-repairs/', '/repair-options/']],
-    'roof-leak-repairs': ['Roof leak repairs', 'Rain patterns and signs of roof leaks', ['/flashing-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/']],
-    'flashing-repairs': ['Roof valleys & flashing repairs', 'Valley and roof junction defects', ['/roof-leak-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/']],
-    'gutters-downpipes': ['Gutters & downpipes', 'Roof drainage from gutter to downpipe', ['/gutter-repairs/', '/downpipe-repairs/', '/roof-maintenance/']],
-    'downpipe-repairs': ['Downpipe repairs', 'Downpipe joints, sections and supports', ['/gutters-downpipes/', '/gutter-repairs/']]
+    'roof-repairs': ['Roof repairs', 'Roof components that need repair', ['/roof-leak-repairs/', '/metal-roof-repairs/', '/repair-options/']],
+    'roof-leak-repairs': ['Roof leak repairs', 'A leak in heavy rain or wind-driven rain', ['/flashing-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/']],
+    'flashing-repairs': ['Roof valleys & flashing repairs', 'Water entry at valleys, walls and roof openings', ['/roof-leak-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/']],
+    'gutters-downpipes': ['Gutters & downpipes', 'Gutter overflow after recent cleaning', ['/gutter-repairs/', '/downpipe-repairs/', '/roof-maintenance/']],
+    'downpipe-repairs': ['Downpipe repairs', 'Water escaping from downpipe joints and supports', ['/gutters-downpipes/', '/gutter-repairs/']]
   };
   for (const [route, [h1, section, links]] of Object.entries(expected)) {
     const html = readFileSync(fileFor(route), 'utf8');

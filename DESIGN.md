@@ -28,6 +28,10 @@ components:
 
 ## Overview
 
+### FAQ access — 2026-10-21
+
+Primary navigation includes FAQ / 常见问题 in both languages, before Resources. The FAQ page starts its question area with four wrapping service buttons using the existing amber button style: leak repairs, gutters and downpipes, inspection, and repair options. Keep the existing category directory, 49 answers and footer links; do not add a separate FAQ route or change H1.
+
 Ellis Services Group is a practical Perth roof-repair service site. Its public pages should feel like a concise field brief: a visitor identifies the roof detail, understands the relevant repair topic, then makes direct contact. The register is brand-led but restrained. The site should never feel like a generic article library, a giant sales page, or a keyword catalogue.
 
 ## Colors
@@ -140,3 +144,27 @@ The visual signature is the transition from a narrow, open repair narrative to t
 # Copy cleanup — 17 October 2026
 
 Company registration retains the ABN, ACN and official register link without a repeated licence/insurance disclaimer. Service, case and guide content omits redundant project-proof and generic defensive commentary. Accurate construction-stage descriptions, technical diagnosis, safety, access, approval and written terms remain. The final English sweep runs before knowledge/schema synchronization and Chinese localization, so both languages and feeds share the same edited content.
+
+## FAQ search and topic navigation — selected revision 2026-10-21
+
+User selected the first displayed concept's horizontal search/topic layout with the third concept's panoramic roof photo fading to white toward the left. FAQ alone uses faq-navigation.css merged into its existing page layer, and faq.js as progressive enhancement. Existing original photo/logo, bilingual H1,49 answers, schema and route IDs remain. Related services are compact opening links. Desktop categories wrap; at480px and below a visible native select replaces the category list only when JS is active. Without JS all categories/anchors remain visible and the nonfunctional search is hidden. Search matches the visible questions and answers locally; no server request or enquiry submission.
+
+FAQ's functional search, navigation and responsive image treatment use a route layer ceiling5500 bytes, matching the existing service-layout ceiling; all other directory ceilings4000 and shared85000/combined90000 ceilings remain. At most two stylesheets per page. This supersedes the earlier FAQ four-button presentation; it does not change other pages.
+
+## FAQ selected sidebar layout — user screenshot correction, 2026-10-21
+
+The user's explicit screenshot supersedes the preceding horizontal-topic interpretation. FAQ uses a full-width search above a two-column workspace: sticky270px topic/service sidebar,32px gap and flexible answers. First disclosure opens initially; native details semantics remain and official locally hosted Heroicons supply plus/minus/search/chevron visuals. At640px and below the workspace stacks and uses the existing native category selector. The original photo retains only the requested left-fading mask. No change to49 answers, H1, URLs or business/schema facts. Existing5500-byte FAQ layer and90000-byte combined ceilings stay enforced; initial over-budget CSS was reduced, not waived.
+
+Site-wide UI maintenance extends the same readable navigation language to long News guides: a 240px sticky contents rail sits beside the article on desktop, while the existing portrait editorial photograph keeps its full composition beside the first section. At900px and below the contents rail returns to document flow and the photograph becomes a separate bounded block. News and service-area directories use natural card heights and real section anchors; mobile service/FAQ content navigation stays visible independently of the collapsed header menu. These refinements do not change article text, headings, URLs, assets or machine-readable content.
+
+Guide contents remain in normal document flow until reaching the bottom edge of the sticky site header, then follow the reader within the article boundary. Measure the real header height with ResizeObserver rather than adding a fixed desktop gap; keep phone/tablet single-column behavior at900px and below. Reuse that measured height for chapter anchor clearance.
+
+Latest user alignment correction: the guide contents rail starts level with the entire article opening, including its breadcrumb/title area, rather than the first body section. The desktop workspace has an introduction and reading body in the right column, while the sticky rail spans both rows on the left. On phones the introduction, contents and body retain their original document order.
+
+## Site UI maintenance — 2026-10-21
+
+The existing field-brief identity and approved FAQ sidebar remain. A scoped audit restores body-related navigation on phones in service-layout.css and FAQ's page layer; these nav elements must not inherit the header's collapsed state. Service links wrap and provide44px targets.
+
+Guide articles use a240px outline beside the readable body in a1120px container, owned by tools/build-ui-layout.mjs and ui-guides.css. Original headings, anchors, prose, images and machine data stay; at900px and below the outline becomes a bounded210px scroll region with a visible scrollbar. Photos retain natural proportions at restrained heights. Sticky guide and FAQ offsets are136px where the desktop header can wrap; FAQ tablet offset96px clears the77px mobile header.
+
+ui-directories.css owns the existing News and service-area collections: compact spacing, four real News topic anchors, a single-guide group occupying its row, and area cards without the18rem minimum. These layers join the existing fingerprinted page stylesheet; no per-page CSS request or budget increase. Homepage, gallery, about, contact, area detail and project design stay unchanged. The added site-ui-review test normalizes only explicit new UI wrappers/navigation and preserves the prior138-page content baseline.

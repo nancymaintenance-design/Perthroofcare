@@ -81,8 +81,10 @@ test('News reuses the compact index opening without changing guide records or me
  const $=page('news'),hero=$('main > section').first();
  assert.equal(hero.hasClass('index-hero'),true);assert.equal(hero.find('h1').text(),'Roof repair guides');
  const old=load(approvedCopy(execFileSync('git',['show','a33fb0c:news/index.html'],{encoding:'utf8',maxBuffer:4*1024*1024})));
+ // Only the two reviewed task summaries change; cards, targets and metadata stay fixed.
+ for(const [slug,summary] of [['roof-leak-inspection','Decide what to report before leak investigation, compare repair quote inclusions and understand the sequence before ceiling redecoration.'],['drainage-after-rain','Understand overflow that returns after cleaning and distinguish gutter or downpipe repairs from an underground drainage problem.']])old(`.guide-index article:has(a[href="/news/${slug}/"]) p`).first().text(summary);
  for(const selector of ['.guide-index article','title','meta[name="description"]','main [id]']){
-  const collect=d=>d(selector).map((_,e)=>selector==='main [id]'?d(e).attr('id'):d.html(e)).get();
+  const collect=d=>d(selector).filter((_,e)=>selector!=='main [id]'||!/^guide-topic-\d+$/.test(d(e).attr('id'))).map((_,e)=>selector==='main [id]'?d(e).attr('id'):d.html(e)).get();
   assert.deepEqual(collect($),collect(old),selector+' preserved');
  }
  assert.equal(hero.find('p:not(.eyebrow)').text(),old('main > section').first().find('p:not(.eyebrow)').text(),'existing guide scope preserved');

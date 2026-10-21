@@ -72,7 +72,7 @@ test('published pages deliver fingerprinted shared styles with small route-owned
       const layoutCss=readFileSync(`${root}/public${styles.last().attr('href')}`);
       // Service pages now also own the responsive steps/guidance composition.
       // Keep the existing request count and stricter 90KB combined ceiling.
-      assert.ok(layoutCss.length<(dom('main.service-layout').length?5500:4000),`${route} layout plus navigation stays small`);
+      assert.ok(layoutCss.length<(dom('main.service-layout,main.faq-page').length?5500:4000),`${route} layout plus navigation stays small`);
       assert.ok(Buffer.byteLength(sharedCss)+layoutCss.length<90000,`${route} total CSS remains below 90KB`);
     }
   }

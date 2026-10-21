@@ -1,62 +1,37 @@
-# UI design QA — 20 October 2026
+# 全站UI修复视觉验收 — 2026-10-21
 
-final result: passed
+最新对齐反馈已修复：目录从第一节正文上移到整篇文章开头齐平。最终截图aligned-top-desktop.png，1440×900 CSS；中英目录与正文开头容器top均125.594px。滚动后仍为77px吸附，1024px为120.266px，手机保持原顺序及static。详见reports/2026-10-21-site-ui-review/目录顶部对齐补充.md。字体、色彩、原图和文案保持；最终340测试通过，无控制台警告或错误。此前“初始位置不变”的记录是上一轮状态，现以最新对齐反馈为准。
 
-## Target and scope
+本轮追加：用户要求指南目录滚至网页上端后跟随。已将固定136px改为实际页头高度：1440px中英页77px，1024px约120.266px，均实测目录顶部贴合页头下缘；手机仍为static。初始与滚动状态证据见reports/2026-10-21-site-ui-review/sticky-natural-before-scroll.png和sticky-follow-desktop.png，量测见sticky-follow-checks.json。相对于上一轮已选版式，仅吸附起点和章节避让更新，字体、网格、颜色、图片与内容保持。已打开合并对照sticky-layout-comparison.png：同一1440×900 CSS初始状态，前后均为1425×889像素采集，等比缩为720×450并排；标题换行、照片、目录和正文起点一致。滚动后截图与77px/约120px实测补足行为复核。最终340测试通过，无控制台警告/错误；追加结果passed。
 
-Selected visual truth: `C:/Users/UFTR/.codex/generated_images/01a1239b-d07d-7213-ace8-fbf86ef70c74/exec-6520fa1b-ec97-4440-9aac-7f725f244139.png` — the third displayed option, not submission order.
+Source visual truth：本轮before-*截图及用户已确认的FAQ左目录/右正文语言；范围为已确认问题的受控修复，非品牌重设计。
+Implementation：../reports/2026-10-21-site-ui-review/after-*、after-top-*。
+Full comparison：comparison-guide-desktop.png、comparison-news-mobile.png、comparison-areas-mobile.png、comparison-service-mobile.png，均在同一张图内左旧右新。
 
-Implementation: `http://127.0.0.1:4184/zh/`.
-Evidence directory: `E:/Ellis-Services/Perth Roof Care/reports/2026-10-20-ui-design/`.
-Final screenshot: `implementation-final.png`. Full simultaneous comparison: `comparison-final.png`; focused service typography/image comparison: `comparison-detail.png`. Both were opened and inspected together, not judged from paths alone.
+Viewport：主要1440×900、390×900 CSS px；桌面浏览器截图1425px有效宽，手机375px有效宽（捕获排除滚动条，保持原比例）。比较使用相同CSS尺寸和相同页面顶部状态，无密度差异拉伸。额外320/768/1024px，共24种代表状态。
 
-Desktop CSS viewport: 1435 × 1096, devicePixelRatio 1. Source raster: 1435 × 1096. Browser screenshot transport returns JPEG bytes under the .png filename, final raster 1420 × 1085; comparison normalizes that transport image to 1435 × 1096. This is capture normalization, not a claim of pixel-identical matching. State: Chinese homepage, top, collapsed navigation, light theme, original published content.
+## Findings and history
 
-This is the existing marketing website, not a new application. Preserve all nine services, reviews, original imagery, text, URLs, structured data and interaction code. The mock's altered words and image color grading are not authoritative business content. No replacement assets, fonts, routes or sections were created.
-
-## Comparison history
-
-1. Before implementation: hero x=0, radius=0 and enclosed 1px service cards contradicted the chosen concept. Implemented inset hero, rounded clipping and open service rows.
-2. `implementation-1.png` / `comparison-1.png`: P1 service images remained about 308px tall due the existing alignment rule; P2 heading remained too large. Increased only the homepage image selector specificity, corrected the descendant selector and constrained section heading size. Project galleries remain 4:3.
-3. Intermediate capture: P2 paragraph top margins created an unnecessary gap after service titles. Removed that margin, retained natural paragraph height, and adjusted readable body/heading sizes. Recaptured and compared after the fixes.
-4. Final comparison: no actionable P0/P1/P2 remaining. Hero x≈35.9px, height≈428.6px, radius16px; wide service images≈410.7 × 183.3px. Reference hero height≈424px. Open rows, three aligned image columns, dividers and hierarchy follow the selected direction.
+- P1已修复：46页手机正文相关导航原被隐藏。所属页面层显示规则恢复，并实点进入对应服务。
+- P2已修复：长指南目录占整块正文宽度，照片容器空白较多。桌面旁置目录，竖版原图与首段并排；手机目录限制高度、有滚动条，图片恢复独立自然宽度；原图等比完整展示，正文更早出现。
+- P2已修复：News卡片标题大间距及单卡分组留空。四分类捷径、紧凑卡片与单卡满行，完整指南内容保留。
+- P2已修复：地区组固定最小高度造成空白，改为自然高度。
+- P2已修复：平板FAQ/指南侧栏顶部位于固定页头下方。768px页头77→侧栏96；1024px页头约120→侧栏136。证据sticky-recheck.json。
 
 ## Required fidelity surfaces
 
-- Typography: existing Arial/Arial Narrow and Chinese system fallbacks retained; homepage H1 52px at this viewport, service heading up to48px, card titles28.8px and body18px. No clipping or fabricated text. Native font rendering/weight differs slightly from the generated mock (P3 only).
-- Spacing/layout: inset hero, compact section rhythm, flat three-column services and natural-height text. Tablet two columns; phone one. No new fixed-height text panels or empty spacer sections.
-- Colors/tokens: existing charcoal, white, neutral wash, amber actions and dark-ochre links. Original neutral hero overlay intentionally retained for contrast; generated mock's brighter image grading is not reproduced.
-- Images: real original logo, roofer and service photographs retained, responsive source variants unchanged. Wide teaser crop is deliberate; no stretching or replacement imagery. Existing raster screenshot compression is an evidence limitation, not a modified site asset.
-- Copy/content: all 138 sitemap pages have the identical non-style HTML snapshot hash before/after: `08371404c8f9ad389676ee26fce8fa0c42822b894b1e7c3e71ff25ad62936e19`. This includes text, links, image attributes, canonical/hreflang and JSON-LD. Feed/RSS/llms and content-source files have no Git changes.
+- Typography：沿用Arial及中文系统回退；原H1不改，目录/卡片字号保持层级与阅读行距；未截断业务文本。
+- Spacing/layout：目录和正文利用现有内容区域；减少固定空高和标题48px空隙；服务触控目标最小44px。手机单列，目录可独立滚动。
+- Colors/tokens：现有白/炭黑/琥珀/深赭及中性底，未引入新调色板或夸张装饰。
+- Assets：原照片、logo、图标保持，图片按自然比例显示，懒加载和响应式构建沿用。
+- Copy/content：138页保护快照通过，除新增分类锚点和布局容器外的HTML一致，包含所有客户评价、FAQ与schema。
 
-## Runtime checks
+## Interaction and validation
 
-IAB browser: home EN/ZH, Chinese About/Contact, English leak repairs and Services at 360/390/768/1435px: 24 checks, zero document horizontal overflows. See browser-checks.json, mobile-390.png and mobile-en-390.png. Latest CSS scrollbar addition was separately checked at desktop; it restores native width and retains configured colors.
+手机分类、指南尾项、恢复的服务入口实点成功；标题落点在页头以下。桌面目录在长阅读区域随滚动定位，阅读末端受父内容边界约束。浏览器检查无控制台错误/警告。最终完整复跑340测试通过；276组逐页复验无横向溢出和隐藏正文导航；额外24组断点检查及3组侧栏间距复验通过。最终指南截图确认目录、正文和原图在1440px首屏内形成连续阅读顺序。
 
-Mobile menu opens; service submenu expands; Escape closes it. Review pause changes to play and next advances. Hero assessment action opens the Chinese Contact form; empty submit focuses Name with five invalid required fields, without sending an enquiry. Console error log empty. Existing API behavior is covered by project tests; no real email or phone call was sent. No JS interaction changes.
+Focused comparison：comparison-news-mobile.png可辨识文字、卡片与导航间距；comparison-service-mobile.png核对恢复的正文入口；宽屏指南对照用于布局和图片比例。交付报告记录了首屏/代表模板人工检查与完整辅助技术验收之间的边界。
 
-`npm test`: production build plus 314/314 tests pass, including UI preservation/bundling tests now included in the normal test list. Node syntax checks and git diff --check pass. Existing <85KB shared, <90KB combined, <4KB ordinary route and <5KB service route budgets pass; no third stylesheet request.
+Implementation checklist：已确认缺陷修复、同屏宽视觉比较、交互、双语、回归测试和报告均完成。无待处理P0/P1/P2；未部署。
 
-Scoped premium static audit of the two changed visual layers: zero findings. Default recursive audit was stopped after excessively scanning generated copies; it is not reported as an all-repository pass. A legacy scrollbar cross-file warning led to explicit standards width in the new common layer; computed runtime colors and width were verified. This marketing project has no separate configured typecheck/lint or product-admin contracts.
-
-Read-only reviewer: no Critical/Important findings; minor request to include the new tests in npm test was implemented and rerun. No new contracts or broad refactor introduced.
-
-## Handoff and limitations
-
-Local only, branch codex/ui-polish-20261020, base d6ae315. No push, merge or production deployment. Preview remains available for owner review. Production, Safari/Firefox, real mobile hardware, full screen-reader/200% zoom matrix and live lead delivery were not newly tested; no claims about SEO performance or business uplift.
-
-P3 follow-up: optional native-device font/photographic grading review. No blocker remains for the approved local visual handoff.
-
-## Service-page whitespace follow-up — 20 October 2026
-
-User-reported defect: the storm solution occupied only729.7px of its1120px container, stranded on the left, with56px section padding at each edge. This was an inherited service-layout rule, not missing business content.
-
-Fix: use the available width; above980px put existing steps/scope beside existing disclosures. Below that breakpoint retain natural single-column DOM order. Section padding now24–32px. Content, gallery geometry, scripts and URLs unchanged. The obsolete removed inspection notice style was retired.
-
-Evidence: reports/2026-10-20-ui-design/service-before.jpg (full-page original), service-after-desktop.jpg (1920×1000 CSS viewport, scrolled solution), service-after-mobile.jpg; browser transport may rescale raster dimensions. Storm solution width1120px, content height376.2px versus510.1px before; padding32px versus56px. No new spacer panels or fixed text height. The desktop screenshot was visually inspected; disclosure expansion and phone keyboard Enter work without overlap. No console errors.
-
-All44 EN/ZH service pages checked at390/768/1440/1920px:176 browser checks, zero horizontal overflow, zero steps/disclosure overlap, zero stranded narrow bodies and zero incorrect responsive modes. Exact records: service-spacing-browser.json. Non-style snapshot across all138 pages remains unchanged. Updated regression test first failed on82ch, then passed after the correction.
-
-Production build and315/315 tests pass. Route styles plus navigation are5272bytes; the service-only cap is intentionally5500bytes, retaining the90KB combined ceiling,85KB shared ceiling and two-request limit. Scoped changed-style static audit has zero findings. No dedicated lint/typecheck exists; git diff --check passes. Other previously documented limitations remain.
-
-Follow-up final result: passed. Local only; no production publication.
+final result: passed

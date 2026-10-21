@@ -17,6 +17,8 @@ import {applyHomeReviews} from '../content/home-reviews.mjs';
 import {applyCopyCleanup} from '../content/copy-cleanup.mjs';
 import {applyEditorApproved} from '../content/editor-approved.mjs';
 import {applyOwnerCopy} from '../content/owner-copy.mjs';
+import {serviceSectionTitles} from '../content/service-section-titles.mjs';
+const postRainReviewRoutes=new Set([...Object.keys(serviceSectionTitles),'faq','news','news/roof-leak-inspection','news/drainage-after-rain','news/roof-maintenance-basics']);
 
 const contentUpdateRoutes=new Set([...keywordGapRoutes,...keywordMapRoutes,'gutters-downpipes']);
 const articleImages={
@@ -41,7 +43,7 @@ export function applyAudit20261010({root,site}){
   const newsFeed=JSON.parse(readFileSync(join(root,'news/feed.json'),'utf8'));
   const declarativeRoutes=new Set();
   for(const route of routes){
-    const updated=localEditorialRoutes.has(route)?localEditorialDate:contentUpdateRoutes.has(route)?'2026-10-12':'2026-10-10';
+    const updated=postRainReviewRoutes.has(route)?'2026-10-21':localEditorialRoutes.has(route)?localEditorialDate:contentUpdateRoutes.has(route)?'2026-10-12':'2026-10-10';
     const file=join(root,route,'index.html'),$=load(readFileSync(file,'utf8'),{xml:{xmlMode:false,decodeEntities:false}});
     completeAuditContent($,route);
     // Preserve GitHub's assessment-to-written-quote path after local editorial passes.
@@ -152,17 +154,18 @@ export function applyAudit20261010({root,site}){
     syncContentKnowledge($,graph,site,canonical);
     refineLocalServiceGraph($,graph,route,canonical);
     if(declarativeRoutes.has(route)){
+      const reviewDate=postRainReviewRoutes.has(route)?'2026-10-21':'2026-10-14';
       const finalRendered=load($.html()),heading=finalRendered('main h1').text().trim();
       if(route.startsWith('news/'))$('[aria-current="page"]').text(heading);
       for(const node of graph){
-        if(['WebPage','Article','CreativeWork'].includes(node['@type']))node.dateModified='2026-10-14';
+        if(['WebPage','Article','CreativeWork'].includes(node['@type']))node.dateModified=reviewDate;
         if(node['@type']==='WebPage'){node.name=finalRendered('title').text();node.description=finalRendered('meta[name="description"]').attr('content');}
         if(node['@type']==='Article')node.headline=heading;
         if(node['@type']==='BreadcrumbList'&&node.itemListElement?.length)node.itemListElement.at(-1).name=route.startsWith('news/')?heading:heading.replace(/\.$/,'');
       }
-      $('.article-byline').each((_,e)=>$(e).html($(e).html().replace(/Updated \d{4}-\d{2}-\d{2}/,'Updated 2026-10-14')));
+      $('.article-byline').each((_,e)=>$(e).html($(e).html().replace(/Updated \d{4}-\d{2}-\d{2}/,'Updated '+reviewDate)));
       const item=newsFeed.items.find(i=>i.url===canonical);
-      if(item){item.date_modified='2026-10-14T00:00:00+08:00';item.title=heading;item.summary=finalRendered('meta[name="description"]').attr('content');item.content_text=finalRendered('main p,main li,main td,main th').not('.eyebrow,.article-byline').map((_,e)=>finalRendered(e).text()).get().join('\n\n');}
+      if(item){item.date_modified=reviewDate+'T00:00:00+08:00';item.title=heading;item.summary=finalRendered('meta[name="description"]').attr('content');item.content_text=finalRendered('main p,main li,main td,main th').not('.eyebrow,.article-byline').map((_,e)=>finalRendered(e).text()).get().join('\n\n');}
     }
     $('script[type="application/ld+json"]').text(JSON.stringify({'@context':'https://schema.org','@graph':graph}).replaceAll('<','\\u003c'));
     $('head').append('<script defer src="/assets/js/analytics.js"></script>');
@@ -181,7 +184,7 @@ export function applyAudit20261010({root,site}){
   writeFileSync(join(root,'news/feed.xml'),`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Roof Repairs Perth News — Ellis Services Group</title><link>${site}/news/</link><description>Practical roof repair and maintenance guidance.</description><language>en-au</language>${newsFeed.items.map(i=>`<item><title>${esc(i.title)}</title><link>${esc(i.url)}</link><guid isPermaLink="true">${esc(i.id)}</guid><description>${esc(i.content_text)}</description></item>`).join('')}</channel></rss>`);
   const sitemap=load(readFileSync(join(root,'sitemap.xml'),'utf8'),{xmlMode:true});
   sitemap('url').each((_,el)=>{const route=new URL(sitemap(el).find('loc').text()).pathname.replace(/^\/|\/$/g,'');
-    const updated=declarativeRoutes.has(route)||route==='about'?'2026-10-14':localEditorialRoutes.has(route)?localEditorialDate:contentUpdateRoutes.has(route)?'2026-10-12':'2026-10-10';
+    const updated=postRainReviewRoutes.has(route)?'2026-10-21':declarativeRoutes.has(route)||route==='about'?'2026-10-14':localEditorialRoutes.has(route)?localEditorialDate:contentUpdateRoutes.has(route)?'2026-10-12':'2026-10-10';
     if(declarativeRoutes.has(route)||localEditorialRoutes.has(route)||substantiveRoutes.has(route)||articleImages[route.replace(/^news\//,'')]||(!route.startsWith('projects/')&&!['privacy','legal'].includes(route))){sitemap(el).find('lastmod').remove();sitemap(el).append(`<lastmod>${updated}</lastmod>`);}
   });
   writeFileSync(join(root,'sitemap.xml'),sitemap.xml());

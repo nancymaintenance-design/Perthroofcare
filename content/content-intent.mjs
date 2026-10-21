@@ -85,7 +85,13 @@ export function applyContentIntent($,route){
   const target=guideServices[slug],intent=serviceIntents[target];
   $('.article-reading').append(`<section class="content-intent"><h2>Before arranging the work</h2><h3>${esc(intent.q)}</h3>${paragraphs([intent.a,intent.next])}<p>${link(target,'See the related service and work scope')} · ${link('contact','Discuss inspection arrangements')}</p></section>`);
   const h2=$('.article-reading h2');const used=new Set($('[id]').map((_,e)=>$(e).attr('id')).get());const toc=[];
-  h2.each((i,e)=>{let id=`guide-section-${i+1}`;while(used.has(id))id+='-topic';used.add(id);$(e).attr('id',id);toc.push(`<li><a href="#${id}">${esc($(e).text())}</a></li>`);});
+  let originalSection=0;
+  h2.each((_,e)=>{
+   // Explicit anchors let appended topics coexist with established guide links.
+   let id=$(e).attr('data-guide-anchor')||`guide-section-${++originalSection}`;
+   while(used.has(id))id+='-topic';
+   used.add(id);$(e).attr('id',id);toc.push(`<li><a href="#${id}">${esc($(e).text())}</a></li>`);
+  });
   const lead=$('.article-lead').first();const insertion=lead.length?lead:$('.article-reading > p:not(.eyebrow,.article-byline)').first();
   insertion.after(`<nav class="content-toc" aria-label="On this page"><p>On this page</p><ul>${toc.join('')}</ul></nav>`);
  }

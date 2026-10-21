@@ -12,6 +12,17 @@ function composeFaq($){
   return `<details${r.aliases.length?` id="${r.aliases[0]}"`:''}><summary>${esc(r.question)}</summary>${answer}</details>`;
  }).join('')}</div></section>`).join('');
  $('main').empty().append(hero).append(`<section class="section" id="educational-questions"><div class="container"><nav class="faq-topic-nav" aria-label="Roof question topics"><ul>${faqGroups.map(([id,title])=>`<li><a href="#${id}">${esc(title)}</a></li>`).join('')}</ul></nav>${questions}<nav id="related-work-options" aria-label="Related roof services"><h2>Roof repairs and inspections</h2><p><a href="/box-gutter-repairs/">Box gutter repairs</a> · <a href="/flat-roof-repairs/">Flat roof repairs</a> · <a href="/news/">Roof repair guides</a></p></nav><div class="content-intent"><h2>Send a roof repair question</h2><p>These answers explain general repair decisions. Include the roof material, suburb, timing of water entry and previous repairs when contacting the team. Leave roof access and close-up investigation to the inspection.</p><p><a class="button" href="/contact/">Send your roof question</a></p></div></div></section>`);
+ $('.faq-topic-nav').before('<nav class="faq-service-shortcuts" aria-label="Related roof services"><p>Related roof services</p><div class="faq-service-buttons"><a class="button" href="/roof-leak-repairs/">Roof leak repairs</a><a class="button" href="/gutters-downpipes/">Gutters &amp; downpipes</a><a class="button" href="/roof-inspection/">Roof inspection</a><a class="button" href="/repair-options/">Repair options</a></div></nav>');
+ $('main').addClass('faq-page');
+ $('.faq-service-buttons a').removeClass('button');
+ $('.faq-topic-nav').before('<form class="faq-search" role="search" hidden><label for="faq-search-input">Search questions</label><input id="faq-search-input" type="search" placeholder="Leaks, gutters, inspections, quotes…" autocomplete="off"><button class="button" type="submit">Search</button><button type="button" class="faq-clear" hidden>Clear</button></form><p class="faq-search-status" role="status" aria-live="polite" hidden></p>');
+ $('.faq-topic-nav a').each((_,el)=>{const a=$(el),count=$(a.attr('href')).find('details').length;a.append(`<span class="faq-count" aria-hidden="true">${count}</span>`);});
+ $('.faq-topic-nav').prepend('<p class="faq-topic-heading">Question topics <span>(49)</span></p>');
+ $('.faq-topic-nav').before('<div class="faq-workspace"><aside class="faq-sidebar"></aside><div class="faq-results"></div></div>');
+ $('.faq-sidebar').append($('.faq-topic-nav')).append($('.faq-service-shortcuts'));
+ $('.faq-results').append($('.faq-category'));
+ $('.faq-search button[type="submit"]').text('Search questions');
+ $('body').append('<script src="/assets/js/faq.js" defer></script>');
 }
 const guideGroups=[
  ['Leaks and inspection',['roof-leak-detection-perth','roof-leak-inspection','roof-inspection-perth-guide']],
@@ -21,7 +32,7 @@ const guideGroups=[
 ];
 const guideSummaries={
  'roof-leak-detection-perth':'Trace recurring leaks through rain patterns, ceiling stains and connected roof details; understand why earlier sealing may not resolve the source.',
- 'roof-leak-inspection':'Prepare the affected room, rainfall timing and repair history for an inspection of the connected roof and drainage path.',
+ 'roof-leak-inspection':'Decide what to report before leak investigation, compare repair quote inclusions and understand the sequence before ceiling redecoration.',
  'roof-inspection-perth-guide':'Review roof coverings, ridge and wall junctions, drainage, inspection fees and records before agreeing maintenance priorities.',
  'tile-roof-repairs-perth-guide':'Compare cracked or slipped tiles, compatible replacement profiles and adjoining ridge or flashing work.',
  'metal-roof-repairs-perth-guide':'Understand screw seals, fixing-hole corrosion and sheet condition before choosing local fastener or sheet repairs.',
@@ -30,7 +41,7 @@ const guideSummaries={
  'roof-valleys-flashing-repairs-perth':'Follow runoff through valleys and chimney junctions; distinguish debris clearing from formed-metal repairs or replacement.',
  'roof-flashing-explained':'Understand how flashing connects roof coverings to walls, chimneys and openings, with safe observations to report.',
  'gutter-warning-signs':'Separate blocked outlets, leaking joints, loose supports and corrosion when assessing overflow and local gutter work.',
- 'drainage-after-rain':'Record valley discharge, gutter overflow and downpipe behaviour to explain a connected roof drainage problem.',
+ 'drainage-after-rain':'Understand overflow that returns after cleaning and distinguish gutter or downpipe repairs from an underground drainage problem.',
  'roof-maintenance-basics':'Plan tile, metal and drainage maintenance from known defects, seasonal deposits and previous repair records.',
  'roof-repair-cost-perth':'Compare inspection fees, repair materials, access, waste removal, exclusions and written terms without assuming a universal price.'
 };
@@ -51,6 +62,9 @@ function composeNews($){
    card.find('a').text('Read the guide');group.find('.cards').append(card);
   }directory.append(group);
  }
+ const topics=$('<nav class="guide-index-topics" aria-label="Roof repair guides"></nav>');
+ directory.children('section').each((i,el)=>{const h=$(el).children('h2').first(),id=`guide-topic-${i+1}`;h.attr('id',id);topics.append(`<a href="#${id}">${esc(h.text())}</a>`);});
+ directory.prepend(topics);
  $('main > #related-work-options,main > .content-intent').remove();
  const enquiry=$('.home-enquiry');enquiry.find('h2').text('Send a roof assessment enquiry');
  enquiry.find('.container').children('p:not(.eyebrow)').first().text('General guidance cannot diagnose a property. Send the suburb, affected roof or drainage area, timing and previous repair details. Existing safe photographs are optional.');
