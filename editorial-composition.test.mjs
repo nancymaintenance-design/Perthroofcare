@@ -63,6 +63,13 @@ test('Gallery opens directly into project images with dates and every project re
  assert.equal(library.children().first().hasClass('case-library-grid'),true,'no repeated title and introduction before the photographs');
  assert.match(library.find('.case-library-intro').text(),/record work at individual properties.*material, condition and access/);
  const old=load(execFileSync('git',['show','a33fb0c:gallery/index.html'],{encoding:'utf8',maxBuffer:4*1024*1024}));
+ // Only these three alternatives were rewritten after inspecting the original
+ // pixels. Keep the full card/URL/date/image preservation comparison below.
+ for(const [image,alt] of [
+  ['roleystone-metal-fastener-rust-01.jpg','Corrosion and aged sealant around a metal roof fastener.'],
+  ['metal-fastener-sequence-01-overall-before.png','Corrugated metal roof with ridge and hip capping before fastener repairs.'],
+  ['wa6121-tile-valley-gutter-01.jpg','Tiled roof edge with surface deposits beside a gutter holding water.']
+ ])old(`img[src$="${image}"]`).attr('alt',alt);
  for(const selector of ['.case-library-card','title','meta[name="description"]','main [id]']){
   const collect=d=>d(selector).map((_,e)=>selector==='main [id]'?d(e).attr('id'):d.html(e)).get();
   assert.deepEqual(collect($),collect(old),selector+' facts, dates, images, URLs and identifiers stay intact');
@@ -73,7 +80,7 @@ test('Gallery opens directly into project images with dates and every project re
 test('News reuses the compact index opening without changing guide records or metadata',()=>{
  const $=page('news'),hero=$('main > section').first();
  assert.equal(hero.hasClass('index-hero'),true);assert.equal(hero.find('h1').text(),'Roof repair guides');
- const old=load(execFileSync('git',['show','a33fb0c:news/index.html'],{encoding:'utf8',maxBuffer:4*1024*1024}));
+ const old=load(approvedCopy(execFileSync('git',['show','a33fb0c:news/index.html'],{encoding:'utf8',maxBuffer:4*1024*1024})));
  for(const selector of ['.guide-index article','title','meta[name="description"]','main [id]']){
   const collect=d=>d(selector).map((_,e)=>selector==='main [id]'?d(e).attr('id'):d.html(e)).get();
   assert.deepEqual(collect($),collect(old),selector+' preserved');

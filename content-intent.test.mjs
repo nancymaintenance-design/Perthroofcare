@@ -41,10 +41,10 @@ test('Roleystone project evidence links use the same place spelling as the proje
 
 // Catch summaries selecting the author/date or another non-content paragraph.
 for(const [slug,opening] of [
- ['drainage-after-rain','Water overflowing at an eave, gutter or downpipe during rain needs the connected roof drainage route checked.'],
- ['metal-roofing-perth','Metal roof repairs in Perth involve more than the visible sheet surface.'],
- ['roof-leak-inspection','A roof leak inspection connects the water seen indoors with the roof detail that needs repair.'],
- ['roof-maintenance-basics','Roof maintenance in Perth combines inspection of the covering with practical work on the parts that carry rainwater away.']
+ ['drainage-after-rain','We inspect overflowing gutters, eaves and downpipes by tracing water from the roof covering through valleys, gutters and outlets.'],
+ ['metal-roofing-perth','We repair Perth metal roofs by checking the sheets, roof screws, sealing washers, laps and flashings together.'],
+ ['roof-leak-inspection','We investigate ceiling stains after rain, intermittent roof leaks and water returning after an earlier repair.'],
+ ['roof-maintenance-basics','We inspect Perth roofs and the components that carry rainwater away, then organise the maintenance and repairs the property needs.']
 ]) test(`${slug}: generated knowledge summary describes the article subject`,()=>{
  const $=pages.get(`/news/${slug}/`),summary=JSON.parse($('#page-knowledge').text()).summary;
  assert.ok(summary.startsWith(opening),slug+' meaningful article opening');

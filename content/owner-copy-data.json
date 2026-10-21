@@ -1,0 +1,1604 @@
+[
+  {
+    "id": "S01",
+    "routes": [
+      "roof-repairs"
+    ],
+    "before": "If you are unsure, Ellis inspects the roof on site and identifies the work required.",
+    "after": "If you are unsure which repair service you need, we inspect the roof on site and identify the work required.",
+    "zh": "如果您不确定需要哪项维修服务，我们会现场检查屋面，明确所需工作。",
+    "category": "A",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S02",
+    "routes": [
+      "roof-repairs"
+    ],
+    "before": "A written roof repair quote should name the affected area, findings, components to repair, materials, access and included work. Ellis also explains exclusions and any further investigation before you approve the work.",
+    "after": "Our written roof repair quote sets out the affected area, inspection findings, components to repair, materials, access and included work. We explain exclusions and any further investigation before you approve the work.",
+    "zh": "我们的书面屋面维修报价列明受影响区域、检查结果、待修构件、材料、作业通道及所含工作。您批准施工前，我们会说明不包含的项目及所需的进一步排查。",
+    "category": "A",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S03",
+    "routes": [
+      "roof-repairs"
+    ],
+    "before": "A local repair suits an isolated defect when surrounding roof materials remain sound. Widespread deterioration calls for a broader assessment; Ellis compares repair and restoration options and quotes for the recommended scope.",
+    "after": "A local repair suits an isolated defect when surrounding roof materials remain sound. For widespread deterioration, we assess the wider roof, compare repair and restoration options and quote for the recommended scope.",
+    "zh": "周边屋面材料状况良好时，单处缺陷适合局部维修。如出现大面积老化，我们会评估更大范围的屋面，比较维修与翻修方案，并按建议范围报价。",
+    "category": "A",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S04",
+    "routes": [
+      "roof-leak-repairs"
+    ],
+    "before": "Heavy or wind-driven rain can expose a failed overlap, flashing junction or drainage restriction that is less apparent in lighter rain. Ellis traces the entry path on site and checks the reported weather pattern before specifying the repair.",
+    "after": "Heavy or wind-driven rain can expose a failed overlap, flashing junction or drainage restriction that is less apparent in lighter rain. We trace the entry path on site and check when the leak occurs before specifying the repair.",
+    "zh": "暴雨或风雨可能暴露小雨时不明显的搭接失效、泛水板交接缺陷或排水受阻。我们会现场追查进水路径，了解漏水发生时的天气情况，再确定维修方案。",
+    "category": "A",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S05",
+    "routes": [
+      "roof-leak-repairs"
+    ],
+    "before": "Yes. Flashing, valleys and penetrations can admit water when their connections or adjoining materials deteriorate. Ellis inspects these junctions and the drainage route to identify the cause of a recurring leak.",
+    "after": "Flashing, valleys and penetrations can admit water when their connections or adjoining materials deteriorate. We inspect these junctions and the drainage route to identify the cause of a recurring leak.",
+    "zh": "泛水板、天沟及屋面穿透部位的连接或相邻材料老化时，可能导致进水。我们会检查这些交接处及排水路径，查找反复漏水的原因。",
+    "category": "F/A",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S06",
+    "routes": [
+      "roof-leak-repairs"
+    ],
+    "before": "The assessment connects the indoor stain or drip with roof coverings, flashings, valleys, penetrations and drainage. Ellis explains the findings, repair plan and written quote, including any access limits or further investigation.",
+    "after": "We investigate the indoor stain or drip alongside the roof coverings, flashings, valleys, penetrations and drainage. We explain our findings, repair plan and written quote, including any access limits or further investigation.",
+    "zh": "我们会结合室内水渍或滴水，检查屋面覆盖材料、泛水板、天沟、穿透部位及排水系统，并说明检查结果、维修方案和书面报价，包括作业通道限制或所需的进一步排查。",
+    "category": "A/F",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S07",
+    "routes": [
+      "tile-roof-repairs"
+    ],
+    "before": "Yes. Individual concrete or terracotta tiles can be replaced where a suitable profile is available and the surrounding roof supports a local repair. Ellis checks alignment, adjoining damage and material availability; new tiles can differ in colour from weathered tiles.",
+    "after": "We can replace individual concrete or terracotta tiles where a suitable profile is available and the surrounding roof supports a local repair. We check alignment, adjoining damage and material availability; new tiles can differ in colour from weathered tiles.",
+    "zh": "有合适的瓦型且周边屋面适合局部维修时，我们可以单独更换混凝土瓦或陶瓦。我们会检查瓦片排列、相邻损坏及供货情况；新瓦与风化旧瓦可能存在色差。",
+    "category": "F/A",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S08",
+    "routes": [
+      "tile-roof-repairs"
+    ],
+    "before": "Include ridge, valley or chimney flashing work when inspection finds damage at those connections or a linked water-entry path. Ellis identifies the affected components and includes the required repairs in the written quote.",
+    "after": "When our inspection finds damage or a linked water-entry path at a ridge, valley or chimney flashing, we identify the affected components and include the required repairs in the written quote.",
+    "zh": "如检查发现屋脊、天沟或烟囱泛水板连接处受损，或存在相连的进水路径，我们会明确受影响构件，并将所需维修列入书面报价。",
+    "category": "A/C",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S09",
+    "routes": [
+      "metal-roof-repairs"
+    ],
+    "before": "Yes. Loose or deteriorated screws and washers can allow water through a fixing point. Ellis checks the fasteners, adjoining sheets and overlaps to confirm whether fixing repairs or additional work are required.",
+    "after": "Loose or deteriorated screws and washers can allow water through a fixing point. We check the fasteners, adjoining sheets and overlaps to confirm whether fixing repairs or additional work are required.",
+    "zh": "螺钉和密封垫圈松动或老化时，水可能从固定点进入。我们会检查紧固件、相邻板材及搭接处，确定需要维修固定件，还是同时处理其他问题。",
+    "category": "F/A",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S10",
+    "routes": [
+      "metal-roof-repairs"
+    ],
+    "before": "Capping or flashing needs attention where it is loose, damaged or no longer sheds water at a ridge, hip or junction. Ellis checks the adjoining sheets and connections, then quotes for the affected roof sections.",
+    "after": "Capping or flashing needs attention where it is loose, damaged or no longer sheds water at a ridge, hip or junction. We check the adjoining sheets and connections, then quote for the affected roof sections.",
+    "zh": "正脊、斜脊或交接处的盖板或泛水板如有松动、损坏或排水失效，就需要处理。我们会检查相邻板材和连接，并为受影响的屋面区段报价。",
+    "category": "A",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S11",
+    "routes": [
+      "metal-roof-repairs"
+    ],
+    "before": "A local repair is possible when the surrounding sheets and connections remain serviceable. Ellis inspects corrosion, fixings, laps and flashing to decide whether targeted repairs or replacement sections suit the roof.",
+    "after": "A local repair is possible when the surrounding sheets and connections remain serviceable. We inspect corrosion, fixings, laps and flashing to decide whether targeted repairs or replacement sections suit the roof.",
+    "zh": "周边板材和连接仍可使用时，可以进行局部维修。我们会检查腐蚀、固定件、搭接和泛水板，确定适合局部维修还是更换受影响区段。",
+    "category": "A",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S12",
+    "routes": [
+      "ridge-capping-repointing"
+    ],
+    "before": "Bedding supports the ridge caps; pointing is the exposed finishing material along their edges. Ellis checks both on site, identifies the sections requiring rebedding or repointing and confirms the repair scope and quote.",
+    "after": "Bedding supports the ridge caps; pointing is the exposed finishing material along their edges. We check both on site, identify the sections requiring rebedding or repointing and confirm the repair scope and quote.",
+    "zh": "座浆支撑屋脊盖瓦，勾缝材料是盖瓦边缘的外露饰面。我们会现场检查两者，确定需要重铺座浆或重新勾缝的区段，并确认维修范围和报价。",
+    "category": "A",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S13",
+    "routes": [
+      "ridge-capping-repointing"
+    ],
+    "before": "The quote should identify the ridge or hip sections, cap stability, bedding or pointing work, adjoining tile repairs, materials and safe access. Ellis records the proposed work and any further investigation in writing.",
+    "after": "Our quote identifies the ridge or hip sections, cap stability, bedding or pointing work, adjoining tile repairs, materials and safe access. We record the proposed work and any further investigation in writing.",
+    "zh": "我们的报价列明正脊或斜脊区段、盖瓦稳定性、座浆或勾缝工作、相邻瓦片维修、材料及安全作业通道安排。拟定工作和所需的进一步排查均以书面记录。",
+    "category": "A/C",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S14",
+    "routes": [
+      "ridge-capping-repointing"
+    ],
+    "before": "Ridge work should include adjoining tiles when they are displaced, damaged or involved in the same leak path. Ellis checks cap position and the surrounding tile overlaps before specifying the ridge repair.",
+    "after": "We check cap position and surrounding tile overlaps before specifying the ridge repair, including adjoining tiles when they are displaced, damaged or involved in the same leak path.",
+    "zh": "制定屋脊维修方案前，我们会检查盖瓦位置和周围瓦片搭接；相邻瓦片如有移位、损坏或位于同一渗漏路径，也会纳入维修范围。",
+    "category": "A/C",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S15",
+    "routes": [
+      "flashing-repairs"
+    ],
+    "before": "Flashing directs water away from junctions around walls, chimneys, skylights and roof penetrations. Ellis checks its condition and connections to the adjoining roof, then confirms the junction repair and quote.",
+    "after": "Flashing directs water away from junctions around walls, chimneys, skylights and roof penetrations. We check its condition and connections to the adjoining roof, then confirm the junction repair and quote.",
+    "zh": "泛水板将水引离墙体、烟囱、天窗及屋面穿透部位的交接处。我们会检查其状况及与相邻屋面的连接，再确认维修方案和报价。",
+    "category": "A",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S16",
+    "routes": [
+      "flashing-repairs"
+    ],
+    "before": "Cleaning suits debris in an otherwise sound valley. Corrosion, damaged lining or faulty connections can require repair or replacement. Ellis checks the valley and surrounding roof surfaces before quoting for the work.",
+    "after": "Cleaning suits debris in an otherwise sound valley. Corrosion, damaged lining or faulty connections can require repair or replacement. We check the valley and surrounding roof surfaces before quoting for the work.",
+    "zh": "天沟本身完好、仅有杂物时，适合清理；腐蚀、衬层损坏或连接缺陷则可能需要维修或更换。我们会检查天沟和周围屋面，再提供施工报价。",
+    "category": "A",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S17",
+    "routes": [
+      "flashing-repairs"
+    ],
+    "before": "A leak near a skylight can involve its flashing, the adjoining tiles or sheets, or water arriving from higher on the roof. Ellis inspects the connected roof area and traces the entry path before confirming the repair.",
+    "after": "A leak near a skylight can involve its flashing, the adjoining tiles or sheets, or water arriving from higher on the roof. We inspect the connected roof area and trace the entry path before confirming the repair.",
+    "zh": "天窗附近漏水可能涉及泛水板、相邻瓦片或板材，也可能是屋面更高处来水。我们会检查相连屋面区域，追查进水路径后再确定维修方案。",
+    "category": "A",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S18",
+    "routes": [
+      "gutter-repairs"
+    ],
+    "before": "Share your suburb, the affected gutter run and whether water escapes at a join, edge or outlet during rain. A brief description is enough; optional ground-level photos can be emailed to help Ellis prepare.",
+    "after": "Share your suburb, the affected gutter run and whether water escapes at a join, edge or outlet during rain. A brief description is enough; you can email optional ground-level photos to help us prepare.",
+    "zh": "请告知所在城区、受影响的檐沟区段，以及下雨时水从接缝、边缘还是出水口溢出。简要描述即可；如有地面拍摄的照片，也可通过邮件发送，方便我们准备。",
+    "category": "A/F",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S19",
+    "routes": [
+      "gutter-repairs"
+    ],
+    "before": "Yes. A roof edge or valley can feed debris or excess water into a gutter, and faulty connections can let water bypass it. Ellis checks those connected details and includes the necessary work in the repair scope.",
+    "after": "A roof edge or valley can feed debris or excess water into a gutter, and faulty connections can let water bypass it. We check those connected details and include the necessary work in the repair scope.",
+    "zh": "屋面边缘或天沟可能将杂物或过量雨水带入檐沟，连接缺陷也可能使水绕过檐沟。我们会检查这些相连部位，并将必要工作纳入维修范围。",
+    "category": "F/A",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S20",
+    "routes": [
+      "gutter-repairs"
+    ],
+    "before": "Note leaks at the outlet, separated joints, loose brackets and whether water leaves the pipe during rain. Ellis inspects the connection and pipe route, then confirms the cleaning or repair work and written quote.",
+    "after": "Tell us about leaks at the outlet, separated joints, loose brackets and whether water escapes from the pipe during rain. We inspect the connection and pipe route, then confirm the cleaning or repair work and written quote.",
+    "zh": "请告知出水口漏水、接头脱开、支架松动，以及下雨时管道向外漏水的情况。我们会检查连接和管道路径，再确认清理或维修工作及书面报价。",
+    "category": "A/F",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S21",
+    "routes": [
+      "gutters-downpipes"
+    ],
+    "before": "No. Overflow can also result from poor fall, restricted outlets, damaged joints or a blocked downpipe. Ellis checks the full drainage route and quotes for cleaning, repairs or replacement sections as required.",
+    "after": "Overflow can result from poor fall, restricted outlets, damaged joints or a blocked downpipe as well as debris. We check the full drainage route and quote for cleaning, repairs or replacement sections as required.",
+    "zh": "除了杂物，排水坡度不足、出水口受阻、接缝损坏或落水管堵塞也会导致溢水。我们会检查完整排水路径，并按需要为清理、维修或区段更换报价。",
+    "category": "F/A",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S22",
+    "routes": [
+      "gutters-downpipes"
+    ],
+    "before": "Check both when water backs up, escapes at an outlet or fails to discharge through the pipe. Ellis inspects the gutter, outlet and connected downpipe together so the agreed work addresses the restriction.",
+    "after": "When water backs up, escapes at an outlet or fails to discharge through the pipe, we inspect the gutter, outlet and connected downpipe together so the agreed work addresses the restriction.",
+    "zh": "如出现水流倒灌、出水口外溢或无法经管道排水，我们会一并检查檐沟、出水口及相连落水管，使约定施工针对实际堵塞或受阻问题。",
+    "category": "A/C",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S23",
+    "routes": [
+      "downpipe-repairs"
+    ],
+    "before": "Yes. A loose bracket can let a pipe move, strain its joints or pull it away from the gutter outlet. Ellis checks the fixings, pipe sections and connections, then quotes for the required repair.",
+    "after": "A loose bracket can let a pipe move, strain its joints or pull it away from the gutter outlet. We check the fixings, pipe sections and connections, then quote for the required repair.",
+    "zh": "支架松动可能使管道移动、接头受力，或使管道脱离檐沟出水口。我们会检查固定件、管段和连接，再为所需维修报价。",
+    "category": "F/A",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S24",
+    "routes": [
+      "downpipe-repairs"
+    ],
+    "before": "Tell us where water escapes: along the gutter, at the outlet, at a pipe joint or near the lower connection. Ellis checks both components on site to locate the restriction or damage.",
+    "after": "Tell us where water escapes: along the gutter, at the outlet, at a pipe joint or near the lower connection. We check the gutter and downpipe on site to locate the restriction or damage.",
+    "zh": "请告知水从哪里漏出：沿檐沟、出水口、管道接头，还是下部连接附近。我们会现场检查檐沟和落水管，确定受阻或损坏位置。",
+    "category": "A/F",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S25",
+    "routes": [
+      "downpipe-repairs"
+    ],
+    "before": "Use the combined gutter and downpipe service when overflow or water escape involves both components or the source is unclear. Ellis inspects the connected route and confirms roofline drainage repairs; underground stormwater work is outside this service.",
+    "after": "When overflow or water escape involves both components or the source is unclear, we inspect the connected gutter and downpipe route and confirm the roofline drainage repairs required. Underground stormwater work is outside this service.",
+    "zh": "如溢水或漏水涉及檐沟和落水管，或来源尚不明确，我们会检查两者相连的排水路径，确认所需的屋面边缘排水维修。此项服务不包括地下雨水管道工程。",
+    "category": "A/C",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S26",
+    "routes": [
+      "roof-maintenance"
+    ],
+    "before": "Share your suburb, roof material if known, recurring concerns and any previous work. Ellis inspects roof coverings, ridge details, junctions and drainage to set maintenance priorities and provide a written quote.",
+    "after": "Share your suburb, roof material if known, recurring concerns and any previous work. We inspect roof coverings, ridge details, junctions and drainage to set maintenance priorities and provide a written quote.",
+    "zh": "请提供所在城区、已知屋面材料、反复出现的问题及以往施工情况。我们会检查屋面覆盖材料、屋脊、交接处和排水系统，确定维护重点并提供书面报价。",
+    "category": "A",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S27",
+    "routes": [
+      "roof-maintenance"
+    ],
+    "before": "Have damaged roof components, blocked valleys and restricted gutters or downpipes checked before seasonal rain. Ellis arranges safe access and quotes for clearing and repairs; do not climb onto the roof for these checks.",
+    "after": "Before seasonal rain, we can check damaged roof components, blocked valleys and restricted gutters or downpipes. We arrange safe access and quote for clearing and repairs; do not climb onto the roof for these checks.",
+    "zh": "季节性降雨前，我们可以检查受损屋面构件、堵塞天沟及排水受阻的檐沟或落水管。我们会安排安全作业通道，并为清理和维修报价；请勿自行爬上屋面检查。",
+    "category": "A/C",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S28",
+    "routes": [
+      "roof-maintenance"
+    ],
+    "before": "New leaks, displaced components, deteriorated joints or recurring overflow need repair assessment alongside routine maintenance. Ellis identifies the cause and explains which repairs belong in the agreed maintenance scope.",
+    "after": "New leaks, displaced components, deteriorated joints or recurring overflow need repair assessment alongside routine maintenance. We investigate the cause and explain which repairs belong in the agreed maintenance scope.",
+    "zh": "发现新漏水、构件移位、接缝老化或反复溢水时，需要在日常维护中一并评估维修。我们会排查原因，说明哪些维修纳入约定的维护范围。",
+    "category": "A/F",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S29",
+    "routes": [
+      "roof-cleaning-painting"
+    ],
+    "before": "Yes. Tile and metal roofs need different preparation and coating considerations. We check tile condition and porosity or the metal roof finish and corrosion, address repair defects and select compatible cleaning and coating methods for the surface.",
+    "after": "Tile and metal roofs need different preparation and coating considerations. We check tile condition and porosity or the metal roof finish and corrosion, address repair defects and select compatible cleaning and coating methods for the surface.",
+    "zh": "瓦屋面和金属屋面的前处理与涂层要求不同。我们会检查瓦片状况和孔隙特性，或金属屋面的饰面和腐蚀，先处理需要维修的缺陷，再选择兼容的清洗及涂装方法。",
+    "category": "F",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S30",
+    "routes": [
+      "commercial-roof-repairs"
+    ],
+    "before": "Yes. Our commercial service covers connected sheet, flashing, penetration, gutter and downpipe defects. We inspect the roof and drainage route, identify the affected components and organise the repair sequence around access and the property operation.",
+    "after": "Our commercial service covers connected sheet, flashing, penetration, gutter and downpipe defects. We inspect the roof and drainage route, identify the affected components and organise the repair sequence around access and the property operation.",
+    "zh": "我们的商业物业服务涵盖相连的板材、泛水板、屋面穿透部位、檐沟和落水管缺陷。我们会检查屋面和排水路径，确定受影响构件，并结合通道条件和物业运营安排维修顺序。",
+    "category": "F",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S31",
+    "routes": [
+      "storm-damage-roof-repairs"
+    ],
+    "before": "Urgent roof leaks and storm-damaged roof components in Perth — contact Ellis Services Group during opening hours to discuss assessment and repair availability. Work depends on weather and safe access.",
+    "after": "For urgent roof leaks or storm-damaged roof components in Perth, contact us during opening hours to discuss assessment and repair availability. Work depends on weather and safe access.",
+    "zh": "如珀斯物业出现紧急屋面漏水或风暴损坏，请在营业时间联系我们，咨询评估和维修安排。施工取决于天气及安全作业通道条件。",
+    "category": "A",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S32",
+    "routes": [
+      "storm-damage-roof-repairs"
+    ],
+    "before": "From a safe place, note the storm timing, the affected room or roof area, water entry and any displaced materials. Contact Ellis to arrange a storm-damage assessment; photos are optional and must not require unsafe access.",
+    "after": "From a safe place, note the storm timing, the affected room or roof area, water entry and any displaced materials. Contact us to arrange a storm-damage assessment; photos are optional and must not require unsafe access.",
+    "zh": "请在安全位置记录风暴时间、受影响房间或屋面区域、进水及材料移位情况，然后联系我们安排评估。照片并非必需，请勿进入危险区域拍摄。",
+    "category": "A",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S33",
+    "routes": [
+      "storm-damage-roof-repairs"
+    ],
+    "before": "No. One image cannot show concealed damage or the full water path. Ellis assesses the affected roof and connected materials on site and explains any further access needed before quoting for repairs.",
+    "after": "One image cannot show concealed damage or the full water path. We assess the affected roof and connected materials on site and explain any further access needed before quoting for repairs.",
+    "zh": "一张照片无法反映隐蔽损坏或完整进水路径。我们会现场评估受影响屋面及相连材料，在维修报价前说明还需要检查哪些区域及相应通道安排。",
+    "category": "F/A",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S34",
+    "routes": [
+      "storm-damage-roof-repairs"
+    ],
+    "before": "Tell us about active water, sagging ceilings, fallen materials, electrical hazards and restricted access. Keep clear of dangerous areas. Call emergency services for immediate life or electrical danger; Ellis arranges roof attendance when weather and safe access allow.",
+    "after": "Tell us about active water, sagging ceilings, fallen materials, electrical hazards and restricted access. Keep clear of dangerous areas. Call emergency services for immediate life or electrical danger; we arrange roof attendance when weather and safe access allow.",
+    "zh": "请告知正在进水、天花板下垂、材料掉落、电气危险及通道受限情况，并远离危险区域。如有即时生命或电气危险，请联系紧急服务；我们会在天气及安全通道条件允许时安排到场。",
+    "category": "A",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S35",
+    "routes": [
+      "roof-inspection"
+    ],
+    "before": "The agreed inspection checks safely accessible roof coverings, ridge caps, valleys, flashing, gutters and downpipes against your concern. Ellis confirms the accessible areas, written findings and any inspection fee before booking.",
+    "after": "We check safely accessible roof coverings, ridge caps, valleys, flashings, gutters and downpipes within the agreed inspection scope. Before booking, we confirm the areas to be inspected, the inspection fee and the records we can provide.",
+    "zh": "我们在约定检查范围内，检查可安全接近的屋面覆盖材料、屋脊盖件、天沟、泛水板、檐沟和落水管。预约前，我们会确认检查区域、费用及可提供的记录。",
+    "category": "A/D",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S36",
+    "routes": [
+      "roof-inspection"
+    ],
+    "before": "A repair quote should identify the defect, roof area, components, materials, access and work included. Ellis explains any concealed areas requiring further investigation and obtains agreement before additional work.",
+    "after": "Our repair quote identifies the defect, roof area, components, materials, access and work included. We explain any concealed areas requiring further investigation and obtain agreement before additional work.",
+    "zh": "我们的维修报价列明缺陷、屋面区域、构件、材料、作业通道及所含工作。如隐蔽区域需要进一步排查，我们会说明，并在开展额外工作前取得同意。",
+    "category": "A/C",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S37",
+    "routes": [
+      "roof-inspection"
+    ],
+    "before": "Arrange a check of damaged tiles, loose capping, flashings, valleys and debris in gutters before seasonal rain. Ellis plans safe access and prioritises the maintenance and repairs found; keep your own observations at ground level.",
+    "after": "Before seasonal rain, we check damaged tiles, loose capping, flashings, valleys and debris in gutters. We plan safe access and prioritise the maintenance and repairs found; keep your own observations at ground level.",
+    "zh": "季节性降雨前，我们会检查受损瓦片、松动盖件、泛水板、天沟及檐沟杂物，规划安全作业通道，并按检查结果确定维护和维修重点。请您在地面观察屋面情况。",
+    "category": "A/C",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S38",
+    "routes": [
+      "repair-options"
+    ],
+    "before": "Ellis Services Group inspects the roof and explains targeted repair, component replacement and wider restoration. Our proposed scope follows the condition of the roof and its connected components.",
+    "after": "We inspect the roof and explain targeted repair, component replacement and wider restoration. Our proposed scope follows the condition of the roof and its connected components.",
+    "zh": "我们会检查屋面，说明局部维修、构件更换及整体翻修方案，并根据屋面和相连构件的状况确定建议范围。",
+    "category": "A",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S39",
+    "routes": [
+      "repair-options"
+    ],
+    "before": "Yes. We can coordinate tile, ridge, flashing and drainage work where these components are connected. A combined scope identifies each work item and the access arrangements needed to complete it.",
+    "after": "We can coordinate tile, ridge, flashing and drainage work where these components are connected. A combined scope identifies each work item and the access arrangements needed to complete it.",
+    "zh": "相关构件相连时，我们可以统筹瓦片、屋脊、泛水板及排水施工。综合施工范围会列明各项工作，以及完成施工所需的通道安排。",
+    "category": "F",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S40",
+    "routes": [
+      "roof-cleaning"
+    ],
+    "before": "Yes. Cleaning and painting are different scopes. The condition and your objective determine whether cleaning alone is appropriate.",
+    "after": "We offer cleaning as a separate scope from painting. We assess the roof condition and your objective to determine whether cleaning alone is appropriate.",
+    "zh": "我们提供独立于喷涂的屋面清洗服务，并结合屋面状况和您的目标，判断是否适合仅进行清洗。",
+    "category": "F",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S41",
+    "routes": [
+      "roof-cleaning"
+    ],
+    "before": "No. An inspection is a separately agreed assessment. Cleaning has its own agreed scope.",
+    "after": "We agree the assessment scope separately from the cleaning work, so you know which service is being arranged.",
+    "zh": "我们会分别约定评估和清洗的工作范围，让您清楚本次安排的是哪项服务。",
+    "category": "F",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S42",
+    "routes": [
+      "roof-painting"
+    ],
+    "before": "Yes. Cleaning comes before spray painting. The existing roof and proposed finish also determine the necessary repairs and preparation.",
+    "after": "We clean the roof before spray painting and agree the necessary repairs and preparation for the existing roof and proposed finish.",
+    "zh": "我们会在喷涂前清洗屋面，并根据现有屋面及拟用面层，约定所需维修和前处理工作。",
+    "category": "F",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S43",
+    "routes": [
+      "box-gutter-repairs"
+    ],
+    "before": "Box gutter repairs in Perth for leaks, overflow and deteriorated connections. Ellis Services Group assesses the internal gutter with the roof and outlets before agreeing the repair scope.",
+    "after": "We repair box gutters in Perth for leaks, overflow and deteriorated connections. We assess the internal gutter with the roof and outlets before agreeing the repair scope.",
+    "zh": "我们维修珀斯箱型檐沟的渗漏、溢水及连接老化问题，结合屋面和出水口检查内置檐沟，再约定维修范围。",
+    "category": "A",
+    "reason": "Make our service action and responsibility clear in first person without changing technical conditions."
+  },
+  {
+    "id": "S44",
+    "routes": [
+      "box-gutter-repairs"
+    ],
+    "before": "Yes. Send the property location, affected area and overflow or leak history so we can arrange the assessment and define the work.",
+    "after": "Send the property location, affected area and overflow or leak history so we can arrange the assessment and define the work.",
+    "zh": "请提供物业地点、受影响区域及溢水或漏水历史，以便我们安排评估并明确施工范围。",
+    "category": "F",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S45",
+    "routes": [
+      "box-gutter-repairs"
+    ],
+    "before": "No. Outlet restrictions, material damage or a drainage limitation may remain. Recurring overflow needs the connected system assessed.",
+    "after": "Clearing debris does not repair damaged materials or resolve every outlet or drainage restriction. For recurring overflow, we assess the connected system to identify the work required.",
+    "zh": "清除杂物无法修复材料损坏，也不一定能解决出水口或排水受阻。反复溢水时，我们会评估相连系统，确定所需工作。",
+    "category": "F/C",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S46",
+    "routes": [
+      "roof-replacement"
+    ],
+    "before": "Yes. We assess the existing roof and agree the removal, materials, connections and replacement scope before work proceeds.",
+    "after": "We assess the existing roof and agree the removal, materials, connections and replacement scope before work proceeds.",
+    "zh": "我们会评估现有屋面，并在施工前约定拆除、材料、连接及更换范围。",
+    "category": "F",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S47",
+    "routes": [
+      "roof-replacement"
+    ],
+    "before": "No. Local sheet replacement addresses affected components. Re-roofing is a wider removal and replacement project with a separately agreed scope.",
+    "after": "Local sheet replacement addresses affected components. Re-roofing is a wider removal and replacement project with a separately agreed scope.",
+    "zh": "局部换板处理受影响构件；重新铺设屋面是更大范围的拆除与更换工程，需要另行约定范围。",
+    "category": "F",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S48",
+    "routes": [
+      "flat-roof-repairs"
+    ],
+    "before": "Yes. We first identify the covering and connected details so the proposed work suits the existing roof.",
+    "after": "We first identify the covering and connected details so the proposed work suits the existing roof.",
+    "zh": "我们会先识别覆盖材料和相连构造，使拟定施工方案适合现有屋面。",
+    "category": "F",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S49",
+    "routes": [
+      "flat-roof-repairs"
+    ],
+    "before": "Not by itself. Surface water, drainage and adjoining connections need assessment before a particular defect is identified.",
+    "after": "Standing water alone does not identify the leak source. We assess surface water, drainage and adjoining connections before identifying the defect and repair scope.",
+    "zh": "单凭积水无法确定漏水源头。我们会检查表面水流、排水及相邻连接，再确定缺陷和维修范围。",
+    "category": "F/C",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "S50",
+    "routes": [
+      "strata-roof-repairs"
+    ],
+    "before": "Yes. Provide the property details, authorised manager and access contact so the inspection and work can be arranged.",
+    "after": "Provide the property details, authorised manager and access contact so we can arrange the inspection and work.",
+    "zh": "请提供物业详情、获授权管理人及进场联系人，以便我们安排检查和施工。",
+    "category": "F",
+    "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
+  },
+  {
+    "id": "G01",
+    "routes": [
+      "faq",
+      "news/roof-leak-inspection",
+      "news/roof-inspection-perth-guide"
+    ],
+    "before": "Confirm the inspection fee and what it includes with our team before you book. Also ask whether any inspection charge is separate from the repair work or credited against an accepted quote.",
+    "after": "Our roof inspections are chargeable. Before booking, we confirm the inspection scope and fee with you; any repair work is quoted separately.",
+    "zh": "我们的屋面检查需要收费。预约前，我们会与您确认检查范围及费用；维修工程另行报价。",
+    "category": "C,D,E",
+    "reason": "Credit is floated despite no confirmed credit policy, and the customer is asked to find out our charging process."
+  },
+  {
+    "id": "G02",
+    "routes": [
+      "news/roof-repair-cost-perth"
+    ],
+    "before": "Roof inspections are chargeable. Confirm the fee, the investigation area and any records required before booking. An inspection and a repair quote are different parts of the decision; confirm their separate scope with the team.",
+    "after": "Our roof inspections are chargeable. Before booking, we confirm the inspection area and fee and discuss any records you need. After assessment, we explain the proposed repairs and provide a separate repair quote.",
+    "zh": "我们的屋面检查需要收费。预约前，我们会确认检查区域和费用，并了解您需要的记录。完成评估后，我们会说明拟定维修内容，并另行提供维修报价。",
+    "category": "C,D",
+    "reason": "Charging and quote responsibilities remain abstract instead of telling the customer our actual sequence."
+  },
+  {
+    "id": "G03",
+    "routes": [
+      "news/roof-inspection-perth-guide",
+      "news/roof-leak-inspection"
+    ],
+    "before": "Explain whether you need photographs, written repair recommendations or a particular report format. Confirm what can be supplied for your property before booking. Access limitations should be recorded alongside the findings.",
+    "after": "Tell us before booking if you need photographs, written repair recommendations or a particular report format. We will explain what we can supply for your property and any access limits affecting the inspection.",
+    "zh": "如果您需要照片、书面维修建议或特定格式的报告，请在预约前告知我们。我们会说明可为您的物业提供哪些资料，以及作业通道限制对检查的影响。",
+    "category": "C,F",
+    "reason": "Original sounds like a third-party checklist and leaves responsibility for explaining available records with customer."
+  },
+  {
+    "id": "G05",
+    "routes": [
+      "news/roof-repair-cost-perth"
+    ],
+    "before": "Tell us the roof level and restrictions before the visit; no standard access package or equipment charge is assumed.",
+    "after": "Tell us the roof level and any access restrictions before the visit so we can assess the access arrangements needed for your property and explain them in the quote.",
+    "zh": "上门前，请告知屋面高度及作业通道限制，以便我们评估适合该物业的进场安排，并在报价中说明。",
+    "category": "D,F",
+    "reason": "No equipment charge could be misread as no extra access cost."
+  },
+  {
+    "id": "G07",
+    "routes": [
+      "news/gutter-warning-signs"
+    ],
+    "before": "Ask the quote to identify the cleaning or repairs included, the sections and connections being replaced, and any adjoining damage that requires a separate item.",
+    "after": "Our written quote sets out the cleaning or repairs proposed, the sections and connections to be replaced, and any adjoining damage quoted as a separate item.",
+    "zh": "我们的书面报价会列明拟进行的清理或维修、需要更换的区段和连接部位，以及需要另行列项报价的相邻损坏。",
+    "category": "C,D",
+    "reason": "Customer must ask us to clarify standard scope; adjacent work could be assumed included."
+  },
+  {
+    "id": "G08",
+    "routes": [
+      "news/ridge-capping-repairs-perth-guide"
+    ],
+    "before": "Ask the quote to identify which runs are included, the preparation required, whether caps or adjoining tiles need replacement and what completion checks apply.",
+    "after": "Our quote identifies the ridge or hip runs to be repaired, the preparation required, any caps or adjoining tiles to be replaced, and the completion checks agreed for that work.",
+    "zh": "我们的报价会注明需要维修的正脊或斜脊区段、前期准备、需要更换的盖瓦或相邻瓦片，以及该项工程约定的完工检查。",
+    "category": "C,D",
+    "reason": "Does not connect price to our defined repair runs or distinguish surface pointing from supporting work."
+  },
+  {
+    "id": "G09a",
+    "routes": [
+      "news/roof-flashing-explained"
+    ],
+    "before": "If a roof junction appears changed, leaks near an adjoining feature, or has recurring water-related symptoms, the relevant service is",
+    "after": "For a changed roof junction, leaks beside an adjoining feature or recurring water marks, contact us about",
+    "zh": "如屋面交接处出现变化、相邻构件旁漏水，或水渍反复出现，请联系我们了解",
+    "category": "A,B,C",
+    "reason": "Public copy discusses service-page intent rather than describing our work."
+  },
+  {
+    "id": "G09b",
+    "routes": [
+      "news/roof-flashing-explained"
+    ],
+    "before": ". That service page explains the repair enquiry context; the correct scope depends on the actual junction, roof material, drainage route and access conditions.",
+    "after": ". We inspect the junction, adjoining roof materials and drainage route, then explain the repairs and access arrangements needed for your property.",
+    "zh": "。我们会检查交接处、相邻屋面材料及排水路径，再说明您物业所需的维修和进场安排。",
+    "category": "A,B,C",
+    "reason": "Public copy discusses service-page intent rather than describing our work."
+  },
+  {
+    "id": "G10",
+    "routes": [
+      "news/roof-flashing-explained",
+      "news/roof-valleys-flashing-repairs-perth"
+    ],
+    "before": "No. Water can involve the skylight unit, its flashing, adjoining roof covering or another nearby source.",
+    "after": "Water near a skylight can come from the unit, its flashing, adjoining roof covering or another nearby source.",
+    "zh": "天窗附近的进水可能来自天窗本体、泛水板、相邻屋面覆盖材料或附近其他源头。",
+    "category": "F",
+    "reason": "No answers a question that is no longer displayed; reader cannot tell what is denied."
+  },
+  {
+    "id": "G11",
+    "routes": [
+      "news/gutter-warning-signs"
+    ],
+    "before": "No. Restricted outlets, deposits, damaged joints or the condition of the gutter run can contribute to overflow.",
+    "after": "Restricted outlets, deposits, damaged joints and the condition of the gutter run can all contribute to overflow.",
+    "zh": "出水口受阻、沉积物、接缝损坏及檐沟区段的状况，都可能导致溢水。",
+    "category": "F",
+    "reason": "No under a descriptive heading leaves an unexplained denial."
+  },
+  {
+    "id": "G12",
+    "routes": [
+      "news/drainage-after-rain"
+    ],
+    "before": "No. Overflow can also result from poor fall, restricted outlets, damaged joints or a blocked downpipe. Ellis checks the full drainage route and quotes for cleaning, repairs or replacement sections as required.",
+    "after": "Overflow can also result from poor fall, restricted outlets, damaged joints or a blocked downpipe. We check the connected drainage route and quote for the cleaning, repairs or replacement sections required.",
+    "zh": "坡降不足、出水口受阻、接缝损坏或落水管堵塞也可能导致溢水。我们会检查相连的排水路径，并为所需的清理、维修或区段更换报价。",
+    "category": "F",
+    "reason": "Dangling No and third-person answer obscure what we assess and quote."
+  },
+  {
+    "id": "G13",
+    "routes": [
+      "news/roof-leak-detection-perth"
+    ],
+    "before": "No. Existing water marks, photographs and the timing of previous leaks help us prepare an inspection. Keep clear of wet roof access and report active dripping when you contact our team.",
+    "after": "You can contact us between rain events. Existing water marks, photographs and the timing of previous leaks help us prepare an inspection. Keep clear of wet roof access and tell our team if water is actively dripping.",
+    "zh": "两次降雨之间也可以联系我们。已有水迹、照片及以往漏水的时间，有助于我们准备检查。请勿接近湿滑的屋面通道；如果仍在滴水，请告知团队。",
+    "category": "F",
+    "reason": "No does not tell the reader whether they can enquire or need to wait for rain."
+  },
+  {
+    "id": "G14",
+    "routes": [
+      "news/roof-inspection-perth-guide"
+    ],
+    "before": "It identifies affected components, recommended work, materials, access and included tasks. Our team explains repair priorities and separates them from future maintenance items.",
+    "after": "Our proposed repair scope identifies the affected components, recommended work, materials, access and included tasks. We explain which repairs take priority and which maintenance items can be planned for later.",
+    "zh": "我们拟定的维修范围会列明受影响构件、建议工作、材料、进场安排及包含项目，并说明哪些维修应优先处理，哪些保养项目可以稍后安排。",
+    "category": "F",
+    "reason": "Pronoun It lacks an antecedent under rewritten heading."
+  },
+  {
+    "id": "G15",
+    "routes": [
+      "news/roof-maintenance-basics"
+    ],
+    "before": "Roof maintenance in Perth combines inspection of the covering with practical work on the parts that carry rainwater away. Ellis Services Group checks tiles, metal sheets, ridges, flashings, valleys, gutters and downpipes, and organises maintenance and repairs according to the condition of the property.",
+    "after": "We inspect Perth roofs and the components that carry rainwater away, then organise the maintenance and repairs the property needs. Our checks cover tiles or metal sheets, ridges, flashings, valleys, gutters and downpipes, helping you plan clearing and repairs together.",
+    "zh": "我们检查珀斯物业的屋面及排水构件，再根据实际状况安排保养和维修。检查涵盖瓦片或金属板、屋脊、泛水板、天沟、檐沟和落水管，方便您一并规划清理及维修。",
+    "category": "A,F",
+    "reason": "Awkward Chinese and general industry opening bury our coordinated service benefit."
+  },
+  {
+    "id": "G16",
+    "routes": [
+      "news/metal-roofing-perth"
+    ],
+    "before": "Metal roof repairs in Perth involve more than the visible sheet surface. Corrugated roofing, roof screws, sealing washers, sheet laps and formed flashings work together to keep rain outside. Ellis Services Group inspects these connected details and carries out targeted repairs to the components that need attention.",
+    "after": "We repair Perth metal roofs by checking the sheets, roof screws, sealing washers, laps and flashings together. This helps us identify whether the affected area needs fixing repairs, a local replacement sheet or work to a connected flashing before we set out the repair scope.",
+    "zh": "我们维修珀斯金属屋面时，会一并检查板材、螺钉、密封垫圈、搭接及泛水板，再确定受影响区域需要固定件维修、局部换板，还是相关泛水板工程，并据此说明维修范围。",
+    "category": "A,F",
+    "reason": "Lead explains metal roofing abstractly before clarifying the actual offered repair choices."
+  },
+  {
+    "id": "G17",
+    "routes": [
+      "news/roof-leak-inspection"
+    ],
+    "before": "A roof leak inspection connects the water seen indoors with the roof detail that needs repair. Ellis Services Group investigates ceiling stains after rain, intermittent leaks and water returning after an earlier repair. We trace the connected roofline and prepare a targeted repair scope rather than relying on the stain location alone.",
+    "after": "We investigate ceiling stains after rain, intermittent roof leaks and water returning after an earlier repair. Our inspection traces the route between the indoor water marks and the roof covering, junctions and drainage, so the proposed repairs address the defects found.",
+    "zh": "我们排查雨后天花板水渍、间歇性屋面渗漏，以及维修后再次出现的进水。检查会追踪室内水迹与屋面覆盖材料、交接部位及排水之间的路径，再针对发现的缺陷提出维修方案。",
+    "category": "A,F",
+    "reason": "Roofline translated as silhouette; first-person work and customer outcome unclear."
+  },
+  {
+    "id": "G18",
+    "routes": [
+      "news/tile-roof-repairs-perth-guide"
+    ],
+    "before": "Our team restores the affected covering without describing a new surface coating as a substitute for broken-tile replacement.",
+    "after": "We replace or reposition the damaged tiles and repair the adjoining roof details included in the agreed scope; a surface coating does not replace those repairs.",
+    "zh": "我们会更换或复位受损瓦片，并维修约定范围内的相邻屋面部位；表面涂层不能代替这些维修。",
+    "category": "B,C",
+    "reason": "Original explains how copy should describe work instead of what the team does."
+  },
+  {
+    "id": "G19",
+    "routes": [
+      "news/metal-roof-repairs-perth-guide"
+    ],
+    "before": "It gives customers a concrete view of the components involved in fastener repairs rather than relying on a generic roof photograph.",
+    "after": "You can see the fixing defects, the repair stages and the completed area in the linked project photographs.",
+    "zh": "链接案例展示了施工前屋面、腐蚀固定件近照、维修过程及完工区域，方便您了解这项维修涉及的部位和工序。",
+    "category": "B,F",
+    "reason": "Editorial justification of image choice appears as customer prose."
+  },
+  {
+    "id": "G20",
+    "routes": [
+      "news/ridge-capping-repairs-perth-guide"
+    ],
+    "before": "Our tiled-roof service photographs show ridge details alongside valleys and chimney connections. The linked valley and chimney case illustrates adjoining tiled-roof junctions; it is not presented as a rebedding case.",
+    "after": "The linked valley and chimney project shows how adjoining tiled-roof junctions connect. For ridge repairs at your property, we inspect the cap support, pointing and nearby tiles to decide whether repointing, rebedding or component replacement is needed.",
+    "zh": "链接的天沟及烟囱案例展示了相邻瓦屋面交接处的连接方式。针对您物业的屋脊维修，我们会检查盖瓦支撑、勾缝及附近瓦片，确定需要重新勾缝、重铺座浆，还是更换构件。",
+    "category": "B,F",
+    "reason": "Internal evidence disclaimer takes the place of explaining our ridge assessment; linked case should not imply rebedding proof."
+  },
+  {
+    "id": "G21",
+    "routes": [
+      "news/roof-valleys-flashing-repairs-perth"
+    ],
+    "before": "A valley with leaves may need clearing, while deteriorated valley iron can need component work.",
+    "after": "A valley blocked with leaves needs clearing; corroded or damaged valley metal needs assessment for repair or replacement.",
+    "zh": "天沟被落叶堵塞时需要清理；金属天沟腐蚀或损坏时，需要评估维修或更换方案。",
+    "category": "F",
+    "reason": "Component work / 部件施工 does not tell the customer what decision is being made."
+  },
+  {
+    "id": "G22",
+    "routes": [
+      "news/drainage-after-rain"
+    ],
+    "before": "Underground stormwater, internal drainage and unrelated plumbing are not automatically included in a roof-edge repair; ask which parts of the route the proposed work covers.",
+    "after": "Our roof-edge repair scope identifies the gutters, outlets and above-ground downpipe sections being worked on. Underground stormwater, internal building drainage and unrelated plumbing are not part of this roof-edge repair scope.",
+    "zh": "我们的屋檐排水维修范围会列明需要处理的檐沟、出水口及地上落水管区段。地下雨水排水、建筑内部排水及无关管道工程不在此项屋檐排水维修范围内。",
+    "category": "C,F",
+    "reason": "Ask us which parts can sound like the service boundary is customer responsibility; internal drainage is easily confused with box gutter service."
+  },
+  {
+    "id": "G23",
+    "routes": [
+      "news/gutter-warning-signs"
+    ],
+    "before": "Gutter overflow in Perth: see how Ellis checks leaves, joints, outlets and downpipes, then plans cleaning, local repairs or a damaged-section replacement.",
+    "after": "We inspect overflowing Perth gutters, outlets and connected downpipes, then quote for the clearing, local repairs or damaged-section replacement required.",
+    "zh": "我们检查珀斯物业的溢水檐沟、出水口及相连落水管，再为所需清理、局部维修或损坏区段更换报价。",
+    "category": "A,F",
+    "reason": "Search description is framed as a third-party account rather than owner service explanation."
+  },
+  {
+    "id": "G24",
+    "routes": [
+      "faq"
+    ],
+    "before": "Confirm the purpose, accessible components, limitations, inspection fee and available records.",
+    "after": "Before booking, we agree the inspection purpose and scope with you, including the roof components we can access, any limitations, the inspection fee and the records available.",
+    "zh": "预约前，我们会与您确认检查目的和范围，包括可检查的屋面构件、检查限制、费用及可提供的记录。",
+    "category": "C,F",
+    "reason": "FAQ gives the customer a duty to verify rather than answering how our inspection is scoped."
+  },
+  {
+    "id": "AC01",
+    "routes": [
+      "areas/cottesloe-roof-repairs",
+      "areas/mosman-park-roof-repairs",
+      "areas/city-beach-roof-repairs",
+      "areas/scarborough-roof-repairs",
+      "areas/claremont-roof-repairs",
+      "areas/nedlands-roof-repairs",
+      "areas/subiaco-roof-repairs",
+      "areas/perth-roof-repairs",
+      "areas/leederville-roof-repairs",
+      "areas/joondalup-roof-repairs",
+      "areas/hillarys-roof-repairs",
+      "areas/fremantle-roof-repairs",
+      "areas/rockingham-roof-repairs",
+      "areas/kalamunda-roof-repairs",
+      "areas/victoria-park-roof-repairs",
+      "areas/bayswater-roof-repairs"
+    ],
+    "before": "Our team confirms the appointment, inspects the roof and drainage and provides the work plan and written quote. A short form description is enough to arrange an on-site assessment; photos by email are optional.",
+    "after": "Send a brief description of the problem and your suburb. We will contact you to discuss access and confirm the assessment arrangements. After inspecting the roof and drainage, we explain the proposed work and provide a written quote. You can email existing photos if helpful.",
+    "zh": "请简要说明屋面问题及所在城区。我们会联系您，了解进场条件并确认评估安排。检查屋面及排水后，我们说明拟定施工内容，并提供书面报价。如有现成照片，也可通过邮件发送。",
+    "category": [
+      "D",
+      "C"
+    ],
+    "reason": "Current sentence compresses enquiry, appointment, inspection and quote into one action; a submitted enquiry must not imply a confirmed visit."
+  },
+  {
+    "id": "AC02",
+    "routes": [
+      "service-areas"
+    ],
+    "before": "Our Perth service areas connect each property location with roof repair services and assessment arrangements.",
+    "after": "We provide tile and metal roof repairs, leak investigation, flashing repairs and roof drainage work across the Perth areas listed below. Tell us your suburb and roof problem to discuss an assessment.",
+    "zh": "我们在下列珀斯地区提供瓦屋面及金属屋面维修、漏水排查、泛水板维修和屋面排水服务。请告诉我们所在城区及屋面问题，以便沟通评估安排。",
+    "category": [
+      "F",
+      "C"
+    ],
+    "reason": "Directory describes website organisation instead of the service a customer can request."
+  },
+  {
+    "id": "AC03",
+    "routes": [
+      "service-areas"
+    ],
+    "before": "Send your suburb or postcode, the affected roof level and the problem you have noticed. The Perth office is our team base, not a separate branch address in every suburb. Visit arrangements depend on the property, access and current availability.",
+    "after": "Our team is based at our Perth office and visits properties across the service areas listed here. Send your suburb or postcode, the affected roof level and the problem you have noticed. We will discuss access and current availability with you before confirming a visit.",
+    "zh": "我们的团队以珀斯办公室为驻点，为本页所列服务地区的物业安排上门。请提供所在城区或邮编、受影响屋面的高度及您发现的问题。确认上门前，我们会与您沟通进场条件及当前可预约时间。",
+    "category": [
+      "C",
+      "D"
+    ],
+    "reason": "Existing branch disclaimer is accurate but customer can instead understand actual base and attendance arrangements directly."
+  },
+  {
+    "id": "AC04",
+    "routes": [
+      "areas/leederville-roof-repairs"
+    ],
+    "before": "Mentioning the roof type and timing gives the appropriate core service page a clearer starting point.",
+    "after": "Tell us the roof material and when the problem occurs so we can plan which roof junctions and drainage details to assess.",
+    "zh": "请说明屋面材料及问题出现的时间，帮助我们规划需要检查的屋面交接处和排水部位。",
+    "category": [
+      "F",
+      "B"
+    ],
+    "reason": "The core service page cannot receive a clearer starting point; the sentence exposes content-routing logic."
+  },
+  {
+    "id": "AC05",
+    "routes": [
+      "areas/fremantle-roof-repairs"
+    ],
+    "before": "The related repair pages separate roof leak, tile, flashing and drainage work so the enquiry reaches the relevant service topic.",
+    "after": "We assess the affected roof material, flashing and drainage together, then explain the repair work needed for your Fremantle property.",
+    "zh": "我们一并检查受影响的屋面材料、泛水板及排水部位，再说明您在 Fremantle 的物业需要哪些维修。",
+    "category": [
+      "F",
+      "B"
+    ],
+    "reason": "Customer needs repair actions, not explanation of how an enquiry reaches a service topic."
+  },
+  {
+    "id": "AC06",
+    "routes": [
+      "areas/nedlands-roof-repairs"
+    ],
+    "before": "This creates a practical route to roof repairs, leak repairs, tile repairs or gutter repairs without treating all roof concerns as the same job.",
+    "after": "We trace the reported problem through the roof covering, nearby junctions and drainage, then define the tile, flashing or gutter repairs required.",
+    "zh": "我们沿屋面覆盖材料、附近交接处及排水路径追查您反映的问题，再确定所需的瓦片、泛水板或檐沟维修。",
+    "category": [
+      "F",
+      "C"
+    ],
+    "reason": "Routing commentary and negative generalisation do not describe the work."
+  },
+  {
+    "id": "AC07",
+    "routes": [
+      "areas/victoria-park-roof-repairs"
+    ],
+    "before": "This keeps the discussion focused on the relevant repair service and avoids treating a whole roof as one undifferentiated issue.",
+    "after": "We check the affected roof level, adjoining covering and drainage connections so the repair scope addresses the connected defects.",
+    "zh": "我们检查受影响的屋面高度、相邻覆盖材料及排水连接，使维修范围涵盖相互关联的损坏部位。",
+    "category": [
+      "F",
+      "C"
+    ],
+    "reason": "Current text narrates enquiry classification and leaves work responsibility vague."
+  },
+  {
+    "id": "AC08",
+    "routes": [
+      "areas/victoria-park-roof-repairs"
+    ],
+    "before": "Describe whether the affected room is beneath the main roof, a patio connection or an extension. Ask the team to confirm the relevant junction is within scope before booking; equipment or plumbing may need a separate trade.",
+    "after": "Tell us whether the affected room is beneath the main roof, a patio connection or an extension. We will clarify the roof-junction work included before booking and explain if equipment or plumbing needs a separate trade.",
+    "zh": "请说明受影响房间位于主屋面、露台连接处还是加建部分下方。预约前，我们会说明所涉及的屋面交接处施工范围；如需由其他工种处理设备或管道，也会向您说明。",
+    "category": [
+      "C",
+      "D"
+    ],
+    "reason": "Moves responsibility to us for explaining scope while retaining actual equipment/plumbing boundary."
+  },
+  {
+    "id": "AC09",
+    "routes": [
+      "areas/bayswater-roof-repairs"
+    ],
+    "before": "We confirm the affected building or extension, shared outlets and the contact authorised to arrange access. Do not assume that a shared route establishes responsibility for the defect or permission to work on another property.",
+    "after": "We confirm the affected building or extension, shared outlets and the person authorised to arrange access. Before work involving shared areas or adjoining property is agreed, the authorised contact needs to clarify repair approval and access permission.",
+    "zh": "我们会确认受影响的建筑或加建部分、共用出水口及有权安排进场的联系人。涉及共用区域或相邻物业时，需由获授权联系人明确维修批准和进场许可，再确定施工安排。",
+    "category": [
+      "C",
+      "D"
+    ],
+    "reason": "Current warning should become an actionable approval/access step without making the roofer determine legal liability."
+  },
+  {
+    "id": "AC10",
+    "routes": [
+      "areas/subiaco-roof-repairs"
+    ],
+    "before": "For a two-storey property or constrained side access, include the roof level, driveway and adjoining structures. Suitable equipment and permission requirements need assessment before a visit can be confirmed.",
+    "after": "For a two-storey property or restricted side access, tell us the roof level, driveway layout and nearby structures. We assess the equipment and access permissions needed before confirming a visit.",
+    "zh": "两层楼物业或侧面通道受限时，请说明屋面高度、车道布局及邻近建筑。确认上门前，我们会评估所需设备及进场许可。",
+    "category": [
+      "C",
+      "D"
+    ],
+    "reason": "Passive requirement obscures who organises assessment."
+  },
+  {
+    "id": "AC11",
+    "routes": [
+      "areas/fremantle-roof-repairs"
+    ],
+    "before": "If your property has older terracotta tiles, include existing material records or safely obtained photos. Matching and local replacement depend on profile and availability, not a promise that every older tile can be sourced.",
+    "after": "If your property has older terracotta tiles, share any existing material records or photos taken safely from the ground. We check the tile profile and replacement availability before confirming local replacement.",
+    "zh": "如果物业使用较旧的陶瓦，请提供已有材料记录或从地面安全拍摄的照片。确认局部换瓦方案前，我们会核对瓦型及替换瓦片的供应情况。",
+    "category": [
+      "C",
+      "F"
+    ],
+    "reason": "Retain supply limitation through a concrete check, replacing defensive phrasing."
+  },
+  {
+    "id": "AC14",
+    "routes": [
+      "projects/roleystone-metal-roof-fastener-leak-repair",
+      "projects/metal-roof-fastener-repair-sequence",
+      "projects/wa-6121-tile-roof-valley-gutter-cleaning",
+      "projects/metal-roof-ridge-capping-repair-perth",
+      "projects/tile-roof-chimney-flashing-repair-perth",
+      "projects/metal-roof-hip-ridge-capping-repair-perth",
+      "projects/tile-roof-valley-chimney-flashing-repairs-perth",
+      "projects/metal-roof-ridge-flashing-repair-perth"
+    ],
+    "before": "The photographs above show this project’s roof details. Similar-looking damage can involve different surrounding material or access needs. Include the part of this record that relates to your concern, together with your suburb, roof material and any previous repair history.",
+    "after": "Need similar roof work? Tell us which roof area is affected, your suburb, the roof material if known and any previous repairs. We assess the surrounding roof condition and access before defining the repair scope for your property.",
+    "zh": "需要类似屋面施工？请告诉我们受影响的部位、所在城区、已知屋面材料及以往维修情况。我们会评估周边屋面状况和进场条件，再确定适合您物业的维修范围。",
+    "category": [
+      "C",
+      "F"
+    ],
+    "reason": "Replaces instruction to interpret project records with the information needed for our assessment."
+  },
+  {
+    "id": "AC15",
+    "routes": [
+      "projects/roleystone-metal-roof-fastener-leak-repair",
+      "projects/metal-roof-fastener-repair-sequence",
+      "projects/wa-6121-tile-roof-valley-gutter-cleaning",
+      "projects/metal-roof-ridge-capping-repair-perth",
+      "projects/tile-roof-chimney-flashing-repair-perth",
+      "projects/metal-roof-hip-ridge-capping-repair-perth",
+      "projects/tile-roof-valley-chimney-flashing-repairs-perth",
+      "projects/metal-roof-ridge-flashing-repair-perth"
+    ],
+    "before": "Arrange the same type of roof work with Ellis Services Group. Choose the service below to see our repair scope, related projects and direct contact options.",
+    "after": "We carry out the related roof repairs below. Explore the service that matches your roof problem, or contact us to discuss the work needed.",
+    "zh": "我们承接下列相关屋面维修。您可以查看符合屋面问题的服务，也可以直接联系我们沟通所需施工。",
+    "category": [
+      "C",
+      "F"
+    ],
+    "reason": "Current navigation description is verbose and can imply requesting exactly the same method from photos."
+  },
+  {
+    "id": "AC16",
+    "routes": [
+      "projects/roleystone-metal-roof-fastener-leak-repair"
+    ],
+    "before": "For this property, our recorded repair used structural adhesive around affected fastener areas. We also renewed the coating by spraying as part of the customer-approved scope. These are the documented materials and work items for this job. The close photographs show the roof details that informed the repair, including the condition around fixing points and adjoining sheet surfaces.",
+    "after": "At this Roleystone property, we used structural adhesive around the affected fastener areas and renewed the coating by spraying, as agreed with the customer. The work focused on the affected fixing points and adjoining sheet surfaces within the approved scope.",
+    "zh": "在这处 Roleystone 物业，我们按客户同意的范围，在受影响的紧固件区域周围使用结构胶，并通过喷涂更新涂层。施工集中于已确定的固定点及相邻板面。",
+    "category": [
+      "B",
+      "F"
+    ],
+    "reason": "Actual method and agreed scope are buried under repeated documentation language."
+  },
+  {
+    "id": "AC17",
+    "routes": [
+      "projects/wa-6121-tile-roof-valley-gutter-cleaning"
+    ],
+    "before": "We cleaned the valley gutter areas as part of the documented roof maintenance scope. The work considered the valley and roof-edge drainage route together while clearing the relevant areas. This is an important distinction for a tiled roof: a valley receives water from adjoining slopes, and its condition belongs to the connected drainage arrangement rather than a separate isolated channel.",
+    "after": "We cleaned the valley gutters and connected roof-edge drainage areas within the agreed maintenance scope. Because the valleys receive water from adjoining tiled slopes, we considered the route through to the roof edge when clearing these areas.",
+    "zh": "我们按约定的保养范围，清理了天沟及相连的屋檐排水区域。天沟承接两侧瓦坡的来水，因此清理时一并考虑了通向屋檐的排水路径。",
+    "category": [
+      "B",
+      "F"
+    ],
+    "reason": "Work facts can be stated directly without repeatedly certifying records or explaining the distinction."
+  },
+  {
+    "id": "AC18",
+    "routes": [
+      "projects/metal-roof-fastener-repair-sequence"
+    ],
+    "before": "CONFIRMED PHOTO ORDER",
+    "after": "FASTENER REPAIR STAGES",
+    "zh": "紧固件维修过程",
+    "category": [
+      "B"
+    ],
+    "reason": "Public heading exposes evidence-verification process; ordered stage meaning remains useful."
+  },
+  {
+    "id": "AC19",
+    "routes": [
+      "projects/metal-roof-fastener-repair-sequence"
+    ],
+    "before": "The work-stage photograph shows fastener work taking place on the metal roof. It connects the earlier condition photographs with the final overall view of the completed surface. The sequence therefore presents the affected details, the recorded work and the finished roof together. It is a practical example of our targeted metal roof repair work around fixing points.",
+    "after": "We carried out targeted repairs around the affected metal roof fixing points. The photographs show the original condition, fastener work in progress and the roof surface after the work.",
+    "zh": "我们对受影响的金属屋面固定点进行了局部维修。照片展示了施工前的状况、紧固件施工过程，以及完工后的屋面表面。",
+    "category": [
+      "B",
+      "F"
+    ],
+    "reason": "The paragraph analyses photo storytelling more than it explains our work."
+  },
+  {
+    "id": "AC20",
+    "routes": [
+      "projects/metal-roof-ridge-capping-repair-perth"
+    ],
+    "before": "The work-stage photograph shows our tradesperson securing the formed metal capping over the corrugated roof junction. The completed views show the cap continuing along the roof line, with its fixing points visible beside the sheet profile. Our work on these connections joins the cap to the surrounding covering and gives the junction a defined, consistent finish.",
+    "after": "We secured the formed metal capping over the corrugated roof junction and connected it to the surrounding sheets. The photographs show the installation detail and completed cap run, including the fixing points beside the sheet profile.",
+    "zh": "我们在波纹屋面的交接处固定成型金属盖板，并与周边板材连接。照片展示了安装细节和完工盖板区段，包括板型旁的固定点。",
+    "category": [
+      "F"
+    ],
+    "reason": "Direct work statement better explains service while preserving different installation/completion image roles."
+  },
+  {
+    "id": "AC21",
+    "routes": [
+      "projects/tile-roof-chimney-flashing-repair-perth"
+    ],
+    "before": "The completed photographs show grey formed metal around the chimney, including the apron at its base and the stepped side detail against the brickwork. They also show the adjoining metal valley extending between the tiled slopes. Our work connects these details within the existing roof layout, with the photographs presenting the completed junction from several useful angles.",
+    "after": "We completed the grey formed-metal flashing around the chimney, including the apron at its base, the stepped side detail against the brickwork and the adjoining valley connection. The completed photographs show how these details meet the existing tiled roof.",
+    "zh": "我们完成了烟囱周围的灰色成型金属泛水板工程，包括底部裙板、贴合砖墙的阶梯状侧面构造及相邻天沟连接。完工照片展示了这些部位与现有瓦屋面的衔接。",
+    "category": [
+      "F"
+    ],
+    "reason": "Existing owner action is hidden behind a repeated description of photographs."
+  },
+  {
+    "id": "AC22",
+    "routes": [
+      "projects/metal-roof-hip-ridge-capping-repair-perth"
+    ],
+    "before": "The completed sequence shows grey capping running along the roof ridge and into the adjoining hip junction. The intersection photograph shows how the formed pieces meet, while another view follows the cap run across the roof. The final close view includes a gloved hand at the finished detail, providing a useful sense of its position and scale.",
+    "after": "We connected the grey formed capping along the ridge and through the adjoining hip junction. The completed photographs show the intersection, the cap run across the roof and a close view of the finished detail.",
+    "zh": "我们将灰色成型盖板沿正脊连接至相邻斜脊交接处。完工照片展示了交汇连接、横跨屋面的盖板区段，以及完工细节的近景。",
+    "category": [
+      "F"
+    ],
+    "reason": "The hand/scale narrative distracts from what the business completed."
+  },
+  {
+    "id": "AC23",
+    "routes": [
+      "projects/tile-roof-valley-chimney-flashing-repairs-perth"
+    ],
+    "before": "The completed work shows grey flashing around the chimney base and side, with a separate formed valley channel between the tiled slopes. The photograph sequence follows the chimney apron, the adjoining tile interface and the valley below the ridge area. These views present the roof connections our team completed and the way the metal sits within the existing tiled covering.",
+    "after": "We completed the grey flashing at the chimney base and side, together with the formed valley channel between the tiled slopes. The photographs show the chimney apron, adjoining tile edges and valley below the ridge area within the existing roof.",
+    "zh": "我们完成了烟囱底部和侧面的灰色泛水板，以及两侧瓦坡之间的成型天沟。照片展示了现有屋面中的烟囱裙板、相邻瓦片边缘及屋脊区域下方的天沟。",
+    "category": [
+      "F"
+    ],
+    "reason": "Reframes observed completed-work description as concrete work we completed."
+  },
+  {
+    "id": "AC24",
+    "routes": [
+      "projects/metal-roof-ridge-flashing-repair-perth"
+    ],
+    "before": "The completed work shows grey formed metal along the ridge and across the adjoining junction. Close photographs show the connection, cap edges and screw-fixed line beside the corrugated sheets. Another view follows the longer ridge run. This sequence presents both the detailed workmanship at the intersection and the finished roof line extending beyond that point.",
+    "after": "We completed the formed metal ridge flashing and adjoining junction on this corrugated roof. The photographs show the finished connection, cap edges, screw-fixing line and the longer ridge run.",
+    "zh": "我们完成了这处波纹屋面的成型金属屋脊泛水板及相邻交接处。照片展示了完工连接、盖板边缘、螺钉固定线及较长的屋脊区段。",
+    "category": [
+      "F"
+    ],
+    "reason": "Puts the completed service before the photo commentary."
+  },
+  {
+    "id": "AC25",
+    "routes": [
+      "news"
+    ],
+    "before": "General guidance cannot diagnose a property. Send the suburb, affected roof or drainage area, timing and previous repair details. Existing safe photographs are optional.",
+    "after": "Tell us your suburb, the affected roof or drainage area, when the problem occurs and any previous repairs. We will discuss the assessment needed for your property. You can also send existing photos taken safely from the ground.",
+    "zh": "请告诉我们所在城区、受影响的屋面或排水部位、问题出现时间及以往维修情况。我们会与您沟通适合该物业的评估安排。如有从地面安全拍摄的现成照片，也可一并提供。",
+    "category": [
+      "C",
+      "F"
+    ],
+    "reason": "Enquiry paragraph leads with inability instead of the service contact action."
+  },
+  {
+    "id": "AC26",
+    "routes": [
+      "news"
+    ],
+    "before": "Compare inspection fees, repair materials, access, waste removal, exclusions and written terms without assuming a universal price.",
+    "after": "Learn which inspection fees, repair materials, access arrangements, waste removal and exclusions to look for in a written quote.",
+    "zh": "了解书面报价应说明的检查费用、维修材料、进场安排、废料清运及不包含项目。",
+    "category": [
+      "C",
+      "F"
+    ],
+    "reason": "Guide card can explain its usefulness without scolding the customer about assumed prices."
+  }
+,
+  {
+    "id": "M01",
+    "routes": [
+      ""
+    ],
+    "before": "Roof leaks, damaged tiles, metal roof defects and drainage problems — inspected and repaired by Ellis Services Group. Tell us about your roof and we will arrange the next step.",
+    "after": "We inspect and repair roof leaks, damaged tiles, metal roof defects and drainage problems. Tell us about your roof and we will arrange the next step.",
+    "zh": "我们检查和维修屋面漏水、受损瓦片、金属屋面缺陷及排水问题。请告诉我们您的屋面情况，我们会与您沟通下一步。",
+    "category": "A",
+    "reason": "Owner voice; preserve owner-approved focus on customer's roof."
+  },
+  {
+    "id": "M02",
+    "routes": [
+      ""
+    ],
+    "before": "We provide roof cleaning and painting services in Perth, with repairs and surface preparation planned around the roof material.",
+    "after": "We clean Perth roofs using methods suited to the roof material and condition. Repairs and painting are agreed as separate work scopes.",
+    "zh": "我们根据屋面材料及状况选择适合的方式，为珀斯物业清洗屋面。维修和喷涂另行约定施工范围。",
+    "category": "D/F",
+    "reason": "Owner-approved cleaning card title; separate painting remains available, not silently bundled."
+  },
+  {
+    "id": "M03",
+    "routes": [
+      "about"
+    ],
+    "before": "The company behind Perth Roof Care, providing roof repairs and drainage services across Perth.",
+    "after": "We operate Perth Roof Care, providing roof repairs and drainage services across Perth.",
+    "zh": "我们运营 Perth Roof Care，为珀斯各地提供屋面维修及排水服务。",
+    "category": "A",
+    "reason": "Owner-confirmed operating entity relationship."
+  },
+  {
+    "id": "M04",
+    "routes": [
+      "contact"
+    ],
+    "before": "Our team reviews your suburb, roof material if known, the affected area, timing and previous repairs to plan the assessment. Include the authorised access contact and any restrictions.",
+    "after": "Tell us your suburb, roof material if known, the affected area, when the problem occurs and any previous repairs. We use these details to plan the assessment. Include the person authorised to arrange access and any access restrictions.",
+    "zh": "请告诉我们您所在的城区、屋面材料（如知道）、受影响部位、问题出现时间及以往维修情况。我们会据此规划评估；如有进场限制，请一并提供有权安排进场的联系人和相关要求。",
+    "category": "F",
+    "reason": "Natural enquiry instructions without automatic booking."
+  },
+  {
+    "id": "M05",
+    "routes": [
+      "roof-cleaning"
+    ],
+    "before": "These photographs show the cleaning stage and the roof after spray painting at one Perth property. The work stages shown are identified separately; the supplied set does not include a spray-application photograph. The scope and finish for another roof are assessed separately.",
+    "after": "This photograph shows roof cleaning in progress at a Perth property, including the surface deposits and the area being washed. We assess your roof material and condition before agreeing the cleaning method and scope.",
+    "zh": "这张照片展示珀斯一处物业的屋面清洗过程，可见表面沉积物及正在冲洗的区域。我们会先评估您屋面的材料和状况，再约定清洗方式及范围。",
+    "category": "D/F",
+    "reason": "Displayed subset has one cleaning image; do not claim displayed painting."
+  },
+  {
+    "id": "M06",
+    "routes": [
+      "roof-painting"
+    ],
+    "before": "These photographs show the cleaning stage and the roof after spray painting at one Perth property. The work stages shown are identified separately; the supplied set does not include a spray-application photograph. The scope and finish for another roof are assessed separately.",
+    "after": "These photographs show the tiled roof after spray painting at one Perth property, from the roof slopes to the ridge and eaves. We assess your roof condition and agree the repairs, preparation and finish before painting.",
+    "zh": "这些照片展示珀斯一处物业瓦屋面喷涂后的坡面、屋脊及檐口。喷涂前，我们会评估您屋面的状况，并约定所需维修、前处理及面层。",
+    "category": "D/F",
+    "reason": "Displayed subset is three finished images, not spray application."
+  }
+,
+  {
+    "id": "A-cottesloe-roof-repairs",
+    "routes": [
+      "areas/cottesloe-roof-repairs"
+    ],
+    "before": "Ellis Services Group provides tile and metal roof repairs, leak investigation, flashing repairs and roof drainage work for COTTESLOE properties. We inspect the affected roof area and organise the repairs around its materials, condition and access.",
+    "after": "We repair tile and metal roofs in Cottesloe, investigate leaks, and repair flashing and roof drainage. We assess the affected area and explain the proposed work, materials and access arrangements for your property.",
+    "zh": "我们为 Cottesloe 的物业维修瓦屋面和金属屋面，排查漏水，处理泛水板及屋面排水问题。我们会评估受影响部位，并说明拟定工作、材料及进场安排。",
+    "category": "A/F",
+    "reason": "Existing locality coverage; concrete owner actions without implying a suburb office."
+  },
+  {
+    "id": "A-mosman-park-roof-repairs",
+    "routes": [
+      "areas/mosman-park-roof-repairs"
+    ],
+    "before": "Ellis Services Group provides tile and metal roof repairs, leak investigation, flashing repairs and roof drainage work for MOSMAN PARK properties. We inspect the affected roof area and organise the repairs around its materials, condition and access.",
+    "after": "We repair tile and metal roofs in Mosman Park, investigate leaks, and repair flashing and roof drainage. We assess the affected area and explain the proposed work, materials and access arrangements for your property.",
+    "zh": "我们为 Mosman Park 的物业维修瓦屋面和金属屋面，排查漏水，处理泛水板及屋面排水问题。我们会评估受影响部位，并说明拟定工作、材料及进场安排。",
+    "category": "A/F",
+    "reason": "Existing locality coverage; concrete owner actions without implying a suburb office."
+  },
+  {
+    "id": "A-city-beach-roof-repairs",
+    "routes": [
+      "areas/city-beach-roof-repairs"
+    ],
+    "before": "Ellis Services Group provides tile and metal roof repairs, leak investigation, flashing repairs and roof drainage work for CITY BEACH properties. We inspect the affected roof area and organise the repairs around its materials, condition and access.",
+    "after": "We repair tile and metal roofs in City Beach, investigate leaks, and repair flashing and roof drainage. We assess the affected area and explain the proposed work, materials and access arrangements for your property.",
+    "zh": "我们为 City Beach 的物业维修瓦屋面和金属屋面，排查漏水，处理泛水板及屋面排水问题。我们会评估受影响部位，并说明拟定工作、材料及进场安排。",
+    "category": "A/F",
+    "reason": "Existing locality coverage; concrete owner actions without implying a suburb office."
+  },
+  {
+    "id": "A-scarborough-roof-repairs",
+    "routes": [
+      "areas/scarborough-roof-repairs"
+    ],
+    "before": "Ellis Services Group provides tile and metal roof repairs, leak investigation, flashing repairs and roof drainage work for SCARBOROUGH properties. We inspect the affected roof area and organise the repairs around its materials, condition and access.",
+    "after": "We repair tile and metal roofs in Scarborough, investigate leaks, and repair flashing and roof drainage. We assess the affected area and explain the proposed work, materials and access arrangements for your property.",
+    "zh": "我们为 Scarborough 的物业维修瓦屋面和金属屋面，排查漏水，处理泛水板及屋面排水问题。我们会评估受影响部位，并说明拟定工作、材料及进场安排。",
+    "category": "A/F",
+    "reason": "Existing locality coverage; concrete owner actions without implying a suburb office."
+  },
+  {
+    "id": "A-claremont-roof-repairs",
+    "routes": [
+      "areas/claremont-roof-repairs"
+    ],
+    "before": "Ellis Services Group provides tile and metal roof repairs, leak investigation, flashing repairs and roof drainage work for CLAREMONT properties. We inspect the affected roof area and organise the repairs around its materials, condition and access.",
+    "after": "We repair tile and metal roofs in Claremont, investigate leaks, and repair flashing and roof drainage. We assess the affected area and explain the proposed work, materials and access arrangements for your property.",
+    "zh": "我们为 Claremont 的物业维修瓦屋面和金属屋面，排查漏水，处理泛水板及屋面排水问题。我们会评估受影响部位，并说明拟定工作、材料及进场安排。",
+    "category": "A/F",
+    "reason": "Existing locality coverage; concrete owner actions without implying a suburb office."
+  },
+  {
+    "id": "A-nedlands-roof-repairs",
+    "routes": [
+      "areas/nedlands-roof-repairs"
+    ],
+    "before": "Ellis Services Group provides tile and metal roof repairs, leak investigation, flashing repairs and roof drainage work for NEDLANDS properties. We inspect the affected roof area and organise the repairs around its materials, condition and access.",
+    "after": "We repair tile and metal roofs in Nedlands, investigate leaks, and repair flashing and roof drainage. We assess the affected area and explain the proposed work, materials and access arrangements for your property.",
+    "zh": "我们为 Nedlands 的物业维修瓦屋面和金属屋面，排查漏水，处理泛水板及屋面排水问题。我们会评估受影响部位，并说明拟定工作、材料及进场安排。",
+    "category": "A/F",
+    "reason": "Existing locality coverage; concrete owner actions without implying a suburb office."
+  },
+  {
+    "id": "A-subiaco-roof-repairs",
+    "routes": [
+      "areas/subiaco-roof-repairs"
+    ],
+    "before": "Ellis Services Group provides tile and metal roof repairs, leak investigation, flashing repairs and roof drainage work for SUBIACO properties. We inspect the affected roof area and organise the repairs around its materials, condition and access.",
+    "after": "We repair tile and metal roofs in Subiaco, investigate leaks, and repair flashing and roof drainage. We assess the affected area and explain the proposed work, materials and access arrangements for your property.",
+    "zh": "我们为 Subiaco 的物业维修瓦屋面和金属屋面，排查漏水，处理泛水板及屋面排水问题。我们会评估受影响部位，并说明拟定工作、材料及进场安排。",
+    "category": "A/F",
+    "reason": "Existing locality coverage; concrete owner actions without implying a suburb office."
+  },
+  {
+    "id": "A-perth-roof-repairs",
+    "routes": [
+      "areas/perth-roof-repairs"
+    ],
+    "before": "Ellis Services Group provides tile and metal roof repairs, leak investigation, flashing repairs and roof drainage work for PERTH properties. We inspect the affected roof area and organise the repairs around its materials, condition and access.",
+    "after": "We repair tile and metal roofs in Perth, investigate leaks, and repair flashing and roof drainage. We assess the affected area and explain the proposed work, materials and access arrangements for your property.",
+    "zh": "我们为 Perth 的物业维修瓦屋面和金属屋面，排查漏水，处理泛水板及屋面排水问题。我们会评估受影响部位，并说明拟定工作、材料及进场安排。",
+    "category": "A/F",
+    "reason": "Existing locality coverage; concrete owner actions without implying a suburb office."
+  },
+  {
+    "id": "A-leederville-roof-repairs",
+    "routes": [
+      "areas/leederville-roof-repairs"
+    ],
+    "before": "Ellis Services Group provides tile and metal roof repairs, leak investigation, flashing repairs and roof drainage work for LEEDERVILLE properties. We inspect the affected roof area and organise the repairs around its materials, condition and access.",
+    "after": "We repair tile and metal roofs in Leederville, investigate leaks, and repair flashing and roof drainage. We assess the affected area and explain the proposed work, materials and access arrangements for your property.",
+    "zh": "我们为 Leederville 的物业维修瓦屋面和金属屋面，排查漏水，处理泛水板及屋面排水问题。我们会评估受影响部位，并说明拟定工作、材料及进场安排。",
+    "category": "A/F",
+    "reason": "Existing locality coverage; concrete owner actions without implying a suburb office."
+  },
+  {
+    "id": "A-joondalup-roof-repairs",
+    "routes": [
+      "areas/joondalup-roof-repairs"
+    ],
+    "before": "Ellis Services Group provides tile and metal roof repairs, leak investigation, flashing repairs and roof drainage work for JOONDALUP properties. We inspect the affected roof area and organise the repairs around its materials, condition and access.",
+    "after": "We repair tile and metal roofs in Joondalup, investigate leaks, and repair flashing and roof drainage. We assess the affected area and explain the proposed work, materials and access arrangements for your property.",
+    "zh": "我们为 Joondalup 的物业维修瓦屋面和金属屋面，排查漏水，处理泛水板及屋面排水问题。我们会评估受影响部位，并说明拟定工作、材料及进场安排。",
+    "category": "A/F",
+    "reason": "Existing locality coverage; concrete owner actions without implying a suburb office."
+  },
+  {
+    "id": "A-hillarys-roof-repairs",
+    "routes": [
+      "areas/hillarys-roof-repairs"
+    ],
+    "before": "Ellis Services Group provides tile and metal roof repairs, leak investigation, flashing repairs and roof drainage work for HILLARYS properties. We inspect the affected roof area and organise the repairs around its materials, condition and access.",
+    "after": "We repair tile and metal roofs in Hillarys, investigate leaks, and repair flashing and roof drainage. We assess the affected area and explain the proposed work, materials and access arrangements for your property.",
+    "zh": "我们为 Hillarys 的物业维修瓦屋面和金属屋面，排查漏水，处理泛水板及屋面排水问题。我们会评估受影响部位，并说明拟定工作、材料及进场安排。",
+    "category": "A/F",
+    "reason": "Existing locality coverage; concrete owner actions without implying a suburb office."
+  },
+  {
+    "id": "A-fremantle-roof-repairs",
+    "routes": [
+      "areas/fremantle-roof-repairs"
+    ],
+    "before": "Ellis Services Group provides tile and metal roof repairs, leak investigation, flashing repairs and roof drainage work for FREMANTLE properties. We inspect the affected roof area and organise the repairs around its materials, condition and access.",
+    "after": "We repair tile and metal roofs in Fremantle, investigate leaks, and repair flashing and roof drainage. We assess the affected area and explain the proposed work, materials and access arrangements for your property.",
+    "zh": "我们为 Fremantle 的物业维修瓦屋面和金属屋面，排查漏水，处理泛水板及屋面排水问题。我们会评估受影响部位，并说明拟定工作、材料及进场安排。",
+    "category": "A/F",
+    "reason": "Existing locality coverage; concrete owner actions without implying a suburb office."
+  },
+  {
+    "id": "A-rockingham-roof-repairs",
+    "routes": [
+      "areas/rockingham-roof-repairs"
+    ],
+    "before": "Ellis Services Group provides tile and metal roof repairs, leak investigation, flashing repairs and roof drainage work for ROCKINGHAM properties. We inspect the affected roof area and organise the repairs around its materials, condition and access.",
+    "after": "We repair tile and metal roofs in Rockingham, investigate leaks, and repair flashing and roof drainage. We assess the affected area and explain the proposed work, materials and access arrangements for your property.",
+    "zh": "我们为 Rockingham 的物业维修瓦屋面和金属屋面，排查漏水，处理泛水板及屋面排水问题。我们会评估受影响部位，并说明拟定工作、材料及进场安排。",
+    "category": "A/F",
+    "reason": "Existing locality coverage; concrete owner actions without implying a suburb office."
+  },
+  {
+    "id": "A-kalamunda-roof-repairs",
+    "routes": [
+      "areas/kalamunda-roof-repairs"
+    ],
+    "before": "Ellis Services Group provides tile and metal roof repairs, leak investigation, flashing repairs and roof drainage work for KALAMUNDA properties. We inspect the affected roof area and organise the repairs around its materials, condition and access.",
+    "after": "We repair tile and metal roofs in Kalamunda, investigate leaks, and repair flashing and roof drainage. We assess the affected area and explain the proposed work, materials and access arrangements for your property.",
+    "zh": "我们为 Kalamunda 的物业维修瓦屋面和金属屋面，排查漏水，处理泛水板及屋面排水问题。我们会评估受影响部位，并说明拟定工作、材料及进场安排。",
+    "category": "A/F",
+    "reason": "Existing locality coverage; concrete owner actions without implying a suburb office."
+  },
+  {
+    "id": "A-victoria-park-roof-repairs",
+    "routes": [
+      "areas/victoria-park-roof-repairs"
+    ],
+    "before": "Ellis Services Group provides tile and metal roof repairs, leak investigation, flashing repairs and roof drainage work for VICTORIA PARK properties. We inspect the affected roof area and organise the repairs around its materials, condition and access.",
+    "after": "We repair tile and metal roofs in Victoria Park, investigate leaks, and repair flashing and roof drainage. We assess the affected area and explain the proposed work, materials and access arrangements for your property.",
+    "zh": "我们为 Victoria Park 的物业维修瓦屋面和金属屋面，排查漏水，处理泛水板及屋面排水问题。我们会评估受影响部位，并说明拟定工作、材料及进场安排。",
+    "category": "A/F",
+    "reason": "Existing locality coverage; concrete owner actions without implying a suburb office."
+  },
+  {
+    "id": "A-bayswater-roof-repairs",
+    "routes": [
+      "areas/bayswater-roof-repairs"
+    ],
+    "before": "Ellis Services Group provides tile and metal roof repairs, leak investigation, flashing repairs and roof drainage work for BAYSWATER properties. We inspect the affected roof area and organise the repairs around its materials, condition and access.",
+    "after": "We repair tile and metal roofs in Bayswater, investigate leaks, and repair flashing and roof drainage. We assess the affected area and explain the proposed work, materials and access arrangements for your property.",
+    "zh": "我们为 Bayswater 的物业维修瓦屋面和金属屋面，排查漏水，处理泛水板及屋面排水问题。我们会评估受影响部位，并说明拟定工作、材料及进场安排。",
+    "category": "A/F",
+    "reason": "Existing locality coverage; concrete owner actions without implying a suburb office."
+  },
+  {
+    "id": "M07",
+    "routes": [
+      "roof-cleaning"
+    ],
+    "before": "Chargeable inspection and separate cleaning scope",
+    "after": "Cleaning and inspection scopes",
+    "zh": "清洗与检查范围",
+    "category": "A/F",
+    "reason": "Paragraph-reviewed action clarification; existing scope retained."
+  },
+  {
+    "id": "M08",
+    "routes": [
+      "news/roof-leak-inspection"
+    ],
+    "before": "Ellis Services Group uses those details to prepare for inspection and organise the required roof repairs.",
+    "after": "We use these details to prepare the inspection and organise the roof repairs identified in the assessment.",
+    "zh": "我们会根据这些信息准备检查，并安排评估后确定的屋面维修。",
+    "category": "A/F",
+    "reason": "Paragraph-reviewed action clarification; existing scope retained."
+  },
+  {
+    "id": "M09",
+    "routes": [
+      "roof-leak-repairs"
+    ],
+    "before": "Ellis Services Group assesses each roof individually and recommends the repair scope that suits its materials, condition and access.",
+    "after": "We assess each roof individually and recommend repairs suited to its materials, condition and access.",
+    "zh": "我们会逐一评估屋面，根据材料、状况及进场条件建议维修范围。",
+    "category": "A/F",
+    "reason": "Paragraph-reviewed action clarification; existing scope retained."
+  },
+  {
+    "id": "M10",
+    "routes": [
+      "tile-roof-repairs"
+    ],
+    "before": "Ellis Services Group assesses each roof and recommends the right repair scope for its condition.",
+    "after": "We assess each roof and explain the repair scope suited to its condition.",
+    "zh": "我们会评估每处屋面，并根据实际状况说明适合的维修范围。",
+    "category": "A/F",
+    "reason": "Paragraph-reviewed action clarification; existing scope retained."
+  },
+  {
+    "id": "M11",
+    "routes": [
+      "roof-inspection"
+    ],
+    "before": "The visible maintenance point shows the type of roofline detail Ellis Services Group inspects and addresses through a property-specific maintenance or repair scope.",
+    "after": "The visible maintenance point shows a roof-edge detail we inspect when planning maintenance or repairs for the property.",
+    "zh": "照片中的维护部位展示了屋面边缘的一处细节，我们会在规划该物业的维护或维修时检查这类部位。",
+    "category": "A/F",
+    "reason": "Paragraph-reviewed action clarification; existing scope retained."
+  },
+  {
+    "id": "M12",
+    "routes": [
+      "news/metal-roof-repairs-perth-guide"
+    ],
+    "before": "Metal roof fasteners do more than hold sheets in place: exposed fixing points also need effective sealing. Weathered washers, corroded screw heads and damaged metal around holes require different repairs. Ellis Services Group checks the fixing and the sheet together before selecting compatible materials and completing the agreed work.",
+    "after": "We check metal roof fasteners together with the surrounding sheets, because weathered washers, corroded screw heads and damaged fixing holes need different repairs. We select compatible materials for the defects found and complete the agreed work.",
+    "zh": "我们会一并检查金属屋面的紧固件及周边板材，因为垫圈老化、螺钉头腐蚀及固定孔周边金属损坏，需要不同的维修方式。我们会针对发现的缺陷选择适合的材料，并完成约定施工。",
+    "category": "A/F",
+    "reason": "Paragraph-reviewed action clarification; existing scope retained."
+  },
+  {
+    "id": "M13",
+    "routes": [
+      "news/ridge-capping-repairs-perth-guide"
+    ],
+    "before": "Repointing renews the outer pointing around ridge caps; rebedding restores the supporting bedding beneath them. These are related but distinct roof repair tasks. Ellis Services Group checks ridge and hip runs, cap stability and adjoining tiles before recommending the work required for a Perth tiled roof.",
+    "after": "We inspect ridge and hip runs, cap stability and adjoining tiles before recommending repairs. Repointing renews the outer pointing around the caps; rebedding restores the supporting mortar beneath them. We explain which work your tiled roof needs.",
+    "zh": "我们会检查正脊、斜脊、盖瓦稳定性及相邻瓦片，再提出维修建议。重新勾缝更新盖瓦边缘的外露勾缝材料，重铺座浆则修复盖瓦下方的支撑砂浆。我们会说明您的瓦屋面需要哪项处理。",
+    "category": "A/F",
+    "reason": "Paragraph-reviewed action clarification; existing scope retained."
+  },
+  {
+    "id": "M14",
+    "routes": [
+      "news/roof-inspection-perth-guide"
+    ],
+    "before": "A roof inspection identifies the covering and drainage defects that need attention before repairs or maintenance are arranged. Ellis Services Group inspects Perth tiled and metal roofs, explains the findings and organises the work appropriate to the property. Inspection identifies the problem; maintenance and repair address it.",
+    "after": "We inspect Perth tile and metal roofs to identify covering and drainage defects before planning repairs or maintenance. We explain the findings and the work recommended for your property, so you can decide which repairs to arrange.",
+    "zh": "我们检查珀斯的瓦屋面和金属屋面，排查覆盖材料及排水缺陷，再规划维修或保养。我们会说明检查结果和针对该物业的施工建议，方便您决定安排哪些维修。",
+    "category": "A/F",
+    "reason": "Paragraph-reviewed action clarification; existing scope retained."
+  },
+  {
+    "id": "M15",
+    "routes": [
+      "news/gutter-warning-signs"
+    ],
+    "before": "Leaking gutter joints, overflow during rain and rust at the roof edge are practical reasons to arrange gutter repairs in Perth. Ellis Services Group inspects the gutter run, outlets and connected downpipes, then repairs the affected components and restores the drainage path within the agreed roof drainage scope.",
+    "after": "We repair leaking gutter joints, rain-related overflow and rust-damaged gutter sections in Perth. We inspect the gutter run, outlets and connected downpipes, then repair the affected components within the agreed roof drainage scope.",
+    "zh": "我们在珀斯维修檐沟接缝漏水、下雨时溢水及锈蚀区段。我们会检查檐沟、出水口及相连落水管，再按约定的屋面排水范围维修受影响构件。",
+    "category": "A/F",
+    "reason": "Paragraph-reviewed action clarification; existing scope retained."
+  },
+  {
+    "id": "M16",
+    "routes": [
+      "news/gutter-warning-signs"
+    ],
+    "before": "Gutter overflow can call for clearing, a local repair or replacement of a damaged section. Ellis Services Group checks the gutter run, outlet and connected downpipe together, then defines the work from the obstruction or defect found. Recurring overflow after cleaning needs a closer look at the drainage route.",
+    "after": "We check the gutter run, outlet and connected downpipe together to identify what is causing overflow. We then explain whether clearing, local repairs or replacement of a damaged section is needed. If overflow returns after cleaning, we assess the drainage route to identify the work required.",
+    "zh": "我们会一并检查檐沟、出水口及相连落水管，排查溢水原因，再说明需要清理、局部维修还是更换损坏区段。如清理后仍反复溢水，我们会评估排水路径，确定所需工作。",
+    "category": "A/F",
+    "reason": "Paragraph-reviewed action clarification; existing scope retained."
+  },
+  {
+    "id": "M17",
+    "routes": [
+      "news/gutter-warning-signs"
+    ],
+    "before": "Ellis checks the joint, surrounding material, supports and downpipe connection before defining the repair.",
+    "after": "We check the joint, surrounding gutter material, supports and downpipe connection before defining the repair.",
+    "zh": "确定维修方案前，我们会检查接缝、周边檐沟材料、支撑及落水管连接。",
+    "category": "A/F",
+    "reason": "Paragraph-reviewed action clarification; existing scope retained."
+  }
+,
+  {
+    "id": "ALT01",
+    "routes": [
+      "gallery"
+    ],
+    "attribute": "alt",
+    "before": "METAL ROOF FASTENER LEAK REPAIR IN ROLEYSTONE",
+    "after": "Corrosion and aged sealant around a metal roof fastener.",
+    "zh": "金属屋面紧固件周围的腐蚀及老化密封材料。",
+    "category": "F",
+    "reason": "Main agent inspected original pixels on 2026-10-21; no new result claims."
+  },
+  {
+    "id": "ALT02",
+    "routes": [
+      "gallery"
+    ],
+    "attribute": "alt",
+    "before": "METAL ROOF FASTENER LEAK REPAIR",
+    "after": "Corrugated metal roof with ridge and hip capping before fastener repairs.",
+    "zh": "紧固件维修前的波纹金属屋面，可见正脊和斜脊盖板。",
+    "category": "F",
+    "reason": "Main agent inspected original pixels on 2026-10-21; no new result claims."
+  },
+  {
+    "id": "ALT03",
+    "routes": [
+      "gallery"
+    ],
+    "attribute": "alt",
+    "before": "TILE ROOF AND VALLEY GUTTER CLEANING WITH TILE REPAIRS",
+    "after": "Tiled roof edge with surface deposits beside a gutter holding water.",
+    "zh": "瓦屋面边缘可见表面沉积物，相邻檐沟内有积水。",
+    "category": "F",
+    "reason": "Main agent inspected original pixels on 2026-10-21; no new result claims."
+  }
+,
+  {
+    "id": "M18",
+    "routes": [
+      "news/drainage-after-rain"
+    ],
+    "before": "Water overflowing at an eave, gutter or downpipe during rain needs the connected roof drainage route checked. Ellis Services Group inspects how water moves from the roof covering through valleys, gutters and outlets, then repairs and maintains the components within the agreed scope.",
+    "after": "We inspect overflowing gutters, eaves and downpipes by tracing water from the roof covering through valleys, gutters and outlets. We identify the obstruction or defect, then explain the clearing, repairs or maintenance needed within the agreed roof drainage scope.",
+    "zh": "遇到檐沟、檐口或落水管在下雨时溢水，我们会沿屋面覆盖材料、天沟、檐沟和出水口检查水流路径，排查堵塞或缺陷，再说明约定屋面排水范围内所需的清理、维修或维护。",
+    "category": "A/F",
+    "reason": "Independent final review: remaining owner-voice guide introduction."
+  },
+  {
+    "id": "M19",
+    "routes": [
+      "news/tile-roof-repairs-perth-guide"
+    ],
+    "before": "A tiled roof repair restores the damaged tile and the roof connections around it. Ellis Services Group repairs concrete and terracotta roofs in Perth, inspecting cracked, displaced and missing tiles alongside ridge caps, valleys and flashings. Matching the tile profile and maintaining the overlapping roof detail are central to the work.",
+    "after": "We repair concrete and terracotta tile roofs in Perth, checking cracked, displaced or missing tiles alongside the ridges, valleys and flashings. We match the replacement tile profile and restore the overlaps and adjoining connections included in the repair scope.",
+    "zh": "我们在珀斯维修混凝土瓦和陶瓦屋面，一并检查开裂、移位或缺失的瓦片，以及屋脊、天沟和泛水板。我们会匹配替换瓦片的瓦型，并修复维修范围内的搭接及相邻连接。",
+    "category": "A/F",
+    "reason": "Independent final review: remaining owner-voice guide introduction."
+  },
+  {
+    "id": "M20",
+    "routes": [
+      "news/roof-valleys-flashing-repairs-perth"
+    ],
+    "before": "Valleys collect water from adjoining slopes, while flashings protect junctions such as chimneys and walls. Ellis Services Group repairs and replaces these roof details in Perth, checking the formed metal together with adjoining tiles or sheets and the drainage route below. The work restores the connection, not just the appearance of a metal strip.",
+    "after": "We repair and replace valleys and flashings at Perth roof junctions, including chimneys and walls. We check the formed metal, adjoining tiles or sheets and the drainage route together, so the repair addresses the water connection rather than just the metal surface.",
+    "zh": "我们在珀斯维修及更换屋面天沟和泛水板，涵盖烟囱、墙体等交接处。我们会一并检查成型金属件、相邻瓦片或板材及排水路径，使维修针对导排水连接，而非仅处理金属表面。",
+    "category": "A/F",
+    "reason": "Independent final review: remaining owner-voice guide introduction."
+  }
+]

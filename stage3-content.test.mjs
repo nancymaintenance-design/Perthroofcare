@@ -30,6 +30,6 @@ test('gutter guide publishes Perth decision metadata and removes generic article
   assert.match(load(html)('title').text(),/Gutter Overflow Perth: Clearing and Repairs/);
   assert.doesNotMatch(load(html)('title').text(),/\?/);
   assert.ok(html.includes('<h1>GUTTER OVERFLOW AND WARNING SIGNS IN PERTH.</h1>'));
-  assert.ok(html.includes('name="description" content="Gutter overflow in Perth: see how Ellis checks leaves, joints, outlets and downpipes, then plans cleaning, local repairs or a damaged-section replacement."'));
+  assert.equal(load(html)('meta[name="description"]').attr('content'),'We inspect overflowing Perth gutters, outlets and connected downpipes, then quote for the clearing, local repairs or damaged-section replacement required.');
   for(const heading of ['Start with the visible detail','Trace the relationship','Use material context carefully','Continue the reading']) assert.ok(!html.includes(`<h2>${heading}</h2>`),heading);
 });

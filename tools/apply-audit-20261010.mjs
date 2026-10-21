@@ -16,6 +16,7 @@ import {applyEditorialComposition} from '../content/editorial-composition.mjs';
 import {applyHomeReviews} from '../content/home-reviews.mjs';
 import {applyCopyCleanup} from '../content/copy-cleanup.mjs';
 import {applyEditorApproved} from '../content/editor-approved.mjs';
+import {applyOwnerCopy} from '../content/owner-copy.mjs';
 
 const contentUpdateRoutes=new Set([...keywordGapRoutes,...keywordMapRoutes,'gutters-downpipes']);
 const articleImages={
@@ -147,6 +148,7 @@ export function applyAudit20261010({root,site}){
     applyHomeReviews($,route);
     if(applyCopyCleanup($,route))declarativeRoutes.add(route);
     if(applyEditorApproved($,route))declarativeRoutes.add(route);
+    if(applyOwnerCopy($,route,graph))declarativeRoutes.add(route);
     syncContentKnowledge($,graph,site,canonical);
     refineLocalServiceGraph($,graph,route,canonical);
     if(declarativeRoutes.has(route)){
