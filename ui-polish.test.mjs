@@ -12,7 +12,8 @@ test('published pages retain the reviewed 138-page content baseline',()=>{
   // rechecked; H1s, destinations, forms, reviews and protected legal copy remain.
   const snapshot=uiContentSnapshot();
   assert.equal(snapshot.pageCount,138);
-  assert.equal(snapshot.hash,'2f8379806b0ff9da36c60d22ab6fe940579a51adb8bc11a5e510fb54001d0b42');
+  // 2026-10-22: only the two homepage RSS head links advance this snapshot.
+  assert.equal(snapshot.hash,'4c00217bba180efd163d537a0f9daef899d91b260ba4e5cb936d0217cd037327');
 });
 
 test('visual layer joins the existing route request after original styles',t=>{

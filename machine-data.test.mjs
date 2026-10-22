@@ -12,6 +12,18 @@ const page=route=>load(readFileSync(join('public',route,'index.html'),'utf8'));
 const graph=$=>JSON.parse($('script[type="application/ld+json"]').text())['@graph'];
 const types=n=>[n['@type']].flat();
 
+test('each homepage statically discovers exactly its own language RSS in the head',()=>{
+ for(const prefix of ['/','/zh/']){
+  const $=page(prefix),links=$('head link[rel="alternate"][type="application/rss+xml"]');
+  assert.equal(links.length,1,prefix+' has one RSS discovery link');
+  assert.equal(links.attr('href'),site+prefix+'news/feed.xml');
+  assert.equal($('body link[type="application/rss+xml"]').length,0);
+  const rss=load(readFileSync('public'+prefix+'news/feed.xml','utf8'),{xmlMode:true});
+  assert.equal(rss('channel > language').text(),prefix==='/zh/'?'zh-Hans':'en-AU');
+  assert.equal(rss('channel > atom\\:link[rel="self"]').attr('href'),links.attr('href'));
+ }
+});
+
 test('service mainEntity and description identify the visible repair scope in both languages',()=>{
  for(const prefix of ['/','/zh/']){
   const $=page(prefix+'roof-leak-repairs/'),g=graph($),s=g.find(n=>types(n).includes('Service'));
