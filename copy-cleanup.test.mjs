@@ -35,7 +35,7 @@ test('cleanup retains registration facts, technical cautions, safety and origina
  assert.match(leak('main').text(),/Electrical equipment must be handled by the appropriate specialist/);
  assert.match(leak('main').text(),/visible stain or fresh patch does not establish the source/);
  const replacement=load(readFileSync('public/roof-replacement/index.html','utf8'));
- assert.match(replacement('main').text(),/Suspected asbestos requires separate identification and specialist arrangements/);
+ assert.match(replacement('main').text(),/Suspected asbestos requires separate identification and specialist arrangements|suspect asbestos.*must be identified.*appropriate specialist/i);
  const home=load(readFileSync('public/index.html','utf8'));
  assert.equal(home('.google-review-card').length,10);
  assert.match(home('.google-review-card').eq(7).text(),/Living in Sydney/);

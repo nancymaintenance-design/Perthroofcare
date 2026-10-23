@@ -11,7 +11,8 @@ const readingSubject={
  'metal-roof-repairs':'metal roof','ridge-capping-repointing':'ridge repair','flashing-repairs':'flashing repair',
  'gutter-repairs':'gutter repair','gutters-downpipes':'roof drainage','downpipe-repairs':'downpipe repair',
  'roof-maintenance':'roof maintenance','roof-inspection':'roof inspection','repair-options':'repair comparison',
- 'roof-painting':'roof painting','box-gutter-repairs':'box gutter','roof-replacement':'roof replacement'
+ 'roof-painting':'roof painting','box-gutter-repairs':'box gutter','roof-replacement':'roof replacement',
+ 'roof-restoration':'roof restoration'
 };
 const section=(purpose,title,body)=>`<section class="section service-section" data-service-section="${purpose}"><div class="container"><h2>${title}</h2>${body}</div></section>`;
 
@@ -97,7 +98,8 @@ export function applyServiceStructure($,route){
  hero.find('a[href="/contact/"]').remove();
  hero.find('h1').attr('id','service-overview');
  hero.find('.inspection-charge-notice').remove();
- hero.find('h1').parent().append('<p class="hero-actions"><a class="button" href="/contact/">Request a roof assessment</a></p>');
+ const enquiryLabel=copy.enquiryLabel||'Request a roof assessment';
+ hero.find('h1').parent().append(`<p class="hero-actions"><a class="button" href="/contact/">${esc(enquiryLabel)}</a></p>`);
 
  const evidence=main.children().filter((_,e)=>$(e).find('img').length).toArray().map((e,index)=>{
   const record=$(e).clone();record[0].tagName='div';record.removeClass('section').addClass('service-case');
@@ -119,7 +121,7 @@ export function applyServiceStructure($,route){
  const guide=topicGuide[route];
  const extraGuides=articleLinks.filter(e=>e[0]!==`/news/${guide}/`);
  const selections=(topics.length>6?[topics[0],topics[2],topics[6],topics[4]]:topics).slice(0,4-extraGuides.length);
- const reading=topics.length||articleLinks.length?`<div class="service-reading"${topics.length?' id="roof-questions-explained"':''}><h3>Related ${esc(readingSubject[route])} guides</h3><ul>${selections.map(t=>`<li data-topic="${t.id}"><a href="${topicHref(t)}">${esc(topicPlacement[t.id][1])}</a></li>`).join('')}${guide?`<li><a href="/news/${guide}/">Full ${esc(readingSubject[route])} guide</a></li>`:''}${extraGuides.map(relatedLink).join('')}</ul></div>`:'';
+ const reading=topics.length||articleLinks.length?`<div class="service-reading"${topics.length?' id="roof-questions-explained"':''}><h3>${esc(copy.readingTitle||`Related ${readingSubject[route]} guides`)}</h3><ul>${selections.map(t=>`<li data-topic="${t.id}"><a href="${topicHref(t)}">${esc(copy.topicLabels?.[t.id]||topicPlacement[t.id][1])}</a></li>`).join('')}${guide?`<li><a href="/news/${guide}/">${esc(copy.guideLabel||`Full ${readingSubject[route]} guide`)}</a></li>`:''}${extraGuides.map(relatedLink).join('')}</ul></div>`:'';
  const related=`<nav class="service-related keyword-gap-content" aria-label="Related services"${originalIds.includes('related-work-options')?' id="related-work-options"':''}><h3>Related services</h3><ul>${serviceRelated[route].filter(e=>!articleLinks.includes(e)).map(relatedLink).join('')}</ul></nav>`;
  const guidanceMarkup=guidance.length?`<div class="focus-faq service-guidance"><h3>${esc(titles.guidance)}</h3>${guidance.toArray().map(e=>$.html(e)).join('')}</div>`:'';
  main.empty().addClass('service-layout').append(hero);
@@ -131,7 +133,8 @@ export function applyServiceStructure($,route){
   if(route==='metal-roof-repairs')target.append(fastenerCase());
  }
  const target=main.children('section').last().children('.container');
- target.append(`<div class="service-enquiry"><p>We assess the roof on site and explain the written repair quote before work. Existing safe photos are optional; do not climb onto the roof or enter an unsafe roof space.</p><a class="button" href="/contact/">Request a roof assessment</a></div>`);
+ const enquiryText=copy.enquiryText||'We assess the roof on site and explain the written repair quote before work. Existing safe photos are optional; do not climb onto the roof or enter an unsafe roof space.';
+ target.append(`<div class="service-enquiry"><p>${esc(enquiryText)}</p><a class="button" href="/contact/">${esc(enquiryLabel)}</a></div>`);
  const targets={content:'.service-description',steps:'.service-steps',boundary:'.service-boundary',guidance:'.service-guidance'};
  for(const [id,targetName] of Object.entries(copy.anchors)){
   const target=main.find(targets[targetName]);if(target.length!==1)throw new Error(`Missing anchor content ${route} / ${id}`);

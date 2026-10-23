@@ -12,8 +12,10 @@ test('published pages retain the reviewed 138-page content baseline',()=>{
   // rechecked; H1s, destinations, forms, reviews and protected legal copy remain.
   const snapshot=uiContentSnapshot();
   assert.equal(snapshot.pageCount,138);
-  // 2026-10-22: only the two homepage RSS head links advance this snapshot.
-  assert.equal(snapshot.hash,'4c00217bba180efd163d537a0f9daef899d91b260ba4e5cb936d0217cd037327');
+  // 2026-10-23: standard Chinese and plain Australian English on two services.
+  // reports/2026-10-23-bilingual-copy-review verifies every changed text slot;
+  // all other 887 public files, H1s, metadata, forms and styles are unchanged.
+  assert.equal(snapshot.hash,'c8804d6ae12f65737f9bf46a9cd9cc6cf0c0d0eefa7a49ec480152371f4ae652');
 });
 
 test('visual layer joins the existing route request after original styles',t=>{

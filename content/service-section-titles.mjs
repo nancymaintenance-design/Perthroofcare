@@ -77,9 +77,9 @@ export const serviceSectionTitles={
     "work": "Roof-void inspection photographs"
   },
   "roof-restoration": {
-    "content": "A local defect or wider roof deterioration",
-    "solution": "Separating repairs from cleaning and finishing",
-    "guidance": "Repairs and finishing in the restoration proposal"
+    "content": "Roof repairs before restoration",
+    "solution": "Roof restoration work and quote",
+    "guidance": "Restoration details"
   },
   "roof-inspection": {
     "content": "An active leak, condition review or maintenance plan",
@@ -111,10 +111,10 @@ export const serviceSectionTitles={
     "work": "Box gutter condition and repair photographs"
   },
   "roof-replacement": {
-    "content": "Widespread deterioration or isolated damaged sheets",
-    "solution": "Defining replacement areas and retained roof components",
-    "guidance": "Replacement areas, materials and exclusions",
-    "work": "Roof replacement construction photographs"
+    "content": "Local repairs or a replacement roof",
+    "solution": "Agreeing the roof replacement work",
+    "guidance": "Roof replacement details",
+    "work": "Roof replacement project photos"
   },
   "flat-roof-repairs": {
     "content": "Standing water and leaks at low-slope roof junctions",

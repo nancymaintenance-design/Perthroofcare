@@ -75,8 +75,9 @@ test('Perth whole-roof replacement gallery distinguishes construction from compl
  const $=page('roof-replacement'),section=$('#perth-roof-replacement-project');
  assert.equal(section.find('img').length,3);
  assert.equal(new Set(section.find('img').map((_,e)=>$(e).attr('src')).get()).size,3);
- assert.match(section.find('h3').text(),/whole-roof replacement.*construction/i);
- assert.match(section.text(),/construction-stage records/);
+ assert.match(section.find('h3').text(),/roof replacement.*(?:construction|work in progress)/i);
+ assert.match(section.text(),/construction-stage records|photos were taken during the work/i);
+ assert.match($('main').text(),/work in progress, not the finished roof/i);
  for(const img of section.find('img').toArray()){
   assert.ok($(img).attr('alt').length>20);
   assert.match($(img).attr('srcset'),/\.webp/);

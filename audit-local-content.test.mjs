@@ -19,7 +19,7 @@ test('six service scopes explain distinct component decisions without unconfirme
   'roof-cleaning':[/cleaning service addresses surface deposits/i,/painting adds a finish/i,/restoration/i],
   'roof-painting':[/existing coating/i,/clean.*before spray painting/i,/product compatibility/i],
   'box-gutter-repairs':[/outlet/i,/joint/i,/overflow route/i],
-  'roof-replacement':[/local repair/i,/retained/i,/concealed/i],
+  'roof-replacement':[/local repair|replacing a few damaged sheets/i,/retained|which can stay/i,/concealed|damage that was hidden/i],
   'flat-roof-repairs':[/covering/i,/drainage/i,/penetrations/i],
   'strata-roof-repairs':[/permission/i,/authorised contact/i,/approval arrangements/i]
  };
@@ -65,7 +65,7 @@ test('refined service copy names work and photo stages directly while retaining 
  assert.match(page('roof-cleaning')('#scope-1').text(),/we clean.*before spray painting/i);
  assert.match(page('roof-painting')('#scope-2').text(),/we clean.*before spray painting/i);
  assert.match(page('roof-painting')('#scope-3').text(),/after spray painting/i);
- assert.match(page('roof-replacement')('#scope-3').text(),/construction.stage/i);
+ assert.match(page('roof-replacement')('#scope-3').text(),/construction.stage|work in progress, not the finished roof/i);
  assert.match(page('strata-roof-repairs')('#perth-strata-skylight-project').text(),/adding a skylight.*existing metal roof/i);
 });
 

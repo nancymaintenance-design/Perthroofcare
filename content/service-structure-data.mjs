@@ -16,13 +16,13 @@ export const serviceRelated={
  'roof-cleaning-painting':['roof-cleaning','roof-painting','roof-maintenance','roof-leak-repairs','roof-restoration#restoration-quote-factors'],
  'commercial-roof-repairs':['metal-roof-repairs','box-gutter-repairs','flat-roof-repairs','roof-inspection','strata-roof-repairs'],
  'storm-damage-roof-repairs':['roof-leak-repairs','tile-roof-repairs','flashing-repairs','roof-repairs#repair-quote-factors'],
- 'roof-restoration':['repair-options#compare-repair-options','roof-cleaning','roof-painting','roof-repairs','roof-replacement'],
+ 'roof-restoration':['repair-options#compare-repair-options','roof-cleaning','roof-painting','roof-repairs','roof-replacement',['/news/roof-repair-cost-perth/#guide-section-6','Compare roof repairs, restoration and replacement']],
  'roof-inspection':['repair-options#compare-repair-options','roof-leak-repairs','roof-maintenance','strata-roof-repairs','roof-replacement'],
  'repair-options':['roof-repairs#repair-quote-factors','roof-restoration#restoration-quote-factors','roof-replacement','roof-inspection',['/news/roof-repair-cost-perth/','Repair quote inclusions']],
  'roof-cleaning':['roof-painting','roof-maintenance','roof-leak-repairs'],
  'roof-painting':['roof-cleaning','roof-restoration','roof-leak-repairs'],
  'box-gutter-repairs':['gutter-repairs','gutters-downpipes','flat-roof-repairs','commercial-roof-repairs'],
- 'roof-replacement':['repair-options#compare-repair-options','roof-repairs','roof-inspection'],
+ 'roof-replacement':['repair-options#compare-repair-options','roof-repairs','roof-inspection',['/news/roof-repair-cost-perth/#guide-section-6','Compare roof repairs, restoration and replacement']],
  'flat-roof-repairs':['box-gutter-repairs','roof-leak-repairs','commercial-roof-repairs'],
  'strata-roof-repairs':['roof-inspection','commercial-roof-repairs','roof-leak-repairs']
 };
@@ -133,9 +133,12 @@ export const serviceCopy={
  },
  'roof-restoration':{
   heading:'Coordinated repairs and surface work',
-  content:'Restoration brings suitable component repairs together with agreed cleaning, preparation and finishing. A few broken tiles or an isolated leak may need only a local repair. Wider work is assessed against the covering, material condition and your objective; painting is not a substitute for a sound roof detail.',
-  steps:['Assess tiles or sheets, ridge support, flashings and drainage to establish whether a broader programme is appropriate.','Separate repair items from cleaning, preparation and finish in the quote, identifying materials, deterioration addressed and preparation required. We clean before spray painting where painting is agreed.','Review the agreed repair and finishing scope, drainage details and exclusions. Confirm additional work, product information and any warranty terms in writing.'],
-  boundary:'Access, removal of damaged material and disposal should be clear in the comparison. Whole-roof replacement is a separate decision where retained material cannot support an appropriate repair.',
+  content:'A few broken tiles or a leak around a flashing may only need a local repair. Roof restoration combines necessary repairs with cleaning, preparation and painting where suitable. We check the condition of the roof before recommending the work. Painting alone will not fix damaged tiles, sheets or flashings.',
+  steps:['Inspect the roof tiles or sheets, ridge capping, flashings and drainage to identify repairs.','Provide a written quote that lists the repairs, cleaning, surface preparation and painting separately. If painting is included, we clean the roof first.','Confirm the materials, areas to be treated and any work excluded from the quote. We agree any extra work with you and confirm applicable warranty terms in writing.'],
+  boundary:'The quote should also explain roof access, removal of damaged materials and rubbish removal. If the existing roofing is too damaged to repair, we discuss replacement separately.',
+  enquiryLabel:'Discuss roof restoration',
+  enquiryText:'Tell us your suburb, what needs attention and whether the roof is tiled or metal, if known. Photos you already have can help, but are optional. Do not climb onto the roof or enter an unsafe roof space to take them.',
+  readingTitle:'Roof restoration advice',
   anchors:{'restoration-quote-factors':'steps'},caseTitles:[]
  },
  'roof-inspection':{
@@ -175,10 +178,15 @@ export const serviceCopy={
  },
  'roof-replacement':{
   heading:'Whole-roof scope and retained components',
-  content:'We undertake whole-roof replacement in Perth. Widespread deterioration or material unable to support a suitable local repair can justify a wider scope. The assessment compares what can be retained, the covering to remove and the proposed replacement; age or appearance alone is insufficient.',
-  steps:['Compare local repair and replacement against the observed defects, adjoining junctions and limitations of retaining the covering.','Define new covering, flashings, penetrations, drainage connections, removal, disposal and access. Agree how concealed deterioration will be recorded and further work approved.','Review the agreed replacement components and completion checks, distinguishing the final scope from construction-stage photographs.'],
-  boundary:'Suspected asbestos requires separate identification and specialist arrangements. The photographs are construction-stage records; this gallery does not show the completed replacement roof. They cannot establish another roof’s material needs or a standard duration.',
-  anchors:{'scope-1':'content','scope-2':'steps','scope-3':'boundary','service-questions':'guidance'},caseTitles:['Whole-roof replacement construction stages']
+  content:'Replacing a few damaged sheets may be enough if the surrounding roof is still in good condition. If damage or deterioration is widespread, replacing the roof may be more practical. We check the roof before recommending either option, rather than relying on its age or appearance.',
+  steps:['Inspect the roof and explain which areas need replacing and which can stay.','Agree the roofing materials, flashings and drainage connections, along with safe roof access, removal of the old roofing and rubbish removal.','Check the work against the agreed quote. If we find damage that was hidden before removal, we explain it and agree any extra work with you before proceeding.'],
+  boundary:'If we suspect asbestos, it must be identified and dealt with by an appropriate specialist. The photos below show work in progress, not the finished roof.',
+  enquiryLabel:'Discuss roof replacement',
+  enquiryText:'Tell us your suburb, what needs attention and whether the roof is tiled or metal, if known. Photos you already have can help, but are optional. Do not climb onto the roof or enter an unsafe roof space to take them.',
+  readingTitle:'Roof repair and replacement advice',
+  guideLabel:'Roof repair cost guide',
+  topicLabels:{Q025:'Deciding between roof repairs and replacement'},
+  anchors:{'scope-1':'content','scope-2':'steps','scope-3':'boundary','service-questions':'guidance'},caseTitles:['Roof replacement work in progress']
  },
  'flat-roof-repairs':{
   heading:'Covering, drainage and connected junctions',

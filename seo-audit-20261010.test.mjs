@@ -118,7 +118,7 @@ test('key guides offer practical checklists, decision comparisons and direct rep
   }
   assert.ok(page('/news/ridge-capping-repairs-perth-guide/')('.audit-decision-comparison tbody tr').length>=3);
   const restoration=page('/roof-restoration/');
-  for(const pattern of [/local repair/i,/restoration.*cleaning.*preparation/i,/replacement.*separate decision/i])assert.match(restoration('main').text(),pattern);
+  for(const pattern of [/local repair/i,/restoration.*cleaning.*preparation/i,/replacement.*separate decision|discuss replacement separately/i])assert.match(restoration('main').text(),pattern);
   assert.ok(restoration('main a[href^="/repair-options/"]').length,'full repair/restoration/replacement comparison remains reachable');
 });
 

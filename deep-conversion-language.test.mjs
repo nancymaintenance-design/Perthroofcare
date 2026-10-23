@@ -72,5 +72,5 @@ test('drainage preparation photos are locally optional and restoration describes
  }
  const txt=visible(readFileSync('public/roof-restoration/index.html','utf8'));
  assert.doesNotMatch(txt,/can be discussed separately before a scope|DETAILS THAT HELP FRAME AN ENQUIRY/);
- assert.match(txt,/materials, deterioration.*preparation/i);
+ for(const pattern of [/roof tiles or sheets/i,/rust, damaged sheets/i,/surface preparation/i])assert.match(txt,pattern);
 });

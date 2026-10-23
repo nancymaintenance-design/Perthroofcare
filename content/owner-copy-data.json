@@ -500,8 +500,8 @@
       "roof-replacement"
     ],
     "before": "Yes. We assess the existing roof and agree the removal, materials, connections and replacement scope before work proceeds.",
-    "after": "We assess the existing roof and agree the removal, materials, connections and replacement scope before work proceeds.",
-    "zh": "我们会评估现有屋面，并在施工前约定拆除、材料、连接及更换范围。",
+    "after": "We inspect the existing roof and explain whether repairs or replacement are appropriate. If replacement is recommended, the quote sets out the old roofing to be removed, new materials and installation work.",
+    "zh": "我们会检查现有屋面，说明适合维修还是更换。如果建议更换，报价会列明旧屋面材料的拆除范围、新材料和安装项目。",
     "category": "F",
     "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
   },
@@ -511,8 +511,8 @@
       "roof-replacement"
     ],
     "before": "No. Local sheet replacement addresses affected components. Re-roofing is a wider removal and replacement project with a separately agreed scope.",
-    "after": "Local sheet replacement addresses affected components. Re-roofing is a wider removal and replacement project with a separately agreed scope.",
-    "zh": "局部换板处理受影响构件；重新铺设屋面是更大范围的拆除与更换工程，需要另行约定范围。",
+    "after": "A local sheet replacement deals with the damaged section while the surrounding sheets remain in place. Re-roofing involves removing and replacing the old tiles or sheets across the whole roof. We list the areas, materials, flashings, drainage connections, access and rubbish removal in the quote so you can compare the actual work.",
+    "zh": "局部换板只处理损坏的部分，周围仍可使用的板材会保留。整体更换则需要拆除并更新整片屋面的旧瓦片或金属板。我们会在报价中列明施工区域、材料、泛水板、排水连接、施工通道及废料清运安排，方便您比较实际包含的工作。",
     "category": "F",
     "reason": "Declarative heading requires a complete self-contained answer; align Chinese naturally and preserve conditions."
   },
@@ -1153,8 +1153,7 @@
       "F"
     ],
     "reason": "Guide card can explain its usefulness without scolding the customer about assumed prices."
-  }
-,
+  },
   {
     "id": "M01",
     "routes": [
@@ -1220,8 +1219,7 @@
     "zh": "这些照片展示珀斯一处物业瓦屋面喷涂后的坡面、屋脊及檐口。喷涂前，我们会评估您屋面的状况，并约定所需维修、前处理及面层。",
     "category": "D/F",
     "reason": "Displayed subset is three finished images, not spray application."
-  }
-,
+  },
   {
     "id": "A-cottesloe-roof-repairs",
     "routes": [
@@ -1518,8 +1516,7 @@
     "zh": "确定维修方案前，我们会检查接缝、周边檐沟材料、支撑及落水管连接。",
     "category": "A/F",
     "reason": "Paragraph-reviewed action clarification; existing scope retained."
-  }
-,
+  },
   {
     "id": "ALT01",
     "routes": [
@@ -1555,8 +1552,7 @@
     "zh": "瓦屋面边缘可见表面沉积物，相邻檐沟内有积水。",
     "category": "F",
     "reason": "Main agent inspected original pixels on 2026-10-21; no new result claims."
-  }
-,
+  },
   {
     "id": "M18",
     "routes": [

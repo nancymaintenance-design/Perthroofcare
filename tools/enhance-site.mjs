@@ -38,7 +38,7 @@ function setMetadata($, title, description) {
 function replaceLegacyPage($, route) {
   const restoration = route === 'roof-restoration';
   const title = restoration ? 'Roof Restoration Perth' : 'Roof Repair Options Perth';
-  const lead = restoration ? 'We restore Perth roofs through coordinated tile or metal repairs, ridge and flashing work, drainage maintenance and suitable surface preparation. Our inspection establishes the work your roof needs before cleaning or coating is specified.' : 'Choose the right extent of roof work with an inspection from Ellis Services Group. We explain targeted repair, component replacement and wider restoration so you can commission work that suits the roof condition.';
+  const lead = restoration ? 'We restore tile and metal roofs across Perth. We check for leaks and assess the roofing, ridge capping, flashings and drainage before recommending repairs, cleaning or painting.' : 'Choose the right extent of roof work with an inspection from Ellis Services Group. We explain targeted repair, component replacement and wider restoration so you can commission work that suits the roof condition.';
   const work = restoration ? [
     ['Repair before finishing', 'We identify broken tiles, unstable ridge caps, deteriorated metal fixings and damaged flashing first. These defects need repair before surface work; a new coating alone does not repair a broken component.'],
     ['Preparation matched to the roof', 'Tile and metal surfaces need different preparation. We check existing coatings, corrosion and substrate condition, plan appropriate cleaning and specify compatible materials for the proposed finish.'],
@@ -49,9 +49,9 @@ function replaceLegacyPage($, route) {
     ['Coordinated restoration', 'When several areas need attention, a coordinated scope can combine covering repairs, ridge work, drainage maintenance and surface preparation. We explain the priorities and the extent of each work item.']
   ];
   const questions = restoration ? [
-    ['Does roof restoration include repairing leaks?', 'Leak-related defects are identified during inspection and included in the repair scope before surface finishing. Our team checks tiles or sheets, ridges, flashings and drainage and explains the required work.'],
-    ['Can a metal roof be restored?', 'A metal roof can suit coordinated repairs and surface work where its condition supports that approach. We inspect corrosion, sheet integrity, fixings and existing finish and specify local replacement or broader work accordingly.'],
-    ['How is a restoration scope prepared?', 'We inspect the covering and connected roofline, record damaged components and assess the existing surface. The scope sets out repairs, access, preparation, proposed finish and drainage work so each stage is clear.']
+    ['Does roof restoration include repairing leaks?', 'We check for leaks and agree any repairs before cleaning or painting. Damaged tiles, loose fixings and faulty flashings need repair; a new coat of paint will not fix them. If a local repair is enough, we explain that option.'],
+    ['Can a metal roof be restored?', 'A metal roof may be suitable for restoration if the sheets and surrounding roof are still serviceable. We check for rust, damaged sheets, loose fixings and problems with the existing coating before recommending repairs or replacement.'],
+    ['How is a restoration scope prepared?', 'Our quote lists the roof areas, repairs, cleaning, preparation and painting included. It also explains the materials, access and rubbish removal, and any work that is not included. This helps you compare quotes for the same work. Any extra work found necessary during the job is discussed and agreed with you first.']
   ] : [
     ['How do you choose between repair and replacement?', 'We check the extent of the defect and the condition of surrounding material. A local repair suits isolated damage; component replacement addresses material that is no longer suitable for repair. We explain the recommended scope after inspection.'],
     ['Can several repairs be combined in one job?', 'Yes. We can coordinate tile, ridge, flashing and drainage work where these components are connected. A combined scope identifies each work item and the access arrangements needed to complete it.'],
