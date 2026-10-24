@@ -61,11 +61,19 @@ export async function optimizeImages(root) {
     });
     if(route===''||route==='zh'){
       $('link[rel="preload"][as="image"][href="/assets/images/hero-australian-roofer-v2.png"]').remove();
-      const rec=manifest['hero-australian-roofer-v2.png'];
+      const selectedHero=$('.home-topic-rail').attr('data-ui-hero-image');
+      const rec=manifest[selectedHero||'hero-australian-roofer-v2.png'];
       const mobile=rec.variants.find(v=>v.width>=640)||rec.variants.at(-1);
-      bgRules.push(`.home-topic-rail.home-hero-backdrop{background-image:url('/assets/images/${rec.variants.at(-1).file}')!important}@media(max-width:600px){.home-topic-rail.home-hero-backdrop{background-image:url('/assets/images/${mobile.file}')!important}}`);
+      const property=selectedHero?'--ui-home-image':'background-image';
+      bgRules.push(`.home-topic-rail.home-hero-backdrop{${property}:url('/assets/images/${rec.variants.at(-1).file}')}@media(max-width:600px){.home-topic-rail.home-hero-backdrop{${property}:url('/assets/images/${mobile.file}')}}`);
       $('head').append(`<link rel="preload" as="image" fetchpriority="high" href="/assets/images/${rec.variants.at(-1).file}" media="(min-width:601px)"><link rel="preload" as="image" fetchpriority="high" href="/assets/images/${mobile.file}" media="(max-width:600px)">`);
     }
+    $('[style*="--ui-detail-image"]').each((_,el)=>{
+      const name=$(el).attr('style').match(/\/assets\/images\/([\w.-]+)/)?.[1],record=manifest[name];
+      if(!record)return;
+      const desktop=record.variants.find(v=>v.width>=1280)||record.variants.at(-1),mobile=record.variants.find(v=>v.width>=640)||desktop;
+      bgRules.push(`.ui-solution-media[style*="${name}"]{--ui-detail-image:url('/assets/images/${desktop.file}')!important}@media(max-width:600px){.ui-solution-media[style*="${name}"]{--ui-detail-image:url('/assets/images/${mobile.file}')!important}}`);
+    });
     writeFileSync(join(root,route,'index.html'),$.html());
   }
   writeFileSync(join(root,'responsive-images.css'),[...new Set(bgRules)].join('\n'));

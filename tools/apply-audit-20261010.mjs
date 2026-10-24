@@ -18,6 +18,8 @@ import {applyCopyCleanup} from '../content/copy-cleanup.mjs';
 import {applyEditorApproved} from '../content/editor-approved.mjs';
 import {applyOwnerCopy} from '../content/owner-copy.mjs';
 import {serviceSectionTitles} from '../content/service-section-titles.mjs';
+import {serviceCopy} from '../content/service-structure-data.mjs';
+import {applyUiUpgrade} from '../content/ui-upgrade.mjs';
 const postRainReviewRoutes=new Set([...Object.keys(serviceSectionTitles),'faq','news','news/roof-leak-inspection','news/drainage-after-rain','news/roof-maintenance-basics']);
 
 const contentUpdateRoutes=new Set([...keywordGapRoutes,...keywordMapRoutes,'gutters-downpipes']);
@@ -151,15 +153,17 @@ export function applyAudit20261010({root,site}){
     if(applyCopyCleanup($,route))declarativeRoutes.add(route);
     if(applyEditorApproved($,route))declarativeRoutes.add(route);
     if(applyOwnerCopy($,route,graph))declarativeRoutes.add(route);
+    applyUiUpgrade($,route);
     syncContentKnowledge($,graph,site,canonical);
     refineLocalServiceGraph($,graph,route,canonical);
     if(declarativeRoutes.has(route)){
-      const reviewDate=postRainReviewRoutes.has(route)?'2026-10-21':'2026-10-14';
+      const reviewDate=serviceCopy[route]?.copyReviewedAt||(postRainReviewRoutes.has(route)?'2026-10-21':'2026-10-14');
       const finalRendered=load($.html()),heading=finalRendered('main h1').text().trim();
       if(route.startsWith('news/'))$('[aria-current="page"]').text(heading);
       for(const node of graph){
         if(['WebPage','Article','CreativeWork'].includes(node['@type']))node.dateModified=reviewDate;
         if(node['@type']==='WebPage'){node.name=finalRendered('title').text();node.description=finalRendered('meta[name="description"]').attr('content');}
+        if(node['@type']==='Service'&&serviceCopy[route]?.copyReviewedAt)node.description=finalRendered('meta[name="description"]').attr('content');
         if(node['@type']==='Article')node.headline=heading;
         if(node['@type']==='BreadcrumbList'&&node.itemListElement?.length)node.itemListElement.at(-1).name=route.startsWith('news/')?heading:heading.replace(/\.$/,'');
       }
@@ -184,7 +188,7 @@ export function applyAudit20261010({root,site}){
   writeFileSync(join(root,'news/feed.xml'),`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Roof Repairs Perth News — Ellis Services Group</title><link>${site}/news/</link><description>Practical roof repair and maintenance guidance.</description><language>en-au</language>${newsFeed.items.map(i=>`<item><title>${esc(i.title)}</title><link>${esc(i.url)}</link><guid isPermaLink="true">${esc(i.id)}</guid><description>${esc(i.content_text)}</description></item>`).join('')}</channel></rss>`);
   const sitemap=load(readFileSync(join(root,'sitemap.xml'),'utf8'),{xmlMode:true});
   sitemap('url').each((_,el)=>{const route=new URL(sitemap(el).find('loc').text()).pathname.replace(/^\/|\/$/g,'');
-    const updated=postRainReviewRoutes.has(route)?'2026-10-21':declarativeRoutes.has(route)||route==='about'?'2026-10-14':localEditorialRoutes.has(route)?localEditorialDate:contentUpdateRoutes.has(route)?'2026-10-12':'2026-10-10';
+    const updated=serviceCopy[route]?.copyReviewedAt||(postRainReviewRoutes.has(route)?'2026-10-21':declarativeRoutes.has(route)||route==='about'?'2026-10-14':localEditorialRoutes.has(route)?localEditorialDate:contentUpdateRoutes.has(route)?'2026-10-12':'2026-10-10');
     if(declarativeRoutes.has(route)||localEditorialRoutes.has(route)||substantiveRoutes.has(route)||articleImages[route.replace(/^news\//,'')]||(!route.startsWith('projects/')&&!['privacy','legal'].includes(route))){sitemap(el).find('lastmod').remove();sitemap(el).append(`<lastmod>${updated}</lastmod>`);}
   });
   writeFileSync(join(root,'sitemap.xml'),sitemap.xml());

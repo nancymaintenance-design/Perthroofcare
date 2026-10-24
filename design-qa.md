@@ -1,37 +1,46 @@
-# 全站UI修复视觉验收 — 2026-10-21
+# Perth Roof Care — selected concept 2 UI QA, 2026-10-24
 
-最新对齐反馈已修复：目录从第一节正文上移到整篇文章开头齐平。最终截图aligned-top-desktop.png，1440×900 CSS；中英目录与正文开头容器top均125.594px。滚动后仍为77px吸附，1024px为120.266px，手机保持原顺序及static。详见reports/2026-10-21-site-ui-review/目录顶部对齐补充.md。字体、色彩、原图和文案保持；最终340测试通过，无控制台警告或错误。此前“初始位置不变”的记录是上一轮状态，现以最新对齐反馈为准。
+source visual truth: ../reports/2026-10-24-ui-redesign-exploration/display-2-project-photography.png
 
-本轮追加：用户要求指南目录滚至网页上端后跟随。已将固定136px改为实际页头高度：1440px中英页77px，1024px约120.266px，均实测目录顶部贴合页头下缘；手机仍为static。初始与滚动状态证据见reports/2026-10-21-site-ui-review/sticky-natural-before-scroll.png和sticky-follow-desktop.png，量测见sticky-follow-checks.json。相对于上一轮已选版式，仅吸附起点和章节避让更新，字体、网格、颜色、图片与内容保持。已打开合并对照sticky-layout-comparison.png：同一1440×900 CSS初始状态，前后均为1425×889像素采集，等比缩为720×450并排；标题换行、照片、目录和正文起点一致。滚动后截图与77px/约120px实测补足行为复核。最终340测试通过，无控制台警告/错误；追加结果passed。
+Implementation: ../reports/2026-10-24-site-ui-upgrade/service-full.png; service-desktop.png; service-detail-open.png. Full-view comparison: comparison-full.png. Focused comparisons: comparison-hero-scope.png and comparison-solution.png in the same report folder. Source and implementation were opened together in each combined comparison input.
 
-Source visual truth：本轮before-*截图及用户已确认的FAQ左目录/右正文语言；范围为已确认问题的受控修复，非品牌重设计。
-Implementation：../reports/2026-10-21-site-ui-review/after-*、after-top-*。
-Full comparison：comparison-guide-desktop.png、comparison-news-mobile.png、comparison-areas-mobile.png、comparison-service-mobile.png，均在同一张图内左旧右新。
+## Dimensions and state
 
-Viewport：主要1440×900、390×900 CSS px；桌面浏览器截图1425px有效宽，手机375px有效宽（捕获排除滚动条，保持原比例）。比较使用相同CSS尺寸和相同页面顶部状态，无密度差异拉伸。额外320/768/1024px，共24种代表状态。
+Source raster is 946×1663. Browser viewport is 1440×1000 CSS pixels; scrollbar leaves 1425px screenshot content width. Full implementation capture is 1425×4142, density 1. Both images were scaled proportionally to 720px wide, never stretched; the full comparison has two adjacent columns. Focused regions use the same horizontal normalization and their original aspect ratios. State: Chinese roof-repairs route, top of page; full capture after scrolling through all evidence so lazy images were loaded; an additional real-browser capture records an expanded guidance item. Source is a concept, not an existing responsive specification. Other page families and mobile states inherit its palette, photography and hierarchy.
 
-## Findings and history
+## Binding constraints and intentional adaptations
 
-- P1已修复：46页手机正文相关导航原被隐藏。所属页面层显示规则恢复，并实点进入对应服务。
-- P2已修复：长指南目录占整块正文宽度，照片容器空白较多。桌面旁置目录，竖版原图与首段并排；手机目录限制高度、有滚动条，图片恢复独立自然宽度；原图等比完整展示，正文更早出现。
-- P2已修复：News卡片标题大间距及单卡分组留空。四分类捷径、紧凑卡片与单卡满行，完整指南内容保留。
-- P2已修复：地区组固定最小高度造成空白，改为自然高度。
-- P2已修复：平板FAQ/指南侧栏顶部位于固定页头下方。768px页头77→侧栏96；1024px页头约120→侧栏136。证据sticky-recheck.json。
+The user explicitly requires existing copy, H1, URL and business data to remain. Therefore the concept's invented link descriptions, extra hero CTA, newly rewritten step subheadings and abbreviated enquiry are not copied. The existing four related destinations, full guidance, safety/warranty boundary, six original evidence photographs and captions, enquiry and footer remain. The implementation is longer than the concept because these existing sections cannot be deleted. The original authentic logo and all navigation labels remain, with the Perth site name added beside the operator wordmark. Typography uses installed Arial/Aptos/Chinese system fallbacks, without new font requests; desktop text remains readable at 16–18px rather than scaling text from a flattened concept raster. Hero/detail photographs are the actual corresponding site files, not recreated raster art.
 
-## Required fidelity surfaces
+## Comparison history
 
-- Typography：沿用Arial及中文系统回退；原H1不改，目录/卡片字号保持层级与阅读行距；未截断业务文本。
-- Spacing/layout：目录和正文利用现有内容区域；减少固定空高和标题48px空隙；服务触控目标最小44px。手机单列，目录可独立滚动。
-- Colors/tokens：现有白/炭黑/琥珀/深赭及中性底，未引入新调色板或夸张装饰。
-- Assets：原照片、logo、图标保持，图片按自然比例显示，懒加载和响应式构建沿用。
-- Copy/content：138页保护快照通过，除新增分类锚点和布局容器外的HTML一致，包含所有客户评价、FAQ与schema。
+1. P1: legacy light scope background inherited white text. Fixed with the page-owned content-section surface; latest service-desktop/full and comparisons show charcoal with readable text.
+2. P1: mobile primary menu inherited a light background under white links. Fixed shared open-menu dark surface and bounded scroll. mobile-menu-open.png and actual last-service navigation verify usability at 320px.
+3. P1: FAQ hero inherited white background under white headings. Fixed the precise hero selector. faq-desktop.png and overview-phone.png verify both layouts.
+4. P2: old homepage container inherited hero min-height, adding excess vertical space and centring the text. Reset container min-height/margins and old duplicate overlays; final home-desktop/phone show left-aligned copy and the finished metal roof.
+5. P2: desktop header site name wrapped, and mobile brand consumed menu space. Corrected desktop grid and nowrap; phone shows the authentic logo and Perth site name while keeping the original operator text in the accessible DOM. 320/390/1024/1440 checks pass.
+6. P2: related-service chevron lacked contrast on charcoal. Reused existing SVG with a light filter; latest comparison shows visible chevrons. No new hand-drawn assets.
+7. P2: new layers exceeded stylesheet budgets. Removed only reviewed retired CSS families absent from all pages and runtime JS; moved About/Contact overrides back to their owners, trimmed redundant declarations. No ceiling was raised; all 138 budgets and tests pass.
 
-## Interaction and validation
+## Final assessment
 
-手机分类、指南尾项、恢复的服务入口实点成功；标题落点在页头以下。桌面目录在长阅读区域随滚动定位，阅读末端受父内容边界约束。浏览器检查无控制台错误/警告。最终完整复跑340测试通过；276组逐页复验无横向溢出和隐藏正文导航；额外24组断点检查及3组侧栏间距复验通过。最终指南截图确认目录、正文和原图在1440px首屏内形成连续阅读顺序。
+- Fonts: forceful compact H1, sentence-case body, natural Chinese wrapping; no clipping on 320/390/1024/1440 samples. Original 1854 headings/summary labels retained.
+- Layout: photograph-led hero; sticky light outline; dark two-column scope and related-service rows; chalk photo/solution section; original galleries and dark enquiry/footer. Tablet and phone flow in one column where needed. Directory, FAQ, guides, company/contact and legal pages use the same shared language without stripping their content.
+- Colors/tokens: charcoal #202321, chalk #f4f1e9, amber #f2b544, neutral separators; DESIGN frontmatter matches current runtime tokens. Dark/light inherited-contrast defects above have been corrected.
+- Assets: authentic logo, existing SVG icons and real site photos. Five home thumbnails and home background replaced as requested; service evidence and captions preserved. Original portrait/composite evidence uses contain treatment where required. Full service screenshot has no pending or broken images.
+- Interactions: FAQ bilingual search/no-results/clear and categories; 320px category selector; desktop/mobile service menus; Escape focus restoration; same-route locale switch; review pause/next/previous; sticky service outline; guide TOC initially level with introduction and sticking below the header. Contact was inspected without submitting.
+- Runtime: 138 routes at 1440px and 390px, plus twenty 1024/320px family checks: no page overflow or loaded-image failures. Console errors/warnings checked: none captured. Full HTTP checks: 138 pages, 10 CSS, 9 public documents. 341 project tests pass.
+- Static tool limitations: premium-audit.json retains six known cross-file false positives; premium-audit-review.md documents runtime evidence. This is not a claim that the raw strict auditor returned clean.
 
-Focused comparison：comparison-news-mobile.png可辨识文字、卡片与导航间距；comparison-service-mobile.png核对恢复的正文入口；宽屏指南对照用于布局和图片比例。交付报告记录了首屏/代表模板人工检查与完整辅助技术验收之间的边界。
+## Open questions / follow-up polish
 
-Implementation checklist：已确认缺陷修复、同屏宽视觉比较、交互、双语、回归测试和报告均完成。无待处理P0/P1/P2；未部署。
+No actionable P0/P1/P2 remains. Optional P3: later approval could refine the exact photograph crop or use a licensed display typeface, but no additional dependency is introduced now. No production form was sent, no external enquiry was made, and no deployment occurred. This is browser QA, not a formal exhaustive accessibility certification.
+
+final result: passed
+
+
+## Latest scoped revision: Contact compact layout, 2026-10-24
+
+The owner rejected the Contact form's scale and lateral whitespace. This supersedes the earlier Contact acceptance above. Source and implementation comparison, twelve responsive cases, field sizing, keyboard checks and the final pass are recorded in ../reports/2026-10-24-contact-layout-refinement/design-qa.md. Original non-style HTML and all form handlers remain unchanged; all 341 tests pass.
 
 final result: passed

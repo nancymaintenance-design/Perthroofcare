@@ -94,7 +94,7 @@ test('priority service pages explain repair decisions and quote scope with exist
     const $=page(path);
     assert.equal($('.service-steps li').length,3,path+' inspection, repair and completion');
     const scope=$('[data-service-section="solution"]').text();
-    for(const pattern of [/materials|compatible/i,/access/i,/exclusions|excluded|limits/i,/quote/i])assert.match(scope,pattern,path+' quoted scope');
+    for(const pattern of [/materials|compatible|suitable replacement fixings, sheets or flashings|suitable replacement tiles/i,/access/i,/exclusions|excluded|limits|outside the quote|not included/i,/quote/i])assert.match(scope,pattern,path+' quoted scope');
     assert.ok($('main a[href^="/projects/"]').length,path+' existing evidence paths');
     assert.equal($('.service-enquiry a[href="/contact/"]').length,1,path+' single final action');
   }
@@ -126,7 +126,7 @@ test('sitemap dates identify actual editorial changes instead of dating every bu
   const xml=readFileSync(join(root,'sitemap.xml'),'utf8'),$=load(xml,{xmlMode:true});
   for(const path of ['/roof-repairs/','/news/roof-flashing-explained/','/areas/leederville-roof-repairs/']){
     const entry=$('url').filter((_,e)=>$(e).find('loc').text()===`https://www.perthroofcare.com.au${path}`);
-    assert.equal(entry.find('lastmod').text(),path==='/roof-repairs/'?'2026-10-21':'2026-10-14');
+    assert.equal(entry.find('lastmod').text(),path==='/roof-repairs/'?'2026-10-24':'2026-10-14');
   }
   assert.equal($('url').filter((_,e)=>$(e).find('loc').text()==='https://www.perthroofcare.com.au/privacy/').find('lastmod').text(),'2026-10-14');
   assert.equal($('url').filter((_,e)=>$(e).find('loc').text()==='https://www.perthroofcare.com.au/faq/').find('lastmod').text(),'2026-10-21','FAQ post-rain answers have an actual editorial update');

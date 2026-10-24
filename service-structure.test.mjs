@@ -8,6 +8,9 @@ const page=r=>load(readFileSync(`public/${r?`${r}/`:''}index.html`,'utf8'));
 const baseline=r=>load(execFileSync('git',['show',`3b9fbbb:${r?`${r}/`:''}index.html`],{encoding:'utf8',maxBuffer:4*1024*1024}));
 const words=$=>$('main').text().trim().split(/\s+/).length;
 const approvedCaptions={
+  "Interior symptom": "Indoor water mark",
+  "Penetration and junction detail": "Roof opening and adjoining junction",
+  "Roof-void inspection context": "Roof-void inspection view",
   "Recorded fastener work": "Fastener repair work",
   "Opened tile-area record": "Opened tile area",
   "Ridge-detail record": "Ridge repair detail",
@@ -104,7 +107,7 @@ test('ordinary repair boundaries omit inspection billing without inventing a cre
 
 test('solution navigation is curated, scannable and distinct from education and project records',()=>{
  for(const route of Object.keys(expected)){
-  const $=page(route),group=$('[data-service-section="solution"] .service-related'),links=group.find('a');
+  const $=page(route),group=$('[data-service-section="content"] .service-related'),links=group.find('a');
   assert.equal(group.find('ul > li > a').length,links.length,route+' open list');
   assert.ok(links.length>0&&links.length<=5,route+' at most five related destinations');
   const paths=links.map((_,e)=>new URL($(e).attr('href'),'https://www.perthroofcare.com.au').pathname).get();
@@ -169,19 +172,17 @@ function routeStyle($,element,width){
  visit(readFileSync('service-layout.css','utf8').replace(/\/\*[\s\S]*?\*\//g,''));return result;
 }
 
-test('service solution uses available desktop width without a stranded right column',()=>{
+test('selected photography layout pairs a detail photo with the complete solution',()=>{
  for(const route of Object.keys(expected)){
-  const $=page(route),body=$('.service-solution-body')[0];
-  assert.equal(routeStyle($,body,1920)['max-width'],'none',route+' full narrative container');
-  if($(body).find('.service-guidance').length){
-   assert.equal(routeStyle($,body,1920).display,'grid',route+' steps and guidance side by side');
-   assert.equal(routeStyle($,body,768).display,'block',route+' natural tablet/phone flow');
-   const guidance=$(body).find('.service-guidance')[0];
-   assert.equal(routeStyle($,guidance,1920)['grid-area'],'1/2/3',route+' guidance beside steps and note');
-  }
-  assert.equal(routeStyle($,$('.service-section')[0],1920)['padding-block'],'clamp(1.5rem,2.5vw,2rem)',route+' compact section rhythm');
+  const $=page(route),body=$('.service-solution-body')[0],layout=$('.ui-solution-layout')[0];
+  assert.equal(routeStyle($,body,1920).display,'block',route+' complete narrative');
+  assert.equal(routeStyle($,layout,1920).display,'grid',route+' photo and solution');
+  assert.equal(routeStyle($,layout,768)['grid-template-columns'],'minmax(0,1fr)',route+' phone flow');
+  assert.equal($('.ui-solution-copy>h2').length,1,route+' solution heading retained');
+  assert.equal(routeStyle($,$('.service-section')[0],1920)['padding-block'],'clamp(2rem,4vw,4rem)',route+' section rhythm');
  }
 });
+
 test('service gallery selectors own appended class lists at 800, 500 and 320 pixels',()=>{
  let oldGrids=0;
  for(const route of Object.keys(expected)){
@@ -189,7 +190,7 @@ test('service gallery selectors own appended class lists at 800, 500 and 320 pix
   for(const grid of $('.service-case-list .aligned-photo-grid,.service-case-list .project-case-grid').toArray()){
    const legacy=($(grid).attr('class')||'').split(/\s+/).some(c=>c.endsWith('-evidence-grid'));if(legacy)oldGrids++;
    const count=$(grid).children().length;
-   for(const [width,columns] of [[800,count===1?1:count===2||count===4?2:3],[500,count===1?1:2],[320,1]]){
+   for(const [width,columns] of [[800,count===1?1:count===2||count===4?2:3],[500,1],[320,1]]){
     const style=routeStyle($,grid,width);assert.equal(style.display,'grid',route+' canonical grid '+width);
     assert.equal(style['grid-template-columns'],columns===1?'minmax(0,1fr)':`repeat(${columns},minmax(0,1fr))`,route+' columns '+width);
     assert.equal(style.gap,'1rem',route+' shared spacing '+width);

@@ -94,6 +94,11 @@ export function applyServiceStructure($,route){
  const originalIds=main.find('[id]').map((_,e)=>$(e).attr('id')).get();
  const hero=main.children('.service-hero').first().clone();
  if(!hero.length)throw new Error(`Service hero missing: ${route}`);
+ if(copy.lead){
+  // The existing editor field owns the roof-repairs lead and runs later.
+  if(!copy.editorOwnsLead)hero.find('p').not('.eyebrow,.hero-actions').first().text(copy.lead);
+  $('meta[name="description"],meta[property="og:description"],meta[name="twitter:description"]').attr('content',copy.lead);
+ }
  hero.find('a[href="/contact/"]').parent('p').remove();
  hero.find('a[href="/contact/"]').remove();
  hero.find('h1').attr('id','service-overview');
@@ -108,6 +113,16 @@ export function applyServiceStructure($,route){
   if(!copy.caseTitles[index])throw new Error(`Unreviewed service evidence: ${route} / ${index}`);
   heading[0].tagName='h3';heading.text(copy.caseTitles[index]);
   removeCaseContactLinks($,record);
+  if(copy.caseText?.[index]){
+   const paragraphs=record.find('p').filter((_,p)=>!$(p).hasClass('eyebrow')&&!$(p).find('a').length&&!$(p).closest('figure,nav').length);
+   if(paragraphs.length!==copy.caseText[index].length)throw new Error(`Case text slots changed: ${route} / ${index}`);
+   paragraphs.each((i,p)=>$(p).text(copy.caseText[index][i]));
+  }
+  for(const [captionIndex,text] of Object.entries(copy.caseCaptionText?.[index]||{})){
+   const caption=record.find('figcaption').eq(Number(captionIndex));
+   if(caption.length!==1)throw new Error(`Case caption missing: ${route} / ${index} / ${captionIndex}`);
+   caption.text(text);
+  }
   const projects=serviceProjectReferences[route]?.[index];
   if(projects?.length)record.append(`<nav class="service-project-references" aria-label="Related project records"><p>Related project records</p><ul>${projects.map(([slug,label])=>`<li><a href="/projects/${esc(slug)}/">${esc(label)}</a></li>`).join('')}</ul></nav>`);
   return record;
@@ -115,6 +130,14 @@ export function applyServiceStructure($,route){
  if(evidence.length!==copy.caseTitles.length)throw new Error(`Evidence count differs from reviewed manifest: ${route}`);
 
  const guidance=main.find('.focus-faq details,#service-questions details').clone();
+ if(copy.guidance){
+  if(guidance.length!==copy.guidance.length)throw new Error(`Service guidance slots changed: ${route}`);
+  guidance.each((index,element)=>{
+   const item=$(element);
+   if(item.find('summary').length!==1||item.find('p').length!==1)throw new Error(`Service guidance structure changed: ${route} / ${index}`);
+   item.find('summary').text(copy.guidance[index][0]);item.find('p').text(copy.guidance[index][1]);
+  });
+ }
  const topics=educationalTopics.filter(t=>t.route===route);
  const titles=serviceSectionTitles[route];
  const articleLinks=serviceRelated[route].filter(e=>Array.isArray(e)&&e[0].startsWith('/news/'));

@@ -96,12 +96,29 @@ if (carousel && fixedReadingHero) {
 
 // Let guide contents reach the actual sticky header before following the reader.
 const guideWorkspace = document.querySelector('.guide-workspace');
-const guideHeader = guideWorkspace && document.querySelector('header');
+const guideHeader = document.querySelector('header');
 if (guideHeader) {
-  const measureGuideHeader = () => guideWorkspace.style.setProperty('--guide-header-height', `${guideHeader.getBoundingClientRect().height}px`);
+  const measureGuideHeader = () => {
+    const height=`${guideHeader.getBoundingClientRect().height}px`;
+    document.documentElement.style.setProperty('--ui-header-height',height);
+    guideWorkspace?.style.setProperty('--guide-header-height',height);
+  };
   measureGuideHeader();
   if (typeof ResizeObserver !== 'undefined') new ResizeObserver(measureGuideHeader).observe(guideHeader);
   else window.addEventListener('resize', measureGuideHeader);
+}
+
+// Ordinary fragment links keep working with scripting disabled.
+const sectionNavigation=document.querySelector('.ui-section-nav');
+if(sectionNavigation&&typeof IntersectionObserver!=='undefined'){
+  const links=[...sectionNavigation.querySelectorAll('a[href^="#"]')];
+  const activate=link=>{for(const other of links)other.removeAttribute('aria-current');link.setAttribute('aria-current','location');};
+  links.forEach(link=>link.addEventListener('click',()=>activate(link)));
+  const observer=new IntersectionObserver(entries=>{
+    const entry=entries.filter(e=>e.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top)[0];
+    if(entry){const link=links.find(a=>a.hash==='#'+entry.target.id);if(link)activate(link);}
+  },{rootMargin:'-20% 0px -55% 0px',threshold:0});
+  links.forEach(link=>{const target=document.getElementById(link.hash.slice(1));if(target)observer.observe(target);});
 }
 
 const enquiryForm = document.querySelector('.enquiry-form');

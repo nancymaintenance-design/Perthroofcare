@@ -25,7 +25,7 @@ test('every service disclosure retains distinct useful answers and matching page
   assert.deepEqual(JSON.parse($('#page-knowledge').text()).guidance.map(g=>[g.heading,g.body]),answers);
  }
  const ridge=visible(readFileSync('public/ridge-capping-repointing/index.html','utf8'));
- assert.match(ridge,/Bedding supports.*pointing is/i);
+ assert.match(ridge,/Bedding is the mortar that supports ridge caps.*Pointing seals/i);
 });
 test('contact offers assessment, written quote and optional email photos without upload promise',()=> {
  const txt=visible(readFileSync('public/contact/index.html','utf8'));

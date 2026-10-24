@@ -12,10 +12,11 @@ test('published pages retain the reviewed 138-page content baseline',()=>{
   // rechecked; H1s, destinations, forms, reviews and protected legal copy remain.
   const snapshot=uiContentSnapshot();
   assert.equal(snapshot.pageCount,138);
-  // 2026-10-23: standard Chinese and plain Australian English on two services.
-  // reports/2026-10-23-bilingual-copy-review verifies every changed text slot;
-  // all other 887 public files, H1s, metadata, forms and styles are unchanged.
-  assert.equal(snapshot.hash,'c8804d6ae12f65737f9bf46a9cd9cc6cf0c0d0eefa7a49ec480152371f4ae652');
+  // 2026-10-24: the remaining 20 services use reviewed Chinese and Australian English.
+  // reports/2026-10-24-service-language-review verifies all 845 changed text slots,
+  // unchanged DOM/links/assets/H1s, 98 unchanged pages and matching machine content.
+  // Selected UI 2 snapshot reviewed against content-protection.json, 2026-10-24.
+  assert.equal(snapshot.hash,'96a216d80b6cb39f242c9be0b51ab3ea6b4c2a96406fc6db31e08cb091a980ee');
 });
 
 test('visual layer joins the existing route request after original styles',t=>{

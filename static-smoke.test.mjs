@@ -132,7 +132,7 @@ test('every service-menu destination uses the full standard service-page structu
     assert.equal($('[data-service-section="content"]').length,1,`${route} service content`);
     assert.equal($('.service-steps li').length,3,`${route} inspection, repair and completion`);
     assert.equal($('[data-service-section="solution"] .focus-faq details').length,3,`${route} service guidance`);
-    assert.ok($('[data-service-section="solution"] .service-related a').length,`${route} contextual paths`);
+    assert.ok($('[data-service-section="content"] .service-related a').length,`${route} contextual paths`);
     assert.match(html, /href="\/contact\/"/i, `${route} needs a direct enquiry route`);
     assert.doesNotMatch(html, /class="section service-route-detail service-real-project"/i, `${route} must not render a one-paragraph case-link block as a standalone service section`);
     assert.doesNotMatch(html, /class="section focus-context"|class="section core-service-cases"/i, `${route} must not stack duplicated template sections`);
@@ -219,17 +219,17 @@ test('new service routes, shared social links and JSON Feed are discoverable', (
 
 test('priority owner pages use distinct service roles with crawlable supporting links', () => {
   const expected = {
-    'roof-repairs': ['Roof repairs', 'Roof components that need repair', ['/roof-leak-repairs/', '/metal-roof-repairs/', '/repair-options/']],
-    'roof-leak-repairs': ['Roof leak repairs', 'A leak in heavy rain or wind-driven rain', ['/flashing-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/']],
-    'flashing-repairs': ['Roof valleys & flashing repairs', 'Water entry at valleys, walls and roof openings', ['/roof-leak-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/']],
-    'gutters-downpipes': ['Gutters & downpipes', 'Gutter overflow after recent cleaning', ['/gutter-repairs/', '/downpipe-repairs/', '/roof-maintenance/']],
-    'downpipe-repairs': ['Downpipe repairs', 'Water escaping from downpipe joints and supports', ['/gutters-downpipes/', '/gutter-repairs/']]
+    'roof-repairs': ['Roof repairs', 'Local repairs for damaged roof areas', ['/roof-leak-repairs/', '/metal-roof-repairs/', '/repair-options/']],
+    'roof-leak-repairs': ['Roof leak repairs', 'Ceiling stains and leaks during rain', ['/flashing-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/']],
+    'flashing-repairs': ['Roof valleys & flashing repairs', 'Valley and flashing leaks', ['/roof-leak-repairs/', '/tile-roof-repairs/', '/metal-roof-repairs/']],
+    'gutters-downpipes': ['Gutters & downpipes', 'Gutters that overflow after cleaning', ['/gutter-repairs/', '/downpipe-repairs/', '/roof-maintenance/']],
+    'downpipe-repairs': ['Downpipe repairs', 'Leaking downpipes and loose brackets', ['/gutters-downpipes/', '/gutter-repairs/']]
   };
   for (const [route, [h1, section, links]] of Object.entries(expected)) {
     const html = readFileSync(fileFor(route), 'utf8');
     assert.equal(load(html)('main h1').text(),h1);
     assert.match(html, new RegExp(section.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
-    const $=load(html),destinations=$('[data-service-section="solution"] .service-related a').map((_,e)=>new URL($(e).attr('href'),'https://www.perthroofcare.com.au').pathname).get();
+    const $=load(html),destinations=$('[data-service-section="content"] .service-related a').map((_,e)=>new URL($(e).attr('href'),'https://www.perthroofcare.com.au').pathname).get();
     for (const href of links) assert.ok(destinations.includes(href), `${route} needs ${href}`);
     assert.match(html, /<link rel="canonical" href="https:\/\/www\.perthroofcare\.com\.au\//i);
     assert.doesNotMatch(html, /<meta[^>]+name="robots"[^>]+noindex/i);
@@ -248,8 +248,8 @@ test('roof flashing guide stays informational and links naturally to flashing re
 test('gutter and downpipe pages distinguish their own service questions', () => {
   const gutters = readFileSync(fileFor('gutters-downpipes'), 'utf8');
   const downpipes = readFileSync(fileFor('downpipe-repairs'), 'utf8');
-  assert.match(load(gutters)('[data-service-section="content"]').text(),/run, outlet, downpipe joints and supports together/i);
-  assert.match(load(downpipes)('[data-service-section="content"]').text(),/joint or support repair.*pipe section/i);
+  assert.match(load(gutters)('[data-service-section="content"]').text(),/gutter, outlet, pipe joints and brackets together/i);
+  assert.match(load(downpipes)('[data-service-section="content"]').text(),/joint or bracket can be repaired.*pipe section/i);
   assert.match(load(downpipes)('main').text(),/underground.*outside|separate underground drainage/i);
   assert.notEqual(gutters.match(/<main[\s\S]*<\/main>/)?.[0], downpipes.match(/<main[\s\S]*<\/main>/)?.[0]);
 });
@@ -284,7 +284,7 @@ test('service pages present Ellis as a roof-repair provider and local pages add 
 
   assert.match(home, /PERTH ROOF CARE IS OPERATED BY ELLIS SERVICES GROUP PTY LTD/i);
   assert.match(about, /Perth Roof Care is operated by Ellis Services Group Pty Ltd\./i);
-  assert.match(storm, /Urgent storm-related roof repair enquiries are prioritised\. Attendance is arranged promptly when weather, site access and safety conditions allow\./i);
+  assert.match(storm, /We prioritise urgent enquiries and arrange attendance promptly when weather, site access and safety allow\./i);
 
   for (const route of ['', 'services', 'roof-repairs', 'roof-leak-repairs', 'tile-roof-repairs', 'metal-roof-repairs', 'storm-damage-roof-repairs']) {
     const html = readFileSync(fileFor(route), 'utf8');
@@ -381,11 +381,11 @@ test('every core service page publishes professional keyword-led scope and asses
 test('roof leak and flashing pages retain contextual service links inside the solution with valid targets', () => {
   const leak = readFileSync(fileFor('roof-leak-repairs'), 'utf8');
   const flashing = readFileSync(fileFor('flashing-repairs'), 'utf8');
-  for (const html of [leak, flashing]) assert.ok(load(html)('[data-service-section="solution"] .service-related').length);
+  for (const html of [leak, flashing]) assert.ok(load(html)('[data-service-section="content"] .service-related').length);
   assert.equal(load(leak)('h1#service-overview').text(),'Roof leak repairs');
   assert.equal(load(flashing)('h1#service-overview').text(),'Roof valleys & flashing repairs');
   for (const [html,paths] of [[leak,['/flashing-repairs/','/tile-roof-repairs/','/metal-roof-repairs/','/gutters-downpipes/']],[flashing,['/roof-leak-repairs/','/tile-roof-repairs/','/metal-roof-repairs/']]]) {
-    const $=load(html),links=$('[data-service-section="solution"] .service-related a').map((_,e)=>new URL($(e).attr('href'),'https://www.perthroofcare.com.au')).get();
+    const $=load(html),links=$('[data-service-section="content"] .service-related a').map((_,e)=>new URL($(e).attr('href'),'https://www.perthroofcare.com.au')).get();
     for (const path of paths) {
       const destination=links.find(url=>url.pathname===path);assert.ok(destination,path+' contextual destination');
       const target=load(readFileSync(fileFor(path.slice(1,-1)),'utf8'));
@@ -393,8 +393,8 @@ test('roof leak and flashing pages retain contextual service links inside the so
       assert.equal(target('h1#service-overview').length,1,path+' original inbound anchor preserved');
     }
   }
-  assert.match(load(leak)('[data-service-section="content"]').text(),/tiles or sheets, ridges, valleys, flashings and drainage/i);
-  assert.match(load(flashing)('[data-service-section="content"]').text(),/walls, chimneys, skylights and penetrations/i);
+  assert.match(load(leak)('.service-hero').text(),/damaged tiles, sheets, fixings, valleys and flashings/i);
+  assert.match(load(flashing)('[data-service-section="content"]').text(),/walls, chimneys, skylights and other openings/i);
 });
 
 test('storm damage repairs uses the same professional service structure with safe response conditions', () => {
@@ -402,8 +402,8 @@ test('storm damage repairs uses the same professional service structure with saf
   assert.equal(load(html)('h1#service-overview').text(),'Storm damage roof repairs');
   assert.equal(load(html)('[data-service-section="content"]').length,1);
   assert.equal(load(html)('.service-steps li').length,3);
-  assert.ok(load(html)('[data-service-section="solution"] .service-related a').length);
-  assert.match(html, /weather, site access and safety conditions allow/i);
+  assert.ok(load(html)('[data-service-section="content"] .service-related a').length);
+  assert.match(html, /weather, site access and safety allow/i);
   assert.doesNotMatch(html, /24-hour or unconditional attendance/i);
   assert.doesNotMatch(html, /SERVICES WE DISCUSS|THE DETAILS WE CAN DISCUSS/i);
 });
@@ -635,7 +635,7 @@ test('five supplied four-image completed-work cases are indexable and exposed th
     assert.ok(existsSync(join(root, 'public', 'assets', 'images', image)), `${image} must be staged for production`);
   }
   assert.ok(JSON.parse(load(gallery)('script[type="application/ld+json"]').text())['@graph'].some(n=>n['@type']==='DataFeed'&&n.url==='https://www.perthroofcare.com.au/case-studies.json'));
-  assert.match(load(readFileSync(fileFor('metal-roof-repairs'),'utf8'))('[data-service-section="work"] h3').first().text(),/metal roof and junction repair sequence/i);
+  assert.match(load(readFileSync(fileFor('metal-roof-repairs'),'utf8'))('[data-service-section="work"] h3').first().text(),/Metal roof repair project/i);
   for (const route of ['roof-leak-repairs', 'flashing-repairs']) assert.doesNotMatch(readFileSync(fileFor(route), 'utf8'), /TILE ROOF VALLEY AND CHIMNEY FLASHING CASES\./i, `${route} must not present a documented case as a service item`);
 });
 
@@ -673,8 +673,8 @@ test('storm damage repairs presents the supplied six-image urgent-response recor
   assert.ok(html.includes(`<section class="topic-rail service-hero" style="--service-hero-image:url('/assets/images/storm-damage-case-06-roof-void-inspection.jpg')">`), 'storm damage needs its own documented-case title image');
   const images = ['storm-damage-case-01-roof-void-overview.jpg', 'storm-damage-case-02-roof-void-opening.jpg', 'storm-damage-case-03-under-tile-detail.jpg', 'storm-damage-case-04-roof-void-junction.jpg', 'storm-damage-case-05-roof-void-work-record.jpg', 'storm-damage-case-06-roof-void-inspection.jpg'];
   assert.match(html, /Roof-void observations/i);
-  assert.match(html, /Urgent storm-related roof repair enquiries are prioritised/i);
-  assert.match(html, /weather, site access and safety conditions allow/i);
+  assert.match(html, /We prioritise urgent storm-damage enquiries/i);
+  assert.match(html, /weather, site access and safety allow/i);
   assert.equal(load(html)('[data-service-section="content"]').length,1,'storm damage compact service description');
   assert.doesNotMatch(html, /SERVICES WE DISCUSS|THE DETAILS WE CAN DISCUSS/i, 'storm damage must not retain generic service headings');
   assert.doesNotMatch(html, /service-route-detail|FIELD GUIDE \/ PRACTICAL CONTEXT/i, 'storm damage must not retain the old generic route template');

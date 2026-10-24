@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { load } from 'cheerio';
 import { fileURLToPath } from 'node:url';
 import { serviceAnswers } from './content/service-faqs.mjs';
-import {reviewedOwnerCopy} from './test-copy-expectations.mjs';
+const reviewedAnswers=JSON.parse(readFileSync(new URL('./test-reviewed-service-copy.json',import.meta.url),'utf8'));
 const root = fileURLToPath(new URL('./public/', import.meta.url));
 const routes = [...readFileSync(join(root,'sitemap.xml'),'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname).filter(r=>!r.startsWith('/zh/'));
 const pages = new Map(routes.map(r=>[r,load(readFileSync(join(root,r,'index.html'),'utf8'))]));
@@ -14,7 +14,7 @@ test('42 service answers are specific, unique and match declarative page knowled
   assert.equal(answers.length,42);assert.equal(new Set(answers).size,42);
   for(const [slug,expected] of Object.entries(serviceAnswers)){
     const dom=pages.get(`/${slug}/`);
-    assert.deepEqual(dom('.focus-faq details p').map((_,e)=>dom(e).text()).get(),expected.map(reviewedOwnerCopy));
+    assert.deepEqual(dom('.focus-faq details p').map((_,e)=>dom(e).text()).get(),reviewedAnswers[slug]);
     const graph=JSON.parse(dom('script[type="application/ld+json"]').text())['@graph'];
     assert.equal(graph.find(n=>n['@type']==='FAQPage'),undefined);
     assert.deepEqual(JSON.parse(dom('#page-knowledge').text()).guidance.map(g=>g.body),dom('main details').map((_,e)=>dom(e).find('p').text()).get());

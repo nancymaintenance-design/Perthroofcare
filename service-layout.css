@@ -1,49 +1,40 @@
-/* One compact reading flow; existing palette and photo geometry stay canonical. */
-.service-layout .service-hero{padding-block:2rem}
-.service-layout .service-hero .container{max-width:1120px}
-.service-layout .service-hero h1{font-size:clamp(2rem,4.5vw,3.6rem);max-width:24ch}
-.service-layout .service-hero p:not(.eyebrow){max-width:76ch}
-.service-layout .service-section{padding-block:clamp(1.5rem,2.5vw,2rem)}
-.service-layout .service-section + .service-section{border-top:1px solid var(--sand-line)}
-.service-layout .service-section > .container{max-width:1120px}
-.service-layout .service-section h2{font-size:clamp(1.75rem,3vw,2.4rem);margin:0 0 1.4rem}
-.service-layout h3{font-size:1.2rem;line-height:1.35;margin:0 0 .8rem}
-.service-layout .service-description,.service-layout .service-solution-body{max-width:none}
-.service-layout .service-solution-body:has(.service-guidance){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:2.5rem;align-items:start}
-.service-layout .service-solution-body .service-guidance{grid-area:1/2/3;padding-top:0}
-.service-layout .service-solution-body :is(.service-reading,.service-related){grid-column:1/-1}
-.service-layout .service-solution-body>p{margin-top:0}
-.service-layout p,.service-layout li{line-height:1.65}
-.service-layout .service-steps{padding:0 0 0 1.4rem;margin:0 0 1.5rem;display:block;background:none;border:0}
-.service-layout .service-steps li{padding-left:.35rem;margin-bottom:.75rem}
-.service-layout .service-steps li::marker{color:var(--clay);font-weight:700}
+/* Selected concept 2. The existing content structure and full evidence remain. */
+.ui-upgrade .service-layout .service-hero{position:relative;min-height:480px;padding-block:clamp(2.8rem,5vw,5rem);background:linear-gradient(90deg,#202321 0%,#202321e8 30%,#20232170 58%,#20232100 85%),var(--service-hero-image) 65% 48%/cover no-repeat}
+.ui-upgrade .service-hero::before,.ui-upgrade .service-hero::after{display:none}
+.service-layout .service-hero .container,.service-layout .service-section>.container{max-width:1280px}
+.ui-upgrade .service-hero h1{font-size:clamp(2.5rem,4.8vw,4.8rem);max-width:19ch;margin:1.2rem 0 1.5rem}
+.ui-upgrade .service-hero p:not(.eyebrow){max-width:41rem;font-size:1.12rem;line-height:1.8}
+.ui-upgrade .service-layout [data-service-section="content"]{background:var(--ink);color:var(--ui-light);padding-block:clamp(2.5rem,5vw,4rem);border:0}
+.service-layout .service-related ul,.service-project-references ul{list-style:none;padding:0;margin:0}
+.ui-solution-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:3rem;align-items:start}
+.ui-solution-layout--text{grid-template-columns:minmax(0,1fr);max-width:1000px}
+.ui-solution-media{min-height:520px;height:min(72vh,700px);background:var(--sand) var(--ui-detail-image) center/cover;position:sticky;top:calc(var(--ui-header-height) + 90px)}
+.service-layout .service-section{padding-block:clamp(2rem,4vw,4rem)}
+.service-layout .service-section h2{margin:0 0 1.5rem}
+.service-layout .service-solution-body{display:block}
 .service-layout .service-boundary{border-left:3px solid var(--accent);padding-left:1rem}
-.service-layout .service-guidance{padding:1.5rem 0 0;background:none}
-.service-layout .service-guidance details{margin:0;border:0;border-bottom:1px solid var(--sand-line);border-radius:0;padding:.8rem 0;background:none}
-.service-layout .service-guidance summary{font-size:1rem}
-.service-layout .service-reading{margin-top:1.5rem}
-.service-layout .service-reading ul{columns:2;column-gap:2rem;padding-left:1.2rem;margin:0}
-.service-layout .service-reading li{break-inside:avoid;margin-bottom:.4rem}
-.service-layout :is(.service-related,.service-project-references){font-size:.9rem;margin:1.5rem 0 0;padding:0;background:none}
-.service-layout :is(.service-related,.service-project-references) ul{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;list-style:none;margin:0;padding:0}
-.service-layout .service-case{padding:0;margin:0 0 2.5rem;background:none;border:0;max-width:none}
-.service-layout .service-case > p{max-width:82ch}
-.service-layout .service-case .eyebrow{font-size:.75rem;margin-top:0}
-.service-layout .service-case-list :is(.aligned-photo-grid,.project-case-grid){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:1.25rem;background:none;border:0}
-.service-layout .service-case-list figure{min-width:0;margin:0}
-.service-layout .service-case-list img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:12px}
-.service-layout .service-case-list #perth-strata-skylight-project img{aspect-ratio:3/4;object-fit:contain}
-.service-layout .service-case-list .two-storey-project-photo img{aspect-ratio:4/3;object-fit:contain}
-.service-layout .service-case-list figcaption{font-size:.85rem;line-height:1.5;padding:.6rem 0}
-.service-layout .service-case-list .project-case-grid:has(> :is(:nth-child(2),:nth-child(4)):last-child){grid-template-columns:repeat(2,minmax(0,1fr))}
-.service-layout .service-case-list .project-case-grid:has(> :only-child){grid-template-columns:minmax(0,1fr);max-width:720px}
-.service-layout .service-enquiry{border-top:1px solid var(--sand-line);padding-top:1.25rem;margin-top:1.5rem;max-width:82ch}
-.service-layout .service-enquiry p{font-size:.9rem}
-.service-layout [id]{scroll-margin-top:7rem}
-.service-layout a:focus-visible{outline:3px solid var(--clay);outline-offset:4px}
-@media(max-width:980px){.service-layout .service-solution-body:has(.service-guidance){display:block}.service-layout .service-solution-body .service-guidance{padding-top:1.5rem}}
-@media(max-width:720px){.service-layout .service-reading ul{columns:1}.service-layout .service-case-list :is(.aligned-photo-grid,.project-case-grid){grid-template-columns:repeat(2,minmax(0,1fr))}.service-layout .service-case-list .project-case-grid:has(> :only-child){grid-template-columns:minmax(0,1fr)}}
-@media(max-width:480px){.service-layout .service-case-list :is(.aligned-photo-grid,.project-case-grid,.project-case-grid:has(> :is(:nth-child(2),:nth-child(4)):last-child)){grid-template-columns:minmax(0,1fr)}}
-/* Page navigation is independent of the collapsed header menu. */
+.service-layout .service-guidance{padding:1rem 0 0;background:none}
+.service-layout .service-guidance details{padding:.9rem 1rem;border:1px solid var(--line);background:transparent;margin:0 0 -1px}
+.service-layout .service-guidance details[open]{background:#fff7}
+.service-layout .service-guidance summary{font-size:1rem;cursor:pointer;line-height:1.5}
+.service-layout .service-guidance details p{margin:0}
+.service-layout .service-reading ul{padding-left:1.2rem}
+.service-layout [id]{scroll-margin-top:calc(var(--ui-header-height) + 90px)}
+.ui-upgrade .service-layout [data-service-section="work"]{background:var(--ui-light)}
+.service-layout .service-case{padding:0;margin:0 0 2.5rem;border:0;background:none;max-width:none}
+.service-layout :is(.aligned-photo-grid,.project-case-grid){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:1.25rem;background:none;border:0}
+.service-layout figure{margin:0;min-width:0}
+.service-layout img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:2px;display:block}
+.service-layout :is(#perth-strata-skylight-project,.two-storey-project-photo) img{object-fit:contain}
+.service-layout figcaption{font-size:.85rem;padding:.6rem 0}
+.service-layout .project-case-grid:has(>:nth-child(2):last-child),.service-layout .project-case-grid:has(>:nth-child(4):last-child){grid-template-columns:repeat(2,minmax(0,1fr))}
+.service-layout .project-case-grid:has(>:only-child){grid-template-columns:minmax(0,1fr);max-width:720px}
 main nav.service-related,main nav.service-project-references{display:block}
-.service-related a,.service-project-references a{display:inline-flex;align-items:center;min-height:44px;white-space:normal}
+.service-project-references ul{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
+.service-project-references a{display:inline-flex;align-items:center;min-height:44px}
+.service-layout .service-enquiry{background:var(--ink);color:var(--ui-light);padding:1.5rem 2rem;border-left:4px solid var(--accent);margin-top:2rem}
+.service-layout .service-enquiry p{color:var(--ui-muted);max-width:75ch;font-size:.94rem}
+@media(max-width:900px){.ui-scope-grid,.ui-solution-layout{grid-template-columns:minmax(0,1fr);gap:2rem}.ui-upgrade .ui-scope-grid .service-related{border:0;padding:0}.ui-scope-grid .service-related ul{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}.ui-solution-media{position:static;height:300px;min-height:0;order:2}.ui-section-nav>.container{gap:1.5rem}.ui-section-nav a{min-height:56px;font-size:.88rem}.ui-upgrade .service-layout .service-hero{min-height:0;padding-block:3rem}}
+@media(max-width:600px){.ui-upgrade .service-layout .service-hero{background-image:linear-gradient(90deg,#202321ed,#2023218c),var(--service-hero-image)}.ui-upgrade .service-hero h1{font-size:2.4rem}.ui-upgrade .service-hero p:not(.eyebrow){font-size:1rem}.ui-scope-grid .service-related ul{grid-template-columns:1fr}.ui-solution-media{height:250px}.service-layout :is(.aligned-photo-grid,.project-case-grid,.project-case-grid:has(>:nth-child(2):last-child)){grid-template-columns:minmax(0,1fr)}.service-layout .service-enquiry{padding:1.25rem}.ui-section-nav>.container{gap:1.2rem}.ui-section-nav a{font-size:.85rem}}
+
+.service-layout #perth-strata-skylight-project img{aspect-ratio:3/4}

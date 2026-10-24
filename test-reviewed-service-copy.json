@@ -1,0 +1,72 @@
+{
+  "roof-repairs": [
+    "Water coming indoors may need leak investigation. Broken concrete or terracotta tiles need tile repairs, while damaged sheets or fixings need metal roof repairs. If you are unsure, tell us what you have noticed and we will inspect the roof.",
+    "Our written roof repair quote lists the affected area, what we found, the repairs, materials and access arrangements. We explain exclusions and any further investigation before you approve the work.",
+    "An isolated fault may suit a local repair when nearby roofing is sound. If deterioration is widespread, we inspect the wider area and explain the repair and restoration options before quoting."
+  ],
+  "roof-leak-repairs": [
+    "Heavy rain puts more water through valleys and gutters. Wind can drive rain towards roof laps and flashings. We check these areas and the timing of the leak before recommending repairs.",
+    "Worn joints, damaged flashing and faults around roof openings can let water in. We inspect these areas with the nearby tiles or sheets and drainage, rather than adding another patch without checking the cause.",
+    "We compare indoor water marks with the roof, flashings, valleys and drainage above and nearby. We explain what we found, the repairs proposed and any access limits or further checks in the written quote."
+  ],
+  "tile-roof-repairs": [
+    "We check the tile profile, fit and availability before confirming a replacement. New tiles can look different from weathered tiles even when the profile is suitable.",
+    "If damaged tiles are beside ridge capping, a valley or chimney flashing, we check those connections too. Any related repairs are listed in the written quote.",
+    "Tell us your suburb, where tiles appear damaged and whether you have noticed indoor water marks or changes after a storm. You do not need to diagnose the problem. Existing photos can be emailed, but are optional; do not climb onto the roof to take them."
+  ],
+  "metal-roof-repairs": [
+    "Loose screws and worn washers can let water through a fixing point. We inspect the fixing and nearby metal before deciding whether the fastener, sheet or both need attention.",
+    "Loose or damaged capping and flashings can let rain reach the joins below. We inspect the adjoining sheets and fixings and list the affected areas in the quote.",
+    "Local repairs can be suitable when the nearby sheets and connections are still sound. We check the extent of rust and damage before recommending repair or replacement sections."
+  ],
+  "ridge-capping-repointing": [
+    "Repointing renews the exposed finish along the ridge caps. Rebedding replaces the supporting mortar beneath them. We check both before recommending which work is needed.",
+    "The quote identifies the ridge or hip sections, the repointing or rebedding needed, any broken caps or adjoining tiles, materials and roof access. Any further investigation is explained in writing.",
+    "We check the cap position and nearby tile overlaps. Tiles that are loose, broken or part of the same leak path may need repair with the ridge."
+  ],
+  "flashing-repairs": [
+    "Flashings direct rain over joins between the roof and walls, chimneys or openings. We inspect the metal, overlaps and connections to the surrounding roof before recommending repairs.",
+    "Leaves or debris may only need clearing if the valley is sound. Rust holes, damaged metal or failed joints may need repair or replacement. We inspect the valley and adjoining roof first.",
+    "Water can enter around the skylight flashing or travel from higher on the roof. We check the skylight junction and nearby roof areas before deciding where repairs are needed."
+  ],
+  "gutter-repairs": [
+    "Tell us your suburb, which side of the property is affected and where water escapes during rain. A short description is enough. Ground-level photos can help, but are optional.",
+    "A valley or roof edge can concentrate water and debris at one section of gutter. We inspect that area and the nearby connections, and include any required repairs in the quote.",
+    "Loose brackets, separated joints or a leaking gutter outlet can affect the connected downpipe. We inspect the pipe and outlet together before quoting for clearing or repairs."
+  ],
+  "gutters-downpipes": [
+    "Poor fall, a blocked outlet, damaged joints or a restricted downpipe can also cause overflow. We inspect the visible drainage route and explain the clearing or repairs needed.",
+    "When water backs up or escapes near an outlet, we inspect the gutter and pipe together. This helps identify the restriction instead of treating the gutter and downpipe as separate faults.",
+    "You can email existing or ground-level photos of the gutter, outlet, downpipe or water marks. A written description is enough to request an assessment. Avoid ladders or roof access to collect images."
+  ],
+  "downpipe-repairs": [
+    "A moving pipe can strain joints or pull away from the gutter outlet. We inspect the supports, pipe and connection before quoting for repairs.",
+    "Tell us whether water spills along the gutter, leaks at the outlet, escapes at a pipe joint or collects near the lower connection. We check the adjoining parts on site.",
+    "We inspect connected gutters and downpipes when the source of overflow is unclear. Underground stormwater work is outside this service and needs a separate arrangement."
+  ],
+  "roof-maintenance": [
+    "Tell us your suburb, roof material if known, recurring problems and previous repairs. We inspect the roof and drainage, explain priorities and provide a written quote.",
+    "Before seasonal rain, we can check damaged tiles, loose capping, blocked valleys and restricted gutters or downpipes. We arrange safe access and quote for the work needed; do not climb onto the roof yourself.",
+    "New leaks, loose materials, worn joints or recurring overflow may need more than routine clearing. We investigate and explain the repairs before adding them to the work."
+  ],
+  "roof-cleaning-painting": [
+    "We inspect the roofing, existing coating, damage and drainage. Necessary repairs come first, and the cleaning and coating products must suit the roof.",
+    "Tiles and metal sheets need different preparation. We check tile condition, metal corrosion and previous coatings before agreeing suitable cleaning and painting methods.",
+    "Tell us the roof material if known, whether it has been painted before, and any leaks or damage. Existing photos are optional. We inspect the roof before quoting for repairs, preparation and painting."
+  ],
+  "commercial-roof-repairs": [
+    "Tell us how the building is used, when it is occupied and any roof access restrictions. Details of leaks, previous repairs and roof equipment help us plan the inspection with the building manager.",
+    "We inspect damaged sheets, flashings, roof-opening connections, gutters and downpipes together where the faults are related. The quote identifies the repairs and the agreed work sequence.",
+    "Provide the affected room or area, leak timing, previous repair records and the authorised site contact. Existing photos or a plan can help, but are optional. Tell us about access and operating requirements."
+  ],
+  "storm-damage-roof-repairs": [
+    "From a safe place, note when the storm occurred, the affected room or roof area and any new water entry. Photos are optional; do not enter a dangerous area to take them.",
+    "A photo cannot show all hidden damage or the full water path. We inspect the roof on site and explain any areas that need further access before quoting for repairs.",
+    "Tell us about active water entry, sagging ceilings, fallen materials and access restrictions from a safe location. Keep clear of hazards and call emergency services for immediate life or electrical danger. Roof attendance depends on weather and safe access."
+  ],
+  "roof-inspection": [
+    "We check safely accessible tiles or sheets, ridge caps, valleys, flashings, gutters and downpipes within the agreed scope. Before booking, we confirm the areas to be inspected, fee and records we can provide.",
+    "If repairs are needed, the written quote identifies the area, fault, materials, access and work included. Further investigation or additional work is explained and agreed before it proceeds.",
+    "We can check damaged tiles, loose capping, flashings, valleys and gutter debris before seasonal rain. We plan safe access and prioritise the repairs found. Keep your own observations at ground level."
+  ]
+}

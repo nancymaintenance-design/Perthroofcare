@@ -44,7 +44,7 @@ test('maintenance and region links are bidirectional, and new guide topics enter
 test('new reading sections do not become nested service sidebar grid cells',()=>{
  for(const [path,$] of pages) for(const section of $('main .keyword-gap-content').toArray()){
   const parent=$(section).parent();
-  assert.ok(parent.is('main, .article-reading, .service-solution-body')||(path.includes('/news/')&&parent.is('.guide-reading-body')&&parent.parent().is('.guide-workspace')),path+' content nested in '+parent.attr('class'));
+  assert.ok(parent.is('main, .article-reading, .service-solution-body')||(parent.is('.ui-scope-grid')&&parent.closest('[data-service-section=content]').length===1)||(path.includes('/news/')&&parent.is('.guide-reading-body')&&parent.parent().is('.guide-workspace')),path+' content nested in '+parent.attr('class'));
   assert.equal($(section).closest('.service-brief-enquiry').length,0,path+' no preparation sidebar');
  }
 });

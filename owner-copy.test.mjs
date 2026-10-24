@@ -47,7 +47,7 @@ test('gallery alternatives describe the photographed roof details rather than se
 test('inspection booking agrees records available rather than claiming findings exist before inspection',()=>{
  const $=page('roof-inspection');
  assert.doesNotMatch($('main').text(),/confirm the accessible areas, written findings and inspection fee before booking/);
- assert.match($('main').text(),/Before booking, we confirm the areas to be inspected, the inspection fee and the records we can provide/);
+ assert.match($('main').text(),/Before booking, we confirm the areas to be inspected, fee and records we can provide/);
 });
 test('all three remaining guide leads describe our repair actions directly',()=>{
  for(const r of ['news/drainage-after-rain','news/tile-roof-repairs-perth-guide','news/roof-valleys-flashing-repairs-perth']){

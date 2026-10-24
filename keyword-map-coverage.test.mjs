@@ -57,13 +57,13 @@ test('Perth drainage photographs are allocated by visible components without com
  }
  assert.equal(new Set(used).size,8);
  assert.match(page('flat-roof-repairs')('#perth-roof-drainage-work').text(),/Drainage condition/);
- assert.match(page('strata-roof-repairs')('#perth-strata-drainage-work').text(),/Confirm the authorised contact, access and scope/);
+ assert.match(page('strata-roof-repairs')('#perth-strata-drainage-work').text(),/confirmed contact, access and quote/);
 });
 test('Perth strata gallery describes skylight addition and preserves original-photo display',()=>{
  const $=page('strata-roof-repairs'),section=$('#perth-strata-skylight-project');
  assert.equal(section.find('img').length,2);
- assert.match(section.text(),/adding a skylight.*existing metal roof/);
- assert.match(section.text(),/authorised contact, access and agreed work scope/);
+ assert.match(section.text(),/added a skylight.*existing metal roof/);
+ assert.match(section.text(),/authorised contact, access and quote confirmed/);
  for(const img of section.find('img').toArray()){
   assert.match($(img).attr('srcset'),/\.webp/);
   assert.ok($(img).attr('alt').length>20);
@@ -91,7 +91,7 @@ test('confirmed Perth gutter photographs retain accurate component captions',()=
   const $=page(route),section=$('#perth-gutter-tile-project');
   assert.equal(section.find('img').length,4);
   assert.equal(new Set(section.find('img').map((_,e)=>$(e).attr('src')).get()).size,4);
-  assert.match(section.text(),/roof tiles at the eaves/);
+  assert.match(section.text(),/tile repairs at the eaves/);
   assert.doesNotMatch(section.text(),/box gutter|before.and.after|same property|guaranteed/i);
   for(const img of section.find('img').toArray()){
    assert.ok($(img).attr('alt').length>20);

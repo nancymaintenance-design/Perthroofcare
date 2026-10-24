@@ -36,3 +36,7 @@
 .about-company-business .about-company-registration-note{font-size:.85rem}
 .about-company .inspection-charge-notice{font-size:.9rem;line-height:1.6}
 @media(max-width:720px){.about-company-hero-grid,.about-company-registration-panel,.about-company-process,.about-company-services>.container{grid-template-columns:1fr}.about-company-process{gap:1.5rem}.about-company h1{max-width:22ch}}
+
+/* Selected UI 2; page-owned adaptation. */
+.ui-upgrade .about-company-hero{background:var(--ink);color:var(--ui-light)}
+.ui-upgrade .about-company-hero :is(h1,p){color:inherit}

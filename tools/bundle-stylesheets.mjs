@@ -1,8 +1,13 @@
-import {readFileSync,writeFileSync} from 'node:fs';
+import {readFileSync,writeFileSync,existsSync} from 'node:fs';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {load} from 'cheerio';
 import {transform} from 'lightningcss';
+
+// Explicitly reviewed, retired layout families. A rule is removed only if every
+// selector depends on a retired class absent from ALL pages and runtime scripts.
+// Mixed selectors, live classes, pseudo-classes and media rules remain intact.
+const retiredVisualClasses=new Set(`service-core-list homepage-service-links service-path story-copy route-rail service-route-grid story-media service-real-project focus-links proof-intro home-proof-sequence service-route-detail homepage-process-grid home-enquiry service-brief-enquiry service-work-card homepage-service-overview fixed-roofline-story homepage-search-intent service-route-support project-case-hero core-service-case-card homepage-areas story-panel--next-steps service-route-link service-route-related services-project-shortcut service-project-evidence-links focus-notes focus-summary hero-slide homepage-process story-panel--drainage field-guide-card service-project-evidence service-core-content service-work-grid gallery-grid story-panel news-guide-grid service-field-guide field-guide-grid service-project-evidence-grid service-brief-layout service-brief-copy service-work-intro homepage-evidence-note service-route-links service-field-guide-intro area-note service-brief evidence-links service-route-intro instagram-mark instagram-dot area-popular-localities area-locality-card core-service-cases core-service-cases-intro`.split(' '));
 
 // Keep the original cascade, including media and interactive-state rules.
 // Only publication copies change; editable source styles remain intact.
@@ -10,6 +15,7 @@ export function bundleStylesheets(publicDirectory,routes,visualLayer=()=> ''){
   const bundles=new Map();
   const routeBundles=new Set();
   const publishedClasses=new Set();
+  const runtimeSources=['site.js','faq.js','analytics.js'].map(name=>join(publicDirectory,'assets/js',name)).filter(existsSync).map(path=>readFileSync(path,'utf8')).join('\n');
   for(const route of routes){
     const $=load(readFileSync(join(publicDirectory,route,'index.html'),'utf8'));
     $('[class]').each((_,el)=>{for(const name of $(el).attr('class').split(/\s+/))publishedClasses.add(name);});
@@ -47,9 +53,9 @@ export function bundleStylesheets(publicDirectory,routes,visualLayer=()=> ''){
     let href=bundles.get(key);
     if(!href){
       const {code}=transform({filename:'site.css',code:Buffer.from(key),minify:true,visitor:{Rule:{style(rule){
-        // Only the retired, non-JS-created atlas layout namespace is pruned.
+        // Prune only explicitly retired classes, absent from every page and runtime script.
         // Never infer all interactive or pseudo-class rules from static coverage.
-        const selectors=rule.value.selectors.filter(selector=>!selector.some(part=>part.type==='class'&&part.name.startsWith('atlas-')&&!publishedClasses.has(part.name)));
+        const selectors=rule.value.selectors.filter(selector=>!selector.some(part=>part.type==='class'&&(part.name.startsWith('atlas-')||retiredVisualClasses.has(part.name))&&!publishedClasses.has(part.name)&&!runtimeSources.includes(part.name)));
         if(!selectors.length)return [];
         // Mixed live/retired lists stay intact rather than rewriting declarations.
       }}}});

@@ -1,30 +1,46 @@
 ---
 version: alpha
 colors:
-  paper: "#ffffff"
-  ink: "#242424"
+  paper: "#f4f1e9"
+  ink: "#202321"
   primary: "#f2b544"
-  eucalyptus: "#705015"
-  wash: "#f3f3f1"
-  line: "#d8d8d3"
+  eucalyptus: "#725018"
+  wash: "#eae6dd"
+  line: "#d3cfc5"
 typography:
   display:
-    fontFamily: "Arial Narrow, Arial, sans-serif"
+    fontFamily: "Arial Narrow, Aptos Display, Arial, Microsoft YaHei, sans-serif"
   body:
-    fontFamily: "Arial, sans-serif"
+    fontFamily: "Arial, Microsoft YaHei, PingFang SC, sans-serif"
   mono:
     fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace"
 rounded:
-  DEFAULT: "18px"
+  DEFAULT: "4px"
 spacing:
   pageGutter: "clamp(20px, 4vw, 64px)"
-  section: "clamp(2.5rem, 4vw, 3.75rem)"
+  section: "clamp(2rem, 4vw, 4rem)"
 components:
   serviceMenu:
     width: "min(56rem, calc(100vw - 32px))"
   primaryCta:
     minHeight: "48px"
 ---
+
+## Current approved direction — 2026-10-24
+
+The owner selected displayed concept 2 (project photography) in reports/2026-10-24-ui-redesign-exploration/selection-manifest.json and requested a site-wide bilingual UI upgrade. This section and the frontmatter supersede older visual directions below; older dated records are retained as history. This candidate is local only.
+
+Use warm charcoal headers, scope sections and enquiry/footer bands; chalk reading surfaces; amber actions; small 4px corners and real site photography. Large service heroes fade from dark left text to the existing photograph on the right. A compact sticky section outline follows the hero. Existing related-service links sit beside the scope, and a decorative repeat of the original detail photograph sits beside the complete solution. All original evidence galleries, captions, prose, H1s and destinations remain. Home alone swaps five thumbnails and its hero to existing finished-work photos, with accurate bilingual alternatives. Never imply an old roof was fully renewed when only flashing or fixings were repaired.
+
+Runtime-canonical model B: ui-system.css owns current palette and common typography/header/footer, homepage adaptations and shared page-outline/scope/process primitives. service-layout.css owns service composition and breakpoints. about-company.css/contact-layout.css own their page overrides; FAQ, guide and directory layers retain their established owners. Legacy refinement.css remains the base, overridden by the current layer, not a second live design choice. The build fingerprints and merges these into at most two requests: shared below 85KB, combined below 90KB, service/FAQ layers below 5.5KB and other layers below 4KB. Only explicitly retired classes absent from all pages and runtime JS are pruned.
+
+Token mapping: paper→--porcelain/--paper; ink→--ink; primary→--accent; eucalyptus→--clay; wash→--sand; line→--sand-line; display/body→--ui-display/--ui-body. Header height is measured through the existing shared ResizeObserver for sticky outlines and guide TOCs. Mobile navigation uses the same dark surface, legible open submenu, natural wrapping and scrolling. Existing form validation, privacy, review and enquiry behaviors remain authoritative. All added UI labels are in batch-030.json, with no external font/icon dependency.
+
+Verification evidence belongs to ../reports/2026-10-24-site-ui-upgrade; design-qa.md records visual comparison and browser states. Source content remains governed by existing owner-copy/editor/locale modules; ui-upgrade.mjs only rearranges their published nodes after owner copy and before machine-content sync.
+
+### Contact refinement — 2026-10-24
+
+The owner rejected the centred, tall Contact form. Contact now uses the existing DOM as a 1280px desktop grid: introduction and direct contact on the left, one compact white enquiry panel on the right. The layout stacks in the original DOM/focus order below 900px. Inputs are 44px high; the message starts at 112px with the existing native vertical resize behavior retained; submit remains at least 48px. There is no nested form card and no empty status row before submission. The live status node stays in the accessibility tree while empty, and resumes normal visible flow when populated. No content, H1, URL, form attributes, handlers or sending behavior change. contact-layout.css owns this adaptation only; the existing header, palette, footer and all sibling pages remain. Evidence: ../reports/2026-10-24-contact-layout-refinement.
 
 ## Overview
 

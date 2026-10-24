@@ -44,7 +44,7 @@ test('all routes use concise component headings without assembled topic suffixes
  for(const r of routes){const $=page(r);for(const e of $('main h1,main h2,main h3,main summary').toArray())assert.doesNotMatch($(e).text(),filler,r+' '+$(e).text());}
  // Independent, paragraph-reviewed examples catch replacement by empty labels.
  for(const [route,headings] of [
-  ['/roof-leak-repairs/',['A leak in heavy rain or wind-driven rain','Tracing the entry point before choosing a repair','Tiled-roof leak repair sequence']],
+  ['/roof-leak-repairs/',['Ceiling stains and leaks during rain','Finding the leak before choosing a repair','Tiled-roof leak repair project']],
   ['/areas/hillarys-roof-repairs/',['Roof material and visible damage','Fixings, capping and rainwater drainage','Arrange a roof assessment']],
   ['/news/roof-inspection-perth-guide/',['Inspection findings and maintenance priorities','Roof inspection and drainage repair records','Inspection fees and agreed access']]
  ]){const $=page(route),actual=$('main h2,main h3').map((_,e)=>$(e).text()).get();for(const heading of headings)assert.ok(actual.includes(heading),route+' missing '+heading);}
@@ -109,7 +109,7 @@ test('generated leak navigation uses both concise ampersand service names',()=>{
   ['/flashing-repairs/','Roof valleys & flashing repairs'],
   ['/gutters-downpipes/','Gutters & downpipes']
  ]){
-  const links=$(`[data-service-section="solution"] .service-related li a[href="${href}"]`);
+  const links=$(`[data-service-section="content"] .service-related li a[href="${href}"]`);
   assert.ok(links.length,href+' contextual link remains present');
   links.each((_,e)=>assert.equal($(e).text(),label,href+' generated navigation name'));
  }

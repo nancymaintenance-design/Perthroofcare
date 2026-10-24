@@ -70,6 +70,7 @@ const stagedFiles = [
   ['case-studies.json', 'case-studies.json'],
   ['site.css', 'assets/css/site.css'],
   ['refinement.css', 'assets/css/refinement.css'],
+  ['ui-system.css', 'assets/css/ui-system.css'],
   ['responsive-images.css', 'assets/css/responsive-images.css'],
   ['office-location.css', 'assets/css/office-location.css'],
   ['brand-hero.css', 'assets/css/brand-hero.css'],

@@ -17,8 +17,8 @@ test('new guide sections preserve the meaning of established fragment links',()=
 
 test('rain-related service copy answers scheduling, cleaning and component questions',()=>{
  assert.match(page('roof-leak-repairs')('.service-description').text(),/do not need to wait for another downpour/);
- assert.match(page('gutters-downpipes')('.service-description').text(),/cleaned but still overflows/);
- assert.match(page('downpipe-repairs')('.service-description').text(),/ground-level drain stays full/);
+ assert.match(page('gutters-downpipes')('.service-description').text(),/still overflows after cleaning/);
+ assert.match(page('downpipe-repairs')('.service-description').text(),/water also backs up at a ground-level drain/);
 });
 
 test('existing News guides contain distinct post-rain decisions rather than duplicate service pages',()=>{

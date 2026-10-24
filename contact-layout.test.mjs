@@ -5,11 +5,12 @@ import {load} from 'cheerio';
 
 const page=route=>load(readFileSync(`public/${route}/index.html`,'utf8'));
 
-test('Contact puts all direct contact information above a standalone centred enquiry form',()=>{
+test('Contact preserves direct details and pairs them with the compact enquiry form',()=>{
  const $=page('contact'),main=$('main'),band=main.find('.contact-details-band'),form=main.find('.contact-enquiry-box');
  assert.equal(band.length,1,'direct information has one top band');
  assert.equal(form.length,1,'form has one separate bounded container');
- assert.equal(main.find('.contact-layout').length,0,'no short left rail beside the form');
+ assert.ok(main.hasClass('contact-page'),'Contact-only composition owner');
+ assert.equal(main.children('section').length,3,'original introduction, direct details and form retained');
  assert.equal(band.find('a[href="tel:+61405878406"]').length,1);
  assert.equal(band.find('a[href="mailto:ellisservicesgroup3@outlook.com"]').length,1);
  assert.match(band.text(),/140 St Georges Terrace, Perth WA 6000/);

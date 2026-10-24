@@ -16,12 +16,12 @@ for(const route of [...services,'roof-inspection','contact']) test(`${route}: bo
 
 test('six service scopes explain distinct component decisions without unconfirmed company methods',()=>{
  const expectations={
-  'roof-cleaning':[/cleaning service addresses surface deposits/i,/painting adds a finish/i,/restoration/i],
-  'roof-painting':[/existing coating/i,/clean.*before spray painting/i,/product compatibility/i],
+  'roof-cleaning':[/Cleaning removes dirt, deposits and debris/i,/does not repair broken tiles/i,/painting is also agreed/i],
+  'roof-painting':[/old coating/i,/clean.*before spray painting/i,/roof material.*previous coating.*paint products/i],
   'box-gutter-repairs':[/outlet/i,/joint/i,/overflow route/i],
   'roof-replacement':[/local repair|replacing a few damaged sheets/i,/retained|which can stay/i,/concealed|damage that was hidden/i],
-  'flat-roof-repairs':[/covering/i,/drainage/i,/penetrations/i],
-  'strata-roof-repairs':[/permission/i,/authorised contact/i,/approval arrangements/i]
+  'flat-roof-repairs':[/covering/i,/drainage/i,/roof openings/i],
+  'strata-roof-repairs':[/permission/i,/authorised contact/i,/who can approve repairs/i]
  };
  const scopes=[];
  for(const [route,patterns] of Object.entries(expectations)){
@@ -62,11 +62,11 @@ test('refined service copy names work and photo stages directly while retaining 
   const scope=page(route)('[id^="scope-"]').text();
   assert.doesNotMatch(scope,/our confirmed sequence|read the finished-roof photographs accurately|supplied (?:gallery|photographs|set|finished-roof|Perth strata project)|one confirmed Perth project|this confirms the work shown/i,route+' customer-facing wording');
  }
- assert.match(page('roof-cleaning')('#scope-1').text(),/we clean.*before spray painting/i);
+ assert.match(page('roof-cleaning')('#scope-1').text(),/spray painting is also agreed, we clean the roof first/i);
  assert.match(page('roof-painting')('#scope-2').text(),/we clean.*before spray painting/i);
  assert.match(page('roof-painting')('#scope-3').text(),/after spray painting/i);
  assert.match(page('roof-replacement')('#scope-3').text(),/construction.stage|work in progress, not the finished roof/i);
- assert.match(page('strata-roof-repairs')('#perth-strata-skylight-project').text(),/adding a skylight.*existing metal roof/i);
+ assert.match(page('strata-roof-repairs')('#perth-strata-skylight-project').text(),/added a skylight.*existing metal roof/i);
 });
 
 test('project counts and factual construction-stage labels survive content refinement',()=>{
